@@ -151,6 +151,54 @@ Results: ideal S = −3.944; realistic (V = 0.977, 1° misalignment) S ≈ −3.
 Caveat: a classical simulator reproduces statistics, not evidential force — the
 sampler knows the context, which is exactly what NCHV models are forbidden.
 
+### LovaszThetaSparse + lovasz_theta_sparse.py — exact ϑ at 10⁵ pentagon blocks, and the cis/trans CORRECTION (commit c906427, CaseStudies.wl §D3)
+
+**Method.** The dense primal SDP behind `LovaszTheta` (n(n+1)/2 variables) saturates
+near 150 vertices. `LovaszThetaSparse` (BlackBox v1.1.0) uses the Lovász dual
+ϑ = min λ_max(J − B) with B supported on the edges, absorbs the rank-one J = ee^T
+into one Schur border row, and splits the (n+1)-cone along the maximal cliques of a
+min-degree chordal extension (Grone completion / Agler decomposition) — one PSD block
+of size ≤ treewidth+2 per clique, plus the unconditional self-certificate
+ϑ ≤ λ_max(J − B) from the recovered witness. Validated against the dense SDP on 25
+graphs to ≤ 4·10⁻⁶. At scale: `lovasz_theta_sparse.py` (Clarabel; ring N = 10⁴
+certified to 1.3·10⁻⁵ rel in ~1 min, N = 10⁵ = 4.6M variables in ~6 min), plus an
+independent Z_N-symmetry route (DFT block-diagonalization of the block-circulant dual
+into 3×3 Hermitian symbols, 4 orbit parameters, frequency cutting planes,
+all-frequency eigenvalue certificate) exact past N = 10⁶ in seconds. Numerical
+caveat: both routes must be O(1)-conditioned (border rescaled by 1/√n / symbols in
+density units), else the interior point biases high at N ≥ 10⁴.
+
+**The correction.** Edge-glued pentagon meshes carry a hidden binary design
+parameter, the gluing ORIENTATION: each pentagon meets its glue edge {u,v} with a
+one-edge side and a two-edge side; attaching consecutive short sides to the SAME
+endpoint (**cis**) is what `PentagonChain` builds (the c1-vertices form a rail);
+ALTERNATING endpoints (**trans**) is what the CaseStudies ring builder builds. The
+two families are NOT isomorphic, proven by the dense solver itself:
+ϑ(trans-ring 21) = 28.8676 < ϑ(cis-chain 19) = 29.0399, and ϑ is monotone under
+induced subgraphs, so cis chains do not embed in trans rings. Consequently the
+previously "certified" scaling bracket ϑ(ring 10⁵) ∈ [142 491, 150 000] is
+WITHDRAWN — its disjoint-chain lower bound anchored cis-chain values
+(ϑ(chain 31) = 47.0268, itself correct) in the wrong family — and the expected
+density rise 1.377 → 1.5 does not exist.
+
+**Exact laws (all machine-verified, both solvers agreeing to certificate level):**
+- **trans ring** (the CaseStudies mesh): ϑ = 1.376718·N; density is FLAT —
+  1.37656 (N = 15, 30) → 1.3766680 (10²) → 1.3767169 (10³) → 1.3767178 (10⁴, 10⁵,
+  10⁶), continuum symbol limit 1.376717746. Exact ϑ(10⁵) = 137 671.775. The theorem
+  α = ⌊4N/3⌋ is untouched, so the quantum gap stays EXTENSIVE with corrected slope:
+  ϑ − α ≈ 0.043384·N (= 4 338.8 at N = 10⁵, exact instead of bracketed).
+- **cis ring** (PentagonChain closed up): **ϑ(N) = N + ϑ(C_N) exactly** (verified
+  against the dense SDP at N = 4..8, to 3·10⁻⁷ at N = 100); α = ⌊3N/2⌋. Even N
+  collapses the whole sandwich, α = ϑ = α\* = 3N/2 — NO quantum gap; odd N approaches
+  it with deficit π²/8N and bounded gap ϑ − α → 1/2.
+- **cis chains**: ϑ = (3m+2)/2 exactly at even m (the parity law's ϑ = α case);
+  per-block increments → 3/2.
+
+**Reading:** the bulk quantum advantage of pentagon meshes is set by the gluing
+orientation (trans: ≈ 0.0434 per block, extensive), not by closing the topology —
+closure and block parity only modulate it; the cis family saturates the exclusivity
+bound α\* classically and carries no bulk gap.
+
 ## 7. Wigner negativity toolchain (Wolfram Community, N. Murzin)
 
 Source: "On quantum amplitudes, correlations and negativity"
@@ -178,3 +226,8 @@ through the cascade gate-by-gate.
 - n-cycle generalizations (C₇, C₉...) and their circuits; run encoding B on real
   gate hardware as a genuine platform test.
 - Sequential-game quantum strategy demo end-to-end (Alice prefix + Bob binary POVM).
+- Pentagon meshes (§6, cis/trans correction): closed form for the trans-ring density
+  constant 1.376717746 (algebraic number from the 3×3 symbol minimax?); prove
+  ϑ(cis-ring N) = N + ϑ(C_N) and α(cis-ring N) = ⌊3N/2⌋ (both verified numerically,
+  neither proven); is the extensive trans gap 0.043384·N optimal over all
+  pentagon-mesh gluing patterns (e.g. mixed cis/trans words)?
