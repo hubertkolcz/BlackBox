@@ -200,10 +200,17 @@ density rise 1.377 → 1.5 does not exist.
   ≤ 10⁵τ\* = 137 671.7746). The theorem α = ⌊4N/3⌋ is untouched, so the quantum gap
   stays EXTENSIVE with algebraic slope: ϑ − α = (τ\* − 4/3)·N = 0.0433844126·N
   (= 4 338.8 at N = 10⁵, exact instead of bracketed).
-- **cis ring** (PentagonChain closed up): **ϑ(N) = N + ϑ(C_N) exactly** (verified
-  against the dense SDP at N = 4..8, to 3·10⁻⁷ at N = 100); α = ⌊3N/2⌋. Even N
-  collapses the whole sandwich, α = ϑ = α\* = 3N/2 — NO quantum gap; odd N approaches
-  it with deficit π²/8N and bounded gap ϑ − α → 1/2.
+- **cis ring** (PentagonChain closed up): **ϑ(N) = N + ϑ(C_N) — a THEOREM**, and
+  **α = ⌊3N/2⌋ — also a THEOREM** (CaseStudies §D3, machine-checked construction).
+  ϑ upper: delete the N glue edges → C_N ⊔ C₂N; monotonicity + additivity +
+  ϑ(C₂N) = N (perfect). ϑ lower: one-extra-dimension orthonormal representation —
+  rail = optimal C_N umbrella, every c3 vertex = the handle itself, every c2
+  vertex = the appended basis vector; value ϑ(C_N) + N. α upper: each of the N
+  pentagons induces exactly C5 (independence 2); window-counting weighs c1, c2
+  twice and c3 once → 2(s1+s2)+s3 ≤ 2N → |S| ≤ N + s3/2 ≤ 3N/2. α lower: all c3's
+  + alternate rail vertices. Even N collapses the whole sandwich,
+  α = ϑ = α\* = 3N/2 — NO quantum gap; odd N approaches it with deficit π²/8N and
+  bounded gap ϑ − α → 1/2.
 - **cis chains**: ϑ = (3m+2)/2 exactly at even m (the parity law's ϑ = α case);
   per-block increments → 3/2.
 
@@ -241,7 +248,9 @@ through the cascade gate-by-gate.
 - Sequential-game quantum strategy demo end-to-end (Alice prefix + Bob binary POVM).
 - Pentagon meshes (§6, cis/trans correction): ~~closed form for the trans-ring
   density constant~~ RESOLVED — τ\* = Root[49x³ − 128x² − 75x + 218, 2], exact KKT
-  certificate in §6/CaseStudies §D3. Still open: prove ϑ(cis-ring N) = N + ϑ(C_N)
-  and α(cis-ring N) = ⌊3N/2⌋ (both verified numerically, neither proven); is the
-  extensive trans gap (τ\* − 4/3)·N optimal over all pentagon-mesh gluing patterns
-  (e.g. mixed cis/trans words)?
+  certificate in §6/CaseStudies §D3. ~~Prove ϑ(cis-ring N) = N + ϑ(C_N) and
+  α(cis-ring N) = ⌊3N/2⌋~~ RESOLVED — both are theorems now (§6/§D3: subgraph
+  monotonicity + one-extra-dimension representation; pentagon window counting).
+  Still open: is the extensive trans gap (τ\* − 4/3)·N optimal over all
+  pentagon-mesh gluing patterns (e.g. mixed cis/trans words)? Analogous closed
+  form for the trans-CHAIN density (numerically also → τ\*?) — unverified.

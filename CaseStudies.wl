@@ -214,12 +214,29 @@ cisRing[nb_ /; nb >= 3] := Module[{c1, c2, c3, edges},
   Graph[DeleteDuplicates[Flatten[edges]], UndirectedEdge @@@ DeleteDuplicates[Sort /@ edges]]];
 
 (* ::CodeText:: *)
-(*The cis family collapses onto exact laws \[LongDash] \[CurlyTheta](cis-ring N) = N + \[CurlyTheta](C_N) and \[Alpha] = \[LeftFloor]3N/2\[RightFloor], verified against the dense SDP:*)
+(*The cis family collapses onto exact laws \[LongDash] \[CurlyTheta](cis-ring N) = N + \[CurlyTheta](C_N) and \[Alpha] = \[LeftFloor]3N/2\[RightFloor] \[LongDash] verified against the dense SDP and PROVED below:*)
 
 (* ::Input:: *)
 cisLawTable = Table[{n, LovaszTheta[cisRing[n]], n + LovaszTheta[CycleGraph[n]],
     IndependenceNumber[cisRing[n]]}, {n, 4, 8}];
 TableForm[cisLawTable, TableHeadings -> {None, {"N", "\[CurlyTheta](cis ring)", "N+\[CurlyTheta](C_N)", "\[Alpha]"}}]
+
+(* ::Text:: *)
+(*THEOREM. \[CurlyTheta](cis-ring N) = N + \[CurlyTheta](C_N) and \[Alpha](cis-ring N) = \[LeftFloor]3N/2\[RightFloor] for every N >= 3. Upper bound for \[CurlyTheta]: deleting the N glue edges (c1_k, c2_k) leaves the disjoint union C_N \[SquareUnion] C_2N (the c1 rail plus the outer c2/c3 cycle); \[CurlyTheta] never decreases under edge deletion, is additive on disjoint unions (Lov\[AAcute]sz 1979), and \[CurlyTheta](C_2N) = N since even cycles are perfect. Lower bound: in the value formulation \[CurlyTheta](G) = max \[Sum] (c.u_i)^2 over unit vectors orthogonal across every edge (Lov\[AAcute]sz 1979, Thm. 5), take an optimal representation {u_k} of the rail C_N in R^d with handle c, append one dimension, and give EVERY c3 vertex the handle itself and EVERY c2 vertex the new basis vector e_(d+1). Every edge pairs something with e_(d+1) or repeats a rail orthogonality, so the assignment is feasible, and its value is \[CurlyTheta](C_N) + N \[CenterDot] 0 + N \[CenterDot] 1. The glue edges are free because the c2 layer is sacrificed to a fresh dimension while the independent c3 layer rides at weight 1 \[LongDash] this is exactly why cis closure produces no quantum gap. The \[Alpha] law: all N c3 vertices plus alternate rail vertices are independent, so \[Alpha] >= N + \[LeftFloor]N/2\[RightFloor]; conversely each of the N pentagons induces exactly C5 (independence 2), and summing the window bound over all pentagons counts c1's and c2's twice and c3's once, so 2(s1 + s2) + s3 <= 2N and |S| <= N + s3/2 <= 3N/2. For even N the sandwich already forces \[CurlyTheta]: \[Alpha] = \[Alpha]\[Star] = 3N/2, so the representation is only needed at odd N.*)
+
+(* ::CodeText:: *)
+(*Machine check of the construction at odd N \[LongDash] rail = Lov\[AAcute]sz umbrella of C_N with step \[Pi](N-1)/N padded by a zero component, c3 vectors = the handle, c2 vectors = the appended basis direction. Spoke and outer-cycle orthogonalities are structurally zero; the nontrivial parts (cyclic rail orthogonality including closure, unit norms, the value identity) are exact:*)
+
+(* ::Input:: *)
+cisORCheck[n_ /; OddQ[n] && n >= 3] := Module[{w = Pi (n - 1)/n, ca2, u, handle},
+  ca2 = Cos[Pi/n]/(1 + Cos[Pi/n]);
+  u[k_] := {Sqrt[ca2], Sqrt[1 - ca2] Cos[k w], Sqrt[1 - ca2] Sin[k w], 0};
+  handle = {1, 0, 0, 0};
+  AllTrue[Range[0, n - 1], FullSimplify[u[#].u[Mod[# + 1, n]]] === 0 &] &&
+   AllTrue[Range[0, n - 1], FullSimplify[u[#].u[#]] === 1 &] &&
+   FullSimplify[Sum[(handle.u[k])^2, {k, 0, n - 1}] +
+      n - (n + n Cos[Pi/n]/(1 + Cos[Pi/n]))] === 0];
+{cisORCheck[5], cisORCheck[7], cisORCheck[9], cisORCheck[11]}
 
 (* ::Input:: *)
 chain31 = LovaszThetaSparse[PentagonChain[31]];
@@ -299,6 +316,8 @@ CaseStudiesVerification = <|
        Abs[th - 137671.775] < 0.01 && th - Floor[4 100000/3] > 4000],
   "D3_densityClosedForm" -> Union[closedFormCertificate] === {0} &&
      Abs[transDensityLimit - 1.376717745915859] < 10^-12 &&
-     AllTrue[ringScalingRecord[[All, 3]], # < transDensityLimit + 10^-6 &]
+     AllTrue[ringScalingRecord[[All, 3]], # < transDensityLimit + 10^-6 &],
+  "D3_cisLawProven" -> cisORCheck[5] && cisORCheck[7] && cisORCheck[9] && cisORCheck[11] &&
+     cisLawTable[[All, 4]] == Table[Floor[3 n/2], {n, 4, 8}]
 |>;
 Column[{CaseStudiesVerification, "OK" -> And @@ Values[CaseStudiesVerification]}]
