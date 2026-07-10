@@ -1,0 +1,62 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      1945,         53]
+NotebookOptionsPosition[      1389,         38]
+NotebookOutlinePosition[      1711,         52]
+CellTagsIndexPosition[      1668,         49]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["CycleScenario", "ObjectName",ExpressionUUID->"f35883b4-69aa-7f4c-9f9c-21aab950c9c5"],
+
+Cell["\<\
+CycleScenario[n] gives the n-cycle contextuality scenario as an association: \
+measurements 0..n-1, contexts = edges {i, i+1}, section order per context \
+(00, 01, 10, 11), the Abramsky-Brandenburger incidence matrix \"Incidence\" \
+(4n x 2^n) relating deterministic global assignments to context sections, and \
+\"Assignments\" (the 2^n global assignments).\
+\>", "Usage",ExpressionUUID->"14cd3433-b3c4-bd44-90e4-732464ba59cd"],
+
+Cell["Basic Examples", "Section",ExpressionUUID->"d161447a-6621-1b43-be56-be813fd07b2a"],
+
+Cell[BoxData[
+ RowBox[{"MatrixRank", "[", 
+  RowBox[{
+   RowBox[{"CycleScenario", "[", "5", "]"}], "[", "\"\<Incidence\>\"", "]"}], 
+  "]"}]], "Input",ExpressionUUID->"139b0cba-8270-aa46-b56b-41140e9d28a1"]
+},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"d410f61e-fcb3-f546-831a-5ef442cd587f"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 90, 0, 70, "ObjectName",ExpressionUUID->"f35883b4-69aa-7f4c-9f9c-21aab950c9c5"],
+Cell[647, 22, 444, 6, 70, "Usage",ExpressionUUID->"14cd3433-b3c4-bd44-90e4-732464ba59cd"],
+Cell[1088, 30, 88, 0, 70, "Section",ExpressionUUID->"d161447a-6621-1b43-be56-be813fd07b2a"],
+Cell[1179, 32, 210, 4, 70, "Input",ExpressionUUID->"139b0cba-8270-aa46-b56b-41140e9d28a1"]
+}
+]
+*)
+
+(* End of internal cache information *)

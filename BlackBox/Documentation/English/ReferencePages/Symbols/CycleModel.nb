@@ -1,0 +1,62 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      1947,         53]
+NotebookOptionsPosition[      1391,         38]
+NotebookOutlinePosition[      1713,         52]
+CellTagsIndexPosition[      1670,         49]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["CycleModel", "ObjectName",ExpressionUUID->"0143438f-5a08-6649-99d9-d1b6634b0139"],
+
+Cell["\<\
+CycleModel[n, p00, p10] gives the symmetric empirical model vector on the \
+n-cycle with edge distribution (p00, p10, p10, 0). CycleModel[n, \"Quantum\"] \
+gives the quantum-maximal model (per-event probability cos(\[Pi]/n)/(1+cos(\
+\[Pi]/n))), CycleModel[n, \"Wright\"] the exclusivity-extremal box (1/2 per \
+event), CycleModel[n, \"Classical\"] the symmetrized classical maximum (\
+\[Alpha]/n per event).\
+\>", "Usage",ExpressionUUID->"0648f7dc-c090-d446-b9db-aeda530cccb2"],
+
+Cell["Basic Examples", "Section",ExpressionUUID->"c4732458-a637-6d40-a572-e8ba901bb8d7"],
+
+Cell[BoxData[
+ RowBox[{"CycleModel", "[", 
+  RowBox[{"5", ",", " ", "\"\<Quantum\>\""}], "]"}]], "Input",ExpressionUUID->\
+"3f0ab428-eb34-0346-a55e-0d1a43ff5cfa"]
+},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"d410f61e-fcb3-f546-831a-5ef442cd587f"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 87, 0, 70, "ObjectName",ExpressionUUID->"0143438f-5a08-6649-99d9-d1b6634b0139"],
+Cell[644, 22, 494, 7, 70, "Usage",ExpressionUUID->"0648f7dc-c090-d446-b9db-aeda530cccb2"],
+Cell[1134, 31, 88, 0, 70, "Section",ExpressionUUID->"c4732458-a637-6d40-a572-e8ba901bb8d7"],
+Cell[1225, 33, 165, 3, 70, "Input",ExpressionUUID->"3f0ab428-eb34-0346-a55e-0d1a43ff5cfa"]
+}
+]
+*)
+
+(* End of internal cache information *)

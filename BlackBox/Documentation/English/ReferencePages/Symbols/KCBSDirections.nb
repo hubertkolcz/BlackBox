@@ -1,0 +1,67 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      1937,         58]
+NotebookOptionsPosition[      1382,         43]
+NotebookOutlinePosition[      1704,         57]
+CellTagsIndexPosition[      1661,         54]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["KCBSDirections", "ObjectName",ExpressionUUID->"8e6e3457-e632-b844-8aef-017b15616085"],
+
+Cell["\<\
+KCBSDirections[] gives the five exact pentagram unit vectors of the KCBS \
+construction (cyclically orthogonal, cone axis {0,0,1}).\
+\>", "Usage",ExpressionUUID->"a4bb065c-8c5c-ff43-8873-6066a9f20f1c"],
+
+Cell["Basic Examples", "Section",ExpressionUUID->"64e1cb29-2122-0147-9912-f6ef126387fa"],
+
+Cell[BoxData[
+ RowBox[{"Simplify", "[", 
+  RowBox[{"Total", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"#", " ", ".", " ", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", " ", "0", ",", " ", "1"}], "}"}]}], ")"}], "^", 
+      "2"}], " ", "&"}], " ", "/@", " ", 
+    RowBox[{"KCBSDirections", "[", "]"}]}], "]"}], "]"}]], "Input",ExpressionU\
+UID->"4285e691-ce9c-7246-8d35-8311db02ca52"]
+},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"d410f61e-fcb3-f546-831a-5ef442cd587f"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 91, 0, 70, "ObjectName",ExpressionUUID->"8e6e3457-e632-b844-8aef-017b15616085"],
+Cell[648, 22, 214, 3, 70, "Usage",ExpressionUUID->"a4bb065c-8c5c-ff43-8873-6066a9f20f1c"],
+Cell[862, 27, 88, 0, 70, "Section",ExpressionUUID->"64e1cb29-2122-0147-9912-f6ef126387fa"],
+Cell[953, 29, 437, 12, 70, "Input",ExpressionUUID->"4285e691-ce9c-7246-8d35-8311db02ca52"]
+}
+]
+*)
+
+(* End of internal cache information *)

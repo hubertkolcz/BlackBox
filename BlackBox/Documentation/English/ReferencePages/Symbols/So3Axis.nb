@@ -1,0 +1,58 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      1623,         49]
+NotebookOptionsPosition[      1069,         34]
+NotebookOutlinePosition[      1391,         48]
+CellTagsIndexPosition[      1348,         45]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["So3Axis", "ObjectName",ExpressionUUID->"cefdb0ea-f393-1e41-afe5-c32af6974b3c"],
+
+Cell["\<\
+So3Axis[m] gives the rotation-axis vector (vee map) of the antisymmetric 3x3 \
+matrix m.\
+\>", "Usage",ExpressionUUID->"7fa06b05-1e9c-8044-a228-ef0ad891880a"],
+
+Cell["Basic Examples", "Section",ExpressionUUID->"215f674c-c54b-f54a-b35c-dac05f7c0eb6"],
+
+Cell[BoxData[
+ RowBox[{"So3Axis", " ", "/@", " ", 
+  RowBox[{"CascadeGenerators", "[", "]"}]}]], "Input",ExpressionUUID->\
+"353e25a0-0b1a-8f49-abfd-3c064084bf4e"]
+},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"d410f61e-fcb3-f546-831a-5ef442cd587f"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 84, 0, 70, "ObjectName",ExpressionUUID->"cefdb0ea-f393-1e41-afe5-c32af6974b3c"],
+Cell[641, 22, 171, 3, 70, "Usage",ExpressionUUID->"7fa06b05-1e9c-8044-a228-ef0ad891880a"],
+Cell[812, 27, 88, 0, 70, "Section",ExpressionUUID->"215f674c-c54b-f54a-b35c-dac05f7c0eb6"],
+Cell[903, 29, 165, 3, 70, "Input",ExpressionUUID->"353e25a0-0b1a-8f49-abfd-3c064084bf4e"]
+}
+]
+*)
+
+(* End of internal cache information *)

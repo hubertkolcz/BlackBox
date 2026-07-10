@@ -10,6 +10,7 @@ PacletObject[<|
   "License" -> "MIT",
   "PrimaryContext" -> "HubertKolcz`BlackBox`",
   "Extensions" -> {
-    {"Kernel", "Root" -> "Kernel", "Context" -> "HubertKolcz`BlackBox`"}
+    {"Kernel", "Root" -> "Kernel", "Context" -> "HubertKolcz`BlackBox`"},
+    {"Documentation", "Root" -> "Documentation", "Language" -> "English"}
   }
 |>]

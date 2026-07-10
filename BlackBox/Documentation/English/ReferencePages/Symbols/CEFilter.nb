@@ -1,0 +1,67 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      2119,         58]
+NotebookOptionsPosition[      1563,         43]
+NotebookOutlinePosition[      1885,         57]
+CellTagsIndexPosition[      1842,         54]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["CEFilter", "ObjectName",ExpressionUUID->"6caa0234-b665-e24f-bbdf-4c2aac1bf084"],
+
+Cell["\<\
+CEFilter[g, p] and CEFilter[g, p, k] apply the Consistent-Exclusivity filter \
+at k copies (default 2) to the probability assignment p (a vector in \
+VertexList order) on the exclusivity graph g: every maximal clique of the \
+k-fold OR (conormal) power must carry total probability at most 1 under the \
+factorization rule P(e1,...,ek) = p(e1)...p(ek). Returns an association with \
+keys \"Passes\", \"ViolatingCliques\", \"Worst\", \"CliqueCount\", \"Omega\".\
+\
+\>", "Usage",ExpressionUUID->"79b2d8b7-ddd3-064e-960a-c4ec3f3ef20a"],
+
+Cell["Basic Examples", "Section",ExpressionUUID->"c4aa5559-6a11-a848-998c-9fc83767e751"],
+
+Cell[BoxData[
+ RowBox[{"CEFilter", "[", 
+  RowBox[{
+   RowBox[{"CycleGraph", "[", "5", "]"}], ",", " ", 
+   RowBox[{"ConstantArray", "[", 
+    RowBox[{
+     RowBox[{"1", "/", "2"}], ",", " ", "5"}], "]"}]}], "]"}]], "Input",Expres\
+sionUUID->"8586f8df-f45f-624e-845f-ccde32c8abb3"]
+},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"d410f61e-fcb3-f546-831a-5ef442cd587f"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 85, 0, 70, "ObjectName",ExpressionUUID->"6caa0234-b665-e24f-bbdf-4c2aac1bf084"],
+Cell[642, 22, 550, 8, 70, "Usage",ExpressionUUID->"79b2d8b7-ddd3-064e-960a-c4ec3f3ef20a"],
+Cell[1187, 32, 88, 0, 70, "Section",ExpressionUUID->"c4aa5559-6a11-a848-998c-9fc83767e751"],
+Cell[1278, 34, 288, 7, 70, "Input",ExpressionUUID->"8586f8df-f45f-624e-845f-ccde32c8abb3"]
+}
+]
+*)
+
+(* End of internal cache information *)

@@ -1,0 +1,59 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      1701,         50]
+NotebookOptionsPosition[      1147,         35]
+NotebookOutlinePosition[      1469,         49]
+CellTagsIndexPosition[      1426,         46]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["IndependenceNumber", "ObjectName",ExpressionUUID->"69ccaa49-ca63-9b49-979c-aae104a44e14"],
+
+Cell["\<\
+IndependenceNumber[g] gives the independence number \[Alpha](g): the \
+noncontextual (deterministic hidden-variable) bound of the exclusivity graph \
+g.\
+\>", "Usage",ExpressionUUID->"5814bd06-d24f-fa4d-9e8b-312a42e72cc7"],
+
+Cell["Basic Examples", "Section",ExpressionUUID->"560a8e49-b753-e041-8c93-641986d09b57"],
+
+Cell[BoxData[
+ RowBox[{"IndependenceNumber", "[", 
+  RowBox[{"CycleGraph", "[", "5", "]"}], "]"}]], "Input",ExpressionUUID->\
+"447025ec-e3bb-d847-ac18-31e68d8b07bf"]
+},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"d410f61e-fcb3-f546-831a-5ef442cd587f"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 95, 0, 70, "ObjectName",ExpressionUUID->"69ccaa49-ca63-9b49-979c-aae104a44e14"],
+Cell[652, 22, 236, 4, 70, "Usage",ExpressionUUID->"5814bd06-d24f-fa4d-9e8b-312a42e72cc7"],
+Cell[887, 28, 88, 0, 70, "Section",ExpressionUUID->"560a8e49-b753-e041-8c93-641986d09b57"],
+Cell[978, 30, 168, 3, 70, "Input",ExpressionUUID->"447025ec-e3bb-d847-ac18-31e68d8b07bf"]
+}
+]
+*)
+
+(* End of internal cache information *)

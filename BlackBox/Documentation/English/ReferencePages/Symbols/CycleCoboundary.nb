@@ -1,0 +1,60 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      1780,         51]
+NotebookOptionsPosition[      1225,         36]
+NotebookOutlinePosition[      1547,         50]
+CellTagsIndexPosition[      1504,         47]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["CycleCoboundary", "ObjectName",ExpressionUUID->"93d73334-34e8-4c48-a6eb-1c5a401eed9c"],
+
+Cell["\<\
+CycleCoboundary[n] gives the cellular-sheaf coboundary \[Delta] (2n x 4n) of \
+the n-cycle cover with marginalization restriction maps (Hansen-Ghrist, \
+arXiv:1808.01513): ker(\[Delta]\[Transpose]\[Delta]) = the no-disturbance \
+models.\
+\>", "Usage",ExpressionUUID->"546d2573-200e-6c45-9f32-300567773924"],
+
+Cell["Basic Examples", "Section",ExpressionUUID->"a333204f-8377-ee4a-a122-7df8c5722e45"],
+
+Cell[BoxData[
+ RowBox[{"MatrixRank", "[", 
+  RowBox[{"CycleCoboundary", "[", "5", "]"}], "]"}]], "Input",ExpressionUUID->\
+"1d7195d0-def1-0840-be79-362efda4c6db"]
+},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"d410f61e-fcb3-f546-831a-5ef442cd587f"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 92, 0, 70, "ObjectName",ExpressionUUID->"93d73334-34e8-4c48-a6eb-1c5a401eed9c"],
+Cell[649, 22, 321, 5, 70, "Usage",ExpressionUUID->"546d2573-200e-6c45-9f32-300567773924"],
+Cell[968, 29, 88, 0, 70, "Section",ExpressionUUID->"a333204f-8377-ee4a-a122-7df8c5722e45"],
+Cell[1059, 31, 165, 3, 70, "Input",ExpressionUUID->"1d7195d0-def1-0840-be79-362efda4c6db"]
+}
+]
+*)
+
+(* End of internal cache information *)

@@ -1,0 +1,59 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      1748,         50]
+NotebookOptionsPosition[      1192,         35]
+NotebookOutlinePosition[      1514,         49]
+CellTagsIndexPosition[      1471,         46]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["FractionalPackingNumber", "ObjectName",ExpressionUUID->"66cd3657-e207-284e-850e-c8b9452d52d0"],
+
+Cell["\<\
+FractionalPackingNumber[g] gives the fractional packing number \[Alpha]*(g) \
+as an exact linear program over the maximal cliques: the exclusivity-only \
+(E-principle, single copy) bound.\
+\>", "Usage",ExpressionUUID->"1b665c7d-da59-4047-8068-1a6addcae6e3"],
+
+Cell["Basic Examples", "Section",ExpressionUUID->"f23200fa-9cfd-4040-9303-58c9f4edd3c0"],
+
+Cell[BoxData[
+ RowBox[{"FractionalPackingNumber", "[", 
+  RowBox[{"CycleGraph", "[", "5", "]"}], "]"}]], "Input",ExpressionUUID->\
+"6b736c46-ed89-8243-912e-5fcf5cfad876"]
+},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"d410f61e-fcb3-f546-831a-5ef442cd587f"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 100, 0, 70, "ObjectName",ExpressionUUID->"66cd3657-e207-284e-850e-c8b9452d52d0"],
+Cell[657, 22, 271, 4, 70, "Usage",ExpressionUUID->"1b665c7d-da59-4047-8068-1a6addcae6e3"],
+Cell[927, 28, 88, 0, 70, "Section",ExpressionUUID->"f23200fa-9cfd-4040-9303-58c9f4edd3c0"],
+Cell[1018, 30, 173, 3, 70, "Input",ExpressionUUID->"6b736c46-ed89-8243-912e-5fcf5cfad876"]
+}
+]
+*)
+
+(* End of internal cache information *)

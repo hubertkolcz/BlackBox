@@ -1,0 +1,64 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      1946,         55]
+NotebookOptionsPosition[      1391,         40]
+NotebookOutlinePosition[      1713,         54]
+CellTagsIndexPosition[      1670,         51]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["HarmonicResidual", "ObjectName",ExpressionUUID->"01717522-f630-b041-a106-e50ea53b29db"],
+
+Cell["\<\
+HarmonicResidual[delta, e] gives Norm[delta . e]: the no-disturbance \
+(signalling) residual of the model e. It vanishes on every no-disturbance \
+model and is provably blind to contextuality - use it as a projector \
+diagnostic, not a contextuality measure.\
+\>", "Usage",ExpressionUUID->"dc6d13fd-0a6e-de43-bc0c-a9a879e93af5"],
+
+Cell["Basic Examples", "Section",ExpressionUUID->"84da5999-9e8a-0746-ac90-b41bc60f5889"],
+
+Cell[BoxData[
+ RowBox[{"HarmonicResidual", "[", 
+  RowBox[{
+   RowBox[{"CycleCoboundary", "[", "5", "]"}], ",", " ", 
+   RowBox[{"N", "@", 
+    RowBox[{"CycleModel", "[", 
+     RowBox[{"5", ",", " ", "\"\<Quantum\>\""}], "]"}]}]}], "]"}]], "Input",Ex\
+pressionUUID->"0e7582ef-382a-624d-bc85-c813da937086"]
+},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"d410f61e-fcb3-f546-831a-5ef442cd587f"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 93, 0, 70, "ObjectName",ExpressionUUID->"01717522-f630-b041-a106-e50ea53b29db"],
+Cell[650, 22, 343, 5, 70, "Usage",ExpressionUUID->"dc6d13fd-0a6e-de43-bc0c-a9a879e93af5"],
+Cell[991, 29, 88, 0, 70, "Section",ExpressionUUID->"84da5999-9e8a-0746-ac90-b41bc60f5889"],
+Cell[1082, 31, 312, 7, 70, "Input",ExpressionUUID->"0e7582ef-382a-624d-bc85-c813da937086"]
+}
+]
+*)
+
+(* End of internal cache information *)

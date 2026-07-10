@@ -1,0 +1,72 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      2179,         63]
+NotebookOptionsPosition[      1624,         48]
+NotebookOutlinePosition[      1946,         62]
+CellTagsIndexPosition[      1903,         59]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["GlueGraphs", "ObjectName",ExpressionUUID->"2a60e513-3256-264a-9c82-21d5ea98030a"],
+
+Cell["\<\
+GlueGraphs[g, h, ident] glues graph h onto graph g identifying vertices by \
+the rules ident: {hVertex -> gVertex, ...}. Shared edges are deduplicated \
+regardless of orientation.\
+\>", "Usage",ExpressionUUID->"13d6cf73-ec84-c24a-ad24-c43f58182943"],
+
+Cell["Basic Examples", "Section",ExpressionUUID->"671b7681-ec69-f64e-89b6-f996b2e19036"],
+
+Cell[BoxData[
+ RowBox[{"GlueGraphs", "[", 
+  RowBox[{
+   RowBox[{"CycleGraph", "[", "5", "]"}], ",", " ", 
+   RowBox[{"VertexReplace", "[", 
+    RowBox[{
+     RowBox[{"CycleGraph", "[", "5", "]"}], ",", " ", 
+     RowBox[{"Thread", "[", 
+      RowBox[{
+       RowBox[{"Range", "[", "5", "]"}], " ", "->", " ", 
+       RowBox[{"Range", "[", 
+        RowBox[{"6", ",", " ", "10"}], "]"}]}], "]"}]}], "]"}], ",", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"6", " ", "->", " ", "1"}], ",", " ", 
+     RowBox[{"7", " ", "->", " ", "2"}]}], "}"}]}], "]"}]], "Input",Expression\
+UUID->"8bb28d99-18da-8448-b819-47c050e29262"]
+},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"d410f61e-fcb3-f546-831a-5ef442cd587f"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 87, 0, 70, "ObjectName",ExpressionUUID->"2a60e513-3256-264a-9c82-21d5ea98030a"],
+Cell[644, 22, 263, 4, 70, "Usage",ExpressionUUID->"13d6cf73-ec84-c24a-ad24-c43f58182943"],
+Cell[906, 28, 88, 0, 70, "Section",ExpressionUUID->"671b7681-ec69-f64e-89b6-f996b2e19036"],
+Cell[997, 30, 639, 16, 70, "Input",ExpressionUUID->"8bb28d99-18da-8448-b819-47c050e29262"]
+}
+]
+*)
+
+(* End of internal cache information *)

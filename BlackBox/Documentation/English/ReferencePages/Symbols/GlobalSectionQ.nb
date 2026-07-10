@@ -1,0 +1,63 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      1891,         54]
+NotebookOptionsPosition[      1336,         39]
+NotebookOutlinePosition[      1658,         53]
+CellTagsIndexPosition[      1615,         50]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["GlobalSectionQ", "ObjectName",ExpressionUUID->"d67e598a-774d-024e-99d2-5608ffc7efbe"],
+
+Cell["\<\
+GlobalSectionQ[scen, e] gives True if the empirical model e extends to a \
+global probability distribution (a nonnegative global section of the \
+Abramsky-Brandenburger presheaf): the model is noncontextual.\
+\>", "Usage",ExpressionUUID->"b8fb2463-d5e2-8849-857e-92767296d6f8"],
+
+Cell["Basic Examples", "Section",ExpressionUUID->"6d37a20f-67ff-e543-91b0-1d862863521d"],
+
+Cell[BoxData[
+ RowBox[{"GlobalSectionQ", "[", 
+  RowBox[{
+   RowBox[{"CycleScenario", "[", "5", "]"}], ",", " ", 
+   RowBox[{"N", "@", 
+    RowBox[{"CycleModel", "[", 
+     RowBox[{"5", ",", " ", "\"\<Classical\>\""}], "]"}]}]}], "]"}]], "Input",\
+ExpressionUUID->"4306309b-80a9-2742-aafc-241fc581364e"]
+},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"d410f61e-fcb3-f546-831a-5ef442cd587f"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 91, 0, 70, "ObjectName",ExpressionUUID->"d67e598a-774d-024e-99d2-5608ffc7efbe"],
+Cell[648, 22, 291, 4, 70, "Usage",ExpressionUUID->"b8fb2463-d5e2-8849-857e-92767296d6f8"],
+Cell[938, 28, 88, 0, 70, "Section",ExpressionUUID->"6d37a20f-67ff-e543-91b0-1d862863521d"],
+Cell[1029, 30, 310, 7, 70, "Input",ExpressionUUID->"4306309b-80a9-2742-aafc-241fc581364e"]
+}
+]
+*)
+
+(* End of internal cache information *)

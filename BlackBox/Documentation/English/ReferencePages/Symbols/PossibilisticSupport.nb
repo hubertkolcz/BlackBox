@@ -1,0 +1,64 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      1948,         55]
+NotebookOptionsPosition[      1393,         40]
+NotebookOutlinePosition[      1715,         54]
+CellTagsIndexPosition[      1672,         51]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["PossibilisticSupport", "ObjectName",ExpressionUUID->"ec1a2fd6-be5b-4246-af79-1088f8d4b950"],
+
+Cell["\<\
+PossibilisticSupport[scen, e] gives the possibilistic global support S_e of \
+the empirical model e: association with \"Size\" (number of global \
+assignments consistent with the support of e) and \"Empty\" (True means \
+strong contextuality, AB Sec. 6).\
+\>", "Usage",ExpressionUUID->"95b5b00b-985b-d548-83a0-58328de90085"],
+
+Cell["Basic Examples", "Section",ExpressionUUID->"b5794ea7-b522-0247-9029-f14f3301e78b"],
+
+Cell[BoxData[
+ RowBox[{"PossibilisticSupport", "[", 
+  RowBox[{
+   RowBox[{"CycleScenario", "[", "5", "]"}], ",", " ", 
+   RowBox[{"N", "@", 
+    RowBox[{"CycleModel", "[", 
+     RowBox[{"5", ",", " ", "\"\<Quantum\>\""}], "]"}]}]}], "]"}]], "Input",Ex\
+pressionUUID->"f498ab87-dd95-ad4b-8321-8fb124faa32d"]
+},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"d410f61e-fcb3-f546-831a-5ef442cd587f"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 97, 0, 70, "ObjectName",ExpressionUUID->"ec1a2fd6-be5b-4246-af79-1088f8d4b950"],
+Cell[654, 22, 339, 5, 70, "Usage",ExpressionUUID->"95b5b00b-985b-d548-83a0-58328de90085"],
+Cell[991, 29, 88, 0, 70, "Section",ExpressionUUID->"b5794ea7-b522-0247-9029-f14f3301e78b"],
+Cell[1082, 31, 314, 7, 70, "Input",ExpressionUUID->"f498ab87-dd95-ad4b-8321-8fb124faa32d"]
+}
+]
+*)
+
+(* End of internal cache information *)

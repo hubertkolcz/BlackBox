@@ -1,0 +1,58 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      1683,         49]
+NotebookOptionsPosition[      1129,         34]
+NotebookOutlinePosition[      1451,         48]
+CellTagsIndexPosition[      1408,         45]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["CascadeGenerators", "ObjectName",ExpressionUUID->"d496c400-034b-7546-a6df-4222498aa682"],
+
+Cell["\<\
+CascadeGenerators[] gives the four so(3) generators (matrix logarithms of the \
+stage-frame transition rotations) of the Lapkiewicz KCBS cascade.\
+\>", "Usage",ExpressionUUID->"fbd127ed-a63b-4c4f-8d08-63ef19fb62fa"],
+
+Cell["Basic Examples", "Section",ExpressionUUID->"abb2e872-54cf-1041-aa10-69bfa150a227"],
+
+Cell[BoxData[
+ RowBox[{"Length", "[", 
+  RowBox[{"CascadeGenerators", "[", "]"}], "]"}]], "Input",ExpressionUUID->\
+"7bf0c027-8a23-9d4e-b583-4c8ccc22291e"]
+},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"d410f61e-fcb3-f546-831a-5ef442cd587f"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 94, 0, 70, "ObjectName",ExpressionUUID->"d496c400-034b-7546-a6df-4222498aa682"],
+Cell[651, 22, 228, 3, 70, "Usage",ExpressionUUID->"fbd127ed-a63b-4c4f-8d08-63ef19fb62fa"],
+Cell[879, 27, 88, 0, 70, "Section",ExpressionUUID->"abb2e872-54cf-1041-aa10-69bfa150a227"],
+Cell[970, 29, 158, 3, 70, "Input",ExpressionUUID->"7bf0c027-8a23-9d4e-b583-4c8ccc22291e"]
+}
+]
+*)
+
+(* End of internal cache information *)

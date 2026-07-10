@@ -1,0 +1,59 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      1758,         50]
+NotebookOptionsPosition[      1203,         35]
+NotebookOutlinePosition[      1525,         49]
+CellTagsIndexPosition[      1482,         46]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["DLADimension", "ObjectName",ExpressionUUID->"b4729189-25b2-1940-b89f-fd8d0924950a"],
+
+Cell["\<\
+DLADimension[gens] gives the dimension of the dynamical Lie algebra generated \
+by the antisymmetric matrices gens after one commutator step: the rank of the \
+generator axes together with all pairwise commutator axes.\
+\>", "Usage",ExpressionUUID->"86b20c28-b8a8-164b-8da8-d7e307bb5826"],
+
+Cell["Basic Examples", "Section",ExpressionUUID->"408479e5-7c6a-d543-a1a6-9cf453a8da69"],
+
+Cell[BoxData[
+ RowBox[{"DLADimension", "[", 
+  RowBox[{"CascadeGenerators", "[", "]"}], "]"}]], "Input",ExpressionUUID->\
+"1f792a56-6cba-594f-8ac3-1cb4c65f40f7"]
+},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"d410f61e-fcb3-f546-831a-5ef442cd587f"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 89, 0, 70, "ObjectName",ExpressionUUID->"b4729189-25b2-1940-b89f-fd8d0924950a"],
+Cell[646, 22, 302, 4, 70, "Usage",ExpressionUUID->"86b20c28-b8a8-164b-8da8-d7e307bb5826"],
+Cell[947, 28, 88, 0, 70, "Section",ExpressionUUID->"408479e5-7c6a-d543-a1a6-9cf453a8da69"],
+Cell[1038, 30, 164, 3, 70, "Input",ExpressionUUID->"1f792a56-6cba-594f-8ac3-1cb4c65f40f7"]
+}
+]
+*)
+
+(* End of internal cache information *)

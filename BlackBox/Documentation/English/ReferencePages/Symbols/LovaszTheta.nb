@@ -1,0 +1,59 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      1700,         50]
+NotebookOptionsPosition[      1146,         35]
+NotebookOutlinePosition[      1468,         49]
+CellTagsIndexPosition[      1425,         46]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["LovaszTheta", "ObjectName",ExpressionUUID->"807206ee-28d4-fa48-acc4-2a26e3b50255"],
+
+Cell["\<\
+LovaszTheta[g] gives the Lov\[AAcute]sz number \[CurlyTheta](g) by \
+semidefinite programming: the quantum bound of the exclusivity graph g (CSW, \
+arXiv:1010.2163).\
+\>", "Usage",ExpressionUUID->"6263860c-f742-4642-92d8-afaaf0f53fdd"],
+
+Cell["Basic Examples", "Section",ExpressionUUID->"fef3d541-6c3e-5c43-8287-41f64970ade9"],
+
+Cell[BoxData[
+ RowBox[{"LovaszTheta", "[", 
+  RowBox[{"CycleGraph", "[", "5", "]"}], "]"}]], "Input",ExpressionUUID->\
+"89b5d5f8-6ed6-1448-b104-4f1793da1392"]
+},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"d410f61e-fcb3-f546-831a-5ef442cd587f"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 88, 0, 70, "ObjectName",ExpressionUUID->"807206ee-28d4-fa48-acc4-2a26e3b50255"],
+Cell[645, 22, 249, 4, 70, "Usage",ExpressionUUID->"6263860c-f742-4642-92d8-afaaf0f53fdd"],
+Cell[893, 28, 88, 0, 70, "Section",ExpressionUUID->"fef3d541-6c3e-5c43-8287-41f64970ade9"],
+Cell[984, 30, 161, 3, 70, "Input",ExpressionUUID->"89b5d5f8-6ed6-1448-b104-4f1793da1392"]
+}
+]
+*)
+
+(* End of internal cache information *)
