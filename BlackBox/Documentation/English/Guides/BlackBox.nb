@@ -26,6 +26,18 @@ the stage-frame transition rotations) of the Lapkiewicz KCBS cascade."
 }], "Item",ExpressionUUID->"4cc01417-ab32-c845-a944-7c6ddf0fff72"],
 
 Cell[TextData[{
+ StyleBox["CechCohomology", "InlineCode"],
+ " \[LongDash] ",
+ "CechCohomology[scen, e] gives the absolute \:010cech cohomology of the \
+Z-linearized support presheaf of the empirical model e over the cover of \
+scen: an association with \"H0Rank\" (rank of the module of compatible \
+Z-linear families = global sections), \"H1FreeRank\" and \"H1Torsion\" \
+(elementary divisors > 1 of the degree-0 coboundary, by Smith normal form), \
+\"CochainRanks\", \"CoboundaryRanks\", \"ComplexCloses\", and \
+\"SupportNoSignalling\"."
+}], "Item",ExpressionUUID->"9d4e2a86-1b73-4c25-8e60-f7a15b39c4d2"],
+
+Cell[TextData[{
  StyleBox["CechObstruction", "InlineCode"],
  " \[LongDash] ",
  "CechObstruction[scen, e] gives the \:010cech cohomological obstruction \

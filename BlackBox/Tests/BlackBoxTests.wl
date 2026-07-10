@@ -36,6 +36,14 @@ prodModel[m1_, m2_] := With[{d1 = AssociationThread[Tuples[{0, 1}, 2] -> m1[[1 ;
   Flatten[Table[d1[s[[1 ;; 2]]] d2[s[[3 ;; 4]]], {c, scenProd["Contexts"]}, {s, Tuples[{0, 1}, 4]}]]];
 chWW = CechObstruction[scenProd, prodModel[CycleModel[5, "Wright"], CycleModel[5, "Wright"]]];
 chQQ = CechObstruction[scenProd, prodModel[CycleModel[5, "Quantum"], CycleModel[5, "Quantum"]]];
+ccC = CechCohomology[scen5, CycleModel[5, "Classical"]];
+ccQ = CechCohomology[scen5, CycleModel[5, "Quantum"]];
+ccW = CechCohomology[scen5, CycleModel[5, "Wright"]];
+ccU = CechCohomology[scen4, ConstantArray[1/4, 16]];
+ccPR = CechCohomology[scen4, ePR];
+ccH = CechCohomology[scen4, eHardy];
+ccWW = CechCohomology[scenProd, prodModel[CycleModel[5, "Wright"], CycleModel[5, "Wright"]]];
+ccQQ = CechCohomology[scenProd, prodModel[CycleModel[5, "Quantum"], CycleModel[5, "Quantum"]]];
 
 SmokeTest = <|
   "alpha" -> IndependenceNumber[c5] == 2,
@@ -89,6 +97,15 @@ SmokeTest = <|
      chWW["CohStronglyContextual"],
   "cechProductQuantum" -> chQQ["ObstructedCount"] == 0 && chQQ["SectionCount"] == 225 &&
      chQQ["GlobalSupportSize"] == 121,
+  "cechCohomC5" -> ({#["H0Rank"], #["H1FreeRank"], #["H1Torsion"]} & /@ {ccC, ccQ, ccW}) ===
+       {{6, 1, {}}, {6, 1, {}}, {1, 1, {}}} &&
+     AllTrue[{ccC, ccQ, ccW}, #["ComplexCloses"] &] &&
+     ccC["H0Rank"] == chC["H0Rank"] && ccW["H0Rank"] == chW["H0Rank"],
+  "cechCohomCHSHCensus" -> ({#["H0Rank"], #["H1FreeRank"], #["H1Torsion"]} & /@ {ccU, ccPR, ccH}) ===
+     {{9, 1, {}}, {1, 1, {}}, {6, 1, {}}},
+  "cechCohomProduct" -> ccWW["CochainRanks"] == {100, 700, 2200} && ccWW["H0Rank"] == 1 &&
+     ccWW["H1FreeRank"] == 0 && ccWW["ComplexCloses"] &&
+     ccQQ["H0Rank"] == 36 && ccQQ["H0Rank"] == ccQ["H0Rank"]^2 && ccQQ["ComplexCloses"],
   "fourGenerators" -> Length[gens] == 4,
   "generatorSpan" -> MatrixRank[So3Axis /@ gens, Tolerance -> 10^-8] == 2,
   "dlaCloses" -> DLADimension[gens] == 3

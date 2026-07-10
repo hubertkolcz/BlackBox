@@ -40,7 +40,7 @@ the `BeginPackage` line of Kernel/BlackBox.wl.
   Kernel extension.
 ☑ Kernel/BlackBox.wl — single-context implementation, usage message for every
   exported symbol.
-☑ Tests/BlackBoxTests.wl — 41-check battery against the kernel-verified
+☑ Tests/BlackBoxTests.wl — 44-check battery against the kernel-verified
   pipeline values and the support-cohomology gate (`wolframscript -file
   BlackBoxTests.wl` → ALL PASS: True).
 ☐ PROHIBITED in PacletInfo: `"Updating" -> Automatic`. (Not present ✓ —

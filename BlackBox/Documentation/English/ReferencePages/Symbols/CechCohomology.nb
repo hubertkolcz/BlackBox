@@ -1,0 +1,10 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(* Beginning of Notebook Content *)
+Notebook[{Cell["CechCohomology", "ObjectName", ExpressionUUID -> "3635fe37-9eff-4fa3-bd18-da661e49b5c8"], Cell["CechCohomology[scen, e] gives the absolute \[CapitalCHacek]ech cohomology of the Z-linearized support presheaf of the empirical model e over the cover of scen: an association with \"H0Rank\" (rank of the module of compatible Z-linear families = global sections), \"H1FreeRank\" and \"H1Torsion\" (elementary divisors > 1 of the degree-0 coboundary, by Smith normal form), \"CochainRanks\" ({C^0, C^1, C^2} over contexts, pairwise and triple overlaps, each the free Z-module on the restriction image of the support), \"CoboundaryRanks\", \"ComplexCloses\" (the verified identity \[Delta]1 . \[Delta]0 = 0), and \"SupportNoSignalling\". H^1 = ker \[Delta]1 / im \[Delta]0 is computed for arbitrary covers (the C^2 term handles nonempty triple overlaps). These are AMBIENT invariants: the per-section obstruction classes \[Gamma](s) of CechObstruction live in the RELATIVE H^1, so a nonzero absolute H^1 is not itself a contextuality certificate (the PR box and the noncontextual uniform model both have H^1 = Z on the CHSH cover).", "Usage", ExpressionUUID -> "fe6500e1-c110-4613-afe3-5c484392ce83"], Cell["Basic Examples", "Section", ExpressionUUID -> "ead5a3e5-0041-4458-993b-c674c45da937"], Cell[BoxData[RowBox[{RowBox[{"CechCohomology", "[", RowBox[{RowBox[{"CycleScenario", "[", "5", "]"}], ",", RowBox[{"CycleModel", "[", RowBox[{"5", ",", "\"Wright\""}], "]"}]}], "]"}], "[", "\"H0Rank\"", "]"}]], "Input", ExpressionUUID -> "68572a55-0690-45aa-97d6-f74b7431d607"]}, FrontEndVersion -> "15.0 for Microsoft Windows (64-bit) (May 19, 2026)", StyleDefinitions -> "Default.nb", ExpressionUUID -> "aff69e8a-4922-4393-8001-dcf69dc5b736"]
+(* End of Notebook Content *)
