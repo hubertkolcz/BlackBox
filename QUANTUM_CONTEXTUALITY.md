@@ -222,18 +222,34 @@ bound α\* classically and carries no bulk gap.
 **The optimal gluing word (follow-up computation).** Treating a mesh as a binary
 necklace over {cis, trans}, pure trans is NOT gap-optimal: the word **(cct)^∞** —
 two cis gluings, then one trans "reset" — keeps the trans staircase α/L = 4/3 while
-lifting ϑ/L to 1.4032316(23), i.e. **gap 0.0698982 per block = 1.611× the pure-trans
-gap**. Method: exact α densities as max-plus cycle means of a 3-state interface
-transfer DP (exact rational arithmetic; the pure-trans staircase is its transfer
-matrix's 3-cycle gaining 4 per 3 blocks); certified chordal ϑ at 1200–2400 blocks;
-exhaustive sweep of all binary bracelets of period ≤ 6, and over periods ≤ 12 every
-word with α-density 4/3 has cis-fraction ≤ 2/3 with equality UNIQUELY for cct (its
-best higher-period rivals cctcctctt, cctcctcctctt rank strictly below). Design rule:
-trans letters protect the classical bound (each t breaks the cis rail before it can
-lift α), cis letters buy quantum value; the optimum is the densest cis packing α
-tolerates. Refined conjecture: (cct)^∞ is globally optimal over all gluing words.
-Tooling: `lovasz_theta_sparse.py words`; WL anchor wordRing/cct in CaseStudies §D3
+lifting ϑ/L to 1.40323086923899745 (continuum-certified, below), i.e. **gap
+0.0698975 per block = 1.6111× the pure-trans gap**. Method: exact α densities as
+max-plus cycle means of a 3-state interface transfer DP (exact rational arithmetic;
+the pure-trans staircase is its transfer matrix's 3-cycle gaining 4 per 3 blocks);
+certified chordal ϑ at 1200–2400 blocks; exhaustive sweep of all binary bracelets
+of period ≤ 6, and over periods ≤ 12 every word with α-density 4/3 has cis-fraction
+≤ 2/3 with equality UNIQUELY for cct (its best higher-period rivals cctcctctt,
+cctcctcctctt rank strictly below). Design rule: trans letters protect the classical
+bound (each t breaks the cis rail before it can lift α), cis letters buy quantum
+value; the optimum is the densest cis packing α tolerates. Refined conjecture:
+(cct)^∞ is globally optimal over all gluing words. Tooling:
+`lovasz_theta_sparse.py words`; WL anchor wordRing/cct in CaseStudies §D3
 (key D3_gluingWordOptimum).
+
+**No τ\*-style closed form for the cct density — a finding in itself.** The (cct)
+unit cell yields a 9×9 DFT symbol with 12 edge-orbit parameters; the mesh's
+reflection automorphism (|Aut(cct-ring of m cells)| = 2m, machine-checked) pairs
+them to 7, and the continuum minimax has the same active-set shape as τ\* (J-block
++ ONE interior frequency, φ ≈ 0.70345π). Newton on the reduced KKT at 320 digits
+(residual 10⁻³¹⁹, positive multipliers, witness feasible over a 2²⁰-point grid;
+convexity + automorphism averaging ⇒ GLOBAL optimum) pins
+ϑ/L = 1.40323086923899745105894248… exactly — but LLL integer-relation search on
+250 matched digits EXCLUDES any minimal polynomial of degree ≤ 36 with coefficient
+height ≲ 10⁶ (≲ 10⁶⁰ at degree 3), for the density, cos φ, and every witness
+parameter. Contrast: τ\* is a cubic with two-digit coefficients. The algebraic
+complexity of the symbol minimax explodes with word period; at period 3 the exact
+object standing in for a closed form is the polynomial KKT system itself
+(CaseStudies §D3, key D3_cctDensityCharacterized).
 
 ## 7. Wigner negativity toolchain (Wolfram Community, N. Murzin)
 
@@ -268,10 +284,12 @@ through the cascade gate-by-gate.
   α(cis-ring N) = ⌊3N/2⌋~~ RESOLVED — both are theorems now (§6/§D3: subgraph
   monotonicity + one-extra-dimension representation; pentagon window counting).
   ~~Is the extensive trans gap optimal over all gluing words?~~ RESOLVED — NO:
-  (cct)^∞ beats it by 61% (gap 0.0698982 per block, §6). Still open: prove the
-  refined conjecture that (cct)^∞ is globally optimal (ergodic-optimization
-  flavor: is the maximizing measure of gap-density supported on the cct orbit?);
-  closed form for the cct density 1.4032316 (9×9 symbol KKT, mirroring the τ\*
-  derivation); α-density = 4/3 ⟺ cis-fraction ≤ 2/3 characterization (verified
-  p ≤ 12, unproven); analogous closed form for the trans-CHAIN density
-  (numerically also → τ\*?) — unverified.
+  (cct)^∞ beats it by 61% (gap 0.0698975 per block, §6). ~~Closed form for the
+  cct density~~ RESOLVED — negatively: certified global optimum
+  1.40323086923899745105894248 (320-digit KKT), but LLL excludes any minimal
+  polynomial of degree ≤ 36 with height ≲ 10⁶; the exact characterization is the
+  KKT system (§6). Still open: prove the refined conjecture that (cct)^∞ is
+  globally optimal (ergodic-optimization flavor: is the maximizing measure of
+  gap-density supported on the cct orbit?); α-density = 4/3 ⟺ cis-fraction ≤ 2/3
+  characterization (verified p ≤ 12, unproven); analogous closed form for the
+  trans-CHAIN density (numerically also → τ\*?) — unverified.

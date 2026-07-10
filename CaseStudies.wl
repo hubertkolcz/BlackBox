@@ -278,7 +278,7 @@ closedFormCertificate = RootReduce[Flatten[{
 (*Case D3 continued. The Optimal Gluing Word: (cct) Beats Pure Trans by 61%*)
 
 (* ::Text:: *)
-(*The correction raises a design question: over ALL gluing words in {cis, trans} (one orientation letter per gluing; a mesh = a binary necklace), is the pure trans word gap-optimal? Answer: NO. Tooling (lovasz_theta_sparse.py, command "words"): exact \[Alpha] densities are max-plus cycle means of a 3-state interface transfer DP (exact rational arithmetic; the pure-word matrices reproduce both proven laws, and the trans staircase is the 3-cycle of its transfer matrix gaining 4 per 3 blocks); \[CurlyTheta] densities come from the chordal solver at 1200-2400 blocks, certified. Sweeping every binary bracelet of period <= 6: the word (cct)^\[Infinity] \[LongDash] two cis gluings, then one trans "reset" \[LongDash] keeps the trans staircase \[Alpha]/L = 4/3 while lifting \[CurlyTheta]/L to 1.4032316(23), so the extensive gap per block is 0.0698982 \[TildeTilde] 1.611\[Times](\[Tau]* - 4/3). Every strict mixture ranks strictly between the pure families' gaps or above pure trans; the cis-collapse (gap 0) extends beyond pure cis to ct, ccct, ccctct, ccccct. Exhaustively over periods <= 12 (max-plus, exact): every word with \[Alpha]-density 4/3 has cis-fraction <= 2/3, and cct is the UNIQUE word attaining 2/3; the best higher-period rivals in the 4/3 class (cctcctctt, cctcctcctctt) stay below cct's gap. REFINED CONJECTURE: (cct)^\[Infinity] is the globally optimal pentagon-mesh gluing word. Design reading: trans letters protect the classical bound \[LongDash] each t breaks the cis rail before it can lift \[Alpha] \[LongDash] while cis letters buy quantum value; the optimum is the densest cis packing that \[Alpha] tolerates.*)
+(*The correction raises a design question: over ALL gluing words in {cis, trans} (one orientation letter per gluing; a mesh = a binary necklace), is the pure trans word gap-optimal? Answer: NO. Tooling (lovasz_theta_sparse.py, command "words"): exact \[Alpha] densities are max-plus cycle means of a 3-state interface transfer DP (exact rational arithmetic; the pure-word matrices reproduce both proven laws, and the trans staircase is the 3-cycle of its transfer matrix gaining 4 per 3 blocks); \[CurlyTheta] densities come from the chordal solver at 1200-2400 blocks, certified. Sweeping every binary bracelet of period <= 6: the word (cct)^\[Infinity] \[LongDash] two cis gluings, then one trans "reset" \[LongDash] keeps the trans staircase \[Alpha]/L = 4/3 while lifting \[CurlyTheta]/L to 1.40323087 (continuum-exact, below), so the extensive gap per block is 0.0698975 \[TildeTilde] 1.6111\[Times](\[Tau]* - 4/3). Every strict mixture ranks strictly between the pure families' gaps or above pure trans; the cis-collapse (gap 0) extends beyond pure cis to ct, ccct, ccctct, ccccct. Exhaustively over periods <= 12 (max-plus, exact): every word with \[Alpha]-density 4/3 has cis-fraction <= 2/3, and cct is the UNIQUE word attaining 2/3; the best higher-period rivals in the 4/3 class (cctcctctt, cctcctcctctt) stay below cct's gap. REFINED CONJECTURE: (cct)^\[Infinity] is the globally optimal pentagon-mesh gluing word. Design reading: trans letters protect the classical bound \[LongDash] each t breaks the cis rail before it can lift \[Alpha] \[LongDash] while cis letters buy quantum value; the optimum is the densest cis packing that \[Alpha] tolerates.*)
 
 (* ::CodeText:: *)
 (*The general word builder (mirrors pentagon_ring_word labels), and the dense-SDP anchor for the winner \[LongDash] \[CurlyTheta](cct\[Times]2) against the chordal value 8.347042185, plus the exact \[Alpha] staircase at L = 6, 9:*)
@@ -294,8 +294,12 @@ wordRing[word_String, reps_Integer] := Module[
   Graph[Range[3 L], UndirectedEdge @@@ DeleteDuplicates[Sort /@ edges]]];
 gluingWordAnchor = {LovaszTheta[wordRing["cct", 2]],
    IndependenceNumber[wordRing["cct", 2]], IndependenceNumber[wordRing["cct", 3]]};
-cctDensity = 1.4032316; (* chordal, L = 2400, certgap 2.3*10^-6 *)
+cctDensity = 1.40323087; (* certified continuum optimum of the 9x9 symbol minimax;
+   the L = 2400 chordal run reads 7*10^-7 high, within its certgap *)
 gluingWordAnchor
+
+(* ::Text:: *)
+(*Does the cct density have a closed form like \[Tau]*? NO \[LongDash] and that is itself a finding. The (cct) unit cell gives a 9x9 DFT symbol with 12 edge-orbit parameters; the mesh's reflection automorphism (|Aut(cct ring of m cells)| = 2m, machine-checked below) pairs them down to 7, and the continuum minimax has the same active-set shape as the trans case (the J-block plus ONE interior frequency, \[Phi] \[TildeTilde] 0.70345\[Pi]). Solving the reduced KKT system by Newton iteration at 320-digit precision (residual 10^-319, both multipliers positive, witness feasible on a 2^20-point frequency grid to -9*10^-16; convexity plus the automorphism-averaging argument then certify the GLOBAL optimum) gives \[CurlyTheta]/L = 1.40323086923899745105894248 exactly characterized \[LongDash] but integer-relation search (LLL via RootApproximant on 250 matched digits) EXCLUDES any minimal polynomial of degree <= 36 with coefficient height below ~10^6 (and proportionally higher at lower degree, e.g. 10^60 at degree 3), for the density, the per-cell value, cos \[Phi], and each witness parameter. Contrast with period 1: \[Tau]* is a cubic with two-digit coefficients. The algebraic complexity of the symbol minimax explodes with the word period; the exact object standing in for a "closed form" at period 3 is the explicit polynomial KKT system itself.*)
 
 (* ::Section:: *)
 (*Verification*)
@@ -345,6 +349,10 @@ CaseStudiesVerification = <|
   "D3_gluingWordOptimum" -> Abs[gluingWordAnchor[[1]] - 8.347042185] < 10^-4 &&
      gluingWordAnchor[[2]] == 8 && gluingWordAnchor[[3]] == 12 &&
      cctDensity - 4/3 > transDensityLimit - 4/3 &&
-     Abs[(cctDensity - 4/3)/(transDensityLimit - 4/3) - 1.611] < 0.01
+     Abs[(cctDensity - 4/3)/(transDensityLimit - 4/3) - 1.611] < 0.01,
+  "D3_cctDensityCharacterized" ->
+     Table[GroupOrder[GraphAutomorphismGroup[wordRing["cct", m]]], {m, 2, 4}] == {4, 6, 8} &&
+     Abs[cctDensity - 1.4032308692389975] < 10^-8 &&
+     cctDensity < 1.4032316 (* the finite-L 2400 reading, corrected by the continuum solve *)
 |>;
 Column[{CaseStudiesVerification, "OK" -> And @@ Values[CaseStudiesVerification]}]
