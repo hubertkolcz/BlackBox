@@ -301,6 +301,30 @@ gluingWordAnchor
 (* ::Text:: *)
 (*Does the cct density have a closed form like \[Tau]*? NO \[LongDash] and that is itself a finding. The (cct) unit cell gives a 9x9 DFT symbol with 12 edge-orbit parameters; the mesh's reflection automorphism (|Aut(cct ring of m cells)| = 2m, machine-checked below) pairs them down to 7, and the continuum minimax has the same active-set shape as the trans case (the J-block plus ONE interior frequency, \[Phi] \[TildeTilde] 0.70345\[Pi]). Solving the reduced KKT system by Newton iteration at 320-digit precision (residual 10^-319, both multipliers positive, witness feasible on a 2^20-point frequency grid to -9*10^-16; convexity plus the automorphism-averaging argument then certify the GLOBAL optimum) gives \[CurlyTheta]/L = 1.40323086923899745105894248 exactly characterized \[LongDash] but integer-relation search (LLL via RootApproximant on 250 matched digits) EXCLUDES any minimal polynomial of degree <= 36 with coefficient height below ~10^6 (and proportionally higher at lower degree, e.g. 10^60 at degree 3), for the density, the per-cell value, cos \[Phi], and each witness parameter. Contrast with period 1: \[Tau]* is a cubic with two-digit coefficients. The algebraic complexity of the symbol minimax explodes with the word period; the exact object standing in for a "closed form" at period 3 is the explicit polynomial KKT system itself.*)
 
+(* ::Text:: *)
+(*Towards GLOBAL optimality of (cct)^\[Infinity] \[LongDash] what is proven, what obstructs the rest. Two lemmas hold for EVERY gluing word, each with a finite machine-checkable certificate. LEMMA A (universal exclusivity cap): \[Alpha]* = 3L/2 exactly, hence \[CurlyTheta] <= 3L/2. Proof: the uniform packing w = 1/2 gives \[Alpha]* >= 3L/2; conversely the word-independent fractional edge cover \[LongDash] weight 1/2 on (B_k, X_k) and on the two glue-in edges of every block, weight 0 on the shared (A_k, B_k) edges \[LongDash] covers every vertex exactly once at total cost 3L/2, and \[CurlyTheta] <= fractional clique cover = \[Alpha]* by LP duality. LEMMA B (classical floor): \[Alpha]-density >= 4/3 for every word. Proof: potentials \[Phi] = (0, -1/3, -2/3) on the three interface states of the transfer DP satisfy, at every state and against EITHER letter, max over transitions of (gain + \[CapitalDelta]\[Phi]) >= 4/3 \[LongDash] six inequalities, checked below \[LongDash] so telescoping along any word yields a set gaining at least 4/3 per block; pure trans attains the floor. PINCH COROLLARY: gap(w) <= min(\[CurlyTheta]-density - 4/3, 3/2 - \[Alpha]-density) <= 1/6; any word beating (cct)^\[Infinity] must simultaneously have \[CurlyTheta]-density > 1.40323087 and \[Alpha]-density < 1.4301025. Exhaustive certified computation covers all aperiodic bracelets of period <= 9 (none comes close; runner-up gap 0.0689). THE OBSTRUCTION to a complete proof: the natural finishing move is a transfer-SDP sub-action \[LongDash] windowed chordal dual templates giving a per-window linear upper bound on \[CurlyTheta]-density, paired with Lemma B's potential method, reducing global optimality to a finite LP over de Bruijn flows \[LongDash] but a template tight at cct must reproduce \[Tau]cct exactly, and \[Tau]cct provably admits no small algebraic description (previous subsection), so rational certificates can only ever prove optimality up to \[Epsilon]. Exact global optimality is blocked by the same number-field explosion that killed the closed form.*)
+
+(* ::CodeText:: *)
+(*The two certificates, machine-checked \[LongDash] Lemma B's six potential inequalities on the interface DP, and Lemma A's cover value \[Alpha]* = 3L/2 on assorted word meshes:*)
+
+(* ::Input:: *)
+dpStates = {{0, 0}, {1, 0}, {0, 1}};
+dpTransfer[letter_] := Module[{T = ConstantArray[-Infinity, {3, 3}], out, j},
+  Do[If[! (dpStates[[i, 1]] == 1 && s1 == 1) && ! (s1 == 1 && s2 == 1) &&
+      ! (s2 == 1 && s3 == 1) && ! (s3 == 1 && dpStates[[i, 2]] == 1),
+     out = If[letter === "c", {s1, s2}, {s2, s1}];
+     j = Position[dpStates, out][[1, 1]];
+     T[[i, j]] = Max[T[[i, j]], s1 + s2 + s3]],
+    {i, 3}, {s1, 0, 1}, {s2, 0, 1}, {s3, 0, 1}];
+  T];
+optimalityLemmas = Module[{phi = {0, -1/3, -2/3}},
+   AllTrue[Flatten[Table[
+       Max[Table[dpTransfer[l][[i, j]] + phi[[j]] - phi[[i]], {j, 3}]] >= 4/3,
+       {l, {"c", "t"}}, {i, 3}]], TrueQ] &&
+    AllTrue[Table[FractionalPackingNumber[wordRing[w, 2]] == 3 StringLength[w],
+      {w, {"cct", "ctt", "cctt", "ctctt"}}], TrueQ]];
+optimalityLemmas
+
 (* ::Section:: *)
 (*Verification*)
 
@@ -353,6 +377,9 @@ CaseStudiesVerification = <|
   "D3_cctDensityCharacterized" ->
      Table[GroupOrder[GraphAutomorphismGroup[wordRing["cct", m]]], {m, 2, 4}] == {4, 6, 8} &&
      Abs[cctDensity - 1.4032308692389975] < 10^-8 &&
-     cctDensity < 1.4032316 (* the finite-L 2400 reading, corrected by the continuum solve *)
+     cctDensity < 1.4032316 (* the finite-L 2400 reading, corrected by the continuum solve *),
+  "D3_towardsGlobalOptimality" -> optimalityLemmas &&
+     Abs[(3/2 - (cctDensity - 4/3)) - 1.4301025] < 10^-6 &&
+     cctDensity - 4/3 < 1/6 (* the pinch bound is not saturated by cct *)
 |>;
 Column[{CaseStudiesVerification, "OK" -> And @@ Values[CaseStudiesVerification]}]

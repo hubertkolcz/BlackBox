@@ -288,8 +288,21 @@ through the cascade gate-by-gate.
   cct density~~ RESOLVED — negatively: certified global optimum
   1.40323086923899745105894248 (320-digit KKT), but LLL excludes any minimal
   polynomial of degree ≤ 36 with height ≲ 10⁶; the exact characterization is the
-  KKT system (§6). Still open: prove the refined conjecture that (cct)^∞ is
-  globally optimal (ergodic-optimization flavor: is the maximizing measure of
-  gap-density supported on the cct orbit?); α-density = 4/3 ⟺ cis-fraction ≤ 2/3
-  characterization (verified p ≤ 12, unproven); analogous closed form for the
-  trans-CHAIN density (numerically also → τ\*?) — unverified.
+  KKT system (§6). Global optimality of (cct)^∞ — PARTIALLY RESOLVED
+  (machine-checked lemmas, CaseStudies §D3 key D3_towardsGlobalOptimality):
+  LEMMA A, α\* = 3L/2 for every gluing word (uniform ½-packing + a
+  word-independent fractional edge cover: ½ on each block's (B,X) edge and its
+  two glue-in edges, covering every vertex exactly once) hence ϑ̄ ≤ 3/2
+  universally; LEMMA B, ᾱ ≥ 4/3 for every word (potential certificate
+  φ = (0,−⅓,−⅔) on the 3-state interface DP: six inequalities, all ≥ 4/3,
+  telescoping along any word); PINCH: gap ≤ min(ϑ̄−4/3, 3/2−ᾱ) ≤ 1/6, and any
+  cct-beater needs ϑ̄ > 1.40323087 AND ᾱ < 1.4301025 simultaneously;
+  EXHAUSTIVE: all aperiodic bracelets p ≤ 9 certified below cct (max 0.0685 at
+  cctcctctt; overall runner-up cctcctcctctt at 0.0689 vs 0.0698975). The
+  completion is identified — a transfer-SDP sub-action (windowed chordal dual
+  templates ⇒ linear-in-window bound on ϑ̄, finite LP over de Bruijn flows) —
+  but OBSTRUCTED: a cct-tight template must reproduce τ_cct, which provably has
+  no small algebraic form, so rational certificates yield only ε-optimality.
+  Open: construct that explicit ε-certificate; α-density = 4/3 ⟺ cis-fraction
+  ≤ 2/3 characterization (verified p ≤ 12, unproven); trans-CHAIN density
+  closed form (numerically → τ\*?) — unverified.
