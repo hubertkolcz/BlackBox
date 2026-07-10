@@ -183,6 +183,64 @@ chainGaps = Table[{n, LovaszTheta[PentagonChain[n]] - IndependenceNumber[Pentago
    AxesLabel -> {"N", "\[CapitalDelta] ring"}, ImageSize -> 300], chainGaps}
 
 (* ::Section:: *)
+(*Case D3. Exact \[CurlyTheta] at 10^5 Blocks: Chordal Decomposition \[LongDash] and a Correction, the Two Ring Families*)
+
+(* ::Text:: *)
+(*Problem: certify \[CurlyTheta] for pentagon meshes of 10^4-10^5 blocks. The dense primal SDP behind LovaszTheta carries n(n+1)/2 variables and saturates near 150 vertices \[LongDash] the tables above stop at N = 15 for that reason. Established alternative at this scale: none. BlackBox resolution (v1.1.0): LovaszThetaSparse rewrites \[CurlyTheta] as the Lov\[AAcute]sz dual min \[Lambda]max(J - B) with B supported on the edges, absorbs the rank-one J = ee^T into one Schur border row, and splits the single (n+1)-cone along the maximal cliques of a chordal extension (Grone et al. completion / Agler et al. decomposition): one PSD block of size treewidth+2 per clique, linear cost in blocks for any bounded-treewidth mesh, plus a self-certificate \[CurlyTheta] <= \[Lambda]max(J - B) from the recovered witness. The Python companion lovasz_theta_sparse.py carries the identical decomposition to 10^5 blocks (Clarabel interior point) and adds a second, fully independent route for rings: the Z_N symmetry reduction, which block-diagonalises the block-circulant dual under the DFT into 3x3 Hermitian symbols with FOUR real parameters in total, exactly solvable by frequency cutting-planes at any N, with the all-frequency eigenvalue maximum as an unconditional certificate.*)
+
+(* ::CodeText:: *)
+(*The sparse solver agrees with the dense one on every mesh of the tables above (and on C5, C7, Petersen, Mycielskians, ... \[LongDash] see Tests/BlackBoxTests.wl):*)
+
+(* ::Input:: *)
+sparseAgreement = Max[Join[
+   Table[Abs[LovaszThetaSparse[pentagonRing[n]] - ringTable[[n - 2, 2]]], {n, 3, 15}],
+   Table[Abs[LovaszThetaSparse[PentagonChain[n]] - LovaszTheta[PentagonChain[n]]], {n, {3, 7, 11}}]]];
+sparseAgreement
+
+(* ::Text:: *)
+(*THE CORRECTION. Scaling exposed a hidden binary design parameter that N <= 15 never showed: the gluing ORIENTATION. Every pentagon meets its glue edge {u,v} with a one-edge side (u\[Dash]c1) and a two-edge side (v\[Dash]c3\[Dash]c2). Attaching each next short side to the SAME endpoint of the running glue edge (call it cis) chains the c1-vertices into a rail \[LongDash] that is what PentagonChain builds. ALTERNATING the endpoint (trans) is what pentagonRing above builds. The two closures are NOT isomorphic, so pentagonRing is not "PentagonChain closed up", and chain-anchored bounds do not transfer to it: a lower bound \[CurlyTheta](ring 10^5) >= \[LeftFloor]N/33\[RightFloor] \[CenterDot] \[CurlyTheta](chain 31) = 142491 obtained that way is INVALID even though its anchor \[CurlyTheta](chain 31) = 47.0268 is correct. The dense solver itself arbitrates at a size it still reaches: \[CurlyTheta](trans-ring 21) < \[CurlyTheta](cis-chain 19), and \[CurlyTheta] is monotone under induced subgraphs, so no 19-block cis-chain embeds in the 21-block trans-ring.*)
+
+(* ::Input:: *)
+gluingArbitration = {LovaszTheta[pentagonRing[21]], LovaszTheta[PentagonChain[19]]};
+gluingArbitration
+
+(* ::CodeText:: *)
+(*The cis ring (PentagonChain closed cyclically; the c1-rail becomes an N-cycle):*)
+
+(* ::Input:: *)
+cisRing[nb_ /; nb >= 3] := Module[{c1, c2, c3, edges},
+  edges = Flatten[Table[{{c1[Mod[k - 1, nb]], c1[k]}, {c1[k], c2[k]}, {c2[k], c3[k]},
+      {c3[k], c2[Mod[k - 1, nb]]}, {c2[Mod[k - 1, nb]], c1[Mod[k - 1, nb]]}}, {k, 0, nb - 1}], 1];
+  Graph[DeleteDuplicates[Flatten[edges]], UndirectedEdge @@@ DeleteDuplicates[Sort /@ edges]]];
+
+(* ::CodeText:: *)
+(*The cis family collapses onto exact laws \[LongDash] \[CurlyTheta](cis-ring N) = N + \[CurlyTheta](C_N) and \[Alpha] = \[LeftFloor]3N/2\[RightFloor], verified against the dense SDP:*)
+
+(* ::Input:: *)
+cisLawTable = Table[{n, LovaszTheta[cisRing[n]], n + LovaszTheta[CycleGraph[n]],
+    IndependenceNumber[cisRing[n]]}, {n, 4, 8}];
+TableForm[cisLawTable, TableHeadings -> {None, {"N", "\[CurlyTheta](cis ring)", "N+\[CurlyTheta](C_N)", "\[Alpha]"}}]
+
+(* ::Input:: *)
+chain31 = LovaszThetaSparse[PentagonChain[31]];
+cisRing33 = LovaszThetaSparse[cisRing[33]];
+{chain31, cisRing33, 33 + LovaszTheta[CycleGraph[33]]}
+
+(* ::Text:: *)
+(*So even-N cis rings saturate the exclusivity cap on BOTH sides \[LongDash] \[Alpha] = \[CurlyTheta] = \[Alpha]* = 3N/2, no quantum gap at all \[LongDash] and odd ones approach it with deficit \[Pi]^2/8N and a BOUNDED gap \[CurlyTheta] - \[Alpha] -> 1/2. The extensive quantum advantage of Section D2 is therefore purely a TRANS phenomenon. Exact scaling of the trans ring, computed by the two independent Python routes (agreement 6\[CenterDot]10^-8 relative at N = 100 and 2\[CenterDot]10^-7 at N = 1000; the chordal route stays certified to 1.3\[CenterDot]10^-5 relative at N = 10^4 in ~1 minute and 3\[CenterDot]10^-5 at N = 10^5 in ~6 minutes / 10 GB; the symmetry route is exact past 10^6 in seconds, certgap 7\[CenterDot]10^-5 at 10^5):*)
+
+(* ::Input:: *)
+ringScalingRecord = {(* {N, exact theta (Z_N symmetry route), density} *)
+   {100, 137.666799, 1.3766680},
+   {1000, 1376.716871, 1.3767169},
+   {10000, 13767.177609, 1.3767178},
+   {100000, 137671.775134, 1.3767178}};
+transDensityLimit = 1.37671775; (* N->Infinity: continuum minimax of the 3x3 DFT symbol *)
+
+(* ::Text:: *)
+(*The corrected picture at N = 10^5 blocks (3\[CenterDot]10^5 vertices): \[CurlyTheta] = 137671.775 \[LongDash] BELOW the previously recorded "certified" bracket [142491, 150000], whose lower end is hereby withdrawn. The density curve is essentially FLAT: 1.37656 (N = 15, 30) -> 1.37667 (10^2) -> 1.376717 (10^3) -> 1.3767178 (10^4, 10^5; unchanged at 10^6, and equal to the N -> Infinity symbol limit 1.376717746) \[LongDash] it never rises toward 3/2. The theorem \[Alpha](trans-ring N) = \[LeftFloor]4N/3\[RightFloor] is untouched, so the extensive gap survives with the corrected slope: \[CapitalDelta] = \[CurlyTheta] - \[Alpha] = (1.3767178 - 4/3) N \[TildeTilde] 0.043384 N \[LongDash] 4338.8 at N = 10^5, certified exact instead of bracketed. (Numerical caveat that produced an earlier +0.05 bias at 10^5: both solvers need O(1)-conditioned data \[LongDash] the chordal border is rescaled by 1/Sqrt[n], the symbol program is solved in density units.) Design rule, restated honestly: the bulk quantum advantage of pentagon meshes is set by the gluing orientation (trans: 0.0434 per block, extensive) \[LongDash] closure and block parity only modulate it; the cis family instead saturates \[Alpha]* classically and carries no bulk gap.*)
+
+(* ::Section:: *)
 (*Verification*)
 
 (* ::Input:: *)
@@ -207,6 +265,20 @@ CaseStudiesVerification = <|
   "D2_alphaStaircase" -> ringTable[[All, 3]] == ringTable[[All, 4]],
   "D2_alphaStarExact" -> ringTable[[All, 5]] == Table[3 n/2, {n, 3, 15}],
   "D2_classesMonotone" -> AllTrue[gapsByClass, OrderedQ[#[[All, 2]]] &],
-  "D2_chainsDecay" -> OrderedQ[Reverse[chainGaps[[All, 2]]]] && Last[chainGaps][[2]] < 0.1
+  "D2_chainsDecay" -> OrderedQ[Reverse[chainGaps[[All, 2]]]] && Last[chainGaps][[2]] < 0.1,
+  "D3_sparseMatchesDense" -> sparseAgreement < 10^-4,
+  "D3_gluingArbitration" -> gluingArbitration[[1]] < gluingArbitration[[2]] - 0.15 &&
+     Abs[gluingArbitration[[1]] - 28.86756] < 10^-3 && Abs[gluingArbitration[[2]] - 29.03987] < 10^-3,
+  "D3_cisRingLaw" -> AllTrue[cisLawTable, Abs[#[[2]] - #[[3]]] < 10^-5 &] &&
+     cisLawTable[[All, 4]] == Table[Floor[3 n/2], {n, 4, 8}],
+  "D3_cisMonotone" -> chain31 <= cisRing33 + 10^-4 &&
+     Abs[cisRing33 - (33 + LovaszTheta[CycleGraph[33]])] < 10^-3 &&
+     Abs[chain31 - 47.026768] < 10^-3,
+  "D3_recordedScaling" -> OrderedQ[ringScalingRecord[[All, 3]]] &&
+     ringScalingRecord[[-1, 3]] < transDensityLimit + 10^-6 &&
+     AllTrue[ringScalingRecord, Abs[#[[2]]/#[[1]] - #[[3]]] < 10^-6 &],
+  "D3_extensiveGapCorrected" -> With[{th = ringScalingRecord[[-1, 2]]},
+     Floor[4 100000/3] < th < 3 100000/2 && th < 142491 &&
+       Abs[th - 137671.775] < 0.01 && th - Floor[4 100000/3] > 4000]
 |>;
 Column[{CaseStudiesVerification, "OK" -> And @@ Values[CaseStudiesVerification]}]
