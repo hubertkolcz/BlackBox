@@ -32,6 +32,8 @@ GlobalSectionQ::usage = "GlobalSectionQ[scen, e] gives True if the empirical mod
 PossibilisticSupport::usage = "PossibilisticSupport[scen, e] gives the possibilistic global support S_e of the empirical model e: association with \"Size\" (number of global assignments consistent with the support of e) and \"Empty\" (True means strong contextuality, AB Sec. 6).";
 CycleCoboundary::usage = "CycleCoboundary[n] gives the cellular-sheaf coboundary \[Delta] (2n x 4n) of the n-cycle cover with marginalization restriction maps (Hansen-Ghrist, arXiv:1808.01513): ker(\[Delta]\[Transpose]\[Delta]) = the no-disturbance models.";
 HarmonicResidual::usage = "HarmonicResidual[delta, e] gives Norm[delta . e]: the no-disturbance (signalling) residual of the model e. It vanishes on every no-disturbance model and is provably blind to contextuality - use it as a projector diagnostic, not a contextuality measure.";
+CoverScenario::usage = "CoverScenario[X, cover] gives the contextuality scenario of an arbitrary measurement cover as an association: measurements X, contexts = the elements of cover (ordered measurement lists), section order per context (Tuples[{0,1}, Length[context]]), the Abramsky-Brandenburger incidence matrix \"Incidence\" relating deterministic global assignments to context sections, and \"Assignments\" (the 2^Length[X] global assignments). CycleScenario[n] is the n-cycle special case.";
+CechObstruction::usage = "CechObstruction[scen, e] gives the \:010cech cohomological obstruction data of the support presheaf of the empirical model e on the scenario scen (Abramsky-Mansfield-Barbosa; Abramsky-Barbosa-Kishida-Lal-Mansfield, arXiv:1502.03097): a support section s over a context is obstructed when its class \[Gamma](s) in the first \:010cech cohomology of the relative Z-linearized support presheaf is nonzero, equivalently (arXiv:1502.03097, Prop. 4.4) when NO compatible family of Z-linear combinations of support sections restricts to s. Returns an association with keys \"Obstructed\"/\"ObstructedCount\"/\"SectionCount\", \"NonextendableSections\" (sections with no global support assignment through them) and \"FalseNegatives\", \"GlobalSupportSize\", \"H0Rank\" (rank of the compatible-family module), \"SupportNoSignalling\", and the witness flags \"CohLogicallyContextual\" (some \[Gamma](s) != 0: certifies logical contextuality) and \"CohStronglyContextual\" (every \[Gamma](s) != 0: certifies strong contextuality). Vanishing of \[Gamma] is not conclusive - the Hardy model is the canonical false negative.";
 
 (* -- the Lie-Poisson interface of the KCBS cascade -- *)
 CascadeGenerators::usage = "CascadeGenerators[] gives the four so(3) generators (matrix logarithms of the stage-frame transition rotations) of the Lapkiewicz KCBS cascade.";
@@ -140,6 +142,70 @@ CycleCoboundary[n_Integer /; n >= 3] := Module[
   del];
 
 HarmonicResidual[delta_?MatrixQ, e_List] := Norm[delta . e];
+
+(* ------------------------------------------------------------------ *)
+(* the support presheaf and its Cech obstruction                       *)
+(* ------------------------------------------------------------------ *)
+
+CoverScenario[X_List, cover_List] := Module[{glob = Tuples[{0, 1}, Length[X]], pos, secs, M},
+  pos = AssociationThread[X -> Range[Length[X]]];
+  secs = Flatten[Table[{c, s}, {c, cover}, {s, Tuples[{0, 1}, Length[c]]}], 1];
+  M = Table[Boole[(t[[pos[#]]] & /@ sec[[1]]) === sec[[2]]], {sec, secs}, {t, glob}];
+  <|"X" -> X, "Contexts" -> cover, "Sections" -> secs, "Incidence" -> M, "Assignments" -> glob|>];
+
+restrictSection[c_, s_, u_] := s[[Flatten[Position[c, #] & /@ u]]];
+
+(* gamma(s) = 0 iff s extends to a compatible family of Z-linear combinations of
+   support sections (arXiv:1502.03097, Prop. 4.4). Decision order per section:
+   a deterministic global witness settles it; else exact rank refutes over Q
+   (hence over Z); else FindInstance decides the residual Z-solvability. *)
+CechObstruction[scen_Association, e_List] := Module[
+  {ctxs = scen["Contexts"], secs = scen["Sections"], glob = scen["Assignments"],
+   X, pos, m, ctxIdx, supp, cols, colIdx, pairs, rows, A, e2, Se, SeR,
+   colsOf, gammaZeroQ, obstructed, nonext},
+  X = Lookup[scen, "X", Union @@ ctxs];
+  pos = AssociationThread[X -> Range[Length[X]]];
+  m = Length[ctxs]; ctxIdx = AssociationThread[ctxs -> Range[m]];
+  supp = Table[{}, {m}];
+  Do[If[e[[k]] > 10^-12, AppendTo[supp[[ctxIdx[secs[[k, 1]]]]], secs[[k, 2]]]], {k, Length[secs]}];
+  cols = Flatten[Table[{i, s}, {i, m}, {s, supp[[i]]}], 1];
+  colIdx = AssociationThread[cols -> Range[Length[cols]]];
+  pairs = Select[Subsets[Range[m], {2}], Intersection @@ ctxs[[#]] =!= {} &];
+  rows = Flatten[Table[
+     Module[{i = pr[[1]], j = pr[[2]], U = Intersection @@ ctxs[[pr]]},
+      Table[Module[{row = ConstantArray[0, Length[cols]]},
+        Do[If[restrictSection[ctxs[[i]], s, U] === u, row[[colIdx[{i, s}]]] += 1], {s, supp[[i]]}];
+        Do[If[restrictSection[ctxs[[j]], s, U] === u, row[[colIdx[{j, s}]]] -= 1], {s, supp[[j]]}];
+        row], {u, Tuples[{0, 1}, Length[U]]}]], {pr, pairs}], 1];
+  A = DeleteDuplicates[DeleteCases[rows, {0 ..}]];
+  e2 = AllTrue[pairs, Function[pr, With[{U = Intersection @@ ctxs[[pr]]},
+      Sort[DeleteDuplicates[restrictSection[ctxs[[pr[[1]]]], #, U] & /@ supp[[pr[[1]]]]]] ===
+      Sort[DeleteDuplicates[restrictSection[ctxs[[pr[[2]]]], #, U] & /@ supp[[pr[[2]]]]]]]]];
+  Se = Select[glob, Function[g, AllTrue[Range[m], MemberQ[supp[[#]], g[[pos /@ ctxs[[#]]]]] &]]];
+  SeR = Table[DeleteDuplicates[Table[g[[pos /@ ctxs[[i]]]], {g, Se}]], {i, m}];
+  colsOf = Table[Flatten[Position[cols, {i, _}, {1}, Heads -> False]], {i, m}];
+  gammaZeroQ[i0_, s0_] := Module[{rest, Ai, b, vars},
+    If[MemberQ[SeR[[i0]], s0], Return[True]];
+    rest = Complement[Range[Length[cols]], colsOf[[i0]]];
+    Ai = A[[All, rest]]; b = -A[[All, colIdx[{i0, s0}]]];
+    If[MatrixRank[MapThread[Append, {Ai, b}]] > MatrixRank[Ai], Return[False]];
+    vars = Array[\[FormalX], Length[rest]];
+    FindInstance[Thread[Ai . vars == b], vars, Integers] =!= {}];
+  obstructed = Select[cols, ! gammaZeroQ[#[[1]], #[[2]]] &];
+  nonext = Select[cols, ! MemberQ[SeR[[#[[1]]]], #[[2]]] &];
+  <|"SectionCount" -> Length[cols],
+    "SupportSizes" -> Length /@ supp,
+    "SupportNoSignalling" -> e2,
+    "GlobalSupportSize" -> Length[Se],
+    "H0Rank" -> Length[cols] - MatrixRank[A],
+    "Obstructed" -> ({ctxs[[#[[1]]]], #[[2]]} & /@ obstructed),
+    "ObstructedCount" -> Length[obstructed],
+    "NonextendableSections" -> ({ctxs[[#[[1]]]], #[[2]]} & /@ nonext),
+    "FalseNegatives" -> ({ctxs[[#[[1]]]], #[[2]]} & /@ Complement[nonext, obstructed]),
+    "CohLogicallyContextual" -> Length[obstructed] > 0,
+    "CohStronglyContextual" -> Length[cols] > 0 && Length[obstructed] == Length[cols],
+    "LogicallyContextual" -> nonext =!= {},
+    "StronglyContextual" -> Length[cols] > 0 && Se === {}|>];
 
 (* ------------------------------------------------------------------ *)
 (* the Lie-Poisson interface                                           *)

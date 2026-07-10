@@ -5,17 +5,6 @@
 
 (* CreatedBy='Wolfram 15.0' *)
 
-(*CacheID: 234*)
-(* Internal cache information:
-NotebookFileLineBreakTest
-NotebookFileLineBreakTest
-NotebookDataPosition[       154,          7]
-NotebookDataLength[      8807,        200]
-NotebookOptionsPosition[      6794,        169]
-NotebookOutlinePosition[      7116,        183]
-CellTagsIndexPosition[      7073,        180]
-WindowFrame->Normal*)
-
 (* Beginning of Notebook Content *)
 Notebook[{
 Cell["BlackBox: Contextuality Certificates", "Title",ExpressionUUID->"44f8b5df-36fb-6449-94c6-2d0673a1f211"],
@@ -24,7 +13,8 @@ Cell["\<\
 Graph- and sheaf-theoretic certificates of quantum contextuality: three \
 bounds (independence number, Lovasz theta, fractional packing), exclusivity \
 filters under composition, the contextual fraction, Abramsky-Brandenburger \
-local-global analysis, and the so(3) interface of the KCBS cascade. Load with \
+local-global analysis, the \:010cech obstruction of the support presheaf, \
+and the so(3) interface of the KCBS cascade. Load with \
 Needs[\"HubertKolcz`BlackBox`\"].\
 \>", "Text",ExpressionUUID->"ccab2f85-2a65-3541-827f-29cbe3448f2c"],
 
@@ -34,6 +24,15 @@ Cell[TextData[{
  "CascadeGenerators[] gives the four so(3) generators (matrix logarithms of \
 the stage-frame transition rotations) of the Lapkiewicz KCBS cascade."
 }], "Item",ExpressionUUID->"4cc01417-ab32-c845-a944-7c6ddf0fff72"],
+
+Cell[TextData[{
+ StyleBox["CechObstruction", "InlineCode"],
+ " \[LongDash] ",
+ "CechObstruction[scen, e] gives the \:010cech cohomological obstruction \
+data of the support presheaf of the empirical model e on the scenario scen \
+(Abramsky-Mansfield-Barbosa; Abramsky-Barbosa-Kishida-Lal-Mansfield, \
+arXiv:1502."
+}], "Item",ExpressionUUID->"7f2a9c41-88d3-4b46-9a17-c3e5d20b6a94"],
 
 Cell[TextData[{
  StyleBox["CEFilter", "InlineCode"],
@@ -51,6 +50,17 @@ Cell[TextData[{
  "ContextualFraction[scen, e] gives CF = 1 - NoncontextualFraction[scen, e], \
 the contextual resource content of the empirical model e."
 }], "Item",ExpressionUUID->"3279bef5-f9e8-f448-9952-2f35a4e8b5b2"],
+
+Cell[TextData[{
+ StyleBox["CoverScenario", "InlineCode"],
+ " \[LongDash] ",
+ "CoverScenario[X, cover] gives the contextuality scenario of an arbitrary \
+measurement cover as an association: measurements X, contexts = the elements \
+of cover (ordered measurement lists), section order per context (Tuples[{0,1}, \
+Length[context]]), the Abramsky-Brandenburger incidence matrix \"Incidence\" \
+relating deterministic global assignments to context sections, and \
+\"Assignments\" (the 2^Length[X] global assignments)."
+}], "Item",ExpressionUUID->"2b8e5d17-6c94-4f0a-b3d2-91a47e08c5f3"],
 
 Cell[TextData[{
  StyleBox["CycleCoboundary", "InlineCode"],
@@ -172,38 +182,3 @@ StyleDefinitions->"Default.nb",
 ExpressionUUID->"d410f61e-fcb3-f546-831a-5ef442cd587f"
 ]
 (* End of Notebook Content *)
-
-(* Internal cache information *)
-(*CellTagsOutline
-CellTagsIndex->{}
-*)
-(*CellTagsIndex
-CellTagsIndex->{}
-*)
-(*NotebookFileOutline
-Notebook[{
-Cell[554, 20, 108, 0, 70, "Title",ExpressionUUID->"44f8b5df-36fb-6449-94c6-2d0673a1f211"],
-Cell[665, 22, 427, 6, 70, "Text",ExpressionUUID->"ccab2f85-2a65-3541-827f-29cbe3448f2c"],
-Cell[1089, 30, 300, 5, 70, "Item",ExpressionUUID->"4cc01417-ab32-c845-a944-7c6ddf0fff72"],
-Cell[1387, 37, 478, 8, 70, "Item",ExpressionUUID->"d2acfc61-322e-704c-a608-edc5c09dbda8"],
-Cell[1860, 47, 290, 5, 70, "Item",ExpressionUUID->"3279bef5-f9e8-f448-9952-2f35a4e8b5b2"],
-Cell[2148, 54, 318, 6, 70, "Item",ExpressionUUID->"3f9e0608-a6db-6d4a-a1c3-489055112d4a"],
-Cell[2463, 62, 274, 5, 70, "Item",ExpressionUUID->"3398f17e-dc23-fa46-a7db-e07cbeab2c21"],
-Cell[2735, 69, 245, 5, 70, "Item",ExpressionUUID->"faeb794a-74e9-cb40-a116-eacd3c80efbf"],
-Cell[2978, 76, 369, 6, 70, "Item",ExpressionUUID->"d9eec872-325b-e249-82d6-44b53cf6967b"],
-Cell[3344, 84, 349, 6, 70, "Item",ExpressionUUID->"5d591db1-8137-1a48-924e-bfef61e6b200"],
-Cell[3690, 92, 360, 6, 70, "Item",ExpressionUUID->"81155152-cd61-ad41-8228-86f9d8a7536a"],
-Cell[4047, 100, 264, 5, 70, "Item",ExpressionUUID->"e2b54c49-0ee4-054c-9828-b158f9e8bfe6"],
-Cell[4309, 107, 198, 4, 70, "Item",ExpressionUUID->"0a59680e-a750-224e-a391-1ba710f0bc15"],
-Cell[4506, 113, 309, 6, 70, "Item",ExpressionUUID->"fabb275a-1102-2646-ba1c-9b41724fc0eb"],
-Cell[4812, 121, 283, 5, 70, "Item",ExpressionUUID->"56bdd903-3721-0747-aee5-78eb16380241"],
-Cell[5093, 128, 309, 6, 70, "Item",ExpressionUUID->"f643c152-d26b-ff43-91b1-7800efee2888"],
-Cell[5399, 136, 432, 7, 70, "Item",ExpressionUUID->"cc60eb11-a1e2-ec40-a842-44b16d02ac2d"],
-Cell[5827, 145, 332, 6, 70, "Item",ExpressionUUID->"0ac08b76-af91-8e47-a5c3-3f41558ff2ad"],
-Cell[6156, 153, 410, 7, 70, "Item",ExpressionUUID->"f34aa923-7e01-364f-8ad8-def3ae38ca72"],
-Cell[6562, 162, 233, 5, 70, "Item",ExpressionUUID->"c7991bd3-1ebb-f346-975f-cde610374d68"]
-}
-]
-*)
-
-(* End of internal cache information *)
