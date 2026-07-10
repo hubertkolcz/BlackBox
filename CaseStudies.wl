@@ -235,10 +235,27 @@ ringScalingRecord = {(* {N, exact theta (Z_N symmetry route), density} *)
    {1000, 1376.716871, 1.3767169},
    {10000, 13767.177609, 1.3767178},
    {100000, 137671.775134, 1.3767178}};
-transDensityLimit = 1.37671775; (* N->Infinity: continuum minimax of the 3x3 DFT symbol *)
+tauStar = Root[49 #^3 - 128 #^2 - 75 # + 218 &, 2]; (* N->Infinity density limit: EXACT, see below *)
+transDensityLimit = N[tauStar];
 
 (* ::Text:: *)
-(*The corrected picture at N = 10^5 blocks (3\[CenterDot]10^5 vertices): \[CurlyTheta] = 137671.775 \[LongDash] BELOW the previously recorded "certified" bracket [142491, 150000], whose lower end is hereby withdrawn. The density curve is essentially FLAT: 1.37656 (N = 15, 30) -> 1.37667 (10^2) -> 1.376717 (10^3) -> 1.3767178 (10^4, 10^5; unchanged at 10^6, and equal to the N -> Infinity symbol limit 1.376717746) \[LongDash] it never rises toward 3/2. The theorem \[Alpha](trans-ring N) = \[LeftFloor]4N/3\[RightFloor] is untouched, so the extensive gap survives with the corrected slope: \[CapitalDelta] = \[CurlyTheta] - \[Alpha] = (1.3767178 - 4/3) N \[TildeTilde] 0.043384 N \[LongDash] 4338.8 at N = 10^5, certified exact instead of bracketed. (Numerical caveat that produced an earlier +0.05 bias at 10^5: both solvers need O(1)-conditioned data \[LongDash] the chordal border is rescaled by 1/Sqrt[n], the symbol program is solved in density units.) Design rule, restated honestly: the bulk quantum advantage of pentagon meshes is set by the gluing orientation (trans: 0.0434 per block, extensive) \[LongDash] closure and block parity only modulate it; the cis family instead saturates \[Alpha]* classically and carries no bulk gap.*)
+(*The corrected picture at N = 10^5 blocks (3\[CenterDot]10^5 vertices): \[CurlyTheta] = 137671.775 (solver value; rigorously \[CurlyTheta] <= 10^5 \[CenterDot] \[Tau]* = 137671.7746) \[LongDash] BELOW the previously recorded "certified" bracket [142491, 150000], whose lower end is hereby withdrawn. The density curve is essentially FLAT: 1.37656 (N = 15, 30) -> 1.37667 (10^2) -> 1.376717 (10^3) -> 1.3767178 (10^4, 10^5; unchanged at 10^6, converging to the N -> Infinity symbol limit \[Tau]*, an ALGEBRAIC NUMBER computed in closed form below) \[LongDash] it never rises toward 3/2. The theorem \[Alpha](trans-ring N) = \[LeftFloor]4N/3\[RightFloor] is untouched, so the extensive gap survives with the corrected slope: \[CapitalDelta] = \[CurlyTheta] - \[Alpha] = (\[Tau]* - 4/3) N \[TildeTilde] 0.0433844 N \[LongDash] 4338.8 at N = 10^5, certified exact instead of bracketed. (Numerical caveat that produced an earlier +0.05 bias at 10^5: both solvers need O(1)-conditioned data \[LongDash] the chordal border is rescaled by 1/Sqrt[n], the symbol program is solved in density units.) Design rule, restated honestly: the bulk quantum advantage of pentagon meshes is set by the gluing orientation (trans: 0.0434 per block, extensive) \[LongDash] closure and block parity only modulate it; the cis family instead saturates \[Alpha]* classically and carries no bulk gap.*)
+
+(* ::CodeText:: *)
+(*The density limit in CLOSED FORM. The continuum symbol minimax is exactly solvable: the ring's reflection automorphism forces \[Beta]bx = \[Gamma]ax, KKT stationarity factors as (u - 2g)(u + 2gc) = 0 giving \[Beta]ab = 2\[Gamma]ba, and Groebner elimination of the remaining polynomial system leaves a single cubic \[LongDash] \[Tau]* = Root[49x^3 - 128x^2 - 75x + 218, middle root] = 1.3767177459158590533. The dual witness lives in the cubic field \[DoubleStruckCapitalQ] of \[Tau]*, and feasibility on the WHOLE frequency circle reduces to a perfect square (the quadratic coefficient cancels identically, so four exact zeros remain), certifying global optimality \[LongDash] the minimax is convex and both KKT multipliers are positive:*)
+
+(* ::Input:: *)
+{gW, hW, cW} = {(53 tauStar^2 - 121 tauStar + 218)/458,
+   (327 - 67 tauStar - 35 tauStar^2)/229, (1715 tauStar^2 + 77 tauStar - 3428)/916};
+closedFormCertificate = RootReduce[Flatten[{
+    gW tauStar - hW^2 (1 + 2 cW),
+    tauStar^2 - (3 - 3 gW) tauStar + (2 - 3 gW) - 2 (1 - hW)^2,
+    CoefficientList[tauStar^3 - (5 gW^2 + 4 gW^2 \[FormalC] + 2 hW^2) tauStar +
+      2 hW^2 gW (2 \[FormalC] + 2 \[FormalC]^2 - 1) - 4 gW hW^2 (\[FormalC] - cW)^2, \[FormalC]]}]];
+{closedFormCertificate, N[tauStar, 25]}
+
+(* ::Text:: *)
+(*Trigonometric form: \[Tau]* = 128/147 + (2 Sqrt[27409]/147) cos((1/3) arccos(-2852191/(27409 Sqrt[27409])) - 2\[Pi]/3), with 27409 = 128^2 + 3\[CenterDot]49\[CenterDot]75. Minimal polynomials of the witness: 2401g^3 - 4518g^2 + 2549g - 436, 343h^3 - 689h^2 + 173h + 109, and 2c^3 - 15c^2 - 14c - 1 for c = cos \[Theta]* (active frequency \[Theta]* \[TildeTilde] 0.5248591600 \[Pi]). The extensive per-block gap of the trans family is therefore itself algebraic: \[Tau]* - 4/3 = 0.0433844126.*)
 
 (* ::Section:: *)
 (*Verification*)
@@ -279,6 +296,9 @@ CaseStudiesVerification = <|
      AllTrue[ringScalingRecord, Abs[#[[2]]/#[[1]] - #[[3]]] < 10^-6 &],
   "D3_extensiveGapCorrected" -> With[{th = ringScalingRecord[[-1, 2]]},
      Floor[4 100000/3] < th < 3 100000/2 && th < 142491 &&
-       Abs[th - 137671.775] < 0.01 && th - Floor[4 100000/3] > 4000]
+       Abs[th - 137671.775] < 0.01 && th - Floor[4 100000/3] > 4000],
+  "D3_densityClosedForm" -> Union[closedFormCertificate] === {0} &&
+     Abs[transDensityLimit - 1.376717745915859] < 10^-12 &&
+     AllTrue[ringScalingRecord[[All, 3]], # < transDensityLimit + 10^-6 &]
 |>;
 Column[{CaseStudiesVerification, "OK" -> And @@ Values[CaseStudiesVerification]}]

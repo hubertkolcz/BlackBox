@@ -182,11 +182,24 @@ WITHDRAWN — its disjoint-chain lower bound anchored cis-chain values
 density rise 1.377 → 1.5 does not exist.
 
 **Exact laws (all machine-verified, both solvers agreeing to certificate level):**
-- **trans ring** (the CaseStudies mesh): ϑ = 1.376718·N; density is FLAT —
-  1.37656 (N = 15, 30) → 1.3766680 (10²) → 1.3767169 (10³) → 1.3767178 (10⁴, 10⁵,
-  10⁶), continuum symbol limit 1.376717746. Exact ϑ(10⁵) = 137 671.775. The theorem
-  α = ⌊4N/3⌋ is untouched, so the quantum gap stays EXTENSIVE with corrected slope:
-  ϑ − α ≈ 0.043384·N (= 4 338.8 at N = 10⁵, exact instead of bracketed).
+- **trans ring** (the CaseStudies mesh): ϑ = τ\*·N − o(N) with the density limit an
+  ALGEBRAIC NUMBER in closed form:
+  **τ\* = Root[49x³ − 128x² − 75x + 218, middle root] = 1.3767177459158590533…**
+  = 128/147 + (2√27409/147)·cos(⅓ arccos(−2852191/27409^{3/2}) − 2π/3),
+  27409 = 128² + 3·49·75. Derivation: the ring's reflection automorphism forces
+  β_bx = γ_ax, KKT stationarity factors as (u−2g)(u+2gc) = 0 giving β_ab = 2γ_ba,
+  and Gröbner elimination of the remaining polynomial KKT system leaves this single
+  cubic; the dual witness lies in ℚ(τ\*) — g = (53τ²−121τ+218)/458,
+  h = (327−67τ−35τ²)/229, cos θ\* = (1715τ²+77τ−3428)/916, θ\* ≈ 0.52486π — and
+  feasibility on the whole frequency circle reduces to the perfect square
+  4gh²(c−c\*)² ≥ 0, so a handful of RootReduce-exact zeros certify global
+  optimality (convex minimax, positive multipliers; machine-checked in
+  CaseStudies §D3, key D3_densityClosedForm).
+  Density is FLAT: 1.37656 (N = 15, 30) → 1.3766680 (10²) → 1.3767169 (10³) →
+  1.3767178 (10⁴–10⁶) → τ\*. ϑ(10⁵) = 137 671.775 (solver; rigorously
+  ≤ 10⁵τ\* = 137 671.7746). The theorem α = ⌊4N/3⌋ is untouched, so the quantum gap
+  stays EXTENSIVE with algebraic slope: ϑ − α = (τ\* − 4/3)·N = 0.0433844126·N
+  (= 4 338.8 at N = 10⁵, exact instead of bracketed).
 - **cis ring** (PentagonChain closed up): **ϑ(N) = N + ϑ(C_N) exactly** (verified
   against the dense SDP at N = 4..8, to 3·10⁻⁷ at N = 100); α = ⌊3N/2⌋. Even N
   collapses the whole sandwich, α = ϑ = α\* = 3N/2 — NO quantum gap; odd N approaches
@@ -226,8 +239,9 @@ through the cascade gate-by-gate.
 - n-cycle generalizations (C₇, C₉...) and their circuits; run encoding B on real
   gate hardware as a genuine platform test.
 - Sequential-game quantum strategy demo end-to-end (Alice prefix + Bob binary POVM).
-- Pentagon meshes (§6, cis/trans correction): closed form for the trans-ring density
-  constant 1.376717746 (algebraic number from the 3×3 symbol minimax?); prove
-  ϑ(cis-ring N) = N + ϑ(C_N) and α(cis-ring N) = ⌊3N/2⌋ (both verified numerically,
-  neither proven); is the extensive trans gap 0.043384·N optimal over all
-  pentagon-mesh gluing patterns (e.g. mixed cis/trans words)?
+- Pentagon meshes (§6, cis/trans correction): ~~closed form for the trans-ring
+  density constant~~ RESOLVED — τ\* = Root[49x³ − 128x² − 75x + 218, 2], exact KKT
+  certificate in §6/CaseStudies §D3. Still open: prove ϑ(cis-ring N) = N + ϑ(C_N)
+  and α(cis-ring N) = ⌊3N/2⌋ (both verified numerically, neither proven); is the
+  extensive trans gap (τ\* − 4/3)·N optimal over all pentagon-mesh gluing patterns
+  (e.g. mixed cis/trans words)?
