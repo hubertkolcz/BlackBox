@@ -219,6 +219,22 @@ orientation (trans: ≈ 0.0434 per block, extensive), not by closing the topolog
 closure and block parity only modulate it; the cis family saturates the exclusivity
 bound α\* classically and carries no bulk gap.
 
+**The optimal gluing word (follow-up computation).** Treating a mesh as a binary
+necklace over {cis, trans}, pure trans is NOT gap-optimal: the word **(cct)^∞** —
+two cis gluings, then one trans "reset" — keeps the trans staircase α/L = 4/3 while
+lifting ϑ/L to 1.4032316(23), i.e. **gap 0.0698982 per block = 1.611× the pure-trans
+gap**. Method: exact α densities as max-plus cycle means of a 3-state interface
+transfer DP (exact rational arithmetic; the pure-trans staircase is its transfer
+matrix's 3-cycle gaining 4 per 3 blocks); certified chordal ϑ at 1200–2400 blocks;
+exhaustive sweep of all binary bracelets of period ≤ 6, and over periods ≤ 12 every
+word with α-density 4/3 has cis-fraction ≤ 2/3 with equality UNIQUELY for cct (its
+best higher-period rivals cctcctctt, cctcctcctctt rank strictly below). Design rule:
+trans letters protect the classical bound (each t breaks the cis rail before it can
+lift α), cis letters buy quantum value; the optimum is the densest cis packing α
+tolerates. Refined conjecture: (cct)^∞ is globally optimal over all gluing words.
+Tooling: `lovasz_theta_sparse.py words`; WL anchor wordRing/cct in CaseStudies §D3
+(key D3_gluingWordOptimum).
+
 ## 7. Wigner negativity toolchain (Wolfram Community, N. Murzin)
 
 Source: "On quantum amplitudes, correlations and negativity"
@@ -251,6 +267,11 @@ through the cascade gate-by-gate.
   certificate in §6/CaseStudies §D3. ~~Prove ϑ(cis-ring N) = N + ϑ(C_N) and
   α(cis-ring N) = ⌊3N/2⌋~~ RESOLVED — both are theorems now (§6/§D3: subgraph
   monotonicity + one-extra-dimension representation; pentagon window counting).
-  Still open: is the extensive trans gap (τ\* − 4/3)·N optimal over all
-  pentagon-mesh gluing patterns (e.g. mixed cis/trans words)? Analogous closed
-  form for the trans-CHAIN density (numerically also → τ\*?) — unverified.
+  ~~Is the extensive trans gap optimal over all gluing words?~~ RESOLVED — NO:
+  (cct)^∞ beats it by 61% (gap 0.0698982 per block, §6). Still open: prove the
+  refined conjecture that (cct)^∞ is globally optimal (ergodic-optimization
+  flavor: is the maximizing measure of gap-density supported on the cct orbit?);
+  closed form for the cct density 1.4032316 (9×9 symbol KKT, mirroring the τ\*
+  derivation); α-density = 4/3 ⟺ cis-fraction ≤ 2/3 characterization (verified
+  p ≤ 12, unproven); analogous closed form for the trans-CHAIN density
+  (numerically also → τ\*?) — unverified.

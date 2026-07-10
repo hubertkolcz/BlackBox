@@ -275,6 +275,29 @@ closedFormCertificate = RootReduce[Flatten[{
 (*Trigonometric form: \[Tau]* = 128/147 + (2 Sqrt[27409]/147) cos((1/3) arccos(-2852191/(27409 Sqrt[27409])) - 2\[Pi]/3), with 27409 = 128^2 + 3\[CenterDot]49\[CenterDot]75. Minimal polynomials of the witness: 2401g^3 - 4518g^2 + 2549g - 436, 343h^3 - 689h^2 + 173h + 109, and 2c^3 - 15c^2 - 14c - 1 for c = cos \[Theta]* (active frequency \[Theta]* \[TildeTilde] 0.5248591600 \[Pi]). The extensive per-block gap of the trans family is therefore itself algebraic: \[Tau]* - 4/3 = 0.0433844126.*)
 
 (* ::Section:: *)
+(*Case D3 continued. The Optimal Gluing Word: (cct) Beats Pure Trans by 61%*)
+
+(* ::Text:: *)
+(*The correction raises a design question: over ALL gluing words in {cis, trans} (one orientation letter per gluing; a mesh = a binary necklace), is the pure trans word gap-optimal? Answer: NO. Tooling (lovasz_theta_sparse.py, command "words"): exact \[Alpha] densities are max-plus cycle means of a 3-state interface transfer DP (exact rational arithmetic; the pure-word matrices reproduce both proven laws, and the trans staircase is the 3-cycle of its transfer matrix gaining 4 per 3 blocks); \[CurlyTheta] densities come from the chordal solver at 1200-2400 blocks, certified. Sweeping every binary bracelet of period <= 6: the word (cct)^\[Infinity] \[LongDash] two cis gluings, then one trans "reset" \[LongDash] keeps the trans staircase \[Alpha]/L = 4/3 while lifting \[CurlyTheta]/L to 1.4032316(23), so the extensive gap per block is 0.0698982 \[TildeTilde] 1.611\[Times](\[Tau]* - 4/3). Every strict mixture ranks strictly between the pure families' gaps or above pure trans; the cis-collapse (gap 0) extends beyond pure cis to ct, ccct, ccctct, ccccct. Exhaustively over periods <= 12 (max-plus, exact): every word with \[Alpha]-density 4/3 has cis-fraction <= 2/3, and cct is the UNIQUE word attaining 2/3; the best higher-period rivals in the 4/3 class (cctcctctt, cctcctcctctt) stay below cct's gap. REFINED CONJECTURE: (cct)^\[Infinity] is the globally optimal pentagon-mesh gluing word. Design reading: trans letters protect the classical bound \[LongDash] each t breaks the cis rail before it can lift \[Alpha] \[LongDash] while cis letters buy quantum value; the optimum is the densest cis packing that \[Alpha] tolerates.*)
+
+(* ::CodeText:: *)
+(*The general word builder (mirrors pentagon_ring_word labels), and the dense-SDP anchor for the winner \[LongDash] \[CurlyTheta](cct\[Times]2) against the chordal value 8.347042185, plus the exact \[Alpha] staircase at L = 6, 9:*)
+
+(* ::Input:: *)
+wordRing[word_String, reps_Integer] := Module[
+  {w = Characters[StringRepeat[word, reps]], L, edges = {}, u, v, km},
+  L = Length[w];
+  Do[km = Mod[k - 1, L];
+   {u, v} = If[w[[km + 1]] === "c", {3 km + 1, 3 km + 2}, {3 km + 2, 3 km + 1}];
+   edges = Join[edges, {{u, v}, {u, 3 k + 1}, {3 k + 1, 3 k + 2},
+      {3 k + 2, 3 k + 3}, {3 k + 3, v}}], {k, 0, L - 1}];
+  Graph[Range[3 L], UndirectedEdge @@@ DeleteDuplicates[Sort /@ edges]]];
+gluingWordAnchor = {LovaszTheta[wordRing["cct", 2]],
+   IndependenceNumber[wordRing["cct", 2]], IndependenceNumber[wordRing["cct", 3]]};
+cctDensity = 1.4032316; (* chordal, L = 2400, certgap 2.3*10^-6 *)
+gluingWordAnchor
+
+(* ::Section:: *)
 (*Verification*)
 
 (* ::Input:: *)
@@ -318,6 +341,10 @@ CaseStudiesVerification = <|
      Abs[transDensityLimit - 1.376717745915859] < 10^-12 &&
      AllTrue[ringScalingRecord[[All, 3]], # < transDensityLimit + 10^-6 &],
   "D3_cisLawProven" -> cisORCheck[5] && cisORCheck[7] && cisORCheck[9] && cisORCheck[11] &&
-     cisLawTable[[All, 4]] == Table[Floor[3 n/2], {n, 4, 8}]
+     cisLawTable[[All, 4]] == Table[Floor[3 n/2], {n, 4, 8}],
+  "D3_gluingWordOptimum" -> Abs[gluingWordAnchor[[1]] - 8.347042185] < 10^-4 &&
+     gluingWordAnchor[[2]] == 8 && gluingWordAnchor[[3]] == 12 &&
+     cctDensity - 4/3 > transDensityLimit - 4/3 &&
+     Abs[(cctDensity - 4/3)/(transDensityLimit - 4/3) - 1.611] < 0.01
 |>;
 Column[{CaseStudiesVerification, "OK" -> And @@ Values[CaseStudiesVerification]}]

@@ -99,6 +99,111 @@ def cycle_graph(n):
     return n, [(i, (i + 1) % n) if i + 1 < n else (0, n - 1) for i in range(n)]
 
 
+def pentagon_ring_word(word, reps=1):
+    """Necklace of edge-glued pentagons with per-gluing orientation word in {t,c}:
+    letter k orients the entry of pentagon k+1 on pentagon k's exit edge (c1_k, c2_k)
+    -- 'c' keeps the short-side endpoint (u' = c1_k), 't' alternates (u' = c2_k).
+    'c'*L reproduces pentagon_ring_cis(L) and 't'*L reproduces pentagon_ring(L)
+    with identical vertex labels (c1_k = 3k, c2_k = 3k+1, c3_k = 3k+2)."""
+    w = word * reps
+    L = len(w)
+    if L < 3:
+        raise ValueError("need at least 3 blocks")
+    edges = set()
+    for k in range(L):
+        km = (k - 1) % L
+        c1p, c2p = 3 * km, 3 * km + 1
+        u, v = (c1p, c2p) if w[km] == "c" else (c2p, c1p)
+        c1, c2, c3 = 3 * k, 3 * k + 1, 3 * k + 2
+        for a, b in ((u, v), (u, c1), (c1, c2), (c2, c3), (c3, v)):
+            edges.add((min(a, b), max(a, b)))
+    return 3 * L, sorted(edges)
+
+
+def alpha_ring_word(word, reps=1):
+    """Exact independence number of pentagon_ring_word(word, reps) by a max-plus
+    transfer DP over the glue-edge interface. State = independent-set restriction
+    to the entry pair (u, v) in {(0,0), (1,0), (0,1)}; each pentagon contributes
+    its three new vertices c1, c2, c3 subject to the 5-cycle constraints; the
+    letter decides whether the exit pair (c1, c2) enters the next block straight
+    ('c') or swapped ('t')."""
+    w = word * reps
+    L = len(w)
+    states = [(0, 0), (1, 0), (0, 1)]
+    NEG = -(10 ** 9)
+
+    def transfer(letter):
+        T = [[NEG] * 3 for _ in range(3)]
+        for i, (su, sv) in enumerate(states):
+            for s1 in (0, 1):
+                if su and s1:
+                    continue
+                for s2 in (0, 1):
+                    if s1 and s2:
+                        continue
+                    for s3 in (0, 1):
+                        if (s2 and s3) or (s3 and sv):
+                            continue
+                        out = (s1, s2) if letter == "c" else (s2, s1)
+                        j = states.index(out)
+                        T[i][j] = max(T[i][j], s1 + s2 + s3)
+        return T
+
+    Tc, Tt = transfer("c"), transfer("t")
+    best = NEG
+    for s0 in range(3):
+        vec = [NEG] * 3
+        vec[s0] = 0
+        for k in range(L):
+            T = Tc if w[k] == "c" else Tt
+            vec = [max(vec[i] + T[i][j] for i in range(3)) for j in range(3)]
+        best = max(best, vec[s0])
+    return best
+
+
+def alpha_density_word(word):
+    """Exact per-block limit alpha(word^m)/(m len(word)) as m -> infinity: the
+    max-plus cycle mean of the one-period transfer product (exact Fraction)."""
+    from fractions import Fraction
+    NEG = -(10 ** 9)
+    P = None
+    # rebuild the two 3x3 transfer matrices via alpha_ring_word's local logic
+    states = [(0, 0), (1, 0), (0, 1)]
+
+    def transfer(letter):
+        T = [[NEG] * 3 for _ in range(3)]
+        for i, (su, sv) in enumerate(states):
+            for s1 in (0, 1):
+                if su and s1:
+                    continue
+                for s2 in (0, 1):
+                    if s1 and s2:
+                        continue
+                    for s3 in (0, 1):
+                        if (s2 and s3) or (s3 and sv):
+                            continue
+                        j = states.index((s1, s2) if letter == "c" else (s2, s1))
+                        T[i][j] = max(T[i][j], s1 + s2 + s3)
+        return T
+
+    def mp_mul(A, B):
+        return [[max(A[i][k] + B[k][j] for k in range(3)) for j in range(3)]
+                for i in range(3)]
+
+    Tc, Tt = transfer("c"), transfer("t")
+    for ch in word:
+        M = Tc if ch == "c" else Tt
+        P = M if P is None else mp_mul(P, M)
+    # max cycle mean over cycles of length 1..3 in the period-product matrix
+    best = Fraction(NEG)
+    Q = P
+    for ell in range(1, 4):
+        for i in range(3):
+            best = max(best, Fraction(Q[i][i], ell))
+        Q = mp_mul(Q, P)
+    return best / len(word)
+
+
 # ---------------------------------------------------------------------------
 # chordal extension: minimum-degree elimination with lazy heap
 # ---------------------------------------------------------------------------
@@ -557,6 +662,62 @@ def cmd_chain(args):
     return 0
 
 
+def cmd_words(args):
+    """Sweep all binary gluing bracelets (necklaces up to rotation+reversal) of
+    period <= args.period: exact alpha density (max-plus cycle mean), theta density
+    (chordal solver at ~args.blocks blocks), gap density. Answers: which gluing
+    word maximizes the extensive quantum gap?"""
+    from fractions import Fraction
+
+    def bracelets(pmax):
+        seen, out = set(), []
+        for p in range(1, pmax + 1):
+            for bits in range(2 ** p):
+                w = "".join("tc"[(bits >> i) & 1] for i in range(p))
+                reps = {w[r:] + w[:r] for r in range(p)}
+                reps |= {s[::-1] for s in reps}
+                canon = min(reps)
+                if canon in seen:
+                    continue
+                seen.add(canon)
+                if any(canon == (canon[:d] * (p // d)) for d in range(1, p) if p % d == 0):
+                    continue  # smaller period, already covered
+                out.append(canon)
+        return out
+
+    words = bracelets(args.period)
+    print(f"{len(words)} bracelets up to period {args.period}; "
+          f"theta at ~{args.blocks} blocks (chordal, certified)")
+    print(f"{'word':>8} {'L':>6} {'theta/L':>11} {'conv':>9} {'alpha/L':>10} "
+          f"{'gap/L':>10} {'certgap':>9}")
+    rows = []
+    for w in words:
+        p = len(w)
+        reps = max(3, args.blocks // p)
+        L = reps * p
+        n, edges = pentagon_ring_word(w, reps)
+        r = chordal_theta(n, edges, solver=args.solver)
+        n2, edges2 = pentagon_ring_word(w, max(3, reps // 2))
+        r2 = chordal_theta(n2, edges2, solver=args.solver)
+        thd = r["Theta"] / L
+        conv = abs(thd - r2["Theta"] / (len(edges2) // 4))
+        ad = alpha_density_word(w)
+        # exact-alpha sanity at this L
+        assert alpha_ring_word(w, reps) <= ad * L + 1  # cycle-mean dominates
+        gap = thd - float(ad)
+        rows.append((gap, w, L, thd, conv, ad))
+        print(f"{w:>8} {L:>6} {thd:11.7f} {conv:9.1e} "
+              f"{str(ad):>10} {gap:10.7f} {r['CertGap']/L:9.1e}")
+    rows.sort(reverse=True)
+    print("\nranking by extensive gap density:")
+    for gap, w, L, thd, conv, ad in rows[:8]:
+        print(f"  {w:>8}: gap/L = {gap:.7f}   theta/L = {thd:.7f}   alpha/L = {ad}")
+    best = rows[0]
+    print(f"\npure trans optimal: {best[1] == 't'}   "
+          f"(trans gap {next(r[0] for r in rows if r[1] == 't'):.7f})")
+    return 0
+
+
 def cmd_scaling(args):
     print("theta(pentagon ring N); trans ring: alpha = floor(4N/3), alpha* = 3N/2")
     print(f"{'family':>6} {'N':>7} {'theta':>16} {'method':>9} {'density':>9} "
@@ -597,9 +758,12 @@ def main():
     p = sub.add_parser("scaling")
     p.add_argument("--sizes", type=int, nargs="*", default=[100, 1000, 10000, 100000])
     p.add_argument("--chordal-cap", type=int, default=100000)
+    p = sub.add_parser("words")
+    p.add_argument("--period", type=int, default=6)
+    p.add_argument("--blocks", type=int, default=1200)
     args = ap.parse_args()
-    return {"validate": cmd_validate, "ring": cmd_ring,
-            "chain": cmd_chain, "scaling": cmd_scaling}[args.cmd](args)
+    return {"validate": cmd_validate, "ring": cmd_ring, "chain": cmd_chain,
+            "scaling": cmd_scaling, "words": cmd_words}[args.cmd](args)
 
 
 if __name__ == "__main__":
