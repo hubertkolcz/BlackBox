@@ -137,6 +137,12 @@ SmokeTest = <|
   "z3AvNOverGF3" -> avnZ3["AvN"] && avnZ3["EquationCount"] == 4 &&
      avnZ3["Equations"][[All, 2]] === ConstantArray[{1, 2}, 4] && avnZ3["Equations"][[All, 3]] === {0, 0, 0, 2} &&
      Quiet[AvNArgument[z3Scen, z3Model]] === $Failed,
+  "cechObstructionOrders" -> AllTrue[Values[chGHZ["ObstructionOrder"]], # === 2 &] &&
+     AllTrue[Values[chW["ObstructionOrder"]], # === Infinity &] &&
+     AllTrue[Values[chPR["ObstructionOrder"]], # === Infinity &] &&
+     AllTrue[Values[chZ3["ObstructionOrder"]], # === Infinity &] &&
+     AllTrue[Values[chH["ObstructionOrder"]], # === 1 &] &&
+     AllTrue[Values[chC["ObstructionOrder"]], # === 1 &],
   "z3ControlNoncontextual" -> chZ3c["ObstructedCount"] == 0 && chZ3c["GlobalSupportSize"] == 3 &&
      GlobalSectionQ[z3Scen, N@Flatten[Table[If[Mod[s[[2]] - s[[1]], 3] == 0, 1/3, 0],
         {c, 0, 3}, {s, Tuples[Range[0, 2], 2]}]]],

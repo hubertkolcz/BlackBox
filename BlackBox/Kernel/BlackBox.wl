@@ -36,7 +36,7 @@ CoverScenario::usage = "CoverScenario[X, cover] gives the contextuality scenario
 CechCohomology::usage = "CechCohomology[scen, e] gives the absolute \:010cech cohomology of the Z-linearized support presheaf of the empirical model e over the cover of scen: an association with \"H0Rank\" (rank of the module of compatible Z-linear families = global sections), \"H1FreeRank\" and \"H1Torsion\" (elementary divisors > 1 of the degree-0 coboundary, by Smith normal form), \"CochainRanks\" ({C^0, C^1, C^2} over contexts, pairwise and triple overlaps, each the free Z-module on the restriction image of the support), \"CoboundaryRanks\", \"ComplexCloses\" (the verified identity \[Delta]1 . \[Delta]0 = 0), and \"SupportNoSignalling\". H^1 = ker \[Delta]1 / im \[Delta]0 is computed for arbitrary covers (the C^2 term handles nonempty triple overlaps). These are AMBIENT invariants: the per-section obstruction classes \[Gamma](s) of CechObstruction live in the RELATIVE H^1, so a nonzero absolute H^1 is not itself a contextuality certificate (the PR box and the noncontextual uniform model both have H^1 = Z on the CHSH cover).";
 AvNArgument::usage = "AvNArgument[scen, e] and AvNArgument[scen, e, d] give the All-vs-Nothing argument of the empirical model e on the scenario scen over Z_d (default d = 2; d must be prime), following Abramsky-Barbosa-Kishida-Lal-Mansfield, arXiv:1502.03097 Sec. 6: the theory of e collects every Z_d-affine equation Sum c_m x_m = a (mod d) satisfied by ALL support sections of a context; the model is AvN when the joint theory is inconsistent, decided by an exact rank test over GF(d). AvN certifies strong contextuality, and every AvN model is cohomologically strongly contextual, so \"AvN\" -> True implies CechObstruction[scen, e][\"CohStronglyContextual\"]. Returns an association with keys \"Modulus\", \"Equations\" (as {context, coefficient tuple, rhs}, coefficients normalized to leading entry 1), \"EquationCount\", \"Consistent\", and \"AvN\". GHZ is the canonical AvN model (the four Mermin parity equations); the Hardy model is not AvN, matching its non-strong contextuality.";
 AvNArgument::outs = "AvN over Z_`1` requires every measurement of the scenario to take outcomes {0, ..., `2`}.";
-CechObstruction::usage = "CechObstruction[scen, e] gives the \:010cech cohomological obstruction data of the support presheaf of the empirical model e on the scenario scen (Abramsky-Mansfield-Barbosa; Abramsky-Barbosa-Kishida-Lal-Mansfield, arXiv:1502.03097): a support section s over a context is obstructed when its class \[Gamma](s) in the first \:010cech cohomology of the relative Z-linearized support presheaf is nonzero, equivalently (arXiv:1502.03097, Prop. 4.4) when NO compatible family of Z-linear combinations of support sections restricts to s. Returns an association with keys \"Obstructed\"/\"ObstructedCount\"/\"SectionCount\", \"NonextendableSections\" (sections with no global support assignment through them) and \"FalseNegatives\", \"GlobalSupportSize\", \"H0Rank\" (rank of the compatible-family module), \"SupportNoSignalling\", and the witness flags \"CohLogicallyContextual\" (some \[Gamma](s) != 0: certifies logical contextuality) and \"CohStronglyContextual\" (every \[Gamma](s) != 0: certifies strong contextuality). Vanishing of \[Gamma] is not conclusive - the Hardy model is the canonical false negative.";
+CechObstruction::usage = "CechObstruction[scen, e] gives the \:010cech cohomological obstruction data of the support presheaf of the empirical model e on the scenario scen (Abramsky-Mansfield-Barbosa; Abramsky-Barbosa-Kishida-Lal-Mansfield, arXiv:1502.03097): a support section s over a context is obstructed when its class \[Gamma](s) in the first \:010cech cohomology of the relative Z-linearized support presheaf is nonzero, equivalently (arXiv:1502.03097, Prop. 4.4) when NO compatible family of Z-linear combinations of support sections restricts to s. Returns an association with keys \"Obstructed\"/\"ObstructedCount\"/\"SectionCount\", \"ObstructionOrder\" ({context, section} -> least n >= 1 with n \[Gamma](s) = 0, by Smith normal form: 1 means \[Gamma](s) = 0, Infinity means rationally obstructed, finite n > 1 is pure relative torsion - every GHZ class has order exactly 2), \"NonextendableSections\" (sections with no global support assignment through them) and \"FalseNegatives\", \"GlobalSupportSize\", \"H0Rank\" (rank of the compatible-family module), \"SupportNoSignalling\", and the witness flags \"CohLogicallyContextual\" (some \[Gamma](s) != 0: certifies logical contextuality) and \"CohStronglyContextual\" (every \[Gamma](s) != 0: certifies strong contextuality). Vanishing of \[Gamma] is not conclusive - the Hardy model is the canonical false negative.";
 
 (* -- the Lie-Poisson interface of the KCBS cascade -- *)
 CascadeGenerators::usage = "CascadeGenerators[] gives the four so(3) generators (matrix logarithms of the stage-frame transition rotations) of the Lapkiewicz KCBS cascade.";
@@ -163,12 +163,14 @@ restrictSection[c_, s_, u_] := s[[Flatten[Position[c, #] & /@ u]]];
 
 (* gamma(s) = 0 iff s extends to a compatible family of Z-linear combinations of
    support sections (arXiv:1502.03097, Prop. 4.4). Decision order per section:
-   a deterministic global witness settles it; else exact rank refutes over Q
-   (hence over Z); else FindInstance decides the residual Z-solvability. *)
+   a deterministic global witness gives order 1; exact rank refutation over Q
+   gives order Infinity; otherwise the exact order of the class - the least n
+   with n*b in the integer column lattice of the pinned system - comes from the
+   Smith normal form: n = LCM_i d_i/gcd(d_i, (u.b)_i). Obstructed = order > 1. *)
 CechObstruction[scen_Association, e_List] := Module[
   {ctxs = scen["Contexts"], secs = scen["Sections"], glob = scen["Assignments"],
    X, outs, pos, m, ctxIdx, supp, cols, colIdx, pairs, rows, A, e2, Se, SeR,
-   colsOf, gammaZeroQ, obstructed, nonext},
+   colsOf, orderOf, orders, obstructed, nonext},
   X = Lookup[scen, "X", Union @@ ctxs];
   outs = Lookup[scen, "Outcomes", Association[# -> {0, 1} & /@ X]];
   pos = AssociationThread[X -> Range[Length[X]]];
@@ -191,14 +193,23 @@ CechObstruction[scen_Association, e_List] := Module[
   Se = Select[glob, Function[g, AllTrue[Range[m], MemberQ[supp[[#]], g[[pos /@ ctxs[[#]]]]] &]]];
   SeR = Table[DeleteDuplicates[Table[g[[pos /@ ctxs[[i]]]], {g, Se}]], {i, m}];
   colsOf = Table[Flatten[Position[cols, {i, _}, {1}, Heads -> False]], {i, m}];
-  gammaZeroQ[i0_, s0_] := Module[{rest, Ai, b, vars},
-    If[MemberQ[SeR[[i0]], s0], Return[True]];
-    rest = Complement[Range[Length[cols]], colsOf[[i0]]];
-    Ai = A[[All, rest]]; b = -A[[All, colIdx[{i0, s0}]]];
-    If[MatrixRank[MapThread[Append, {Ai, b}]] > MatrixRank[Ai], Return[False]];
-    vars = Array[\[FormalX], Length[rest]];
-    FindInstance[Thread[Ai . vars == b], vars, Integers] =!= {}];
-  obstructed = Select[cols, ! gammaZeroQ[#[[1]], #[[2]]] &];
+  Module[{restOf = <||>, AiOf = <||>, rankAi = <||>, smithAi = <||>},
+   orderOf[i0_, s0_] := Module[{b, sm, ub, nc},
+     If[MemberQ[SeR[[i0]], s0], Return[1]];
+     If[A === {}, Return[1]];
+     If[! KeyExistsQ[restOf, i0],
+      restOf[i0] = Complement[Range[Length[cols]], colsOf[[i0]]];
+      AiOf[i0] = A[[All, restOf[i0]]];
+      rankAi[i0] = If[restOf[i0] === {}, 0, MatrixRank[AiOf[i0]]]];
+     b = -A[[All, colIdx[{i0, s0}]]];
+     If[restOf[i0] === {}, Return[If[b === ConstantArray[0, Length[b]], 1, Infinity]]];
+     If[MatrixRank[MapThread[Append, {AiOf[i0], b}]] > rankAi[i0], Return[Infinity]];
+     If[! KeyExistsQ[smithAi, i0], smithAi[i0] = SmithDecomposition[AiOf[i0]]];
+     sm = smithAi[i0]; ub = sm[[1]] . b; nc = Length[restOf[i0]];
+     LCM @@ Prepend[Table[With[{di = If[r <= nc, Abs[sm[[2]][[r, r]]], 0]},
+         If[di == 0, 1, di/GCD[di, ub[[r]]]]], {r, Length[ub]}], 1]]];
+  orders = Association[Table[{ctxs[[cl[[1]]]], cl[[2]]} -> orderOf[cl[[1]], cl[[2]]], {cl, cols}]];
+  obstructed = Select[cols, orders[{ctxs[[#[[1]]]], #[[2]]}] =!= 1 &];
   nonext = Select[cols, ! MemberQ[SeR[[#[[1]]]], #[[2]]] &];
   <|"SectionCount" -> Length[cols],
     "SupportSizes" -> Length /@ supp,
@@ -207,6 +218,7 @@ CechObstruction[scen_Association, e_List] := Module[
     "H0Rank" -> Length[cols] - MatrixRank[A],
     "Obstructed" -> ({ctxs[[#[[1]]]], #[[2]]} & /@ obstructed),
     "ObstructedCount" -> Length[obstructed],
+    "ObstructionOrder" -> orders,
     "NonextendableSections" -> ({ctxs[[#[[1]]]], #[[2]]} & /@ nonext),
     "FalseNegatives" -> ({ctxs[[#[[1]]]], #[[2]]} & /@ Complement[nonext, obstructed]),
     "CohLogicallyContextual" -> Length[obstructed] > 0,
