@@ -6,10 +6,10 @@ on sup_w gap_bar(w) = max over all words tested; if (cct)^inf stays the maximum 
 necklaces (not merely the balanced/Christoffel words checked earlier), that is strong
 evidence for global optimality of (cct)^inf.
 
-RESULT (this run, Pmax=17): cct and its powers (cct, cctcct, ...) are the UNIQUE maximum,
-gap_bar = 0.0698975, over EVERY binary necklace up to period 17 (~15000+ words); NO word
-beats cct; the runner-ups are cct-perturbations (cctcctccttct, ... ~0.0689) about 0.001
-below. Combined with the alpha-cis theorem (cct uniquely attains alpha_bar = 4/3), this
+RESULT (Pmax=18): cct and its powers (cct, cctcct, ...) are the UNIQUE maximum,
+gap_bar = 0.0698975, over EVERY binary necklace up to period 18 (~29000+ words); NO word
+beats cct; the runner-ups are cct-perturbations (cctcctccttct, ... ~0.0689-0.0692) about
+0.001 below. Combined with the alpha-cis theorem (cct uniquely attains alpha_bar = 4/3), this
 makes an aperiodic (Sturmian) beater implausible. The EXACT sup (= gap(cct)?) and the
 matching upper bracket (Gamma_9, Gamma_10) remain the genuinely-hard ergodic-optimization
 open items -- a certified upper bound needs the exact-rational windowed transfer-SDP

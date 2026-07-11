@@ -579,8 +579,8 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   EVIDENCE (key D3_globalOptimalityEvidence; strengthened 2026-07-12 by an
   EXHAUSTIVE all-word census, `word_census.py`) — cct is a SHARP ISOLATED peak.
   The prior evidence covered only balanced/Christoffel words of period ≤ 21; the
-  new census computes gap̄(w) for **every binary necklace up to period 17**
-  (~15000+ words, not just balanced ones) and finds cct and its powers the
+  new census computes gap̄(w) for **every binary necklace up to period 18**
+  (~29000+ words, not just balanced ones) and finds cct and its powers the
   **unique** maximum, gap̄ = 0.0698975 — **no word beats cct**, runner-ups are
   cct-perturbations (cctcctccttct …) ≈ 0.001 below. With the α-cis theorem (cct
   uniquely hits ᾱ=4/3) as the mechanism, an aperiodic (Sturmian) beat is now very
