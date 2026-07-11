@@ -204,6 +204,126 @@ def alpha_density_word(word):
     return best / len(word)
 
 
+def pentagon_chain_word(word):
+    """OPEN chain of m = len(word)+1 edge-glued pentagons with per-gluing
+    orientation letters (3m+2 vertices: seed glue edge (0,1), block k adds
+    3k+2, 3k+3, 3k+4). 'c'*(m-1) reproduces BlackBox`PentagonChain[m] with
+    identical vertex labels; 't'*(m-1) is the open TRANS chain."""
+    m = len(word) + 1
+    edges = set()
+    u, v = 0, 1
+    for k in range(m):
+        a, b, x = 3 * k + 2, 3 * k + 3, 3 * k + 4
+        for p, q in ((u, v), (u, a), (a, b), (b, x), (x, v)):
+            edges.add((min(p, q), max(p, q)))
+        if k < m - 1:
+            u, v = (a, b) if word[k] == "c" else (b, a)
+    return 3 * m + 2, sorted(edges)
+
+
+def alpha_chain_word(word):
+    """Exact independence number of pentagon_chain_word(word) by the open-
+    boundary version of the interface transfer DP (seed pair counted)."""
+    m = len(word) + 1
+    states = [(0, 0), (1, 0), (0, 1)]
+    NEG = -(10 ** 9)
+    vec = [su + sv for (su, sv) in states]   # seed vertices contribute
+    for k in range(m):
+        letter = word[k] if k < m - 1 else "c"   # last exit unused
+        new = [NEG] * 3
+        for i, (su, sv) in enumerate(states):
+            if vec[i] <= NEG // 2:
+                continue
+            for s1 in (0, 1):
+                if su and s1: continue
+                for s2 in (0, 1):
+                    if s1 and s2: continue
+                    for s3 in (0, 1):
+                        if (s2 and s3) or (s3 and sv): continue
+                        out = (s1, s2) if letter == "c" else (s2, s1)
+                        j = states.index(out)
+                        new[j] = max(new[j], vec[i] + s1 + s2 + s3)
+        vec = new
+    return max(vec)
+
+
+def word_density_transfer_sdp(word, solver="clarabel"):
+    """EXACT theta-density of the periodic gluing word by the position-space
+    transfer SDP: per position one Q block (5x5 on the glue quad u,v,A,B +
+    apex) and one R block (4x4 on v,B,X + apex), uniform unit diagonal and
+    border, fills zero; minimize the mean apex-corner sum d. Certified by the
+    same Schur/assembly argument as EpsilonCertificate.wl; agrees with the
+    DFT-symbol route to solver precision without any symmetry reduction."""
+    import clarabel as _cl
+    p = len(word)
+    T5, T4 = 15, 10
+    qoff = {k: k * T5 for k in range(p)}
+    roff = {k: p * T5 + k * T4 for k in range(p)}
+    nvar = p * (T5 + T4)
+    def sidx(i, j):
+        if i > j: i, j = j, i
+        return j * (j + 1) // 2 + i
+    qv = lambda k, i, j: qoff[k % p] + sidx(i, j)
+    rv = lambda k, i, j: roff[k % p] + sidx(i, j)
+    IU, IV, IA, IB, IP = range(5)
+    JV, JB, JX, JP = range(4)
+    rows, cols, vals, bvals = [], [], [], []
+    def add(terms, rhs):
+        r = len(bvals)
+        for var, coef in terms:
+            rows.append(r); cols.append(var); vals.append(coef)
+        bvals.append(rhs)
+    for k in range(p):
+        add([(rv(k, JX, JX), 1.0)], 1.0)
+        add([(rv(k, JX, JP), 1.0)], 1.0)
+        add([(qv(k, IV, IA), 1.0)], 0.0)
+        add([(qv(k, IU, IB), 1.0)], 0.0)
+        add([(qv(k, IV, IB), 1.0), (rv(k, JV, JB), 1.0)], 0.0)
+        b = word[k]
+        rA, rB = (IU, IV) if b == "c" else (IV, IU)
+        kp = (k + 1) % p
+        t = [(qv(k, IA, IA), 1.0), (qv(kp, rA, rA), 1.0)]
+        if b == "t": t.append((rv(kp, JV, JV), 1.0))
+        add(t, 1.0)
+        t = [(qv(k, IB, IB), 1.0), (rv(k, JB, JB), 1.0), (qv(kp, rB, rB), 1.0)]
+        if b == "c": t.append((rv(kp, JV, JV), 1.0))
+        add(t, 1.0)
+        t = [(qv(k, IA, IP), 1.0), (qv(kp, rA, IP), 1.0)]
+        if b == "t": t.append((rv(kp, JV, JP), 1.0))
+        add(t, 1.0)
+        t = [(qv(k, IB, IP), 1.0), (rv(k, JB, JP), 1.0), (qv(kp, rB, IP), 1.0)]
+        if b == "c": t.append((rv(kp, JV, JP), 1.0))
+        add(t, 1.0)
+    neq = len(bvals)
+    dims = []
+    for k in range(p):
+        for (i, j) in [(i, j) for j in range(5) for i in range(j + 1)]:
+            r = len(bvals)
+            rows.append(r); cols.append(qv(k, i, j))
+            vals.append(-1.0 if i == j else -SQRT2)
+            bvals.append(0.0)
+        dims.append(5)
+    for k in range(p):
+        for (i, j) in [(i, j) for j in range(4) for i in range(j + 1)]:
+            r = len(bvals)
+            rows.append(r); cols.append(rv(k, i, j))
+            vals.append(-1.0 if i == j else -SQRT2)
+            bvals.append(0.0)
+        dims.append(4)
+    A = sp.csc_matrix((vals, (rows, cols)), shape=(len(bvals), nvar))
+    c = np.zeros(nvar)
+    for k in range(p):
+        c[qv(k, IP, IP)] += 1.0
+        c[rv(k, JP, JP)] += 1.0
+    cones = [_cl.ZeroConeT(neq)] + [_cl.PSDTriangleConeT(d) for d in dims]
+    st = _cl.DefaultSettings(); st.verbose = False
+    st.tol_gap_abs = st.tol_gap_rel = st.tol_feas = 1e-11
+    P = sp.csc_matrix((nvar, nvar))
+    res = _cl.DefaultSolver(P, c, A, np.array(bvals), cones, st).solve()
+    x = np.array(res.x)
+    return sum(x[qv(k, IP, IP)] + x[rv(k, JP, JP)] for k in range(p)) / p
+
+
 # ---------------------------------------------------------------------------
 # chordal extension: minimum-degree elimination with lazy heap
 # ---------------------------------------------------------------------------
@@ -629,6 +749,19 @@ def cmd_validate(args):
     ok &= ch["Theta"] <= cr["Theta"] + 1e-5
     print(f"  chain 31 = {ch['Theta']:.6f}  <=  cis-ring 33 = {cr['Theta']:.6f}: "
           f"{ch['Theta'] <= cr['Theta'] + 1e-5}")
+    print("open word-chain builder vs PentagonChain (all-cis word):")
+    for m in (3, 7, 16):
+        r = chordal_theta(*pentagon_chain_word("c" * (m - 1)), solver=args.solver)
+        d = abs(r["Theta"] - DENSE_REFERENCE[("chain", m)])
+        ok &= d < 1e-5
+        print(f"  chain {m:2d}: theta={r['Theta']:.9f}  |diff|={d:.2e}   "
+              f"alpha={alpha_chain_word('c' * (m - 1))}")
+    print("per-cycle transfer SDP (position-space exact word densities):")
+    for wd, ref in (("t", 1.3767177459), ("c", 1.5), ("cct", 1.4032308692)):
+        v = word_density_transfer_sdp(wd)
+        ok &= abs(v - ref) < 2e-6
+        print(f"  {wd:>4}: transfer-SDP = {v:.9f}  ref = {ref:.9f}  "
+              f"|diff| = {abs(v - ref):.2e}")
     print("VALIDATE OK:", ok)
     return 0 if ok else 1
 
@@ -755,6 +888,10 @@ def main():
     p.add_argument("--family", choices=["trans", "cis"], default="trans")
     p = sub.add_parser("chain")
     p.add_argument("N", type=int)
+    p = sub.add_parser("density")
+    p.add_argument("word", type=str)
+    p = sub.add_parser("transchain")
+    p.add_argument("M", type=int)
     p = sub.add_parser("scaling")
     p.add_argument("--sizes", type=int, nargs="*", default=[100, 1000, 10000, 100000])
     p.add_argument("--chordal-cap", type=int, default=100000)
@@ -762,8 +899,20 @@ def main():
     p.add_argument("--period", type=int, default=6)
     p.add_argument("--blocks", type=int, default=1200)
     args = ap.parse_args()
+    def cmd_density(a):
+        print(f"theta-density({a.word}) = {word_density_transfer_sdp(a.word):.9f}")
+        return 0
+    def cmd_transchain(a):
+        n, e = pentagon_chain_word("t" * (a.M - 1))
+        r = chordal_theta(n, e, solver=a.solver)
+        al = alpha_chain_word("t" * (a.M - 1))
+        print(f"trans-chain M={a.M} (n={n}): theta={r['Theta']:.6f} "
+              f"(certgap {r['CertGap']:.1e})  alpha={al}  "
+              f"gap={r['Theta'] - al:.6f}  gap/M={(r['Theta'] - al)/a.M:.6f}")
+        return 0
     return {"validate": cmd_validate, "ring": cmd_ring, "chain": cmd_chain,
-            "scaling": cmd_scaling, "words": cmd_words}[args.cmd](args)
+            "scaling": cmd_scaling, "words": cmd_words,
+            "density": cmd_density, "transchain": cmd_transchain}[args.cmd](args)
 
 
 if __name__ == "__main__":

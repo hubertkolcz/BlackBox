@@ -404,6 +404,32 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   ᾱ ≥ 4/3 + 1/(3p) strictly (adjusted max-plus cube of the cis step has
   min-max exactly 13/3 = 3·(4/3) + ⅓), and f_c = 2/3 without ccc forces all
   cis-runs equal to 2 by the run-average argument. Note the naive converse is
-  false: cctt has f_c = 1/2 but ᾱ = 11/8. Open: construct the explicit
-  ε-optimality certificate; trans-CHAIN density closed form (numerically →
-  τ\*?) — unverified.
+  false: cctt has f_c = 1/2 but ᾱ = 11/8. ~~Construct the explicit ε-optimality
+  certificate~~ RESOLVED — CONSTRUCTED (EpsilonCertificate.wl, key
+  D3_epsilonCertificate): a window-7 transfer-SDP sub-action — 128 pairs of
+  exact rational PSD blocks Q (5×5, glue quad + apex) / R (4×4, X-triangle +
+  apex) per de Bruijn-7 node, closure potentials ψ, DP potentials Φ with fixed
+  strategy — proving **gap(w) ≤ Γ = 1541247/20000000 = 0.07706235 for EVERY
+  gluing word**, i.e. ε = 0.0071648 above the cct optimum. Assembly lemma:
+  blocks sum to M = [[I+B, e],[eᵀ, σ]] ⪰ 0 (uniform unit diagonal/border by
+  the edge equalities) ⇒ Schur ⇒ ϑ(ring) ≤ σ = Σd; Φ-telescoping ⇒
+  α(ring) ≥ Σr; ψ-closure summed over the word's closed de Bruijn walk
+  telescopes to gap ≤ Γ. All identities and 256 PSD facts exact rational,
+  re-verified independently in WL. Convergence: Γ(k) = 0.1667 (pinch), 0.1250,
+  0.1020, 0.0953, 0.0824, 0.07706 for k = 2..7 — ε roughly halves per window
+  step; ε → 0 exactly is the τ_cct field obstruction. Bonus: the Q/R clique
+  family solves the per-cycle transfer-SDP EXACTLY (< 10⁻⁶ loss on every
+  tested word) — a position-space word-density solver with no DFT symbol.
+  ~~Trans-CHAIN density~~ RESOLVED (key D3_transChainResolved): open trans
+  chains have the SAME bulk density τ\* (increments 1.3767178 within
+  certificates from m = 50 to 800; boundary constant ≈ 0.995), with
+  α(trans-chain m) = ⌊4(m+1)/3⌋ at every computed point — the gap is
+  EXTENSIVE ≈ (τ\*−4/3)m, so Case D's "rings beat chains" was never about
+  closure: the decaying chains were cis, and orientation is the whole story.
+  Small-m accident: ϑ(trans-chain 5) = α = 8 exactly. Durable tools added to
+  `lovasz_theta_sparse.py`: pentagon_chain_word, alpha_chain_word,
+  word_density_transfer_sdp (exact position-space ϑ-density of any periodic
+  word; no symmetry reduction). All §6 mesh threads are now resolved; what
+  remains genuinely open at research grade: exact (ε → 0) global optimality
+  of (cct)^∞ — blocked by the τ_cct field — and the ergodic-optimization
+  proof that periodic orbits suffice.
