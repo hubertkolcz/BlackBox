@@ -80,15 +80,8 @@ bound above and `≥ −n` trivially), `|W_g| ≤ 1` — the witness is feasible
 By LP duality `1 + 2ν = max_feasible (e·w′) ≥ e·w`, so `ν ≥ CF/(n−1)`. ∎
 
 **Upper bound `CF ≥ (n−1)ν` (all `e`).** If `CF = 1`, `e = W_{γ*}` and Lemma 1 gives
-equality. Otherwise set
-
-    e₀ = ( e − CF · W_{γ*} ) / ( 1 − CF ).
-
-Then `B_{γ*}(e₀) = n − 2` (direct computation), and `e₀ ∈ P_NC` — it is a valid model
-saturating `γ*` and, by Lemma 0, violates no other facet [verified in exact arithmetic
-across symmetric, asymmetric-correlator, asymmetric-singles, and multi-box-mixture
-models: `e₀ ≥ 0` with `min = 0` and `CF(e₀) = 0` in every case]. Thus
-`‖e₀‖_𝒜 = 1`. With `e = (1 − CF) e₀ + CF · W_{γ*}` and the gauge convex,
+equality. Otherwise set `e₀ = (e − CF·W_{γ*})/(1 − CF)`. By Lemma 2 below, `e₀ ∈ P_NC`,
+so `‖e₀‖_𝒜 = 1`. With `e = (1 − CF) e₀ + CF · W_{γ*}` and the gauge convex,
 
     1 + 2ν(e) = ‖e‖_𝒜 ≤ (1−CF)·‖e₀‖_𝒜 + CF·‖W_{γ*}‖_𝒜
               = (1−CF)·1 + CF·(1 + 2/(n−1)) = 1 + 2·CF/(n−1),
@@ -96,6 +89,43 @@ models: `e₀ ≥ 0` with `min = 0` and `CF(e₀) = 0` in every case]. Thus
 so `ν ≤ CF/(n−1)`. ∎
 
 Both bounds give **CF = (n − 1) · ν**. ∎
+
+## Lemma 2 — e₀ lands in the noncontextual polytope
+
+WLOG (local relabelings `A_i ↦ ±A_i`, a scenario symmetry) take `γ* = (−1,…,−1)`, so the
+violated inequality is `Σ_i c_i ≥ −(n−2)` with `c_i = ⟨A_i A_{i+1}⟩_e`, `S := Σ_i c_i`,
+and `CF = (−S − (n−2))/2`. `W_{γ*}` is the Wright box (correlators `−1`, singles `0`).
+Write `m_i = ⟨A_i⟩_e`. One computes `B_{γ*}(e₀) = n − 2` (e₀ saturates `γ*`).
+
+**(A) e₀ ≥ 0.** For a section `(s,t)` of edge `i`, `4·p⁰_{st}·(1−CF) = 4·pᵉ_{st} + CF(st−1)`.
+Correlated sections (`st = +1`) scale by `1/(1−CF) ≥ 0`, so stay ≥ 0. Anti-correlated
+sections (`st = −1`) need `pᵉ_{st} ≥ CF/2`, equivalently
+
+    (n−1) ± (m_i − m_{i+1}) + Σ_{j≠i} c_j ≥ 0.                          (‡)
+
+Edge-positivity of `e` at the correlated sections of every edge `j` gives
+`c_j ≥ −1 + |m_j + m_{j+1}|`, hence `Σ_{j≠i} c_j ≥ −(n−1) + Σ_{j≠i} |m_j + m_{j+1}|`.
+The complementary path (all edges but `i`) has `n−1` edges; because `n` is odd its
+alternating sum telescopes exactly to
+
+    Σ_{j≠i} (−1)^… (m_j + m_{j+1}) = m_{i+1} − m_i,
+
+so `|m_i − m_{i+1}| ≤ Σ_{j≠i} |m_j + m_{j+1}|`. Therefore
+`Σ_{j≠i} c_j ≥ −(n−1) + |m_i − m_{i+1}|`, and substituting into (‡):
+`(n−1) ± (m_i − m_{i+1}) + Σ_{j≠i} c_j ≥ ±(m_i − m_{i+1}) + |m_i − m_{i+1}| ≥ 0`. ✓
+
+**(B) e₀ satisfies every facet.** It saturates `γ*`. For `γ ≠ γ*` let `D = {i : γ_i = −1}`,
+`d = |D|` (odd, and `d ≤ n−2` since `γ ≠ γ*`). Then
+
+    B_γ(e₀) = ( B_γ(e) + CF·Γ ) / (1−CF),   Γ = Σ_i γ_i = n − 2d,
+
+and `B_γ(e) = −B_{γ*}(e) − 2 Σ_{i∈D} c_i` (since `γ_i + γ*_i = −2` on `D`, `0` off `D`),
+with `B_{γ*}(e) = 2CF + (n−2)`. Substituting, `B_γ(e₀) ≤ n−2` is equivalent to
+`−Σ_{i∈D} c_i ≤ (n−2) − CF·(n−2−d)`. But `−Σ_{i∈D} c_i ≤ d` (each `−c_i ≤ 1`), and
+`d ≤ (n−2) − CF·(n−2−d)` reduces to `CF ≤ 1` (using `n−2−d ≥ 0`). ✓
+
+Both parts use `n` odd essentially — the telescoping sign in (A), and `d ≤ n−2` in (B).
+Hence `e₀ ∈ P_NC`. ∎
 
 ## Where the constant comes from
 
@@ -113,10 +143,14 @@ n-cycle — the pentagon's `4` is the `n = 5` instance.
 
 ## Rigour status
 
-Fully rigorous: Lemma 0; Lemma 1 (`ν(W_γ) = 1/(n−1)`); the lower bound `CF ≤ (n−1)ν` for
-**all** models (explicit dual witness); the whole theorem on the symmetric slice
-(the `G`-symmetrisation makes the upper-bound decomposition self-contained). The upper
-bound in full generality rests on one geometric lemma — that `e₀` lands in `P_NC` — which
-is proven for symmetric models and verified in exact arithmetic for every asymmetric and
-multi-facet-mixture model tested; a coordinate-free proof of that lemma is the only step
-not reduced to a one-line inequality.
+**Complete and unconditional** for every no-disturbance model on the odd n-cycle:
+Lemma 0 (parity), Lemma 1 (`ν(W_γ) = 1/(n−1)`, by symmetrisation), Lemma 2 (`e₀ ∈ P_NC`,
+by edge-positivity + the odd-cycle telescoping identity), the lower bound `CF ≤ (n−1)ν`
+(explicit dual witness), and the upper bound `CF ≥ (n−1)ν` (Lemma 2 + gauge convexity).
+Every step reduces to a one-line inequality; the LP values `CF` and `ν` are exact
+(machine-verified for `n = 5, 7, 9` and random asymmetric models via `SignedNegativity.wl`).
+
+The identity is specific to odd cycles: for even cycles the Wright box is noncontextual,
+and other scenarios give a different constant (CHSH and GHZ both give `CF/ν = 2`). The
+`n − 1` is the odd cycle's frustration number — the maximal number of simultaneously
+satisfiable anti-correlations, one short of a perfect 2-colouring.
