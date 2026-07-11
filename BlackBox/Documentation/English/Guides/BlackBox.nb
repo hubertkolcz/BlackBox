@@ -19,6 +19,15 @@ Needs[\"HubertKolcz`BlackBox`\"].\
 \>", "Text",ExpressionUUID->"ccab2f85-2a65-3541-827f-29cbe3448f2c"],
 
 Cell[TextData[{
+ StyleBox["AvNArgument", "InlineCode"],
+ " \[LongDash] ",
+ "AvNArgument[scen, e] and AvNArgument[scen, e, d] give the All-vs-Nothing \
+argument of the empirical model e on the scenario scen over Z_d (default d = \
+2; d must be prime), following Abramsky-Barbosa-Kishida-Lal-Mansfield, \
+arXiv:1502."
+}], "Item",ExpressionUUID->"5c7d3f92-2e48-4b61-8a05-d94e17b26c38"],
+
+Cell[TextData[{
  StyleBox["CascadeGenerators", "InlineCode"],
  " \[LongDash] ",
  "CascadeGenerators[] gives the four so(3) generators (matrix logarithms of \

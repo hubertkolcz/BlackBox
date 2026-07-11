@@ -44,6 +44,12 @@ ccPR = CechCohomology[scen4, ePR];
 ccH = CechCohomology[scen4, eHardy];
 ccWW = CechCohomology[scenProd, prodModel[CycleModel[5, "Wright"], CycleModel[5, "Wright"]]];
 ccQQ = CechCohomology[scenProd, prodModel[CycleModel[5, "Quantum"], CycleModel[5, "Quantum"]]];
+ghzScen = CoverScenario[{"aX", "aY", "bX", "bY", "cX", "cY"},
+  {{"aX", "bX", "cX"}, {"aX", "bY", "cY"}, {"aY", "bX", "cY"}, {"aY", "bY", "cX"}}];
+ghzModel = Flatten[Table[If[Mod[Total[s], 2] == par, 1/4, 0], {par, {0, 1, 1, 1}}, {s, Tuples[{0, 1}, 3]}]];
+chGHZ = CechObstruction[ghzScen, ghzModel];
+avnGHZ = AvNArgument[ghzScen, ghzModel];
+avnOf[scn_, ee_] := AvNArgument[scn, ee]["AvN"];
 
 SmokeTest = <|
   "alpha" -> IndependenceNumber[c5] == 2,
@@ -106,6 +112,19 @@ SmokeTest = <|
   "cechCohomProduct" -> ccWW["CochainRanks"] == {100, 700, 2200} && ccWW["H0Rank"] == 1 &&
      ccWW["H1FreeRank"] == 0 && ccWW["ComplexCloses"] &&
      ccQQ["H0Rank"] == 36 && ccQQ["H0Rank"] == ccQ["H0Rank"]^2 && ccQQ["ComplexCloses"],
+  "cechGHZAllObstructed" -> chGHZ["ObstructedCount"] == 16 && chGHZ["SectionCount"] == 16 &&
+     chGHZ["CohStronglyContextual"] && chGHZ["GlobalSupportSize"] == 0 && chGHZ["H0Rank"] == 7,
+  "avnGHZMermin" -> avnGHZ["AvN"] && avnGHZ["EquationCount"] == 4 &&
+     avnGHZ["Equations"][[All, 2]] === ConstantArray[{1, 1, 1}, 4] &&
+     avnGHZ["Equations"][[All, 3]] === {0, 1, 1, 1},
+  "avnCensus" -> (avnOf @@@ {{scen5, CycleModel[5, "Classical"]}, {scen5, CycleModel[5, "Wright"]},
+       {scen4, ePR}, {scen4, eHardy}, {CycleScenario[6], CycleModel[6, "Wright"]},
+       {scenProd, prodModel[CycleModel[5, "Wright"], CycleModel[5, "Wright"]]},
+       {scenProd, prodModel[CycleModel[5, "Quantum"], CycleModel[5, "Quantum"]]}}) ===
+     {False, True, True, False, False, True, False},
+  "avnImpliesCohStrong" -> AllTrue[{{avnGHZ["AvN"], chGHZ}, {avnOf[scen5, CycleModel[5, "Wright"]], chW},
+       {avnOf[scen4, ePR], chPR}, {avnOf[scen4, eHardy], chH}},
+     Function[p, ! p[[1]] || p[[2]]["CohStronglyContextual"]]],
   "fourGenerators" -> Length[gens] == 4,
   "generatorSpan" -> MatrixRank[So3Axis /@ gens, Tolerance -> 10^-8] == 2,
   "dlaCloses" -> DLADimension[gens] == 3

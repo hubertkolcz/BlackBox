@@ -106,6 +106,39 @@ chQQ = CechObstruction[scenProd, prodModel[CycleModel[5, "Quantum"], CycleModel[
 (*Reading. On the fixed product cover \[LongDash] no pentad extension, no composite observable \[LongDash] the cohomological layer already expels the Wright product at every one of the 100 product sections: any compatible Z-linear product family would marginalize (sum coefficients over one copy's outcomes) to a single-copy compatible family, which the single-copy obstruction forbids. This is complementary to ab_sheaf.wl Sec. 3, where the QM-certified pentad extension kills the same model one level lower (local existence at C^0, remainder -1/4); and it is invisible to the GE/CE single-copy cap alpha* = 5/2, which admits the Wright box. The quantum product stays clean: 0/225 obstructed, |Se| = 121 = 11^2 \[LongDash] the product of the two Lucas-11 independent-set families, exactly as product structure demands.*)
 
 (* ::Section:: *)
+(*The GHZ Model, and the All-vs-Nothing Layer*)
+
+(* ::Text:: *)
+(*The other half of arXiv:1502.03097 (Sec. 6) is the All-vs-Nothing argument: collect every Z2-affine equation satisfied by ALL support sections of a context; the model is AvN when the joint theory is inconsistent. AvN certifies strong contextuality, and every AvN model is cohomologically strongly contextual \[LongDash] so AvN implies the \[Gamma]-certificate, and the two layers must agree wherever AvN fires. GHZ is the canonical AvN model and the canonical NON-CYCLE cover \[LongDash] three parties, X or Y each: exactly what CoverScenario exists for.*)
+
+(* ::CodeText:: *)
+(*The Mermin scenario and the GHZ model (parity 0 on XXX, parity 1 on the three XYY permutations); the theory is the four textbook equations, and their sum is 0 = 1:*)
+
+(* ::Input:: *)
+ghzScen = CoverScenario[{"aX", "aY", "bX", "bY", "cX", "cY"},
+  {{"aX", "bX", "cX"}, {"aX", "bY", "cY"}, {"aY", "bX", "cY"}, {"aY", "bY", "cX"}}];
+ghzModel = Flatten[Table[If[Mod[Total[s], 2] == par, 1/4, 0], {par, {0, 1, 1, 1}}, {s, Tuples[{0, 1}, 3]}]];
+chGHZ = CechObstruction[ghzScen, ghzModel]; avnGHZ = AvNArgument[ghzScen, ghzModel];
+{Row[{"GHZ \[Gamma]: ", chGHZ["ObstructedCount"], "/", chGHZ["SectionCount"], ", strong certificate: ", chGHZ["CohStronglyContextual"], ", |Se| = ", chGHZ["GlobalSupportSize"]}],
+ Row[{"GHZ AvN: ", avnGHZ["AvN"], ", equations: "}], avnGHZ["Equations"]}
+
+(* ::CodeText:: *)
+(*AvN across the whole census, with the cohomological strong certificate alongside \[LongDash] the implication AvN \[Implies] CSC holds row by row (the converse direction is not claimed: CSC models without parity structure exist outside this census):*)
+
+(* ::Input:: *)
+avnRows = {{"C5 classical", scen5, CycleModel[5, "Classical"], chC}, {"C5 quantum", scen5, CycleModel[5, "Quantum"], chQ},
+   {"C5 Wright", scen5, CycleModel[5, "Wright"], chW}, {"C6 Wright", CycleScenario[6], CycleModel[6, "Wright"], chW6},
+   {"PR box", scen4, ePR, chPR}, {"Hardy", scen4, eHardy, chH}, {"GHZ", ghzScen, ghzModel, chGHZ},
+   {"Wright\[CircleTimes]Wright", scenProd, prodModel[CycleModel[5, "Wright"], CycleModel[5, "Wright"]], chWW},
+   {"quantum\[CircleTimes]quantum", scenProd, prodModel[CycleModel[5, "Quantum"], CycleModel[5, "Quantum"]], chQQ}};
+avnTable = Module[{a}, Table[a = AvNArgument[r[[2]], r[[3]]];
+    {r[[1]], a["EquationCount"], a["AvN"], r[[4]]["CohStronglyContextual"], ! a["AvN"] || r[[4]]["CohStronglyContextual"]}, {r, avnRows}]];
+TableForm[avnTable, TableHeadings -> {None, {"model", "equations", "AvN", "CSC", "AvN \[Implies] CSC"}}]
+
+(* ::Text:: *)
+(*Reading. The AvN layer is the cheap end of the hierarchy \[LongDash] no cohomology, no LP, just parity bookkeeping over GF(2) \[LongDash] and it convicts GHZ, the Wright boxes (odd cycles and their products; the 5 equations x_i + x_{i+1} = 1 around C5 are the parity argument verbatim), and the PR box. It correctly refuses the Hardy model (no nontrivial equations survive its support), whose strong contextuality fails and whose \[Gamma] is the documented false negative one level up. The even-cycle control C6 carries 6 equations that ARE jointly satisfiable \[LongDash] AvN distinguishes odd from even for the same local data, exactly as the cohomology does.*)
+
+(* ::Section:: *)
 (*The Absolute Groups: H^0 and H^1 of the Linearized Support Presheaf*)
 
 (* ::Text:: *)
@@ -121,11 +154,12 @@ ccW = CechCohomology[scen5, CycleModel[5, "Wright"]];
 ccU = CechCohomology[scen4, ConstantArray[1/4, 16]];
 ccPR = CechCohomology[scen4, ePR]; ccH = CechCohomology[scen4, eHardy];
 ccW6 = CechCohomology[CycleScenario[6], CycleModel[6, "Wright"]];
+ccG = CechCohomology[ghzScen, ghzModel];
 ccWW = CechCohomology[scenProd, prodModel[CycleModel[5, "Wright"], CycleModel[5, "Wright"]]];
 ccQQ = CechCohomology[scenProd, prodModel[CycleModel[5, "Quantum"], CycleModel[5, "Quantum"]]];
 cohomTable = MapThread[{#1, #2["CochainRanks"], #2["H0Rank"], #2["H1FreeRank"], #2["H1Torsion"], #2["ComplexCloses"]} &,
-  {{"C5 classical", "C5 quantum", "C5 Wright", "C6 Wright", "CHSH uniform", "PR box", "Hardy", "Wright\[CircleTimes]Wright", "quantum\[CircleTimes]quantum"},
-   {ccC, ccQ, ccW, ccW6, ccU, ccPR, ccH, ccWW, ccQQ}}];
+  {{"C5 classical", "C5 quantum", "C5 Wright", "C6 Wright", "CHSH uniform", "PR box", "Hardy", "GHZ", "Wright\[CircleTimes]Wright", "quantum\[CircleTimes]quantum"},
+   {ccC, ccQ, ccW, ccW6, ccU, ccPR, ccH, ccG, ccWW, ccQQ}}];
 TableForm[cohomTable, TableHeadings -> {None, {"model", "{C0, C1, C2}", "rk H0", "rk H1", "H1 torsion", "\[Delta]1\[Delta]0 = 0"}}]
 
 (* ::Text:: *)
@@ -151,13 +185,19 @@ SupportCohomologyVerification = <|
      chH["FalseNegatives"] === {{{0, 1}, {0, 0}}} && chH["H0Rank"] == 6,
   "productWrightExpelled" -> chWW["ObstructedCount"] == 100 && chWW["CohStronglyContextual"],
   "productQuantumSilent" -> chQQ["ObstructedCount"] == 0 && chQQ["GlobalSupportSize"] == 121,
+  "ghzAllObstructed" -> chGHZ["ObstructedCount"] == 16 && chGHZ["CohStronglyContextual"] &&
+     chGHZ["GlobalSupportSize"] == 0,
+  "ghzAvNMermin" -> avnGHZ["AvN"] && avnGHZ["EquationCount"] == 4 &&
+     avnGHZ["Equations"][[All, 3]] === {0, 1, 1, 1},
+  "avnCensusPattern" -> avnTable[[All, 3]] === {False, False, True, False, True, False, True, True, False},
+  "avnImpliesCSC" -> AllTrue[avnTable[[All, 5]], TrueQ],
   "cohomCensusMatchesUlreyNotebook" -> ({#["H0Rank"], #["H1FreeRank"], #["H1Torsion"]} & /@ {ccU, ccPR, ccH}) ===
      {{9, 1, {}}, {1, 1, {}}, {6, 1, {}}},
-  "cohomComplexCloses" -> AllTrue[{ccC, ccQ, ccW, ccW6, ccU, ccPR, ccH, ccWW, ccQQ}, #["ComplexCloses"] &],
+  "cohomComplexCloses" -> AllTrue[{ccC, ccQ, ccW, ccW6, ccU, ccPR, ccH, ccG, ccWW, ccQQ}, #["ComplexCloses"] &],
   "cohomH0Multiplicative" -> ccQQ["H0Rank"] == ccQ["H0Rank"]^2 && ccWW["H0Rank"] == ccW["H0Rank"]^2,
   "cohomProductH1Vanishes" -> ccWW["H1FreeRank"] == 0 && ccQQ["H1FreeRank"] == 0 &&
      ccWW["CochainRanks"] == {100, 700, 2200},
-  "cohomNoTorsionInCensus" -> AllTrue[{ccC, ccQ, ccW, ccW6, ccU, ccPR, ccH, ccWW, ccQQ}, #["H1Torsion"] === {} &],
+  "cohomNoTorsionInCensus" -> AllTrue[{ccC, ccQ, ccW, ccW6, ccU, ccPR, ccH, ccG, ccWW, ccQQ}, #["H1Torsion"] === {} &],
   "verdict" -> "ADOPT: the support-presheaf Cech obstruction joins the core as the possibilistic-layer certificate; the Laplacian stays a no-disturbance projector only"
 |>;
 SupportCohomologyVerification["OK"] = And @@ Cases[Values[SupportCohomologyVerification], _?BooleanQ];

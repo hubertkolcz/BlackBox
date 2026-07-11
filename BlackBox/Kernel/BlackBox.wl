@@ -34,6 +34,8 @@ CycleCoboundary::usage = "CycleCoboundary[n] gives the cellular-sheaf coboundary
 HarmonicResidual::usage = "HarmonicResidual[delta, e] gives Norm[delta . e]: the no-disturbance (signalling) residual of the model e. It vanishes on every no-disturbance model and is provably blind to contextuality - use it as a projector diagnostic, not a contextuality measure.";
 CoverScenario::usage = "CoverScenario[X, cover] gives the contextuality scenario of an arbitrary measurement cover as an association: measurements X, contexts = the elements of cover (ordered measurement lists), section order per context (Tuples[{0,1}, Length[context]]), the Abramsky-Brandenburger incidence matrix \"Incidence\" relating deterministic global assignments to context sections, and \"Assignments\" (the 2^Length[X] global assignments). CycleScenario[n] is the n-cycle special case.";
 CechCohomology::usage = "CechCohomology[scen, e] gives the absolute \:010cech cohomology of the Z-linearized support presheaf of the empirical model e over the cover of scen: an association with \"H0Rank\" (rank of the module of compatible Z-linear families = global sections), \"H1FreeRank\" and \"H1Torsion\" (elementary divisors > 1 of the degree-0 coboundary, by Smith normal form), \"CochainRanks\" ({C^0, C^1, C^2} over contexts, pairwise and triple overlaps, each the free Z-module on the restriction image of the support), \"CoboundaryRanks\", \"ComplexCloses\" (the verified identity \[Delta]1 . \[Delta]0 = 0), and \"SupportNoSignalling\". H^1 = ker \[Delta]1 / im \[Delta]0 is computed for arbitrary covers (the C^2 term handles nonempty triple overlaps). These are AMBIENT invariants: the per-section obstruction classes \[Gamma](s) of CechObstruction live in the RELATIVE H^1, so a nonzero absolute H^1 is not itself a contextuality certificate (the PR box and the noncontextual uniform model both have H^1 = Z on the CHSH cover).";
+AvNArgument::usage = "AvNArgument[scen, e] and AvNArgument[scen, e, d] give the All-vs-Nothing argument of the empirical model e on the scenario scen over Z_d (default d = 2; d must be prime), following Abramsky-Barbosa-Kishida-Lal-Mansfield, arXiv:1502.03097 Sec. 6: the theory of e collects every Z_d-affine equation Sum c_m x_m = a (mod d) satisfied by ALL support sections of a context; the model is AvN when the joint theory is inconsistent, decided by an exact rank test over GF(d). AvN certifies strong contextuality, and every AvN model is cohomologically strongly contextual, so \"AvN\" -> True implies CechObstruction[scen, e][\"CohStronglyContextual\"]. Returns an association with keys \"Modulus\", \"Equations\" (as {context, coefficient tuple, rhs}, coefficients normalized to leading entry 1), \"EquationCount\", \"Consistent\", and \"AvN\". GHZ is the canonical AvN model (the four Mermin parity equations); the Hardy model is not AvN, matching its non-strong contextuality.";
+AvNArgument::outs = "AvN over Z_`1` requires every measurement of the scenario to take outcomes {0, ..., `1` - 1}.";
 CechObstruction::usage = "CechObstruction[scen, e] gives the \:010cech cohomological obstruction data of the support presheaf of the empirical model e on the scenario scen (Abramsky-Mansfield-Barbosa; Abramsky-Barbosa-Kishida-Lal-Mansfield, arXiv:1502.03097): a support section s over a context is obstructed when its class \[Gamma](s) in the first \:010cech cohomology of the relative Z-linearized support presheaf is nonzero, equivalently (arXiv:1502.03097, Prop. 4.4) when NO compatible family of Z-linear combinations of support sections restricts to s. Returns an association with keys \"Obstructed\"/\"ObstructedCount\"/\"SectionCount\", \"NonextendableSections\" (sections with no global support assignment through them) and \"FalseNegatives\", \"GlobalSupportSize\", \"H0Rank\" (rank of the compatible-family module), \"SupportNoSignalling\", and the witness flags \"CohLogicallyContextual\" (some \[Gamma](s) != 0: certifies logical contextuality) and \"CohStronglyContextual\" (every \[Gamma](s) != 0: certifies strong contextuality). Vanishing of \[Gamma] is not conclusive - the Hardy model is the canonical false negative.";
 
 (* -- the Lie-Poisson interface of the KCBS cascade -- *)
@@ -259,6 +261,32 @@ CechCohomology[scen_Association, e_List] := Module[
   <|"CochainRanks" -> {c0, c1, c2}, "CoboundaryRanks" -> {rk0, rk1},
     "H0Rank" -> c0 - rk0, "H1FreeRank" -> c1 - rk0 - rk1, "H1Torsion" -> torsion,
     "ComplexCloses" -> closes, "SupportNoSignalling" -> e2|>];
+
+AvNArgument[scen_Association, e_List, d : _Integer?PrimeQ : 2] := Module[
+  {ctxs = scen["Contexts"], secs = scen["Sections"], X, outs, m, ctxIdx, supp,
+   xIdx, eqs = {}, A, b, consistent},
+  X = Lookup[scen, "X", Union @@ ctxs];
+  outs = Lookup[scen, "Outcomes", Association[# -> {0, 1} & /@ X]];
+  If[! AllTrue[X, Sort[outs[#]] === Range[0, d - 1] &],
+   Message[AvNArgument::outs, d]; Return[$Failed]];
+  m = Length[ctxs]; ctxIdx = AssociationThread[ctxs -> Range[m]];
+  xIdx = AssociationThread[X -> Range[Length[X]]];
+  supp = Table[{}, {m}];
+  Do[If[e[[k]] > 10^-12, AppendTo[supp[[ctxIdx[secs[[k, 1]]]]], secs[[k, 2]]]], {k, Length[secs]}];
+  Do[Module[{C = ctxs[[i]], S = supp[[i]], cvecs},
+    cvecs = Select[Tuples[Range[0, d - 1], Length[C]],
+      # =!= ConstantArray[0, Length[C]] && First[DeleteCases[#, 0]] == 1 &];
+    Do[Module[{vals = DeleteDuplicates[Mod[c . #, d] & /@ S]},
+      If[S =!= {} && Length[vals] == 1, AppendTo[eqs, {i, c, First[vals]}]]], {c, cvecs}]],
+   {i, m}];
+  A = Table[Module[{row = ConstantArray[0, Length[X]]},
+     MapThread[(row[[xIdx[#1]]] = #2) &, {ctxs[[eq[[1]]]], eq[[2]]}]; row], {eq, eqs}];
+  b = eqs[[All, 3]];
+  consistent = eqs === {} ||
+    MatrixRank[A, Modulus -> d] == MatrixRank[MapThread[Append, {A, b}], Modulus -> d];
+  <|"Modulus" -> d, "EquationCount" -> Length[eqs],
+    "Equations" -> ({ctxs[[#[[1]]]], #[[2]], #[[3]]} & /@ eqs),
+    "Consistent" -> consistent, "AvN" -> ! consistent|>];
 
 (* ------------------------------------------------------------------ *)
 (* the Lie-Poisson interface                                           *)
