@@ -13,7 +13,19 @@ cyclic scenarios:
     CHSH / PR box : c = 2          (nu(box) = 1/2)
     Peres-Mermin  : c = 4          (nu(box) = 1/4)
 In every case c = 1 / nu(extremal box) = the reciprocal MAXIMAL signed negativity -- a
-scenario invariant, of which n-1 is merely the cyclic specialization. MECHANISM: CF and nu
+scenario invariant, of which n-1 is merely the cyclic specialization. (GHZ also gives c=2.)
+
+[PRIOR-ART NOTE. Closest source: V. H. Cervantes, "A note on the relation between the
+Contextual Fraction and CNT2", J. Math. Psychol. (2022), arXiv:2110.07113 -- proves CNTF =
+2*CNT2 (contextual fraction proportional to a signed measure) but WITHIN cyclic systems only;
+Camillo-Cervantes 2024 (arXiv:2305.16574) likewise. The non-cyclic extension, the c = 1/nu(box)
+characterisation, and the Peres-Mermin c=4 instance are unstated. CAVEAT: the cyclic papers
+restrict to cyclic systems on purpose -- Contextuality-by-Default theory (Dzhafarov-Kujala)
+suggests non-cyclic proportionality need NOT hold in general. What is established HERE is the
+weaker, honest statement: along a WHITE-NOISE ray from a strongly-contextual vertex, CF and nu
+are both piecewise-linear and vanish together, so CF/nu is constant = 1/nu(vertex) WITHIN a
+single linear piece; verified computationally for CHSH, Peres-Mermin, GHZ. It is NOT a proven
+universal law for all non-cyclic scenarios/rays.] MECHANISM: CF and nu
 are both piecewise-linear in the visibility v and vanish TOGETHER at the noncontextuality
 threshold (CF=0 <=> nu=0), so along a white-noise ray from a strongly-contextual vertex their
 ratio is constant = CF(vertex)/nu(vertex) = 1/nu(vertex) (CF=1 at a strongly-contextual box),

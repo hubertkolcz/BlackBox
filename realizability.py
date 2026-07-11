@@ -14,6 +14,13 @@ that vague item into two quantified, hardware-deciding curves in the chain lengt
       single-photon / spin-1 system demonstrated by Lapkiewicz et al. 2011 for one pentagon)
       realizes the CSW bound of an ARBITRARILY LONG chain. The resource that grows is the
       number of measurement contexts (3N+2 rank-1 projectors), NOT the system dimension.
+      [PRIOR-ART NOTE: scope this to the OPEN LINEAR edge-glued chain. The nearest source,
+      arXiv:2605.12828 (Quad-C5, this project's own companion), studies the DOUBLY-edge-covered
+      8-vertex quad RING and finds the OPPOSITE -- d=3 gives only eta_3=1+sqrt5, the full theta
+      needs d=4. No contradiction: different topology (verified here, eig4/eig3 ~ 1e-7, a clean
+      rank-3 gap). The linear-chain d=3 saturation vs the quad-ring d=4 is itself a
+      topology-dependent contrast, and the fixed-dimension result is against a thin in-house
+      baseline, not independent prior art.]
 
   (2) NOISE (standard ISOTROPIC model rho = v|psi><psi| + (1-v) I/3): the CSW value is
       S(v) = v*theta + (1-v)*(3N+2)/3, since each of the M=3N+2 rank-1 events gets floor
@@ -32,6 +39,11 @@ that vague item into two quantified, hardware-deciding curves in the chain lengt
 
   RESONANCES (theta = alpha => NO quantum advantage). Mechanism: the Lovasz sandwich
   alpha <= theta <= clique-cover-number chi_bar collapses exactly when alpha = chi_bar.
+  [PRIOR-ART: the mechanism is the published Konig-Egervary-graph lemma (a graph with a
+  perfect matching that is also a clique cover has alpha=theta=|V|/2; Larson et al., "A Class
+  of Graphs Where alpha=theta", 2013). New here (unstated in the literature): that even-length
+  edge-glued CIS pentagon chains ARE such graphs, the PARITY LAW (even-cis collapse vs odd/
+  trans gap), and the gap direction -- none addressed by the KE lemma.]
     * CIS chains -- a clean PARITY LAW: theta = alpha for every EVEN N, gap for odd N.
       Reason: |V| = 3N+2 is even iff N even, and then alpha = |V|/2 with a perfect
       clique cover into |V|/2 edges (alpha = chi_bar), forcing theta = alpha. So EVEN cis

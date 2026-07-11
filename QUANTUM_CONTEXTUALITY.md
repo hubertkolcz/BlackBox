@@ -467,6 +467,28 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   isotropic-noise targets (computable bounds), and a sequential-measurement test still
   faces the compatibility/detection loopholes of §3, so this quantifies the *target*, not
   a realized advantage.
+- **Prior-art audit of the 2026-07-12 batch (7-agent workflow).** Verdicts on the new
+  results: **0 established, 5 adjacent, 2 novel.** (A) α=⌊4(m+1)/3⌋ — ADJACENT: Sedlar
+  "Independent sets in chain cacti" arXiv:1105.1940 does the analogue for *vertex*-glued
+  cactus chains (α=2m), not the edge-glued 2-sum chain; chem-graph "pentagonal chain" work
+  counts independent sets, never the independence *number*. (B) θ-subadditivity — ADJACENT/
+  **FOLKLORE**: the inequality is ~two lines from Lovász 1979's disjoint-union equality
+  (Knuth's Sandwich Theorem catalog); not to be sold as new — the Fekete θ-*density over a
+  glued sequence* is the unstated piece. (C) d=3 qutrit realization — ADJACENT: single-cycle
+  qutrit KCBS is standard (Araújo et al. PRA 88 022118); scope to *open linear* chains — our
+  own Quad-C5 (arXiv:2605.12828) shows the doubly-covered quad *ring* needs d=4 (topology-
+  dependent; not independent prior art). (D) noise saturation v\*→0.885 + non-accumulation +
+  statistical limiter — **NOVEL** (specific constants via standard CSW tools; chained-
+  inequality analogs have v\*→1, not a finite saturation). (E) cis parity law — ADJACENT: the
+  even-cis θ=α collapse is a König–Egerváry-graph instance (Larson et al. 2013); the parity
+  law + gap direction are new. (F) CF=c·ν non-cyclic — ADJACENT: Cervantes arXiv:2110.07113
+  proves CNTF=2·CNT2 for *cyclic* only; extension is new but CbD theory warns non-cyclic
+  proportionality can fail — the honest claim is "constant along a white-noise ray within a
+  linear piece, verified CHSH/PM/GHZ", not a universal law. (G) (cct)^∞ gluing-word optimum
+  via ergodic optimization — **NOVEL** (chain-cacti extremal literature optimizes combinatorial
+  counts and finds *uniform* chains; a θ-density optimum at a non-uniform period-3 word is
+  unstated). Caveats: verification pass found nothing to confirm (no source even claimed to
+  establish any result); several "closest sources" are our own Quad-C5, not third-party.
 - Sequential-game quantum strategy demo end-to-end (Alice prefix + Bob binary POVM).
 - Čech layer follow-ups: ~~Kochen–Specker covers (18-vector Cabello set)~~
   RESOLVED (SupportCohomology.wl KS section): the Peres–Mermin square (24/24)

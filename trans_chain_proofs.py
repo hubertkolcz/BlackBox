@@ -6,6 +6,12 @@ no SDP solver, no Wolfram kernel). Closes two QUANTUM_CONTEXTUALITY.md sec.9 ite
 
 ------------------------------------------------------------------------------------
 #1 PROOF (tropical / max-plus linear algebra), fully finite and machine-checkable.
+[PRIOR-ART: closest is J. Sedlar, "Independent sets in chain cacti", arXiv:1105.1940 (2011) --
+closed-form independence number of polygon chains via recurrence, but for VERTEX-glued cactus
+chains (alpha=2n for pentagons), NOT the EDGE-glued (2-sum) chain here. Chemical-graph-theory
+"pentagonal chain" work computes only COUNTS (Merrifield-Simmons/Hosoya), never the independence
+NUMBER. The edge-glued floor(4(m+1)/3) formula and its tropical cycle-mean-4/3 derivation are
+unstated -- standard tool (independence-number transfer matrix), new object.]
 
 The exact independence number of the open trans chain is computed by a 3-state interface
 DP (states s in {(0,0),(1,0),(0,1)} = the independent-set restriction on the current glue
@@ -39,7 +45,13 @@ full period are equal for all m. Therefore alpha(m)=floor(4(m+1)/3) for all m>=1
 ------------------------------------------------------------------------------------
 #2 THETA-DENSITY.  a_m := theta(open trans chain of m pentagons).
 
-LEMMA (theta subadditive under a shared-vertex union, PROVEN -- no numerics).
+LEMMA (theta subadditive under a shared-vertex union).  [PRIOR-ART NOTE: this inequality
+is ELEMENTARY / near-folklore -- it follows in two lines from restricting the optimal
+orthonormal representation, and generalises Lovasz 1979's equality theta(G+H)=theta(G)+theta(H)
+for DISJOINT unions (catalogued in Knuth, The Sandwich Theorem, EJC 1994) to overlapping
+induced covers. Do NOT present it as new. The genuinely-unstated piece is Part 2: the Fekete
+theta-DENSITY over a glued-chain SEQUENCE, which is distinct from the standard multiplicative
+Fekete over strong powers of one fixed graph.]
 If G = G[V1 u V2] with V = V1 u V2 and Gi = G[Vi], then theta(G) <= theta(G1)+theta(G2).
 PROOF. Take an optimal orthonormal representation {|v_i>}_{i in V} of G (|v_i> unit,
 <v_i|v_j>=0 for edges of G) with handle |psi>, so theta(G) = sum_{i in V} |<psi|v_i>|^2.
