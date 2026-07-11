@@ -212,8 +212,11 @@ cut all in the state; the minimum over cuts is 2/√5 − 2/3, at the Schröding
 the flow note's accounting was the cheapest ledger, and no cut balances to zero.
 (2) Frame-free invariant by exact LP (RevisedSimplex over ℚ(√5)): minimal negative
 weight ν = (√5−2)/2 over noncontextual decompositions; contextual fraction
-CF = 2√5 − 4 = 4ν; bridge N_Wigner = 1/3 − ν/(1+ν), with ν/(1+ν) = the no-click
-probability 1 − 2/√5. (3) White-noise scan ρ_V = V|ψ⟩⟨ψ| + (1−V)𝟙/3: N(V) dies at
+CF = 2√5 − 4 = 4ν (the n = 5 case of the published Camillo–Cervantes theorem
+CF = (n−1)ν, arXiv:2305.16574 — see the epilogue entry); bridge
+N_Wigner = 1/3 − ν/(1+ν), with ν/(1+ν) = the no-click probability 1 − 2/√5. The
+two-sided-ledger framing itself instantiates the known frame-dependence of
+negativity (Spekkens 2008; Resource theory of Absolute Negativity, arXiv:2205.13480). (3) White-noise scan ρ_V = V|ψ⟩⟨ψ| + (1−V)𝟙/3: N(V) dies at
 V\* = (10+9√5)/61 ≈ 0.4938, ν and CF share the KCBS threshold V_c = (5+3√5)/20 ≈
 0.5854 ⇒ window (V\*, V_c) of Wigner-negative yet KCBS-noncontextual states — the
 badges decouple; CF = 4ν holds along the ENTIRE family and CF is exactly linear
@@ -229,17 +232,17 @@ violation (exclusivity binds topologically, not metrically). Machine-checkable
 `wolframscript -file RunLedger.wl -print all`.
 
 ### kcbs_epilogue.wl — closing the Wigner thread (runner: RunEpilogue.wl)
-Three verdicts, 21 checks → OK. (1) CURRENCY LAW: CF = (n−1)·ν on the n-cycle —
-ratios 4/6/8/10 at quantum max for n = 5/7/9/11 (deviations < 1e−9, checks at
-1e−6); EXACT at the Wright boxes (rational Simplex: ν = 1/(n−1), CF = 1,
-n = 5,7,9) and at the C5 quantum point (RevisedSimplex: CF = 4ν); ratio 6 across
-the contextual range of the C7 white-noise family (V = 0.70–1, V_c ≈ 0.677);
-ratio 4 at 40 random ASYMMETRIC quantum models and 23 random contextual
-no-signalling mixtures, 9 of them certified beyond-quantum (they violate the C5
-correlator quantum bound 4√5−5, calibrated on the KCBS-maximal state) — the law
-holds polytope-wide, not just on the symmetric slice. Analytic proof left open
-(route: the complete n-cycle inequality set, Araújo–Quintino–
-Budroni–Terra Cunha–Cabello, PRA 88, 022118). (2) BINDING NO-GO: all 45 cascade
+Three verdicts, 21 checks → OK. **None is a new theorem** (novelty audit, 2026-07-10,
+below) — the note is a machine-checked instantiation on the Lapkiewicz circuit.
+(1) CURRENCY LAW CF = (n−1)·ν on the n-cycle is a **PUBLISHED theorem**, Camillo &
+Cervantes, Phil. Trans. R. Soc. A 382:20230007 (2024), arXiv:2305.16574 (their
+(n−1)·CNT3 = CNTF; via Cervantes arXiv:2110.07113 and Kujala–Dzhafarov
+arXiv:1907.03328). We reproduce it independently in AB-vertex language: ratios
+4/6/8/10 at quantum max for n = 5/7/9/11 (deviations < 1e−9, checks at 1e−6); EXACT
+at the Wright boxes (ν = 1/(n−1), CF = 1, n = 5,7,9) and the C5 quantum point
+(CF = 4ν); ratio 6 across the contextual range of C7 (V = 0.70–1); ratio 4 at 40
+random asymmetric quantum + 23 no-signalling mixtures (9 certified beyond-quantum) —
+confirming polytope-wide, as Camillo–Cervantes prove. (2) BINDING NO-GO: all 45 cascade
 parity witnesses (5 wire points × 9 cells) pulled to one arena; 35 pentagon
 edges with a pointed structure — every positive-cell witness binds to exactly
 one click, the two negative-cell witnesses (the events that certify negativity,
@@ -393,13 +396,14 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   view of the T gates as channels~~ — done, kcbs_epilogue.wl §4 (Choi–Wigner
   route; a Weyl/MIC re-derivation would be representational, not new physics).
 - ~~From kcbs_ledger.wl: is CF = 4ν a theorem? metric binding possible?~~ —
-  settled by kcbs_epilogue.wl (2026-07-10): the law is CF = (n−1)·ν, machine-
-  established across the n-cycle no-signalling polytope (exact at Wright and C5
-  quantum points); metric binding is a NO-GO within the cascade parity pool
-  (exhaustive +1/+2, greedy; negative-cell witnesses never bind to clicks).
-  Still open: the analytic PROOF of CF = (n−1)ν (candidate route: complete
-  n-cycle inequality set, PRA 88, 022118, + piecewise-linearity of both LP
-  values); and whether the law extends beyond cycles (CHSH graph Ci(8;1,4)?).
+  RESOLVED, and the "theorem?" question is answered by the LITERATURE, not by us:
+  CF = (n−1)·ν is **proven** by Camillo & Cervantes 2024 (arXiv:2305.16574) for all
+  cyclic systems (their (n−1)·CNT3 = CNTF) — see the novelty audit, §11. Our
+  epilogue independently reproduces it; it is NOT an open problem and NOT ours.
+  Metric binding is a NO-GO within the cascade parity pool (exhaustive +1/+2, greedy;
+  negative-cell witnesses never bind to clicks) — an instance of the exclusivity
+  principle. Genuinely open only: whether an analogous CF↔ν rate holds beyond cycles
+  (e.g. CHSH graph Ci(8;1,4)), which Camillo–Cervantes do not cover.
 - n-cycle generalizations (C₇, C₉...) and their circuits; run encoding B on real
   gate hardware as a genuine platform test.
 - Sequential-game quantum strategy demo end-to-end (Alice prefix + Bob binary POVM).
@@ -491,8 +495,9 @@ arbitrarily large contextual advantage *computable and certifiable* at 10⁵–1
 (LovaszThetaSparse, the word-density transfer-SDP, EpsilonCertificate.wl). (iv) The atom
 acts as a *resource under composition*: one quantum pentagon activates a heptagon PR box
 that identical copies provably cannot (HeptagonCatalysis.wl). (v) The currency law
-CF = (n−1)·ν (kcbs_epilogue.wl) is one non-classicality currency reconstructed from
-another using only the cycle's own constant 2α.
+CF = (n−1)·ν (Camillo–Cervantes 2024, arXiv:2305.16574; reproduced in
+kcbs_epilogue.wl) links one non-classicality currency to another through the cycle's
+own constant 2α — a *published* structural fact this repo confirms, not originates.
 
 **The three boundaries.** (B1) **Composition is bond-dependent, not atom-determined.**
 The cis/trans discovery (§6): the same pentagon glued two ways gives an extensive
@@ -542,3 +547,46 @@ bound √5 is a two-copy fact (C₅∨C₅, §5), not a clean single-graph one.
   reach for the graph invariant for bounds and scaling, the sheaf/Čech layer for
   possibilistic/strong contextuality and paradox (AvN), and the phase-space negativity for
   simulation cost and magic, rather than expecting any one of them to answer all three.
+
+## 11. Novelty audit of the Wigner thread (2026-07-10)
+
+An adversarial literature audit (12-agent web workflow: research prior art per claim,
+then a skeptic assuming everything was already published tries to refute novelty) was
+run on the Wigner thread (kcbs_wigner_flow / kcbs_ledger / kcbs_epilogue). **Verdict:
+zero new theorems.** Every conceptual claim is subsumed by prior art. The thread is
+best described — and should be written up — as a **rigorously machine-checked
+computational case study of the discrete-Wigner / contextuality structure on the
+canonical Lapkiewicz KCBS experiment**, not as new theory. Per-claim:
+
+- **Currency law CF = (n−1)·ν — ESTABLISHED (rediscovery).** Proven for all cyclic
+  systems by Camillo & Cervantes, Phil. Trans. R. Soc. A 382:20230007 (2024),
+  arXiv:2305.16574 ((n−1)·CNT3 = CNTF), via Cervantes 2023 (arXiv:2110.07113,
+  CNTF = 2·CNT2) and Kujala–Dzhafarov (arXiv:1907.03328, CNT2 = α·CNT3). Our entire
+  verification set lies inside their scope. Nothing survives but the explicit KCBS
+  closed forms and the AB-vertex-language translation.
+- **Two-sided ledger — SUBSUMED.** The frame/cut-dependence of negativity and its
+  frame-free minimum for state–measurement pairs is Spekkens PRL 100, 020401 (2008),
+  Ferrie–Emerson, the Resource theory of Absolute Negativity (arXiv:2205.13480), and
+  Kulikov et al. PRA 109, 012219 (2024). Only the KCBS worked numbers are new.
+- **Noise window V\* = (10+9√5)/61 — worked instantiation.** The single-qutrit
+  negativity/contextuality divergence is Delfosse et al. NJP 19, 123024 (2017); the
+  window's *existence* is forced a priori (negativity necessary-not-sufficient), so only
+  the explicit (convention-dependent) threshold is new.
+- **Binding no-go — worked instantiation.** A one-line corollary of the exclusivity
+  principle (Cabello, arXiv:1210.2988: pairwise-exclusive probabilities ≤ 1 ⇒ 3/√5 > 1)
+  and Δ(C₅) = √5−2. The construction and framing are new; the principle is not.
+- **Channel ledger — worked instantiation.** Choi-state channel magic is Wang–Wilde–Su
+  NJP 21, 103002 (2019). New only as explicit constants + the period-2 [P,T1,T2,T1,T2]
+  cascade reduction.
+- **Wigner flow — the strongest survivor, still not a theorem.** The one conceptually
+  non-obvious residue: negativity is *conserved* along the cascade orbit through gates
+  that are each individually **non-Clifford** — not a corollary of Gross's theorem
+  (Clifford-only), and against the magic-dynamics literature's framing of gates as
+  negativity *generators* (Kocia–Love, Quantum 5, 494 (2021)). Still "a computed fact
+  about one orbit," not a general result.
+
+Closest prior work on the *same physical system*: **Hofmann, arXiv:2507.22323 (2026)**
+localizes negative quasiprobability in the exact Lapkiewicz three-path setup (via
+Kirkwood–Dirac, not the discrete Wigner function). Guidance for any paper/submission:
+cite Camillo–Cervantes, Absolute-Negativity, Delfosse et al., and Hofmann; frame
+contributions as *verified instantiation + exact constants*, never as new theory.
