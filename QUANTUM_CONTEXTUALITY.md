@@ -406,20 +406,20 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   +1/+2, greedy; negative-cell witnesses never bind to clicks). The ledger's
   "CF = 4ν along the whole C₅ white-noise family" is explained: mixing stays
   inside the pentagon scenario, whose ratio is 4. ~~Analytic PROOF of
-  CF = (n−1)ν~~ NEAR-COMPLETE (`CF-negativity-proof.md`, 11 July): (Lemma 0)
-  every contextual C_n model violates exactly ONE cycle-inequality facet
-  (parity: two odd patterns differ in even ≥2 coords ⇒ B_γ+B_γ′ ≤ 2(n−2));
-  (Lemma 1) Wright box ν = 1/(n−1) by G-symmetrisation (max satisfiable
-  anti-correlations in an odd cycle = n−1); LOWER bound CF ≤ (n−1)ν for ALL
-  models is UNCONDITIONAL via the explicit dual witness
-  w_{i,(s,t)} = (1/n + γ*_i st)/(n−1), e·w = 1+2CF/(n−1), weak LP duality;
-  UPPER bound via e = (1−CF)e₀ + CF·W_{γ*} with e₀∈P_NC + gauge convexity —
-  fully proven on the symmetric slice, general modulo the geometric lemma
-  "e₀∈P_NC" (verified exact for asym-corr/asym-single/multi-box mixtures).
-  So the identity is a theorem on the symmetric slice + the ≤ direction
-  everywhere; only a coordinate-free proof of e₀∈P_NC remains. Still open:
-  whether the law extends beyond cycles (CHSH graph Ci(8;1,4) → ratio 2, so
-  NOT universal; the mechanism is odd-cycle-specific).
+  CF = (n−1)ν~~ COMPLETE & UNCONDITIONAL for every no-disturbance model on the
+  odd n-cycle (`CF-negativity-proof.md`, 11 July): (Lemma 0) every contextual
+  C_n model violates exactly ONE cycle-inequality facet (parity: two odd
+  patterns differ in even ≥2 coords ⇒ B_γ+B_γ′ ≤ 2(n−2)); (Lemma 1) Wright box
+  ν = 1/(n−1) by G-symmetrisation; LOWER bound CF ≤ (n−1)ν via the explicit
+  dual witness w_{i,(s,t)} = (1/n + γ*_i st)/(n−1), e·w = 1+2CF/(n−1), weak LP
+  duality; (Lemma 2) e₀ = (e−CF·W_{γ*})/(1−CF) ∈ P_NC — (A) e₀≥0 from
+  edge-positivity c_j≥−1+|m_j+m_{j+1}| plus the odd-cycle telescoping identity
+  |m_i−m_{i+1}| ≤ Σ_{j≠i}|m_j+m_{j+1}| (alternating sum of the complementary
+  path = m_{i+1}−m_i, needs n odd), (B) other facets reduce to CF≤1 — giving
+  UPPER bound CF ≥ (n−1)ν by gauge convexity. Every step is a one-line
+  inequality; machine-verified n=5,7,9 + random asymmetric. The n−1 is the odd
+  cycle's frustration number (max satisfiable anti-correlations). Genuinely
+  odd-cycle-specific: even cycles → Wright noncontextual; CHSH & GHZ → ratio 2.
 - n-cycle generalizations (C₇, C₉...) and their circuits; run encoding B on real
   gate hardware as a genuine platform test.
 - Sequential-game quantum strategy demo end-to-end (Alice prefix + Bob binary POVM).
