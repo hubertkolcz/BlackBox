@@ -375,9 +375,14 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   with ALL obstruction classes of order EXACTLY 2, and both AvN theories are
   the textbook parity proofs recovered mechanically — with the box models all
   of infinite order, the census now shows a clean TORSION DICHOTOMY between
-  parity-type and box-type strong contextuality. Remaining: relative H¹ as a
-  group (γ lives there — only the per-class orders are computed so far); AvN
-  over non-prime rings.
+  parity-type and box-type strong contextuality. ~~relative H¹ as a group~~
+  RESOLVED (`CechRelativeCohomology`): H¹(F~) for F~ = ker(F → F|C0) is the
+  actual home of γ — Z/2 for the parity models (GHZ, Peres–Mermin, 18 rays),
+  Z for the boxes (Wright, PR), and 0 for classical and Hardy (Hardy's false
+  negative is structural — its γ lives in the trivial group). Because F~(C0)=0
+  the construction is self-validating: the explicit connecting cocycle's order
+  provably equals CechObstruction's ObstructionOrder, checked per section.
+  Remaining: AvN over non-prime rings.
 - Pentagon meshes (§6, cis/trans correction): ~~closed form for the trans-ring
   density constant~~ RESOLVED — τ\* = Root[49x³ − 128x² − 75x + 218, 2], exact KKT
   certificate in §6/CaseStudies §D3. ~~Prove ϑ(cis-ring N) = N + ϑ(C_N) and
