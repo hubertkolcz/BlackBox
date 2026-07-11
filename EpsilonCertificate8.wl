@@ -1,6 +1,8 @@
 (* Rational epsilon-optimality certificate, window k = 8 (strengthened bound; symbol EpsilonCertificate8).
-   Generated k8; all identities verified exactly in Python fractions;
-   re-verified independently by the D3 cell that loads this file. *)
+   All identities (node/edge equalities, exact-LDL PSD of every block) verified in Python
+   fractions at generation. The D3 cell that loads this file independently re-verifies in WL:
+   the pointwise sigma(e) <= Gamma_8 over all 512 edges, the worst-word cycle mean, AND the
+   PSD of every Q/R block (epsilon8BlocksPSD). *)
 EpsilonCertificate8 = <|
   "k" -> 8,
   "Gamma" -> 941357/12500000,
