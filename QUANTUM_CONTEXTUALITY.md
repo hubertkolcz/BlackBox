@@ -371,5 +371,16 @@ through the cascade gate-by-gate.
   optimization, where the finiteness property (periodic optimum) is FALSE in
   general (Bousch–Mairesse 2002, aperiodic Sturmian maximizers) — so the open
   question is genuinely hard and cct optimality is plausible-but-not-guaranteed.
-  A proof would need ϑ̄(W) − ϑ̄(cct) ≤ ᾱ(W) − 4/3 for all W. The τ_cct height
-  result bears only on single finite exact rational certificates.
+  A proof would need ϑ̄(W) − ϑ̄(cct) ≤ ᾱ(W) − 4/3 for all W (⟺ gap(W) ≤ gap(cct)).
+  RIGOROUS REDUCTION of that inequality (key D3_inequalityReduction, NOT a full
+  proof): two already-proven ingredients bracket it — (1) the α\*-cap
+  ϑ̄(W) ≤ α\*-density = 3/2 (Lemma A) gives gap(W) ≤ 3/2 − ᾱ(W), so the inequality
+  holds EXACTLY whenever ᾱ(W) ≥ 3/2 − gap(cct) = 1.4301025; (2) the ε-certificate
+  gives gap(W) ≤ Γ_8 = 0.0753086, i.e. gap(W) ≤ gap(cct) + 0.00541 for all W.
+  COMBINED: proven for every word with ᾱ(W) ≥ 1.4301025 and within 0.0054
+  everywhere; it reduces to the single narrow window ᾱ(W) ∈ [4/3, 1.4301025) —
+  the low-classical-density "cct-like" words (equality at cct), exactly where an
+  aperiodic Sturmian competitor would live. Closing the window needs Γ_k → gap(cct)
+  (open; the certificate bottleneck migrates away from cct) or a new ϑ̄ bound
+  tighter than 3/2 there. The τ_cct height result bears only on single finite
+  exact rational certificates.
