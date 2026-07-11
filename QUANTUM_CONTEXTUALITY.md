@@ -326,5 +326,16 @@ through the cascade gate-by-gate.
   step; ε → 0 exactly is the τ_cct field obstruction. Bonus: the Q/R clique
   family solves the per-cycle transfer-SDP EXACTLY (< 10⁻⁶ loss on every
   tested word) — a position-space word-density solver with no DFT symbol.
-  Still open: trans-CHAIN density closed form (numerically → τ\*?) —
-  unverified.
+  ~~Trans-CHAIN density~~ RESOLVED (key D3_transChainResolved): open trans
+  chains have the SAME bulk density τ\* (increments 1.3767178 within
+  certificates from m = 50 to 800; boundary constant ≈ 0.995), with
+  α(trans-chain m) = ⌊4(m+1)/3⌋ at every computed point — the gap is
+  EXTENSIVE ≈ (τ\*−4/3)m, so Case D's "rings beat chains" was never about
+  closure: the decaying chains were cis, and orientation is the whole story.
+  Small-m accident: ϑ(trans-chain 5) = α = 8 exactly. Durable tools added to
+  `lovasz_theta_sparse.py`: pentagon_chain_word, alpha_chain_word,
+  word_density_transfer_sdp (exact position-space ϑ-density of any periodic
+  word; no symmetry reduction). All §6 mesh threads are now resolved; what
+  remains genuinely open at research grade: exact (ε → 0) global optimality
+  of (cct)^∞ — blocked by the τ_cct field — and the ergodic-optimization
+  proof that periodic orbits suffice.

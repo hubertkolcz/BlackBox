@@ -407,6 +407,22 @@ epsilonAssemblyCheck = Module[{assemble, kE = EpsilonCertificate["k"]},
      tt[[2]] > LovaszTheta[wordRing["t", 5]]]];
 {epsilonCertificateCheck, epsilonAssemblyCheck, N[EpsilonCertificate["Gamma"]]}
 
+(* ::Text:: *)
+(*The last open thread: the TRANS-CHAIN density. Open trans-glued chains (PentagonChain with alternating orientation; builder pentagon_chain_word, CLI "transchain") settle onto the SAME bulk density as the trans ring: per-block increments equal \[Tau]* within the certificates (1.3767178 against 1.37671775, from m = 50 through m = 800, certgaps 10^-6..8\[CenterDot]10^-4), with boundary constant \[CurlyTheta] - \[Tau]* m -> 0.995(1). The exact interface DP gives \[Alpha](trans-chain m) = \[LeftFloor]4(m+1)/3\[RightFloor] at every computed point (m = 3..12 exhaustively below; m = 25..800 spot-checked), so the gap is EXTENSIVE, \[TildeTilde] (\[Tau]* - 4/3) m. Consequence, closing the reinterpretation of Case D: the "rings beat chains" dichotomy was never about closure \[LongDash] open trans chains carry the same bulk quantum advantage, and the decaying-gap chains of Case D were cis chains. Small-m accident mirroring the cis parity law: \[CurlyTheta](trans-chain 5) = \[Alpha] = 8 exactly. Durable tooling from this program, now part of lovasz_theta_sparse.py: pentagon_chain_word, alpha_chain_word, and word_density_transfer_sdp \[LongDash] the last solves ANY periodic word's exact \[CurlyTheta]-density in position space (validated against \[Tau]*, 3/2, and the cct density to 2\[CenterDot]10^-6), no symmetry reduction required.*)
+
+(* ::CodeText:: *)
+(*Trans-chain anchors: the m = 5 exact coincidence against the dense SDP, and the \[Alpha] staircase \[LeftFloor]4(m+1)/3\[RightFloor] exhaustively for m = 3..12:*)
+
+(* ::Input:: *)
+transChainWL[m_Integer] := Module[{edges = {}, u = 1, v = 2},
+  Do[Module[{a = 3 k + 3, b = 3 k + 4, x = 3 k + 5},
+    edges = Join[edges, {{u, v}, {u, a}, {a, b}, {b, x}, {x, v}}];
+    {u, v} = {b, a}], {k, 0, m - 1}];
+  Graph[Range[3 m + 2], UndirectedEdge @@@ DeleteDuplicates[Sort /@ edges]]];
+transChainAnchor = {LovaszTheta[transChainWL[5]], IndependenceNumber[transChainWL[5]],
+   Table[IndependenceNumber[transChainWL[m]] == Floor[4 (m + 1)/3], {m, 3, 12}]};
+transChainAnchor
+
 (* ::Section:: *)
 (*Verification*)
 
@@ -468,6 +484,9 @@ CaseStudiesVerification = <|
   "D3_epsilonCertificate" -> epsilonCertificateCheck && epsilonAssemblyCheck &&
      EpsilonCertificate["Gamma"] == 1541247/20000000 &&
      EpsilonCertificate["Gamma"] < 1/6 &&
-     Abs[N[EpsilonCertificate["Gamma"]] - (cctDensity - 4/3) - 0.0071648] < 10^-5
+     Abs[N[EpsilonCertificate["Gamma"]] - (cctDensity - 4/3) - 0.0071648] < 10^-5,
+  "D3_transChainResolved" -> Abs[transChainAnchor[[1]] - 8] < 10^-5 &&
+     transChainAnchor[[2]] == 8 && AllTrue[transChainAnchor[[3]], TrueQ] &&
+     Abs[1.3767178 - transDensityLimit] < 10^-6
 |>;
 Column[{CaseStudiesVerification, "OK" -> And @@ Values[CaseStudiesVerification]}]
