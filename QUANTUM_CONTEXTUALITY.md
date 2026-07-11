@@ -467,3 +467,77 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   remains genuinely open at research grade: exact (ε → 0) global optimality
   of (cct)^∞ — blocked by the τ_cct field — and the ergodic-optimization
   proof that periodic orbits suffice.
+
+## 10. Positioning: the atomic-GE program — reach and boundaries
+
+The organizing premise of this repository is reductive: treat the **pentagon C₅ as
+the atom** of contextuality and the **graph-exclusivity (GE) layer** — exclusivity
+graph + Lovász ϑ (CSW, arXiv:1010.2163) — as the primary machinery, then try to
+*recreate* contextuality by building composites out of pentagon atoms. The accumulated
+results let us grade that program precisely: it succeeds completely at the
+**quantitative and compositional** face of cyclic contextuality, and it fails — in a
+mapped, informative way — at the reductive dream of one atom recreating
+contextuality-as-a-single-thing. The value is that the corpus *confirms the program
+within its scope and simultaneously charts the scope's three boundaries*, which is a
+stronger outcome than a bare "it works."
+
+**Where the program delivers.** (i) C₅ is the atom by theorem, not analogy: minimal
+cycle with α = 2 < ϑ = √5 < α\* = 5/2, triangle collapses by Specker (§4–5). (ii) CSW
+makes the quantum bound *equal a graph invariant* — "contextuality through the graph"
+is a theorem the pentagon is the paradigm of. (iii) It composes and **scales**: pentagon
+meshes give ϑ growing linearly (density τ\* ≈ 1.3767, α(ring N) = ⌊4N/3⌋ a theorem, §6)
+while any state-vector treatment grows as 2^(5N) — the atomic-graph route makes
+arbitrarily large contextual advantage *computable and certifiable* at 10⁵–10⁶ blocks
+(LovaszThetaSparse, the word-density transfer-SDP, EpsilonCertificate.wl). (iv) The atom
+acts as a *resource under composition*: one quantum pentagon activates a heptagon PR box
+that identical copies provably cannot (HeptagonCatalysis.wl). (v) The currency law
+CF = (n−1)·ν (kcbs_epilogue.wl) is one non-classicality currency reconstructed from
+another using only the cycle's own constant 2α.
+
+**The three boundaries.** (B1) **Composition is bond-dependent, not atom-determined.**
+The cis/trans discovery (§6): the same pentagon glued two ways gives an extensive
+quantum gap (trans) or *none* (cis saturates α\* classically). The atom under-determines
+the molecule; the bonds carry structure the atom doesn't — the gluing-word optimum
+(cct)^∞ makes that design space concrete. (B2) **The graph is a lossy projection of a
+taller stack** — graph ↦ sheaf ↦ phase-space. α/ϑ/α\* capture bounds but are blind to
+the possibilistic/cohomological layer: certifying strong contextuality (Wright box) and
+separating models with identical supports needed the AB sheaf and the Čech obstruction
+(SupportCohomology.wl), not the exclusivity graph; the harmonic/Laplacian residual is
+*blind to contextuality by construction*. (B3) **Non-classicality is not monolithic,**
+so one atom cannot recreate all of it: for the single qutrit, Wigner negativity and KCBS
+contextuality *come apart* (the noise window (0.494, 0.585), kcbs_ledger.wl), and even
+adjoining the pentagon's own phase-space parity witnesses cannot manufacture a stronger
+joint violation (the metric-binding no-go, kcbs_epilogue.wl). Even the atom's quantum
+bound √5 is a two-copy fact (C₅∨C₅, §5), not a clean single-graph one.
+
+**Practical applications.** Ordered from repo-ready to research-grade:
+- **Scalable graph-optimization tooling (ready now).** `LovaszThetaSparse` (chordal/Agler
+  decomposition), the Z_N-symmetry DFT route, and the position-space word-density
+  transfer-SDP are general large-graph ϑ solvers (10⁵–10⁶ vertices, certified), usable
+  well beyond contextuality — Shannon-capacity bracketing (CaseStudies §A), Mycielskian
+  chromatic bounds (§B), any sandwich-theorem problem. This is the most immediately
+  reusable output.
+- **Classical-simulation cost accounting.** Wigner negativity is the sampling overhead of
+  classical simulation (Pashayan–Wallman–Bartlett, PRL 115, 070501); the currency law
+  turns an easy LP (contextual fraction CF) into ν, i.e. into a *simulation-hardness /
+  magic budget* estimate for the whole n-cycle family — practical for benchmarking and
+  for resource accounting in magic-state schemes (Howard et al., Nature 510, 351:
+  contextuality supplies the magic; the channel ledger prices each gate).
+- **Certified randomness.** Contextuality certifies randomness; the scalable meshes yield
+  *extensive* certified randomness with linearly-growing certificates rather than the
+  exponential cost of a state-space treatment — a near-term device-independent-flavoured
+  protocol resource.
+- **Platform / hardware tests and dimension witnessing.** The circuits (encodings A/B) are
+  genuine contextuality tests *when run on real gate hardware* — qutrit dimension
+  witnessing and state self-testing — with the honest caveat (§3, kcbs_simulation.wl)
+  that a simulator reproduces statistics, not evidential force. Hardware remains the open
+  item (§9).
+- **Resource activation / cryptography (speculative).** The catalysis result is a
+  resource-theory primitive: individually inert copies made jointly useful by a fixed
+  qutrit catalyst — the natural direction is non-locality/contextuality distillation and
+  activation-based protocols.
+- **Methodological: a "which certificate for which task" map.** Knowing *where* the graph
+  layer is blind (B2, B3) is itself the practical payoff — it tells a practitioner to
+  reach for the graph invariant for bounds and scaling, the sheaf/Čech layer for
+  possibilistic/strong contextuality and paradox (AvN), and the phase-space negativity for
+  simulation cost and magic, rather than expecting any one of them to answer all three.
