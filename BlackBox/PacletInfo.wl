@@ -2,10 +2,10 @@
 
 PacletObject[<|
   "Name" -> "HubertKolcz/BlackBox",
-  "Description" -> "Graph- and sheaf-theoretic certificates of quantum contextuality: Lovasz theta (SDP), exclusivity filters under composition, the contextual fraction, Abramsky-Brandenburger local-global analysis, the Cech obstruction of the support presheaf, and the so(3) Lie-Poisson interface of the KCBS cascade.",
+  "Description" -> "Graph- and sheaf-theoretic certificates of quantum contextuality: Lovasz theta (SDP), exclusivity filters under composition, the contextual fraction, Abramsky-Brandenburger local-global analysis, the Cech obstruction and cohomology of the support presheaf with exact obstruction orders, All-vs-Nothing parity certificates, and the so(3) Lie-Poisson interface of the KCBS cascade.",
   "Creator" -> "Hubert Kolcz <kolcz.h@gmail.com>",
   "PublisherID" -> "HubertKolcz",
-  "Version" -> "1.1.0",
+  "Version" -> "1.2.0",
   "WolframVersion" -> "13.0+",
   "License" -> "MIT",
   "PrimaryContext" -> "HubertKolcz`BlackBox`",

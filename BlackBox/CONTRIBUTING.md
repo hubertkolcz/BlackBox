@@ -40,23 +40,23 @@ the `BeginPackage` line of Kernel/BlackBox.wl.
   Kernel extension.
 ☑ Kernel/BlackBox.wl — single-context implementation, usage message for every
   exported symbol.
-☑ Tests/BlackBoxTests.wl — 44-check battery against the kernel-verified
-  pipeline values and the support-cohomology gate (`wolframscript -file
+☑ Tests/BlackBoxTests.wl — 52-check battery against the kernel-verified
+  pipeline values and the support-cohomology/AvN gates (`wolframscript -file
   BlackBoxTests.wl` → ALL PASS: True).
 ☐ PROHIBITED in PacletInfo: `"Updating" -> Automatic`. (Not present ✓ —
   keep it that way.)
 
-### 4. Documentation (the one gap before submission)
+### 4. Documentation (pages exist; a polish pass remains before submission)
 
-☐ One reference page (.nb) per exported symbol under
-  Documentation/English/ReferencePages/Symbols/ — every usage line a full
-  sentence ending in a period; options in a three-column headerless table;
-  Basic Examples (simplest case) + Scope (one example per input pattern);
-  author with the Documentation Tools palette; build with
-  PacletDocumentationBuild (Wolfram PacletTools).
-☐ One guide page (Documentation/English/Guides/BlackBox.nb) — becomes the
-  repository homepage; list the most-used functions.
-☐ Add the Documentation extension back to PacletInfo.wl once the pages exist:
+☑ One reference page (.nb) per exported symbol (all 22) under
+  Documentation/English/ReferencePages/Symbols/ — headlessly generated
+  skeletons: ObjectName + Usage (full sentences) + one Basic Example each.
+  Remaining before submission: Scope sections (one example per input
+  pattern), a palette-authoring/formatting pass, and a
+  PacletDocumentationBuild run (Wolfram PacletTools) to compile them.
+☑ One guide page (Documentation/English/Guides/BlackBox.nb) — intro text +
+  one Item per exported symbol.
+☑ Documentation extension present in PacletInfo.wl:
   `{"Documentation", "Root" -> "Documentation", "Language" -> "English"}`.
 Guidelines: https://resources.wolframcloud.com/PacletRepository/guidelines
 Tutorial: https://reference.wolfram.com/language/PacletTools/tutorial/CreatingPaclets.html

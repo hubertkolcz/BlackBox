@@ -151,6 +151,42 @@ Results: ideal S = −3.944; realistic (V = 0.977, 1° misalignment) S ≈ −3.
 Caveat: a classical simulator reproduces statistics, not evidential force — the
 sampler knows the context, which is exactly what NCHV models are forbidden.
 
+### BlackBox paclet — the sheaf/Čech certificate layer (added 10 July 2026)
+
+The pipeline is packaged as the paclet `BlackBox/` (context
+`HubertKolcz`BlackBox``, 22 exported symbols, `Tests/BlackBoxTests.wl` →
+ALL PASS: True). On top of the LP/SDP layer (α, ϑ, α\*, contextual fraction,
+`GlobalSectionQ`) it now carries the **possibilistic certificate layer** that
+replaced the cellular-sheaf Laplacian after the Laplacian's own pre-registered
+gate REJECTED it (residuals {0,0,0} on classical/quantum/Wright — blind; see
+pipeline-2026-07-10/sheaf_laplacian.wl):
+
+- `CechObstruction[scen, e]` — the Abramsky–Mansfield–Barbosa obstruction
+  γ(s) per support section (arXiv:1502.03097 Prop. 4.4: γ(s)=0 iff a compatible
+  Z-linear family restricts to s), with the **exact order** of each class by
+  Smith normal form (`"ObstructionOrder"`). Gate, passed: classical C5 0/15
+  obstructed; quantum 0/15 (identical support — probabilistic contextuality is
+  the LP layer's jurisdiction); Wright 10/10 = strong-contextuality certificate.
+  Orders: GHZ classes are **pure 2-torsion** (order exactly 2, rationally
+  invisible — Mermin's mod-2 argument as a homological invariant); odd-cycle
+  boxes infinite order; Hardy order 1 (the documented false negative, integral).
+- `CechCohomology[scen, e]` — absolute H⁰/H¹ of the Z-linearized support
+  presheaf on arbitrary covers (C² term included, δ¹δ⁰=0 verified, torsion by
+  Smith). H⁰ multiplicative on the two-copy product cover (36 = 6²); ambient H¹
+  is NOT a contextuality signal (PR box and noncontextual uniform both give Z).
+- `AvNArgument[scen, e, d]` — All-vs-Nothing parity certificates over GF(d)
+  (arXiv:1502.03097 §6): GHZ (the four Mermin equations), Wright boxes and
+  their products, PR box, and the Z₃ box on the square are AvN; Hardy is not.
+  AvN ⇒ cohomologically strongly contextual, verified across the census.
+- `CoverScenario[X, cover, outcomes]` — arbitrary covers and per-measurement
+  outcome sets (GHZ/Mermin, Z_d boxes, KS-style covers).
+
+Verification essay: `SupportCohomology.wl` + `RunSupportCohomology.wl`
+(`wolframscript -file RunSupportCohomology.wl -print all` → 25 checks,
+OK -> True), including the two-copy product cover of ab_sheaf.wl
+(Wright⊗Wright 100/100 obstructed; quantum⊗quantum clean, |Sₑ| = 11²) and a
+census cross-validated against Cech-Cohomology-of-Ulrey-Models-AB-Sheaf.nb.
+
 ## 7. Wigner negativity toolchain (Wolfram Community, N. Murzin)
 
 Source: "On quantum amplitudes, correlations and negativity"
@@ -168,6 +204,9 @@ through the cascade gate-by-gate.
 - Cabello, PRL 110, 060402 (2013) ("fundamental inequality", E-principle, two copies)
 - Delfosse et al., New J. Phys. 19, 123024 (2017) (negativity ⇔ contextuality, n ≥ 2)
 - Budroni, Cabello, Gühne, Kleinmann, Larsson, Rev. Mod. Phys. 94, 045007 (2022)
+- Abramsky, Brandenburger, NJP 13, 113036 (2011); arXiv:1102.0264 (sheaf framework)
+- Abramsky, Barbosa, Kishida, Lal, Mansfield, CSL 2015; arXiv:1502.03097
+  ("Contextuality, Cohomology and Paradox": Čech obstruction, AvN arguments)
 - Gühne et al., PRA 81, 022121 (2010) (compatibility loophole)
 - Markiewicz et al., npj Quantum Inf. 5, 5 (2019); Zhang et al., Sci. Rep. 7, 44467 (2017)
 
@@ -178,3 +217,6 @@ through the cascade gate-by-gate.
 - n-cycle generalizations (C₇, C₉...) and their circuits; run encoding B on real
   gate hardware as a genuine platform test.
 - Sequential-game quantum strategy demo end-to-end (Alice prefix + Bob binary POVM).
+- Čech layer follow-ups: Kochen–Specker covers (18-vector Cabello set) through
+  `CoverScenario`/`CechObstruction`; relative H¹ as a group (γ lives there — only
+  the per-class orders are computed so far); AvN over non-prime rings.
