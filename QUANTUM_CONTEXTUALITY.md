@@ -622,6 +622,37 @@ bound √5 is a two-copy fact (C₅∨C₅, §5), not a clean single-graph one.
   possibilistic/strong contextuality and paradox (AvN), and the phase-space negativity for
   simulation cost and magic, rather than expecting any one of them to answer all three.
 
+**Significance and usability — the honest split (ϑ-density thread).** A four-channel prior-art
+audit (combinatorics + alternative-terminology; quantum-contextuality vocabulary; thesis/book
+Grötschel–Lovász–Schrijver lineage; and a τ\*-alternative-representation pass over the constant's
+per-pentagon, per-vertex, per-edge, reciprocal, spectral-radius, trig and continued-fraction forms)
+establishes that the pentagon-mesh ϑ-density results are *unclaimed*, not that they are load-bearing —
+novelty and usefulness are independent axes, and the value splits cleanly across them. What is broadly
+reusable is the **method and the tooling**, not the constant: computing a per-vertex Lovász-ϑ density
+of a repeating graph motif by a transfer operator, and casting the optimal gluing word as an
+ergodic-optimization / joint-spectral-radius problem, is a machine that applies to any clique-sum
+family of cycles (pentagons are only its first worked instance), riding on general large-graph ϑ
+solvers (LovaszThetaSparse, the Z_N-symmetry route, the ε-certificate) usable well beyond
+contextuality. The two exact combinatorial results it yields — ϑ(cis-ring N) = N + ϑ(C_N) and
+α = ⌊3N/2⌋/⌊4N/3⌋ — are self-contained equalities in a regime where the prior literature stops at
+inequalities (and where the recurring "ϑ subadditive under amalgam" phrasing is, on audit, a
+mis-attribution of Delorme–Poljak's *max-cut* eigenvalue bound φ, not ϑ). The constant
+τ\* = Root[49x³−128x²−75x+218, 2] ≈ 1.3767 is, by contrast, an elegant exact by-product with narrow
+direct use: its role is to be the sharpest possible *witness* that contextual advantage on pentagon
+meshes is extensive with an exact computable rate (τ\* > 4/3 > 1), not a quantity anyone substitutes
+in — what is used is that the rate exceeds 1 and is certifiable at 10⁵–10⁶ blocks where a state-vector
+treatment is 2^(5N). For the atomic-GE / black-box-emulation program specifically, the payoff is
+therefore **structural, not numerical**: it makes the program's composition-and-scaling face (iii
+above) quantitative and certifiable, and it fixes boundary B1 with an exact witness — the same atom
+glued *cis* versus *trans* gives no advantage or an extensive one, so the **bond, not the atom, is the
+design variable**, with (cct)^∞ its optimum. It does *not* furnish a new primitive for emulating a
+*single* black box, and — like everything in the GE layer — it is computable-bound theory, not
+empirical: whether a physical device realizes the extensive rate is untouched and remains the standing
+hardware open item (§9). Written up honestly, this is a graph-theory contribution the contextuality
+program threw off, together with a sharpened, scalable statement of that program's own composition
+claims — strong as an *exact-and-it-scales* result, deliberately modest as a *new-physical-capability*
+one.
+
 ## 11. Novelty audit of the Wigner thread (2026-07-10)
 
 An adversarial literature audit (12-agent web workflow: research prior art per claim,
