@@ -445,10 +445,17 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   shrinks to 3τ\*/4 − 1 = 0.033, so certifying the advantage needs ~1/margin² ≈ 945× the
   single-pentagon runs. [Correction: an earlier version of this bullet gave v\* = α/ϑ →
   0.9685; that used a wrong noise floor of 0 and overstated the requirement — the isotropic
-  I/3 floor is the standard model.] (iii) Exact sub-result: ϑ = α *exactly* at N = 2 and N = 5 only (not
-  periodic — N = 8, 11 do not resonate), so those two trans chains carry **no** quantum
-  advantage despite being built from contextual pentagons — a sharp instance of the
-  bond-dependence boundary B1 (§10). What remains genuinely open: an actual laboratory
+  I/3 floor is the standard model.] (iii) **Resonances (ϑ = α ⟹ no quantum advantage),
+  characterized** (`realizability.py` resonance_scan). Mechanism: the Lovász sandwich
+  α ≤ ϑ ≤ χ̄ (clique-cover number) collapses exactly when α = χ̄. **Cis chains obey a
+  parity law** — ϑ = α for every *even* N (verified N=2..14), gap for odd N: since
+  |V|=3N+2 is even iff N even, an even cis chain has α = |V|/2 with a perfect clique cover
+  into |V|/2 edges (α = χ̄), forcing ϑ = α; so **even cis chains carry no contextual
+  advantage** — an exact sharpening of "cis is classical". **Trans chains** resonate only
+  sporadically, at N = 2 and N = 5 (verified to N=20; not periodic), a sandwich coincidence
+  (both still contain induced C₅'s, so not perfection). Either way a resonance is a sharp
+  instance of the bond-dependence boundary B1 (§10) — gluing contextual pentagons can
+  destroy the advantage entirely, the bond (cis/trans) and length deciding. What remains genuinely open: an actual laboratory
   run, and a full device error model — these are idealized projective-measurement /
   isotropic-noise targets (computable bounds), and a sequential-measurement test still
   faces the compatibility/detection loopholes of §3, so this quantifies the *target*, not

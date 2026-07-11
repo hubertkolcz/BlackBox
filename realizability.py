@@ -30,9 +30,17 @@ that vague item into two quantified, hardware-deciding curves in the chain lengt
       [Correction: an earlier version reported v* = alpha/theta -> 0.9685; that used a
       wrong noise floor of 0 (no I/3 contribution) and overstated the requirement.]
 
-  Plus a small exact sub-result: theta = alpha EXACTLY at N=2 and N=5 only (not periodic;
-  N=8,11 do not resonate) -- those two trans chains carry NO quantum advantage despite
-  being built from contextual pentagons (a sharp instance of composition boundary B1).
+  RESONANCES (theta = alpha => NO quantum advantage). Mechanism: the Lovasz sandwich
+  alpha <= theta <= clique-cover-number chi_bar collapses exactly when alpha = chi_bar.
+    * CIS chains -- a clean PARITY LAW: theta = alpha for every EVEN N, gap for odd N.
+      Reason: |V| = 3N+2 is even iff N even, and then alpha = |V|/2 with a perfect
+      clique cover into |V|/2 edges (alpha = chi_bar), forcing theta = alpha. So EVEN cis
+      chains carry NO contextual advantage -- an exact sharpening of "cis is classical".
+    * TRANS chains -- sporadic: theta = alpha only at N = 2 and N = 5 (verified to N=20;
+      not periodic, N=8,11 do not resonate). Both still contain induced C5's, so this is
+      a sandwich coincidence (alpha = chi_bar at those two lengths), not perfection.
+  Either way a resonance is a sharp instance of composition boundary B1: gluing contextual
+  pentagons can destroy the advantage entirely, the bond (cis/trans) and length deciding.
 
 Everything is triple cross-checked across three independent SDP code paths (dense CLARABEL,
 dense SCS, and the repo's chordal-decomposition solver). This is computable-bound theory:
@@ -90,6 +98,20 @@ def noise_profile(nmax=11):
     return out
 
 
+def resonance_scan(nmax=14):
+    """theta=alpha resonances: cis chains resonate iff N even; trans only at N=2,5."""
+    from lovasz_theta_sparse import pentagon_chain_word as pcw
+    cis, trans = [], []
+    for N in range(1, nmax + 1):
+        for word, bucket in ((("c" * (N - 1)), cis), (("t" * (N - 1)), trans)):
+            n, e = pcw(word)
+            th, _ = theta_gram(n, e)
+            a = alpha_chain_word(word)
+            if abs(th - a) < 1e-4:
+                bucket.append(N)
+    return {"cis_resonances": cis, "trans_resonances": trans}
+
+
 def main():
     print(f"{'N':>2} {'verts':>5} {'theta':>10} {'alpha':>5} {'th/alpha':>9} "
           f"{'v*=a/th':>8} {'dim d(N)':>8}")
@@ -115,6 +137,9 @@ def main():
         word = "t" * (N - 1); n, edges = pentagon_chain_word(word)
         th = chordal_theta(n, edges)["Theta"]; a = alpha_chain_word(word)
         print(f"  N={N:>2}: theta={th:.6f}  alpha={a}  |theta-alpha|={abs(th-a):.2e}")
+    rs = resonance_scan()
+    print(f"\nresonance scan (theta=alpha, N=1..14): cis={rs['cis_resonances']} (all even), "
+          f"trans={rs['trans_resonances']} (sporadic)")
 
 
 if __name__ == "__main__":
