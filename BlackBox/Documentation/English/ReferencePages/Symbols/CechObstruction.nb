@@ -1,0 +1,10 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(* Beginning of Notebook Content *)
+Notebook[{Cell["CechObstruction", "ObjectName", ExpressionUUID -> "0f987e53-458a-4a20-b73e-0a4f1096bab6"], Cell["CechObstruction[scen, e] gives the \[CapitalCHacek]ech cohomological obstruction data of the support presheaf of the empirical model e on the scenario scen (Abramsky-Mansfield-Barbosa; Abramsky-Barbosa-Kishida-Lal-Mansfield, arXiv:1502.03097): a support section s over a context is obstructed when its class \[Gamma](s) in the first \[CapitalCHacek]ech cohomology of the relative Z-linearized support presheaf is nonzero, equivalently (arXiv:1502.03097, Prop. 4.4) when NO compatible family of Z-linear combinations of support sections restricts to s. Returns an association with keys \"Obstructed\"/\"ObstructedCount\"/\"SectionCount\", \"NonextendableSections\" (sections with no global support assignment through them) and \"FalseNegatives\", \"GlobalSupportSize\", \"H0Rank\" (rank of the compatible-family module), \"SupportNoSignalling\", and the witness flags \"CohLogicallyContextual\" (some \[Gamma](s) != 0: certifies logical contextuality) and \"CohStronglyContextual\" (every \[Gamma](s) != 0: certifies strong contextuality). Vanishing of \[Gamma] is not conclusive - the Hardy model is the canonical false negative.", "Usage", ExpressionUUID -> "72a6cc09-43fc-4be4-8d96-f2071062b343"], Cell["Basic Examples", "Section", ExpressionUUID -> "c7a78801-9893-4173-ac72-308f0b6c9646"], Cell[BoxData[RowBox[{RowBox[{"CechObstruction", "[", RowBox[{RowBox[{"CycleScenario", "[", "5", "]"}], ",", RowBox[{"CycleModel", "[", RowBox[{"5", ",", "\"Wright\""}], "]"}]}], "]"}], "[", "\"CohStronglyContextual\"", "]"}]], "Input", ExpressionUUID -> "e5b02fed-7000-4a2a-a473-6bcfb12b07fe"]}, FrontEndVersion -> "15.0 for Microsoft Windows (64-bit) (May 19, 2026)", StyleDefinitions -> "Default.nb", ExpressionUUID -> "251c4e99-14a0-4f94-9551-0311bc9feb90"]
+(* End of Notebook Content *)

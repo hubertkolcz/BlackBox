@@ -1,0 +1,10 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(* Beginning of Notebook Content *)
+Notebook[{Cell["CoverScenario", "ObjectName", ExpressionUUID -> "498a0dd7-cba7-4d9b-8ef5-531d09e52459"], Cell["CoverScenario[X, cover] gives the contextuality scenario of an arbitrary measurement cover as an association: measurements X, contexts = the elements of cover (ordered measurement lists), section order per context (Tuples[{0,1}, Length[context]]), the Abramsky-Brandenburger incidence matrix \"Incidence\" relating deterministic global assignments to context sections, and \"Assignments\" (the 2^Length[X] global assignments). CycleScenario[n] is the n-cycle special case.", "Usage", ExpressionUUID -> "1875746b-322d-4843-9bb3-19db11c86f5e"], Cell["Basic Examples", "Section", ExpressionUUID -> "0d91dff9-b604-4c9b-a77f-372350aa0c35"], Cell[BoxData[RowBox[{RowBox[{RowBox[{"CoverScenario", "[", RowBox[{RowBox[{"Range", "[", RowBox[{"0", ",", "4"}], "]"}], ",", RowBox[{"Table", "[", RowBox[{RowBox[{"{", RowBox[{"i", ",", RowBox[{"Mod", "[", RowBox[{RowBox[{"i", "+", "1"}], ",", "5"}], "]"}]}], "}"}], ",", RowBox[{"{", RowBox[{"i", ",", "0", ",", "4"}], "}"}]}], "]"}]}], "]"}], "[", "\"Incidence\"", "]"}], "===", RowBox[{RowBox[{"CycleScenario", "[", "5", "]"}], "[", "\"Incidence\"", "]"}]}]], "Input", ExpressionUUID -> "e3ca9046-6604-4716-a492-8a97277957c8"]}, FrontEndVersion -> "15.0 for Microsoft Windows (64-bit) (May 19, 2026)", StyleDefinitions -> "Default.nb", ExpressionUUID -> "571d8541-d00e-4cf2-a5ef-4ce2ded826f1"]
+(* End of Notebook Content *)

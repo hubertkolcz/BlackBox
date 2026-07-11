@@ -16,6 +16,35 @@ gens = CascadeGenerators[];
 ceQ = CEFilter[c5, qv]; ceW = CEFilter[c5, wv];
 ce7 = CEFilter[CycleGraph[7], ConstantArray[.5, 7]];
 
+(* Cech obstruction of the support presheaf: exact models throughout *)
+chC = CechObstruction[scen5, CycleModel[5, "Classical"]];
+chQ = CechObstruction[scen5, CycleModel[5, "Quantum"]];
+chW = CechObstruction[scen5, CycleModel[5, "Wright"]];
+chQ7 = CechObstruction[scen7, CycleModel[7, "Quantum"]];
+chW7 = CechObstruction[scen7, CycleModel[7, "Wright"]];
+chW6 = CechObstruction[CycleScenario[6], CycleModel[6, "Wright"]];
+scen4 = CycleScenario[4];
+ePR = Flatten[{{1/2, 0, 0, 1/2}, {1/2, 0, 0, 1/2}, {1/2, 0, 0, 1/2}, {0, 1/2, 1/2, 0}}];
+eHardy = Flatten[{{1/12, 1/12, 1/12, 3/4}, {0, 1/6, 2/3, 1/6}, {1/3, 1/3, 1/3, 0}, {0, 2/3, 1/6, 1/6}}];
+chPR = CechObstruction[scen4, ePR];
+chH = CechObstruction[scen4, eHardy];
+edges5 = Table[{i, Mod[i + 1, 5]}, {i, 0, 4}];
+scenProd = CoverScenario[Join[Table[{1, i}, {i, 0, 4}], Table[{2, i}, {i, 0, 4}]],
+  Flatten[Table[{{1, ed[[1]]}, {1, ed[[2]]}, {2, f[[1]]}, {2, f[[2]]}}, {ed, edges5}, {f, edges5}], 1]];
+prodModel[m1_, m2_] := With[{d1 = AssociationThread[Tuples[{0, 1}, 2] -> m1[[1 ;; 4]]],
+    d2 = AssociationThread[Tuples[{0, 1}, 2] -> m2[[1 ;; 4]]]},
+  Flatten[Table[d1[s[[1 ;; 2]]] d2[s[[3 ;; 4]]], {c, scenProd["Contexts"]}, {s, Tuples[{0, 1}, 4]}]]];
+chWW = CechObstruction[scenProd, prodModel[CycleModel[5, "Wright"], CycleModel[5, "Wright"]]];
+chQQ = CechObstruction[scenProd, prodModel[CycleModel[5, "Quantum"], CycleModel[5, "Quantum"]]];
+ccC = CechCohomology[scen5, CycleModel[5, "Classical"]];
+ccQ = CechCohomology[scen5, CycleModel[5, "Quantum"]];
+ccW = CechCohomology[scen5, CycleModel[5, "Wright"]];
+ccU = CechCohomology[scen4, ConstantArray[1/4, 16]];
+ccPR = CechCohomology[scen4, ePR];
+ccH = CechCohomology[scen4, eHardy];
+ccWW = CechCohomology[scenProd, prodModel[CycleModel[5, "Wright"], CycleModel[5, "Wright"]]];
+ccQQ = CechCohomology[scenProd, prodModel[CycleModel[5, "Quantum"], CycleModel[5, "Quantum"]]];
+
 SmokeTest = <|
   "alpha" -> IndependenceNumber[c5] == 2,
   "theta" -> Abs[LovaszTheta[c5] - Sqrt[5.]] < 10^-6,
@@ -44,6 +73,39 @@ SmokeTest = <|
   "coboundaryRank" -> MatrixRank[del5] == 9,
   "kerLaplacian" -> 20 - MatrixRank[Transpose[del5] . del5] == 11,
   "residualsVanish" -> AllTrue[HarmonicResidual[del5, #] & /@ {eC, eQ, eW}, # < 10^-10 &],
+  "coverGeneralizesCycle" -> With[{cs = CoverScenario[Range[0, 4], Table[{i, Mod[i + 1, 5]}, {i, 0, 4}]]},
+     cs["Incidence"] === scen5["Incidence"] && cs["Sections"] === scen5["Sections"]],
+  "cechClassicalUnobstructed" -> chC["ObstructedCount"] == 0 && chC["SectionCount"] == 15 &&
+     ! chC["LogicallyContextual"] && chC["SupportNoSignalling"],
+  "cechQuantumUnobstructed" -> chQ["ObstructedCount"] == 0 && chQ["SectionCount"] == 15 &&
+     chQ["GlobalSupportSize"] == 11 && ! chQ["CohLogicallyContextual"],
+  "cechWrightAllObstructed" -> chW["ObstructedCount"] == 10 && chW["SectionCount"] == 10 &&
+     chW["CohStronglyContextual"] && chW["StronglyContextual"] && chW["H0Rank"] == 1,
+  "cechGateTriple" -> Length[DeleteDuplicates[
+       {#["ObstructedCount"] > 0, GlobalSectionQ[scen5, N@CycleModel[5, #2]]} & @@@
+       {{chC, "Classical"}, {chQ, "Quantum"}, {chW, "Wright"}}]] == 3,
+  "cechC7" -> chW7["ObstructedCount"] == 14 && chW7["CohStronglyContextual"] &&
+     chQ7["ObstructedCount"] == 0 && chQ7["SectionCount"] == 21 && chQ7["GlobalSupportSize"] == 29,
+  "cechC6WrightParity" -> chW6["ObstructedCount"] == 0 && chW6["SectionCount"] == 12 &&
+     chW6["GlobalSupportSize"] == 2 && ! chW6["LogicallyContextual"],
+  "cechPRBoxAllObstructed" -> chPR["ObstructedCount"] == 8 && chPR["CohStronglyContextual"] &&
+     chPR["StronglyContextual"],
+  "cechHardyFalseNegative" -> chH["ObstructedCount"] == 0 && chH["LogicallyContextual"] &&
+     ! chH["StronglyContextual"] && chH["FalseNegatives"] === {{{0, 1}, {0, 0}}} &&
+     chH["SupportNoSignalling"] && chH["H0Rank"] == 6,
+  "cechProductWright" -> chWW["ObstructedCount"] == 100 && chWW["SectionCount"] == 100 &&
+     chWW["CohStronglyContextual"],
+  "cechProductQuantum" -> chQQ["ObstructedCount"] == 0 && chQQ["SectionCount"] == 225 &&
+     chQQ["GlobalSupportSize"] == 121,
+  "cechCohomC5" -> ({#["H0Rank"], #["H1FreeRank"], #["H1Torsion"]} & /@ {ccC, ccQ, ccW}) ===
+       {{6, 1, {}}, {6, 1, {}}, {1, 1, {}}} &&
+     AllTrue[{ccC, ccQ, ccW}, #["ComplexCloses"] &] &&
+     ccC["H0Rank"] == chC["H0Rank"] && ccW["H0Rank"] == chW["H0Rank"],
+  "cechCohomCHSHCensus" -> ({#["H0Rank"], #["H1FreeRank"], #["H1Torsion"]} & /@ {ccU, ccPR, ccH}) ===
+     {{9, 1, {}}, {1, 1, {}}, {6, 1, {}}},
+  "cechCohomProduct" -> ccWW["CochainRanks"] == {100, 700, 2200} && ccWW["H0Rank"] == 1 &&
+     ccWW["H1FreeRank"] == 0 && ccWW["ComplexCloses"] &&
+     ccQQ["H0Rank"] == 36 && ccQQ["H0Rank"] == ccQ["H0Rank"]^2 && ccQQ["ComplexCloses"],
   "fourGenerators" -> Length[gens] == 4,
   "generatorSpan" -> MatrixRank[So3Axis /@ gens, Tolerance -> 10^-8] == 2,
   "dlaCloses" -> DLADimension[gens] == 3
