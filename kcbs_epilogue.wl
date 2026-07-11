@@ -10,7 +10,7 @@
 (*Hubert Ko\[LSlash]cz \[LongDash] July 2026. Closes the questions left open by kcbs_wigner_flow.wl and kcbs_ledger.wl (QUANTUM_CONTEXTUALITY.md, Section 9). Requires Wolfram/QuantumFramework and the BlackBox paclet. Headless verification: wolframscript -file RunEpilogue.wl -print all (must end OK -> True). Interactive use: evaluate cell by cell from a fresh kernel \[LongDash] the first cell repairs a kernel polluted by an earlier single-block evaluation (the Global`-shadowing pitfall of kcbs_circuit.wl, Section 1).*)
 
 (* ::Abstract:: *)
-(*Three questions, three verdicts. (1) THE CURRENCY LAW. kcbs_ledger.wl found CF = 4 nu at the quantum-maximal pentagon point. Here the conversion rate is identified: CF = (n - 1) nu on the n-cycle \[LongDash] verified at quantum maximum for n = 5, 7, 9, 11 (ratios 4, 6, 8, 10 to 1e-10), EXACTLY for the Wright boxes (rational LPs: nu = 1/(n - 1), CF = 1), along the whole C7 white-noise family (ratio 6 throughout), and \[LongDash] the surprise \[LongDash] at forty random ASYMMETRIC quantum models and twenty-plus random NON-quantum no-signalling models on C5, every one with ratio 4 to 1e-10. The law appears to hold on the entire no-signalling polytope of the cycle, not just the symmetric slice; the analytic proof (via the complete n-cycle inequality set of Araujo et al. and vertex classification) is left open. (2) THE BINDING NO-GO. Pulling the 45 parity witnesses of all five wire points into one arena DOES create exclusivity edges to the pentagon clicks (35: each positive-cell witness binds to exactly one click; the negative-cell witnesses \[LongDash] the ones that certify negativity \[LongDash] bind to none, at any wire point) \[LongDash] but no metric binding: every single added event strictly lowers the CSW violation (best pentagon+1 is negative), the best pentagon+2 reaches 0.012 versus the pentagon's own 0.236, and greedy growth from the pentagon terminates immediately. Two sharp reasons: any single addition raises the independence number (two pentagon vertices cannot hit all five maximum independent pairs), and no two high-probability witnesses can ever be exclusive, because 2 x 3/(2 Sqrt[5]) = 3/Sqrt[5] > 1 would violate the Born rule. (3) THE CHANNEL LEDGER. The Choi-state Wigner negativity of the gates (cross-checked between the framework's two-qutrit transform and the phase-point pairing, agreement 1e-15): identity and the shift X carry 0 (Clifford); P carries 0.747106; every T_k carries EXACTLY the same 0.725972. At the channel level all five gates are strongly magic-capable \[LongDash] the flow note's gate-by-gate conservation is an orbit fact riding on channels that are each nearly as non-classical as the preparation itself.*)
+(*Three questions, three verdicts. (1) THE CURRENCY LAW. kcbs_ledger.wl certified CF = 4 nu exactly at the quantum-maximal pentagon point and observed it along the whole C5 white-noise family. Here the conversion rate is identified: CF = (n - 1) nu on the n-cycle \[LongDash] verified at quantum maximum for n = 5, 7, 9, 11 (ratios 4, 6, 8, 10; deviations below 1e-9, the machine checks enforce 1e-6), EXACTLY for the Wright boxes (rational LPs: nu = 1/(n - 1), CF = 1) and at the C5 quantum point (RevisedSimplex), across the contextual range of the C7 white-noise family (V = 0.70 to 1, ratio 6 throughout), and \[LongDash] the surprise \[LongDash] at forty random ASYMMETRIC quantum models and twenty-three random contextual no-signalling mixtures, nine of them certifiably OUTSIDE the quantum set (they violate the C5 correlator quantum bound 4 Sqrt[5] - 5), every one with ratio 4 (deviations below 1e-9). The law appears to hold on the entire no-signalling polytope of the cycle, not just the symmetric slice; the analytic proof (via the complete n-cycle inequality set of Araujo et al. and vertex classification) is left open. (2) THE BINDING NO-GO. Pulling the 45 parity witnesses of all five wire points into one arena DOES create exclusivity edges to the pentagon clicks (35: each positive-cell witness binds to exactly one click; the negative-cell witnesses \[LongDash] the ones that certify negativity \[LongDash] bind to none, at any wire point) \[LongDash] but no metric binding: every single added event strictly lowers the CSW violation (best pentagon+1 is negative), the best pentagon+2 reaches 0.012 versus the pentagon's own 0.236, and greedy growth from the pentagon terminates immediately. Two sharp reasons: any single addition raises the independence number (two pentagon vertices cannot hit all five maximum independent pairs), and no two high-probability witnesses can ever be exclusive, because 2 x 3/(2 Sqrt[5]) = 3/Sqrt[5] > 1 would violate the Born rule. (3) THE CHANNEL LEDGER. The Choi-state Wigner negativity of the gates (cross-checked between the framework's two-qutrit transform and the phase-point pairing, agreement 1e-15): identity and the shift X carry 0 (Clifford); P carries 0.747106; every T_k carries the same 0.725972 \[LongDash] and the equality is now EXPLAINED, because the review of this note's own data surfaced a structural fact the flow note missed: T3 = T1 and T4 = T2 to machine precision (the cascade is gate-periodic, [P, T1, T2, T1, T2]), and T2 is a basis-permutation conjugate of T1 (machine-checked) \[LongDash] permutations are affine maps of Z_3, hence Clifford, and Clifford conjugation preserves Choi negativity. At the channel level all five gates are strongly magic-capable \[LongDash] the flow note's gate-by-gate conservation is an orbit fact riding on channels that are each nearly as non-classical as the preparation itself.*)
 
 (* ::Section:: *)
 (*1. Environment*)
@@ -31,7 +31,7 @@ Needs["HubertKolcz`BlackBox`"]; Quiet[Remove /@ Select["Global`" <> # & /@ Names
 (*2. The currency law: CF = (n - 1) nu on the n-cycle*)
 
 (* ::Text:: *)
-(*Both measures are linear programs over the cycle scenario's incidence matrix: the contextual fraction CF = 1 - max{Total[b] : M.b <= e, b >= 0}, and the minimal negative weight nu = min{Total[b-] : M.(b+ - b-) = e, b\[PlusMinus] >= 0}. kcbs_ledger.wl certified CF = 4 nu at one point of one scenario. The conversion rate turns out to be structural:*)
+(*Both measures are linear programs over the cycle scenario's incidence matrix: the contextual fraction CF = 1 - max{Total[b] : M.b <= e, b >= 0}, and the minimal negative weight nu = min{Total[b-] : M.(b+ - b-) = e, b\[PlusMinus] >= 0}. kcbs_ledger.wl certified CF = 4 nu exactly at the C5 quantum-maximal point and observed it along the entire C5 white-noise family. The conversion rate turns out to be structural:*)
 
 (* ::Input:: *)
 nuLP[MN_, eN_] := Module[{m2 = Dimensions[MN][[2]], vp, vm},
@@ -74,12 +74,12 @@ cf5Exact = 1 + LinearOptimization[-Total[vb5],
 exactLaw = FullSimplify[cf5Exact - 4 nu5Exact] === 0
 
 (* ::CodeText:: *)
-(*Along the whole C7 white-noise family the ratio stays 6; and \[LongDash] the strong form \[LongDash] at random ASYMMETRIC quantum models (random qutrit states against the fixed pentagon; sections built by the Born rule and checked no-signalling) and at random NON-quantum models (random noncontextal mixtures pulled toward the Wright box), the C5 ratio is 4 every single time. The law is a property of the polytope, not of a symmetric slice:*)
+(*Across the contextual range of the C7 white-noise family (threshold V_c \[TildeTilde] 0.677; sampled V = 0.70 to 1) the ratio stays 6; and \[LongDash] the strong form \[LongDash] at random ASYMMETRIC quantum models (random qutrit states against the fixed pentagon; sections built by the Born rule and checked no-signalling) and at random contextual no-signalling mixtures pulled toward the Wright box \[LongDash] certifying, via the sixteen odd-sign C5 correlator sums, which of them lie provably OUTSIDE the quantum set (bound 4 Sqrt[5] - 5, calibrated below on the KCBS-maximal state itself) \[LongDash] the C5 ratio is 4 every single time. The law is a property of the polytope, not of a symmetric slice:*)
 
 (* ::Input:: *)
 c7Ratios = Table[Module[{p1 = V N[Cos[Pi/7]/(1 + Cos[Pi/7])] + (1 - V)/3, MN, eN},
     MN = N[CycleScenario[7]["Incidence"]]; eN = N[CycleModel[7, 1 - 2 p1, p1]];
-    cfLP[MN, eN]/nuLP[MN, eN]], {V, {0.85, 0.9, 0.95, 1.}}]
+    cfLP[MN, eN]/nuLP[MN, eN]], {V, {0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.}}]
 
 (* ::Input:: *)
 c2 = Cos[Pi/5]/(1 + Cos[Pi/5]);
@@ -109,12 +109,18 @@ asymRatios = Reap[Do[Module[{st, eN, cf},
        cf = cfLP[M5, eN];
        If[cf > 0.02, Sow[cf/nuLP[M5, eN]]]]], {40}]][[2, 1]];
 wrightE = N[CycleModel[5, "Wright"]];
-nonqRatios = Reap[Do[Module[{w, eN, cf},
+oddCorrMax[eN_] := Module[{corr = Table[eN[[4 i - 3]] - eN[[4 i - 2]] - eN[[4 i - 1]] + eN[[4 i]], {i, 5}]},
+  Max @ Table[If[OddQ[Count[g, -1]], g . corr, -Infinity], {g, Tuples[{-1, 1}, 5]}]];
+oddBoundResidual = Abs[oddCorrMax[asymE[s1]] - (4 Sqrt[5.] - 5)];
+nonqSamples = Reap[Do[Module[{w, eN, cf},
       w = RandomReal[{0, 1}, 32]; w = w/Total[w];
       eN = Module[{t = RandomReal[{0.3, 1}]}, (1 - t) M5 . w + t wrightE];
       cf = cfLP[M5, eN];
-      If[cf > 0.02, Sow[cf/nuLP[M5, eN]]]], {40}]][[2, 1]];
-{orderingResidual, Length[asymRatios], MinMax[asymRatios], Length[nonqRatios], MinMax[nonqRatios]}
+      If[cf > 0.02, Sow[{cf/nuLP[M5, eN], oddCorrMax[eN]}]]], {40}]][[2, 1]];
+nonqRatios = nonqSamples[[All, 1]];
+beyondQuantum = Count[nonqSamples[[All, 2]], x_ /; x > 4 Sqrt[5.] - 5 + 10^-9];
+{orderingResidual, oddBoundResidual, Length[asymRatios], MinMax[asymRatios],
+ Length[nonqRatios], MinMax[nonqRatios], beyondQuantum}
 
 (* ::Text:: *)
 (*Reading. nu prices contextuality in negative probability; CF prices it in contextual mixture weight; on the n-cycle the exchange rate is the odd-cycle constant n - 1 = 2 alpha, apparently everywhere on the no-signalling polytope. Consistency anchors: at the Wright box, CF = 1 (strong contextuality) converts to nu = 1/(n - 1) \[LongDash] exactly the negative weight of the affine decomposition that writes the box over the deterministic vertices; and the quantum maximum's nu = (Sqrt[5] - 2)/2 is CF/4 = (2 Sqrt[5] - 4)/4. A proof should follow from the complete n-cycle noncontextuality inequality set (Araujo, Quintino, Terra Cunha, Cabello) \[LongDash] both LPs are optima of matching piecewise-linear functionals \[LongDash] but it is left open here; the machine evidence above is what this note certifies.*)
@@ -185,7 +191,13 @@ greedy = Module[{cur = base, curv = subViol[base], cand, vals},
 (*4. The channel ledger: every gate is magic-capable, exactly equally for the T's*)
 
 (* ::Text:: *)
-(*The remaining variant from the flow note \[LongDash] the gates as CHANNELS in phase space. The channel-level measure is the Wigner negativity of the Choi state (I \[CircleTimes] U)|Phi> with |Phi> the maximally entangled two-qutrit state (Wang-Wilde-Su mana of channels, in its negativity form). Two independent routes must and do agree to 1e-15: the framework's native two-qutrit QuantumWignerTransform, and the pairing against the tensor products A_lambda \[CircleTimes] A_mu of the reconstructed phase-point parities. Cliffords calibrate the scale at zero (identity, cyclic shift X). The verdict sharpens the flow note maximally: P carries Choi negativity 0.747106, and the four T_k carry EXACTLY the same 0.725972 as one another (the basis relabelings taking one T to another are affine permutations of Z_3, hence Clifford, hence negativity-preserving on Choi states). The cascade conserves the state's negativity not because its gates are weakly non-classical \[LongDash] as channels they are nearly as magic-capable as P itself \[LongDash] but because the orbit V_k psi presents each gate with the one state it happens to carry sideways.*)
+(*The remaining variant from the flow note \[LongDash] the gates as CHANNELS in phase space. The channel-level measure is the Wigner negativity of the Choi state (I \[CircleTimes] U)|Phi> with |Phi> the maximally entangled two-qutrit state (Wang-Wilde-Su mana of channels, in its negativity form). Two independent routes must and do agree to 1e-15: the framework's native two-qutrit QuantumWignerTransform, and the pairing against the tensor products A_lambda \[CircleTimes] A_mu of the reconstructed phase-point parities. Cliffords calibrate the scale at zero (identity, cyclic shift X). The verdict sharpens the flow note maximally, and en route surfaces a structural fact the flow note never noticed: the cascade owns only TWO distinct transition matrices \[LongDash] T3 = T1 and T4 = T2 to machine precision, so the gate sequence is [P, T1, T2, T1, T2] \[LongDash] and T2 is a basis-permutation conjugate of T1 (machine-checked below). Permutations of the computational basis are affine maps of Z_3, hence Clifford, and Clifford conjugation preserves Choi-state negativity; the four equal channel values are therefore explained, not coincidental. P carries Choi negativity 0.747106; every T carries 0.725972 (equal to machine precision, spread ~1e-16). The cascade conserves the state's negativity not because its gates are weakly non-classical \[LongDash] as channels they are nearly as magic-capable as P itself \[LongDash] but because the orbit V_k psi presents each gate with the one state it happens to carry sideways.*)
+
+(* ::Input:: *)
+cascadePeriodResiduals = {Max @ Abs[Ts[[3]] - Ts[[1]]], Max @ Abs[Ts[[4]] - Ts[[2]]]};
+permConjResidual = Min @ Table[Max @ Abs[p . Ts[[1]] . Transpose[p] - Ts[[2]]],
+   {p, Permutations[IdentityMatrix[3]]}];
+{cascadePeriodResiduals, permConjResidual}
 
 (* ::Input:: *)
 choiVec[U_] := Flatten[Transpose[U]]/Sqrt[3];
@@ -213,8 +225,10 @@ EpilogueVerification = <|
   "currencyLawC5Exact" -> exactLaw,
   "currencyLawC7Family" -> Max @ Abs[c7Ratios - 6] < 10^-6,
   "asymmetricOrdering" -> orderingResidual < 10^-12,
+  "oddBoundCalibrated" -> oddBoundResidual < 10^-10,
   "currencyLawAsymQuantum" -> Length[asymRatios] >= 30 && Max @ Abs[asymRatios - 4] < 10^-6,
-  "currencyLawNonQuantum" -> Length[nonqRatios] >= 15 && Max @ Abs[nonqRatios - 4] < 10^-6,
+  "currencyLawNoSignalling" -> Length[nonqRatios] >= 15 && Max @ Abs[nonqRatios - 4] < 10^-6,
+  "someCertifiedBeyondQuantum" -> beyondQuantum >= 5,
   "poolComplete" -> Length[pool] == 45 && pConsistency < 10^-12,
   "witnessProbabilityCap" -> Abs[Max[poolP] - 3/(2 Sqrt[5.])] < 10^-12,
   "topologicalBindingExists" -> crossEdges == 35 && negCellIsolated &&
@@ -226,7 +240,9 @@ EpilogueVerification = <|
      greedy[[1]] == 5 && Abs[greedy[[2]] - (Sqrt[5.] - 2)] < 10^-12,
   "cliffordsCarryZero" -> Max[channelTable[[1 ;; 2, 2]]] == 0 && Max[channelTable[[1 ;; 2, 3]]] == 0,
   "routesAgree" -> Max @ Abs[channelTable[[All, 2]] - channelTable[[All, 3]]] < 10^-12,
-  "fourTsExactlyEqual" -> Max[tNegs] - Min[tNegs] < 10^-12,
+  "cascadePeriodTwo" -> Max[cascadePeriodResiduals] < 10^-13,
+  "tOneTwoCliffordConjugate" -> permConjResidual < 10^-13,
+  "allFourChoisCoincide" -> Max[tNegs] - Min[tNegs] < 10^-12,
   "everyGateMagicCapable" -> Min[channelTable[[3 ;;, 2]]] > 0.7 &&
      channelTable[[3, 2]] > Max[tNegs]
 |>;

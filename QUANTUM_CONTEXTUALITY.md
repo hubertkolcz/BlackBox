@@ -194,13 +194,16 @@ violation (exclusivity binds topologically, not metrically). Machine-checkable
 `wolframscript -file RunLedger.wl -print all`.
 
 ### kcbs_epilogue.wl — closing the Wigner thread (runner: RunEpilogue.wl)
-Three verdicts, 17 checks → OK. (1) CURRENCY LAW: CF = (n−1)·ν on the n-cycle —
-ratios 4/6/8/10 at quantum max for n = 5/7/9/11 (to 1e−10); EXACT at the Wright
-boxes (rational Simplex: ν = 1/(n−1), CF = 1, n = 5,7,9) and at the C5 quantum
-point (RevisedSimplex: CF = 4ν); ratio 6 along the entire C7 white-noise family;
-ratio 4 at 40 random ASYMMETRIC quantum models and 23 random NONQUANTUM models
-on C5 — the law holds polytope-wide, not just on the symmetric slice. Analytic
-proof left open (route: the complete n-cycle inequality set, Araújo–Quintino–
+Three verdicts, 21 checks → OK. (1) CURRENCY LAW: CF = (n−1)·ν on the n-cycle —
+ratios 4/6/8/10 at quantum max for n = 5/7/9/11 (deviations < 1e−9, checks at
+1e−6); EXACT at the Wright boxes (rational Simplex: ν = 1/(n−1), CF = 1,
+n = 5,7,9) and at the C5 quantum point (RevisedSimplex: CF = 4ν); ratio 6 across
+the contextual range of the C7 white-noise family (V = 0.70–1, V_c ≈ 0.677);
+ratio 4 at 40 random ASYMMETRIC quantum models and 23 random contextual
+no-signalling mixtures, 9 of them certified beyond-quantum (they violate the C5
+correlator quantum bound 4√5−5, calibrated on the KCBS-maximal state) — the law
+holds polytope-wide, not just on the symmetric slice. Analytic proof left open
+(route: the complete n-cycle inequality set, Araújo–Quintino–
 Budroni–Terra Cunha–Cabello, PRA 88, 022118). (2) BINDING NO-GO: all 45 cascade
 parity witnesses (5 wire points × 9 cells) pulled to one arena; 35 pentagon
 edges with a pointed structure — every positive-cell witness binds to exactly
@@ -212,8 +215,11 @@ the pentagon raises α (best pentagon+1 violation is negative), best pentagon+2
 is the metric optimum of its own phase-space witness pool: the badges share
 topology, never strength. (3) CHANNEL LEDGER: Choi-state Wigner negativity
 (framework two-qutrit transform ≡ A_λ⊗A_μ pairing, agreement 1e−15): Id and
-X(shift) → 0 (Clifford); P → 0.747106; all four T's → exactly equal 0.725972
-(affine permutations of Z₃ are Clifford). Every cascade gate is strongly
+X(shift) → 0 (Clifford); P → 0.747106; every T → 0.725972. NEW structural fact
+surfaced en route: T3 = T1 and T4 = T2 to machine precision — the cascade is
+gate-periodic, [P, T1, T2, T1, T2] — and T2 = Π·T1·Πᵀ for a basis permutation Π
+(machine-checked); permutations are affine on Z₃, hence Clifford, so the equal
+channel values are explained, not coincidental. Every cascade gate is strongly
 magic-capable as a channel — the flow note's conservation is purely an orbit
 fact. Headless: `wolframscript -file RunEpilogue.wl -print all`.
 
