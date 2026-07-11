@@ -13,7 +13,7 @@ if (-not $ok) { $all = $false }
 Write-Output ("{0,-34} {1}" -f "BlackBox\Tests\BlackBoxTests.wl", $(if ($ok) { "OK" } else { "FAILED" }))
 foreach ($f in @("RunEssay.wl", "RunCaseStudies.wl", "RunHeptagonCatalysis.wl",
     "RunBiphotonSimulator.wl", "RunWignerFlow.wl", "RunLedger.wl", "RunEpilogue.wl",
-    "RunSupportCohomology.wl")) {
+    "RunSupportCohomology.wl", "RunSignedNegativity.wl")) {
   Push-Location $root
   $out = & $ws -file $f -print all 2>&1 | Out-String
   Pop-Location

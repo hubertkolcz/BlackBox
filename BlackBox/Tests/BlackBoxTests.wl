@@ -57,6 +57,39 @@ ghzModel = Flatten[Table[If[Mod[Total[s], 2] == par, 1/4, 0], {par, {0, 1, 1, 1}
 chGHZ = CechObstruction[ghzScen, ghzModel];
 avnGHZ = AvNArgument[ghzScen, ghzModel];
 avnOf[scn_, ee_] := AvNArgument[scn, ee]["AvN"];
+pmScen = CoverScenario[Flatten[Table[{i, j}, {i, 3}, {j, 3}], 1],
+  Join[Table[Table[{i, j}, {j, 3}], {i, 3}], Table[Table[{i, j}, {i, 3}], {j, 3}]]];
+pmModel = Flatten[Table[If[Mod[Total[s], 2] == {0, 0, 0, 0, 0, 1}[[k]], 1/4, 0], {k, 6}, {s, Tuples[{0, 1}, 3]}]];
+chPM = CechObstruction[pmScen, pmModel];
+avnPM = AvNArgument[pmScen, pmModel];
+cegTetrads = Map[With[{w = #/GCD @@ #}, If[First[DeleteCases[w, 0]] < 0, -w, w]] &, {
+   {{0,0,0,1},{0,0,1,0},{1,1,0,0},{1,-1,0,0}}, {{0,0,0,1},{0,1,0,0},{1,0,1,0},{1,0,-1,0}},
+   {{1,-1,1,-1},{1,-1,-1,1},{1,1,0,0},{0,0,1,1}}, {{1,-1,1,-1},{1,1,1,1},{1,0,-1,0},{0,1,0,-1}},
+   {{0,0,1,0},{0,1,0,0},{1,0,0,1},{1,0,0,-1}}, {{1,-1,-1,1},{1,1,1,1},{1,0,0,-1},{0,1,-1,0}},
+   {{1,1,-1,1},{1,1,1,-1},{1,-1,0,0},{0,0,1,1}}, {{1,1,-1,1},{-1,1,1,1},{1,0,1,0},{0,1,0,-1}},
+   {{1,1,1,-1},{-1,1,1,1},{1,0,0,1},{0,1,-1,0}}}, {2}];
+cegRays = DeleteDuplicates[Flatten[cegTetrads, 1]];
+cegScen = <|"X" -> cegRays, "Outcomes" -> Association[# -> {0, 1} & /@ cegRays], "Contexts" -> cegTetrads,
+  "Sections" -> Flatten[Table[{c, s}, {c, cegTetrads}, {s, Tuples[{0, 1}, 4]}], 1],
+  "Assignments" -> Tuples[{0, 1}, 18]|>;
+cegModel = Flatten[Table[If[Total[s] == 1, 1/4, 0], {c, cegTetrads}, {s, Tuples[{0, 1}, 4]}]];
+chCEG = CechObstruction[cegScen, cegModel];
+avnCEG = AvNArgument[cegScen, cegModel];
+z4Scen = CoverScenario[Range[0, 3], Table[{i, Mod[i + 1, 4]}, {i, 0, 3}], Range[0, 3]];
+z4Model = Flatten[Table[If[Mod[s[[2]] - s[[1]], 4] == If[c == 3, 2, 0], 1/4, 0], {c, 0, 3}, {s, Tuples[Range[0, 3], 2]}]];
+avnZ4 = AvNArgument[z4Scen, z4Model, 4];
+z4A = Table[Module[{row = ConstantArray[0, 4]}, MapThread[(row[[#1 + 1]] = #2) &, {eq[[1]], eq[[2]]}]; row], {eq, avnZ4["Equations"]}];
+z4b = avnZ4["Equations"][[All, 3]];
+z4Mod2Shadow = MatrixRank[z4A, Modulus -> 2] == MatrixRank[MapThread[Append, {z4A, z4b}], Modulus -> 2];
+z4Model0 = Flatten[Table[If[Mod[s[[2]] - s[[1]], 4] == 0, 1/4, 0], {c, 0, 3}, {s, Tuples[Range[0, 3], 2]}]];
+avnZ4ctl = AvNArgument[z4Scen, z4Model0, 4];
+relGHZ = CechRelativeCohomology[ghzScen, ghzModel, 1];
+relW = CechRelativeCohomology[scen5, CycleModel[5, "Wright"], 1];
+relH = CechRelativeCohomology[scen4, eHardy, 2];
+relPM = CechRelativeCohomology[pmScen, pmModel, 6];
+relMatch[rel_, ch_, scn_, c0_] := And @@ Table[
+   rel["GammaOrders"][s0] === ch["ObstructionOrder"][{scn["Contexts"][[c0]], s0}],
+   {s0, Keys[rel["GammaOrders"]]}];
 
 SmokeTest = <|
   "alpha" -> IndependenceNumber[c5] == 2,
@@ -89,6 +122,14 @@ SmokeTest = <|
   "sectionClassical" -> GlobalSectionQ[scen5, eC],
   "noSectionQuantum" -> ! GlobalSectionQ[scen5, eQ],
   "noSectionWright" -> ! GlobalSectionQ[scen5, eW],
+  "negPentagonQuantum" -> Simplify[SignedNegativity[scen5, CycleModel[5, "Quantum"]] - (Sqrt[5] - 2)/2] === 0,
+  "negCfIs4NuPentagon" -> Simplify[ContextualFraction[scen5, CycleModel[5, "Quantum"]] ==
+     4 SignedNegativity[scen5, CycleModel[5, "Quantum"]]],
+  "negCycleLawC7" -> ContextualFraction[scen7, CycleModel[7, "Wright"]] ==
+     6 SignedNegativity[scen7, CycleModel[7, "Wright"]] &&
+     SignedNegativity[scen5, CycleModel[5, "Wright"]] == 1/4,
+  "negNotUniversal" -> SignedNegativity[scen5, CycleModel[5, "Classical"]] == 0 &&
+     Simplify[ContextualFraction[scen5, N@CycleModel[5, "Wright"]]/SignedNegativity[scen5, N@CycleModel[5, "Wright"]]] != 2,
   "supportQuantumLucas" -> PossibilisticSupport[scen5, eQ]["Size"] == 11,
   "supportWrightEmpty" -> PossibilisticSupport[scen5, eW]["Empty"],
   "coboundaryRank" -> MatrixRank[del5] == 9,
@@ -154,6 +195,28 @@ SmokeTest = <|
   "z3ControlNoncontextual" -> chZ3c["ObstructedCount"] == 0 && chZ3c["GlobalSupportSize"] == 3 &&
      GlobalSectionQ[z3Scen, N@Flatten[Table[If[Mod[s[[2]] - s[[1]], 3] == 0, 1/3, 0],
         {c, 0, 3}, {s, Tuples[Range[0, 2], 2]}]]],
+  "ksPeresMermin" -> chPM["ObstructedCount"] == 24 && chPM["CohStronglyContextual"] &&
+     chPM["GlobalSupportSize"] == 0 && avnPM["AvN"] && avnPM["EquationCount"] == 6 &&
+     AllTrue[Values[chPM["ObstructionOrder"]], # === 2 &],
+  "avnComposite Z4" -> avnZ4["AvN"] && avnZ4["EquationCount"] == 8 &&
+     AnyTrue[avnZ4["Equations"], #[[2]] =!= {0, 0} && AllTrue[#[[2]], EvenQ] &] &&
+     z4Mod2Shadow && ! avnZ4ctl["AvN"] && GlobalSectionQ[z4Scen, N@z4Model0],
+  "avnPrimeRegression" -> avnGHZ["AvN"] && avnGHZ["Equations"][[All, 2]] === ConstantArray[{1, 1, 1}, 4] &&
+     avnZ3["AvN"] && avnZ3["Equations"][[All, 2]] === ConstantArray[{1, 2}, 4] &&
+     avnZ3["Equations"][[All, 3]] === {0, 0, 0, 2},
+  "cechRelativeGroups" -> {relGHZ["H1FreeRank"], relGHZ["H1Torsion"]} === {0, {2}} &&
+     {relPM["H1FreeRank"], relPM["H1Torsion"]} === {0, {2}} &&
+     {relW["H1FreeRank"], relW["H1Torsion"]} === {1, {}} &&
+     relH["H1FreeRank"] == 0 && relH["H1Torsion"] === {} &&
+     AllTrue[{relGHZ, relW, relH, relPM}, #["ComplexCloses"] && #["GammaCocyclesVerified"] &],
+  "cechRelativeMatchesObstruction" -> relMatch[relGHZ, chGHZ, ghzScen, 1] &&
+     relMatch[relW, chW, scen5, 1] && relMatch[relH, chH, scen4, 2] &&
+     relMatch[relPM, chPM, pmScen, 6],
+  "ksCEG18" -> Length[cegRays] == 18 &&
+     AllTrue[cegTetrads, AllTrue[Subsets[#, {2}], #[[1]] . #[[2]] == 0 &] &] &&
+     chCEG["ObstructedCount"] == 36 && chCEG["CohStronglyContextual"] &&
+     chCEG["GlobalSupportSize"] == 0 && avnCEG["AvN"] && avnCEG["EquationCount"] == 9 &&
+     AllTrue[Values[chCEG["ObstructionOrder"]], # === 2 &],
   "fourGenerators" -> Length[gens] == 4,
   "generatorSpan" -> MatrixRank[So3Axis /@ gens, Tolerance -> 10^-8] == 2,
   "dlaCloses" -> DLADimension[gens] == 3

@@ -23,8 +23,8 @@ Cell[TextData[{
  " \[LongDash] ",
  "AvNArgument[scen, e] and AvNArgument[scen, e, d] give the All-vs-Nothing \
 argument of the empirical model e on the scenario scen over Z_d (default d = \
-2; d must be prime), following Abramsky-Barbosa-Kishida-Lal-Mansfield, \
-arXiv:1502."
+2; d any integer >= 2, prime or composite), following \
+Abramsky-Barbosa-Kishida-Lal-Mansfield, arXiv:1502."
 }], "Item",ExpressionUUID->"5c7d3f92-2e48-4b61-8a05-d94e17b26c38"],
 
 Cell[TextData[{
@@ -54,6 +54,17 @@ data of the support presheaf of the empirical model e on the scenario scen \
 (Abramsky-Mansfield-Barbosa; Abramsky-Barbosa-Kishida-Lal-Mansfield, \
 arXiv:1502."
 }], "Item",ExpressionUUID->"7f2a9c41-88d3-4b46-9a17-c3e5d20b6a94"],
+
+Cell[TextData[{
+ StyleBox["CechRelativeCohomology", "InlineCode"],
+ " \[LongDash] ",
+ "CechRelativeCohomology[scen, e, c0] gives the RELATIVE \:010cech cohomology \
+of the Z-linearized support presheaf of the empirical model e with respect \
+to the distinguished context c0 (an index into scen[\"Contexts\"], or the \
+context itself): the presheaf F~ = ker(F -> F|c0), whose value on U is \
+spanned by differences of support sections agreeing on U \[Intersection] c0 \
+(so F~(c0) = 0)."
+}], "Item",ExpressionUUID->"8b3f5a29-6d17-4e84-9c02-a4d7e58f1b63"],
 
 Cell[TextData[{
  StyleBox["CEFilter", "InlineCode"],
@@ -231,6 +242,16 @@ Cell[TextData[{
 cos(Pi/n)/(1+cos(Pi/n)) of the quantum-maximal n-cycle model (Araujo et al., \
 PRA 88, 022118); for n = 5 it is 1/Sqrt[5]."
 }], "Item",ExpressionUUID->"c58f0e27-6d43-49b2-9a81-e35d708c14b7"],
+
+Cell[TextData[{
+ StyleBox["SignedNegativity", "InlineCode"],
+ " \[LongDash] ",
+ "SignedNegativity[scen, e] gives the negativity of the empirical model e: the \
+minimal total negative weight of a quasi-probability over deterministic global \
+assignments reproducing e. It vanishes exactly when e is noncontextual; on the \
+n-cycle CF = (n-1)*SignedNegativity (so the pentagon identity CF = 4 nu is the \
+n = 5 case), while CHSH and GHZ give CF/nu = 2."
+}], "Item",ExpressionUUID->"1d9c4e6a-2f3b-4c7d-8e5f-a06b3c294d78"],
 
 Cell[TextData[{
  StyleBox["So3Axis", "InlineCode"],

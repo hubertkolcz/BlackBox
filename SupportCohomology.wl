@@ -163,6 +163,43 @@ chZ3c = CechObstruction[z3Scen, z3Ctl];
 (*The shifted box is convicted twice over: every one of the 12 support sections is \[Gamma]-obstructed (the compatibility system forces the coefficient vector around the cycle through one shift, and a pinned generator cannot return to itself), and the GF(3) theory {x + 2y \[Congruent] 0, 0, 0, 2} sums to 0 \[Congruent] 2. The unshifted control extends (|Se| = 3, a nonnegative global section exists) \[LongDash] same local outcome sets, same marginals, opposite verdict, which is what a certificate is for.*)
 
 (* ::Section:: *)
+(*The Kochen-Specker Covers: the Peres-Mermin Square and the 18-Vector Set*)
+
+(* ::Text:: *)
+(*State-INDEPENDENT contextuality through the same stack. The Peres-Mermin square: nine binary measurements on a 3x3 grid, six contexts (rows and columns), support parities (0,0,0) on rows and (0,0,1) on columns \[LongDash] the magic square. The Cabello-Estebaranz-Garc\[IAcute]a-Alcaine 18-vector set (PLA 212, 183 (1996)): eighteen rays of R^4 in nine orthogonal tetrads, each ray in exactly two tetrads; measurements = rays (does it fire?), support = the exactly-one-fires sections. The geometry is machine-verified before anything is computed. The 18-ray scenario association is built directly (its incidence matrix, 144 x 2^18, is never needed by the \:010cech layer).*)
+
+(* ::Input:: *)
+pmX = Flatten[Table[{i, j}, {i, 3}, {j, 3}], 1];
+pmCover = Join[Table[Table[{i, j}, {j, 3}], {i, 3}], Table[Table[{i, j}, {i, 3}], {j, 3}]];
+pmParity = {0, 0, 0, 0, 0, 1};
+pmScen = CoverScenario[pmX, pmCover];
+pmModel = Flatten[Table[If[Mod[Total[s], 2] == pmParity[[k]], 1/4, 0], {k, 6}, {s, Tuples[{0, 1}, 3]}]];
+chPM = CechObstruction[pmScen, pmModel]; avnPM = AvNArgument[pmScen, pmModel]; ccPM = CechCohomology[pmScen, pmModel];
+tetrads = {
+  {{0,0,0,1},{0,0,1,0},{1,1,0,0},{1,-1,0,0}}, {{0,0,0,1},{0,1,0,0},{1,0,1,0},{1,0,-1,0}},
+  {{1,-1,1,-1},{1,-1,-1,1},{1,1,0,0},{0,0,1,1}}, {{1,-1,1,-1},{1,1,1,1},{1,0,-1,0},{0,1,0,-1}},
+  {{0,0,1,0},{0,1,0,0},{1,0,0,1},{1,0,0,-1}}, {{1,-1,-1,1},{1,1,1,1},{1,0,0,-1},{0,1,-1,0}},
+  {{1,1,-1,1},{1,1,1,-1},{1,-1,0,0},{0,0,1,1}}, {{1,1,-1,1},{-1,1,1,1},{1,0,1,0},{0,1,0,-1}},
+  {{1,1,1,-1},{-1,1,1,1},{1,0,0,1},{0,1,-1,0}}};
+canon[v_] := With[{w = v/GCD @@ v}, If[First[DeleteCases[w, 0]] < 0, -w, w]];
+ctxs18 = Map[canon, tetrads, {2}]; rays = DeleteDuplicates[Flatten[ctxs18, 1]];
+cegGeometry = Length[rays] == 18 &&
+   AllTrue[ctxs18, AllTrue[Subsets[#, {2}], #[[1]] . #[[2]] == 0 &] &] &&
+   Union[Tally[Flatten[ctxs18, 1]][[All, 2]]] === {2};
+scen18 = <|"X" -> rays, "Outcomes" -> Association[# -> {0, 1} & /@ rays], "Contexts" -> ctxs18,
+   "Sections" -> Flatten[Table[{c, s}, {c, ctxs18}, {s, Tuples[{0, 1}, 4]}], 1],
+   "Assignments" -> Tuples[{0, 1}, 18]|>;
+e18 = Flatten[Table[If[Total[s] == 1, 1/4, 0], {c, ctxs18}, {s, Tuples[{0, 1}, 4]}]];
+ch18 = CechObstruction[scen18, e18]; avn18 = AvNArgument[scen18, e18]; cc18 = CechCohomology[scen18, e18];
+ksTable = MapThread[{#1, cegGeometry, Row[{#2["ObstructedCount"], "/", #2["SectionCount"]}],
+    Tally[Values[#2["ObstructionOrder"]]], #2["GlobalSupportSize"], #3["AvN"], #3["EquationCount"], #4["ComplexCloses"]} &,
+  {{"Peres-Mermin", "CEG 18-ray"}, {chPM, ch18}, {avnPM, avn18}, {ccPM, cc18}}];
+TableForm[ksTable, TableHeadings -> {None, {"model", "geometry ok", "\[Gamma] != 0", "orders", "|Se|", "AvN", "eqs", "\[Delta]1\[Delta]0 = 0"}}]
+
+(* ::Text:: *)
+(*Both are convicted at every level, and both AvN theories are the TEXTBOOK proofs recovered mechanically: the six magic-square equations (row sums 0, column sums 0,0,1 \[LongDash] total 0 = 1) and the nine tetrad equations Sum x = 1 (each ray counted twice, nine odd right-hand sides \[LongDash] 0 = 1 again). The order column extends the GHZ discovery to a DICHOTOMY across this whole census: every state-independent parity model (GHZ, Peres-Mermin, the 18 rays) has all its obstruction classes of order EXACTLY 2 \[LongDash] rationally invisible, pure relative 2-torsion \[LongDash] while every box model (Wright, PR, Z3) is obstructed with infinite order, visible already over Q. The certificate stack separates the two known mechanisms of strong contextuality without being told about them.*)
+
+(* ::Section:: *)
 (*The Absolute Groups: H^0 and H^1 of the Linearized Support Presheaf*)
 
 (* ::Text:: *)
@@ -188,6 +225,47 @@ TableForm[cohomTable, TableHeadings -> {None, {"model", "{C0, C1, C2}", "rk H0",
 
 (* ::Text:: *)
 (*Structure worth recording: (i) H^0 is multiplicative on the product cover \[LongDash] 36 = 6^2 for quantum\[CircleTimes]quantum, 1 = 1^2 for Wright\[CircleTimes]Wright; (ii) on every single-cycle cover of this census H^1 has free rank 1 (the nerve circle) except C6 Wright where it is 2 \[LongDash] the group remembers the support, not just the nerve; (iii) on the product cover the C^2 correction kills H^1 entirely (free rank 0), so all the contextuality information there sits in the relative layer, exactly where CechObstruction reads it; (iv) no torsion appears anywhere in this ABSOLUTE census, but the RELATIVE classes do carry it: every GHZ obstruction class has order exactly 2 (\"ObstructionOrder\" in CechObstruction), while Hardy's nonextendable section has order 1 \[LongDash] its false negative is integral, not an artifact of working over Q.*)
+
+(* ::Section:: *)
+(*Beyond Prime Moduli: AvN over Z4*)
+
+(* ::Text:: *)
+(*The All-vs-Nothing layer works over any Z_d, d >= 2 \[LongDash] not only prime fields. For composite d, Z_d is not a field and \"rank over Z_d\" is ill-posed; consistency of the theory is decided instead by exact lattice solvability (Smith normal form of the integer coefficient matrix), which reduces to the GF(d) rank test exactly when d is prime. Two things change for composite d: the theory keeps equations with NON-unit coefficient vectors \[LongDash] the 2x = 2 (mod 4) relations that a prime reduction cannot express \[LongDash] and the resulting witness can be genuinely modular. The demonstration: the Z4 shift box on the square, support y - x = 0 (mod 4) on three edges and y - x = 2 on the fourth.*)
+
+(* ::Input:: *)
+z4Scen = CoverScenario[Range[0, 3], Table[{i, Mod[i + 1, 4]}, {i, 0, 3}], Range[0, 3]];
+z4Model = Flatten[Table[If[Mod[s[[2]] - s[[1]], 4] == If[c == 3, 2, 0], 1/4, 0], {c, 0, 3}, {s, Tuples[Range[0, 3], 2]}]];
+avnZ4 = AvNArgument[z4Scen, z4Model, 4];
+z4A = Table[Module[{row = ConstantArray[0, 4]}, MapThread[(row[[#1 + 1]] = #2) &, {eq[[1]], eq[[2]]}]; row], {eq, avnZ4["Equations"]}];
+z4b = avnZ4["Equations"][[All, 3]];
+z4Mod2 = MatrixRank[z4A, Modulus -> 2] == MatrixRank[MapThread[Append, {z4A, z4b}], Modulus -> 2];
+{Row[{"Z4 shift box AvN over Z4: ", avnZ4["AvN"], ", ", avnZ4["EquationCount"], " equations"}],
+ Row[{"contains a non-unit (all-even) coefficient equation: ", AnyTrue[avnZ4["Equations"], #[[2]] =!= {0, 0} && AllTrue[#[[2]], EvenQ] &]}],
+ Row[{"same equation system is CONSISTENT mod 2 (the witness is genuinely Z4): ", z4Mod2}],
+ Row[{"unshifted control extends: ", ! AvNArgument[z4Scen, Flatten[Table[If[Mod[s[[2]] - s[[1]], 4] == 0, 1/4, 0], {c, 0, 3}, {s, Tuples[Range[0, 3], 2]}]], 4]["AvN"]}]}
+
+(* ::Text:: *)
+(*The certificate is a strict Z4 phenomenon: the shift sum around the cycle equals 2, so the theory is inconsistent mod 4 (0 = 2), yet reducing the SAME integer equation system mod 2 turns the right-hand side to 0 and the system becomes solvable \[LongDash] no prime-modulus AvN argument could have detected it. The unit-coefficient equations alone would give only the mod-2 shadow; the all-even equations 2x = 2 (mod 4), which the prime path discards, are exactly what carries the obstruction. AvN over composite rings is therefore strictly stronger than the union of its prime-field reductions.*)
+
+(* ::Section:: *)
+(*The Relative Group, Where \[Gamma] Actually Lives*)
+
+(* ::Text:: *)
+(*The final layer: H^1 of the relative presheaf F~ = ker(F -> F|C0) itself, as a group (CechRelativeCohomology). Its cochain modules are spanned by DIFFERENCES of support sections agreeing on the overlap with the distinguished context, so F~(C0) = 0 \[LongDash] and that single fact makes the construction self-validating: a lift of a section s of C0 to a compatible family must have C0-component exactly s, so the order of the explicit connecting cocycle \[Gamma](s) = \[Delta]0(lift) in H^1(F~) MUST equal CechObstruction's independently computed \"ObstructionOrder\". The table checks this for every section, at two different choices of C0 per model.*)
+
+(* ::Input:: *)
+relRows = {{"C5 classical", scen5, CycleModel[5, "Classical"], chC, 1}, {"C5 Wright", scen5, CycleModel[5, "Wright"], chW, 1},
+   {"PR box", scen4, ePR, chPR, 4}, {"Hardy", scen4, eHardy, chH, 2}, {"GHZ", ghzScen, ghzModel, chGHZ, 1},
+   {"Peres-Mermin", pmScen, pmModel, chPM, 6}, {"CEG 18-ray", scen18, e18, ch18, 1}};
+relTable = Table[Module[{rel = CechRelativeCohomology[r[[2]], r[[3]], r[[5]]], match},
+    match = And @@ Table[rel["GammaOrders"][s0] === r[[4]]["ObstructionOrder"][{r[[2]]["Contexts"][[r[[5]]]], s0}],
+       {s0, Keys[rel["GammaOrders"]]}];
+    {r[[1]], rel["H1FreeRank"], rel["H1Torsion"], Tally[Values[rel["GammaOrders"]]],
+     rel["GammaCocyclesVerified"] && rel["ComplexCloses"], match}], {r, relRows}];
+TableForm[relTable, TableHeadings -> {None, {"model (c0)", "rk H1(F~)", "torsion", "\[Gamma] orders", "cocycles+closes", "= ObstructionOrder"}}]
+
+(* ::Text:: *)
+(*The relative group is the contextuality group of the model, exactly. For the parity models \[LongDash] GHZ, the Peres-Mermin square, the 18 rays \[LongDash] H^1(F~) \[TildeEqual] Z/2: one two-torsion class, and every \[Gamma](s) hits it. For the box models H^1(F~) \[TildeEqual] Z and the classes have infinite order. For the classical model and for Hardy the group answer is even sharper than the false-negative bookkeeping: H^1(F~) = 0 \[LongDash] Hardy's \[Gamma] does not merely happen to vanish, it lives in a TRIVIAL group; no choice of coefficients in this presheaf could ever have detected it. The census of absolute groups was topology plus support; the relative group is the obstruction theory itself, and its dichotomy Z/2 vs Z is the torsion dichotomy of the orders section restated structurally.*)
 
 (* ::Section:: *)
 (*Verification*)
@@ -222,8 +300,21 @@ SupportCohomologyVerification = <|
   "avnImpliesCSC" -> AllTrue[avnTable[[All, 5]], TrueQ],
   "z3BoxConvictedTwice" -> chZ3["ObstructedCount"] == 12 && chZ3["CohStronglyContextual"] &&
      avnZ3["AvN"] && avnZ3["Equations"][[All, 3]] === {0, 0, 0, 2},
+  "ksGeometryVerified" -> cegGeometry,
+  "ksPeresMermin" -> chPM["ObstructedCount"] == 24 && chPM["CohStronglyContextual"] &&
+     chPM["GlobalSupportSize"] == 0 && avnPM["AvN"] && avnPM["EquationCount"] == 6 &&
+     AllTrue[Values[chPM["ObstructionOrder"]], # === 2 &],
+  "ksCEG18" -> ch18["ObstructedCount"] == 36 && ch18["CohStronglyContextual"] &&
+     ch18["GlobalSupportSize"] == 0 && avn18["AvN"] && avn18["EquationCount"] == 9 &&
+     AllTrue[Values[ch18["ObstructionOrder"]], # === 2 &],
+  "torsionDichotomy" -> AllTrue[Join[Values[chGHZ["ObstructionOrder"]], Values[chPM["ObstructionOrder"]],
+       Values[ch18["ObstructionOrder"]]], # === 2 &] &&
+     AllTrue[Join[Values[chW["ObstructionOrder"]], Values[chPR["ObstructionOrder"]],
+       Values[chZ3["ObstructionOrder"]]], # === Infinity &],
   "z3ControlExtends" -> chZ3c["ObstructedCount"] == 0 && chZ3c["GlobalSupportSize"] == 3 &&
      GlobalSectionQ[z3Scen, N@z3Ctl],
+  "avnCompositeZ4" -> avnZ4["AvN"] && avnZ4["EquationCount"] == 8 && z4Mod2 &&
+     AnyTrue[avnZ4["Equations"], #[[2]] =!= {0, 0} && AllTrue[#[[2]], EvenQ] &],
   "cohomCensusMatchesUlreyNotebook" -> ({#["H0Rank"], #["H1FreeRank"], #["H1Torsion"]} & /@ {ccU, ccPR, ccH}) ===
      {{9, 1, {}}, {1, 1, {}}, {6, 1, {}}},
   "cohomComplexCloses" -> AllTrue[{ccC, ccQ, ccW, ccW6, ccU, ccPR, ccH, ccG, ccWW, ccQQ}, #["ComplexCloses"] &],
@@ -231,6 +322,10 @@ SupportCohomologyVerification = <|
   "cohomProductH1Vanishes" -> ccWW["H1FreeRank"] == 0 && ccQQ["H1FreeRank"] == 0 &&
      ccWW["CochainRanks"] == {100, 700, 2200},
   "cohomNoTorsionInCensus" -> AllTrue[{ccC, ccQ, ccW, ccW6, ccU, ccPR, ccH, ccG, ccWW, ccQQ}, #["H1Torsion"] === {} &],
+  "relativeGroupDichotomy" -> relTable[[All, 2 ;; 3]] ===
+     {{0, {}}, {1, {}}, {1, {}}, {0, {}}, {0, {2}}, {0, {2}}, {0, {2}}},
+  "relativeOrdersMatchObstruction" -> AllTrue[relTable[[All, 6]], TrueQ] &&
+     AllTrue[relTable[[All, 5]], TrueQ],
   "verdict" -> "ADOPT: the support-presheaf Cech obstruction joins the core as the possibilistic-layer certificate; the Laplacian stays a no-disturbance projector only"
 |>;
 SupportCohomologyVerification["OK"] = And @@ Cases[Values[SupportCohomologyVerification], _?BooleanQ];

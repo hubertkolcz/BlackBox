@@ -311,7 +311,8 @@ density rise 1.377 → 1.5 does not exist.
   stays EXTENSIVE with algebraic slope: ϑ − α = (τ\* − 4/3)·N = 0.0433844126·N
   (= 4 338.8 at N = 10⁵, exact instead of bracketed).
 - **cis ring** (PentagonChain closed up): **ϑ(N) = N + ϑ(C_N) — a THEOREM**, and
-  **α = ⌊3N/2⌋ — also a THEOREM** (CaseStudies §D3, machine-checked construction).
+  **α = ⌊3N/2⌋ — also a THEOREM** (CaseStudies §D3; proven by the analytic argument
+  below, with the explicit rail-umbrella witness spot-checked at N∈{5,7,9,11}).
   ϑ upper: delete the N glue edges → C_N ⊔ C₂N; monotonicity + additivity +
   ϑ(C₂N) = N (perfect). ϑ lower: one-extra-dimension orthonormal representation —
   rail = optimal C_N umbrella, every c3 vertex = the handle itself, every c2
@@ -351,9 +352,12 @@ unit cell yields a 9×9 DFT symbol with 12 edge-orbit parameters; the mesh's
 reflection automorphism (|Aut(cct-ring of m cells)| = 2m, machine-checked) pairs
 them to 7, and the continuum minimax has the same active-set shape as τ\* (J-block
 + ONE interior frequency, φ ≈ 0.70345π). Newton on the reduced KKT at 320 digits
-(residual 10⁻³¹⁹, positive multipliers, witness feasible over a 2²⁰-point grid;
-convexity + automorphism averaging ⇒ GLOBAL optimum) pins
-ϑ/L = 1.40323086923899745105894248… exactly — but LLL integer-relation search on
+(residual 10⁻³¹⁹, positive multipliers, witness feasible over a 2²⁰-point grid)
+pins ϑ/L = 1.40323086923899745105894248… — global optimality ARGUED (the
+eigenvalue minimax is convex, so a strictly-feasible KKT point is global) but NOT
+machine-certified (feasibility is numerical on a finite grid, no interval/SOS
+bound); the value is numerically certified to ~300 digits. LLL integer-relation
+search on
 250 matched digits EXCLUDES any minimal polynomial of degree ≤ 36 with coefficient
 height ≲ 10⁶ (≲ 10⁶⁰ at degree 3), for the density, cos φ, and every witness
 parameter. Contrast: τ\* is a cubic with two-digit coefficients. The algebraic
@@ -395,21 +399,49 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   kcbs_wigner_flow.wl (WignerTransform route). ~~Remaining variant: phase-space
   view of the T gates as channels~~ — done, kcbs_epilogue.wl §4 (Choi–Wigner
   route; a Weyl/MIC re-derivation would be representational, not new physics).
-- ~~From kcbs_ledger.wl: is CF = 4ν a theorem? metric binding possible?~~ —
-  RESOLVED, and the "theorem?" question is answered by the LITERATURE, not by us:
-  CF = (n−1)·ν is **proven** by Camillo & Cervantes 2024 (arXiv:2305.16574) for all
-  cyclic systems (their (n−1)·CNT3 = CNTF) — see the novelty audit, §11. Our
-  epilogue independently reproduces it; it is NOT an open problem and NOT ours.
-  Metric binding is a NO-GO within the cascade parity pool (exhaustive +1/+2, greedy;
-  negative-cell witnesses never bind to clicks) — an instance of the exclusivity
-  principle. Genuinely open only: whether an analogous CF↔ν rate holds beyond cycles
-  (e.g. CHSH graph Ci(8;1,4)), which Camillo–Cervantes do not cover.
+- ~~From kcbs_ledger.wl: is CF = 4ν a theorem or a C₅ accident? metric binding
+  possible?~~ — RESOLVED. The law is **CF = (n−1)·ν** (the "4" is n−1 = 2α, a
+  pentagon-specific constant), and it is a **PUBLISHED THEOREM for cyclic systems**:
+  Camillo & Cervantes 2024 (arXiv:2305.16574), (n−1)·CNT3 = CNTF — so the analytic
+  proof is NOT open and NOT ours (see the novelty audit, §11). Confirmed here by TWO
+  independent derivations: (i) sheaf level, `SignedNegativity.wl` +
+  `RunSignedNegativity.wl` (8 checks OK; new paclet fn `SignedNegativity[scen, e]` =
+  min negative mass of a signed decomposition over deterministic assignments) — exact
+  for n=5 (4), n=7 (6, FullSimplify), n=9 Wright (ν=1/8, ratio 8), for both quantum
+  and Wright models; and CRUCIALLY it shows the (n−1) factor is cycle-specific — CHSH
+  PR and GHZ give CF/ν = 2, so no universal constant, only CF = 0 ⇔ ν = 0 (exactly
+  why Camillo–Cervantes is a *cyclic-systems* theorem); (ii) kcbs_epilogue.wl
+  reproduces CF = (n−1)ν across the n-cycle no-signalling polytope. The ledger's
+  "CF = 4ν along the whole C₅ white-noise family" is explained: mixing stays inside
+  the pentagon scenario, whose ratio is 4. Metric binding is a NO-GO within the
+  cascade parity pool (exhaustive +1/+2, greedy; negative-cell witnesses never bind
+  to clicks) — an instance of the exclusivity principle. Genuinely open only: whether
+  an analogous CF↔ν rate exists for a specific non-cyclic graph (CHSH Ci(8;1,4) gives
+  2 empirically; the general classification is uncharted), which Camillo–Cervantes do
+  not cover.
 - n-cycle generalizations (C₇, C₉...) and their circuits; run encoding B on real
   gate hardware as a genuine platform test.
 - Sequential-game quantum strategy demo end-to-end (Alice prefix + Bob binary POVM).
-- Čech layer follow-ups: Kochen–Specker covers (18-vector Cabello set) through
-  `CoverScenario`/`CechObstruction`; relative H¹ as a group (γ lives there — only
-  the per-class orders are computed so far); AvN over non-prime rings.
+- Čech layer follow-ups: ~~Kochen–Specker covers (18-vector Cabello set)~~
+  RESOLVED (SupportCohomology.wl KS section): the Peres–Mermin square (24/24)
+  and the CEG 18-ray set (36/36, geometry machine-verified) are both convicted
+  with ALL obstruction classes of order EXACTLY 2, and both AvN theories are
+  the textbook parity proofs recovered mechanically — with the box models all
+  of infinite order, the census now shows a clean TORSION DICHOTOMY between
+  parity-type and box-type strong contextuality. ~~relative H¹ as a group~~
+  RESOLVED (`CechRelativeCohomology`): H¹(F~) for F~ = ker(F → F|C0) is the
+  actual home of γ — Z/2 for the parity models (GHZ, Peres–Mermin, 18 rays),
+  Z for the boxes (Wright, PR), and 0 for classical and Hardy (Hardy's false
+  negative is structural — its γ lives in the trivial group). Because F~(C0)=0
+  the construction is self-validating: the explicit connecting cocycle's order
+  provably equals CechObstruction's ObstructionOrder, checked per section.
+  ~~AvN over non-prime rings~~ RESOLVED: `AvNArgument[scen, e, d]` now takes any
+  d ≥ 2 (Z_d need not be a field) via a Smith-form lattice-solvability test that
+  reduces to the GF(d) rank test for prime d; for composite d it retains
+  non-unit-coefficient equations (the 2x = 2 mod 4 relations). Demo: the Z₄ shift
+  box on the square is AvN over Z₄ with a witness that is CONSISTENT mod 2 — a
+  strictly-modular obstruction no prime reduction can see. Čech-layer follow-ups
+  are now all closed.
 - Pentagon meshes (§6, cis/trans correction): ~~closed form for the trans-ring
   density constant~~ RESOLVED — τ\* = Root[49x³ − 128x² − 75x + 218, 2], exact KKT
   certificate in §6/CaseStudies §D3. ~~Prove ϑ(cis-ring N) = N + ϑ(C_N) and
@@ -431,10 +463,14 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   cct-beater needs ϑ̄ > 1.40323087 AND ᾱ < 1.4301025 simultaneously;
   EXHAUSTIVE: all aperiodic bracelets p ≤ 9 certified below cct (max 0.0685 at
   cctcctctt; overall runner-up cctcctcctctt at 0.0689 vs 0.0698975). The
-  completion is identified — a transfer-SDP sub-action (windowed chordal dual
-  templates ⇒ linear-in-window bound on ϑ̄, finite LP over de Bruijn flows) —
-  but OBSTRUCTED: a cct-tight template must reproduce τ_cct, which provably has
-  no small algebraic form, so rational certificates yield only ε-optimality.
+  completion — a transfer-SDP sub-action (windowed chordal dual templates ⇒
+  density bound on ϑ̄) — yields ε-OPTIMALITY (see the ε-certificate paragraph):
+  the exact bracket **sup_w gap̄(w) ∈ [gap(cct)=0.069898, Γ₈=0.075309]**, cct
+  optimal to within ε=0.0054. Whether sup = gap(cct) is OPEN (NOT obstructed):
+  each Γ_k is rational and gap(cct) irrational, but rationals converge to
+  irrationals, so the τ_cct height result rules out only a SINGLE finite exact
+  rational certificate — not the limit, not global optimality [ADVERSARIALLY
+  CORRECTED: the earlier "obstructed by the τ_cct field" was a non-sequitur].
   ~~α-density/cis-fraction characterization~~ RESOLVED — THEOREM (CaseStudies
   §D3, key D3_alphaCisTheorem): ᾱ(w) ≥ max(4/3, 1 + f_c/2) for every word
   (letter-weighted potential certificate (0,−½,−1) with rates (3/2, 1)); hence
@@ -443,34 +479,60 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   min-max exactly 13/3 = 3·(4/3) + ⅓), and f_c = 2/3 without ccc forces all
   cis-runs equal to 2 by the run-average argument. Note the naive converse is
   false: cctt has f_c = 1/2 but ᾱ = 11/8. ~~Construct the explicit ε-optimality
-  certificate~~ RESOLVED — CONSTRUCTED (EpsilonCertificate.wl, key
-  D3_epsilonCertificate): a window-7 transfer-SDP sub-action — 128 pairs of
-  exact rational PSD blocks Q (5×5, glue quad + apex) / R (4×4, X-triangle +
-  apex) per de Bruijn-7 node, closure potentials ψ, DP potentials Φ with fixed
-  strategy — proving **gap(w) ≤ Γ = 1541247/20000000 = 0.07706235 for EVERY
-  gluing word**, i.e. ε = 0.0071648 above the cct optimum. Assembly lemma:
-  blocks sum to M = [[I+B, e],[eᵀ, σ]] ⪰ 0 (uniform unit diagonal/border by
-  the edge equalities) ⇒ Schur ⇒ ϑ(ring) ≤ σ = Σd; Φ-telescoping ⇒
-  α(ring) ≥ Σr; ψ-closure summed over the word's closed de Bruijn walk
-  telescopes to gap ≤ Γ. All identities and 256 PSD facts exact rational,
-  re-verified independently in WL. Convergence: Γ(k) = 0.1667 (pinch), 0.1250,
-  0.1020, 0.0953, 0.0824, 0.07706 for k = 2..7 — ε roughly halves per window
-  step; ε → 0 exactly is the τ_cct field obstruction. Bonus: the Q/R clique
-  family solves the per-cycle transfer-SDP EXACTLY (< 10⁻⁶ loss on every
-  tested word) — a position-space word-density solver with no DFT symbol.
-  ~~Trans-CHAIN density~~ RESOLVED (key D3_transChainResolved): open trans
-  chains have the SAME bulk density τ\* (increments 1.3767178 within
-  certificates from m = 50 to 800; boundary constant ≈ 0.995), with
-  α(trans-chain m) = ⌊4(m+1)/3⌋ at every computed point — the gap is
-  EXTENSIVE ≈ (τ\*−4/3)m, so Case D's "rings beat chains" was never about
-  closure: the decaying chains were cis, and orientation is the whole story.
-  Small-m accident: ϑ(trans-chain 5) = α = 8 exactly. Durable tools added to
-  `lovasz_theta_sparse.py`: pentagon_chain_word, alpha_chain_word,
-  word_density_transfer_sdp (exact position-space ϑ-density of any periodic
-  word; no symmetry reduction). All §6 mesh threads are now resolved; what
-  remains genuinely open at research grade: exact (ε → 0) global optimality
-  of (cct)^∞ — blocked by the τ_cct field — and the ergodic-optimization
-  proof that periodic orbits suffice.
+  certificate~~ RESOLVED — CONSTRUCTED (EpsilonCertificate.wl [k=7],
+  EpsilonCertificate8.wl [k=8]; keys D3_epsilonCertificate,
+  D3_periodicOrbitSufficiency): a window-k transfer-SDP sub-action — per
+  de Bruijn-k node a pair of exact rational PSD blocks Q (5×5, glue quad + apex)
+  / R (4×4, X-triangle + apex), closure potentials ψ, DP potentials Φ with fixed
+  strategy — proving the **DENSITY bound gap̄(w) ≤ Γ_k for EVERY gluing word**
+  (Γ₇ = 1541247/20000000 = 0.0770624, Γ₈ = 941357/12500000 = 0.0753086; ε =
+  0.0054 above gap(cct) at k=8). IMPORTANT (adversarially corrected): this is an
+  L→∞ DENSITY bound, NOT a per-finite-ring bound. θ(ring_L) ≤ Σd is exact per
+  ring (Schur on M = [[I+B,e],[eᵀ,σ]] ⪰ 0), but the α side telescopes only up to
+  a bounded boundary, α(ring_L) ≥ Σr − 2·max|Φ| — so the EXACT per-ring form
+  α(ring) ≥ Σr is FALSE (cctt at L=4: α=5 < Σr=5.488, per-block gap 0.0839 > Γ₇);
+  both boundaries (ψ closed-walk-exact, Φ finite-valued) vanish under /L, giving
+  gap̄(w) ≤ Γ_k. The rigorous machine-checked core is the POINTWISE per-edge
+  bound σ(e) ≤ Γ_k (exact rational, all 256/512 edges). PERIODIC-ORBIT
+  SUFFICIENCY (for the certified cocycle, NOT the true functional): σ(e) =
+  d(x)−r(e)+ψ(x)−ψ(w) is locally constant on the de Bruijn-k SFT, so sup over ALL
+  words of the certified functional = max cycle mean of σ = Γ_k (Karp +
+  mean-payoff LP duality; a maximizing invariant measure for a locally-constant
+  potential sits on a periodic orbit) — realized at the certificate's BOTTLENECK
+  words (cttt)^∞ [k=7] / (ctt)^∞ [k=8], low cis-fraction, NOT cct. Hence no
+  aperiodic word beats the best periodic word for the certified bound. Γ_k =
+  0.1667, 0.1250, 0.1020, 0.0953, 0.0824, 0.0770624, 0.0753086 (k=2..8;
+  decrements non-monotone). Bonus: the Q/R clique family solves the per-cycle
+  transfer-SDP EXACTLY (word_density_transfer_sdp; < 10⁻⁶ loss) — position-space,
+  no DFT symbol.
+  Trans-CHAIN density — STRONG NUMERICAL EVIDENCE, not proven (key
+  D3_transChainNumerical; "RESOLVED" was adversarially downgraded): open trans
+  chains NUMERICALLY appear to settle onto the trans-ring bulk density τ\*
+  (Python increments 1.3767178 from m = 50 to 800, boundary constant ≈ 0.995 —
+  unproven numerics, NOT verified in-key; the key checks only the m = 5
+  coincidence and the α-law, the robust facts, not the density — the old key's
+  ring-constant check was a mislabel and is removed),
+  with α(trans-chain m) = ⌊4(m+1)/3⌋ verified m = 3..12 (spot-checked to 800),
+  conjectured for all m — so IF the density conjecture holds the gap is EXTENSIVE
+  ≈ (τ\*−4/3)m and Case D's "rings beat chains" was never about closure (the
+  decaying chains were cis). Small-m accident: ϑ(trans-chain 5) = α = 8 exactly.
+  Durable tools in `lovasz_theta_sparse.py`: pentagon_chain_word, alpha_chain_word,
+  word_density_transfer_sdp (exact position-space ϑ-density of any PERIODIC word).
+  §6 mesh threads status: RIGOROUS — gap̄(w) ≤ Γ_k for all words (density bound)
+  and the bracket sup_w gap̄(w) ∈ [0.069898, 0.075309] (cct optimal to within
+  ε=0.0054); periodic-orbit sufficiency for the CERTIFIED cocycle. STRONG
+  EVIDENCE (key D3_globalOptimalityEvidence) — cct is a SHARP ISOLATED peak:
+  every balanced/Christoffel word of period ≤ 21 near slope 2/3 has gap-density
+  ≥ 0.012 below cct, the α-cis theorem (cct uniquely hits ᾱ=4/3) being the
+  mechanism, so an aperiodic (Sturmian) beat is implausible. GENUINELY OPEN (not
+  obstructed): exact global optimality of (cct)^∞ (sup = gap(cct)?), whether
+  lim_k Γ_k = gap(cct), and periodic-orbit sufficiency for the TRUE functional
+  θ̄−ᾱ. This is ergodic optimization of the SAME genus as joint-spectral-radius
+  optimization, where the finiteness property (periodic optimum) is FALSE in
+  general (Bousch–Mairesse 2002, aperiodic Sturmian maximizers) — so the open
+  question is genuinely hard and cct optimality is plausible-but-not-guaranteed.
+  A proof would need ϑ̄(W) − ϑ̄(cct) ≤ ᾱ(W) − 4/3 for all W. The τ_cct height
+  result bears only on single finite exact rational certificates.
 
 ## 10. Positioning: the atomic-GE program — reach and boundaries
 
@@ -562,8 +624,12 @@ canonical Lapkiewicz KCBS experiment**, not as new theory. Per-claim:
   systems by Camillo & Cervantes, Phil. Trans. R. Soc. A 382:20230007 (2024),
   arXiv:2305.16574 ((n−1)·CNT3 = CNTF), via Cervantes 2023 (arXiv:2110.07113,
   CNTF = 2·CNT2) and Kujala–Dzhafarov (arXiv:1907.03328, CNT2 = α·CNT3). Our entire
-  verification set lies inside their scope. Nothing survives but the explicit KCBS
-  closed forms and the AB-vertex-language translation.
+  verification set (kcbs_epilogue.wl, and independently the sibling `SignedNegativity.wl`)
+  lies inside their scope. The one useful *empirical* refinement, from
+  SignedNegativity.wl: the (n−1) factor is cycle-specific — CHSH-PR and GHZ give
+  CF/ν = 2, so beyond cyclic systems there is no universal constant, only CF = 0 ⇔ ν = 0
+  (consistent with Camillo–Cervantes being a cyclic-systems theorem). No new theorem;
+  what survives is the explicit KCBS closed forms + the cross-scenario map.
 - **Two-sided ledger — SUBSUMED.** The frame/cut-dependence of negativity and its
   frame-free minimum for state–measurement pairs is Spekkens PRL 100, 020401 (2008),
   Ferrie–Emerson, the Resource theory of Absolute Negativity (arXiv:2205.13480), and

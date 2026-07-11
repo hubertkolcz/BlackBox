@@ -49,7 +49,7 @@ the `BeginPackage` line of Kernel/BlackBox.wl.
 
 ### 4. Documentation (pages exist; a polish pass remains before submission)
 
-☑ One reference page (.nb) per exported symbol (all 27) under
+☑ One reference page (.nb) per exported symbol (all 29) under
   Documentation/English/ReferencePages/Symbols/ — headlessly generated
   skeletons: ObjectName + Usage (full sentences) + one Basic Example each.
   Remaining before submission: Scope sections (one example per input
