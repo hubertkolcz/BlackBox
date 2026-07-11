@@ -462,6 +462,25 @@ globalOptimalityEvidence =
 {globalOptimalityEvidence, N[cctDensity - 4/3, 8]}
 
 (* ::Text:: *)
+(*THE TARGET INEQUALITY \[CurlyTheta]\.bar(W) - \[CurlyTheta]\.bar(cct) <= \[Alpha]\.bar(W) - 4/3 for all W \[LongDash] a RIGOROUS REDUCTION, NOT a proof (a full proof is an open ergodic-optimization problem, JSR genus). The inequality is equivalent to gap(W) := \[CurlyTheta]\.bar(W) - \[Alpha]\.bar(W) <= gap(cct) = \[CurlyTheta]\.bar(cct) - 4/3, i.e. global optimality of (cct)^\[Infinity]. Two ALREADY-PROVEN ingredients bracket it. (1) The \[Alpha]*-cap (Lemma A, key D3_towardsGlobalOptimality): \[CurlyTheta]\.bar(W) <= \[Alpha]*-density = 3/2 by the Lov\[AAcute]sz sandwich, so gap(W) <= 3/2 - \[Alpha]\.bar(W); hence the inequality holds EXACTLY whenever \[Alpha]\.bar(W) >= 3/2 - gap(cct) = 1.4301025. (2) The \[Epsilon]-certificate (key D3_epsilonCertificate): gap(W) <= \[CapitalGamma]_8 = 941357/12500000 = 0.0753086 for every W, so gap(W) <= gap(cct) + 0.005411 UNCONDITIONALLY. COMBINED: the target inequality is PROVEN for every word with \[Alpha]\.bar(W) >= 1.4301025, and holds within 0.005411 for all words \[LongDash] it reduces to the single narrow window \[Alpha]\.bar(W) \[Element] [4/3, 1.4301025). By the \[Alpha]-cis theorem these are the LOW-classical-density, "cct-like" words (\[Alpha]\.bar near the floor, high cis-content), with equality exactly at cct; that window is precisely where the \[CurlyTheta]\.bar-vs-\[Alpha]\.bar tradeoff is delicate and where an aperiodic (Sturmian) competitor would have to live. Closing it needs either \[CapitalGamma]_k -> gap(cct) (open; the certificate bottleneck migrates AWAY from cct, so unlikely by this route) or a genuinely new \[CurlyTheta]\.bar upper bound tighter than 3/2 in the window. NOT PROVEN; this is the honest frontier.*)
+
+(* ::CodeText:: *)
+(*The reduction, machine-checked: the two thresholds and that the residual window is a proper sub-interval of [4/3, 3/2). The two ingredient facts themselves are the already-verified keys D3_towardsGlobalOptimality (\[Alpha]* = 3/2) and D3_epsilonCertificate (\[CapitalGamma]_8 bound):*)
+
+(* ::Input:: *)
+(* arithmetic of the reduction only; the two INGREDIENTS are the already-verified keys
+   D3_towardsGlobalOptimality (alpha* = 3/2, Lemma A) and D3_epsilonCertificate (Gamma_8) *)
+inequalityReduction = With[
+   {gapCct = cctDensity - 4/3, g8 = EpsilonCertificate8["Gamma"], thr = 3/2 - (cctDensity - 4/3)},
+   Abs[thr - 1.4301025] < 10^-6 &&        (* alpha*-cap resolves alpha-bar >= this threshold *)
+    4/3 < thr < 3/2 &&                     (* the open window is a proper, narrow sub-interval *)
+    N[g8 - gapCct] < 0.0055];              (* eps-certificate residual in the window *)
+{inequalityReduction,
+ "PROVEN for alpha-bar >=" -> N[3/2 - (cctDensity - 4/3), 8],
+ "within" -> N[EpsilonCertificate8["Gamma"] - (cctDensity - 4/3), 6],
+ "open window" -> {4/3, N[3/2 - (cctDensity - 4/3), 8]}}
+
+(* ::Text:: *)
 (*The last thread: the TRANS-CHAIN density \[LongDash] STRONG NUMERICAL EVIDENCE, not a theorem (adversarially corrected: "resolved" was too strong). Open trans-glued chains (PentagonChain with alternating orientation; builder pentagon_chain_word, CLI "transchain") NUMERICALLY appear to settle onto the same bulk density as the trans ring: per-block increments \[CurlyTheta](chain m2) - \[CurlyTheta](chain m1) over m2 - m1 read \[TildeTilde] \[Tau]* (1.3767178 from m = 50 through m = 800, certgaps 10^-6..8\[CenterDot]10^-4), with an O(1) boundary constant \[CurlyTheta] - \[Tau]* m -> 0.995(1) \[LongDash] these are unproven prose numerics, NOT a convergence proof. The exact interface DP gives \[Alpha](trans-chain m) = \[LeftFloor]4(m+1)/3\[RightFloor] verified m = 3..12 exhaustively (spot-checked to 800), CONJECTURED for all m, so IF the density conjecture holds the gap is EXTENSIVE, \[TildeTilde] (\[Tau]* - 4/3) m. Consequence (numerical): the "rings beat chains" dichotomy of Case D was never about closure \[LongDash] open trans chains numerically carry the same bulk advantage, and the decaying-gap chains of Case D were cis chains. Small-m accident mirroring the cis parity law: \[CurlyTheta](trans-chain 5) = \[Alpha] = 8 exactly. Durable tooling in lovasz_theta_sparse.py: pentagon_chain_word, alpha_chain_word, word_density_transfer_sdp (exact position-space \[CurlyTheta]-density of any PERIODIC word; validated against \[Tau]*, 3/2, the cct density to 2\[CenterDot]10^-6).*)
 
 (* ::CodeText:: *)
@@ -548,6 +567,7 @@ CaseStudiesVerification = <|
   "D3_transChainNumerical" -> Abs[transChainAnchor[[1]] - 8] < 10^-5 &&
      transChainAnchor[[2]] == 8 && AllTrue[transChainAnchor[[3]], TrueQ],
   "D3_periodicOrbitSufficiency" -> periodicOrbitSufficiency,
-  "D3_globalOptimalityEvidence" -> globalOptimalityEvidence
+  "D3_globalOptimalityEvidence" -> globalOptimalityEvidence,
+  "D3_inequalityReduction" -> inequalityReduction
 |>;
 Column[{CaseStudiesVerification, "OK" -> And @@ Values[CaseStudiesVerification]}]
