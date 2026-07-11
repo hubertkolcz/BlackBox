@@ -299,10 +299,14 @@ through the cascade gate-by-gate.
   cct-beater needs ϑ̄ > 1.40323087 AND ᾱ < 1.4301025 simultaneously;
   EXHAUSTIVE: all aperiodic bracelets p ≤ 9 certified below cct (max 0.0685 at
   cctcctctt; overall runner-up cctcctcctctt at 0.0689 vs 0.0698975). The
-  completion is identified — a transfer-SDP sub-action (windowed chordal dual
-  templates ⇒ linear-in-window bound on ϑ̄, finite LP over de Bruijn flows) —
-  but OBSTRUCTED: a cct-tight template must reproduce τ_cct, which provably has
-  no small algebraic form, so rational certificates yield only ε-optimality.
+  completion — a transfer-SDP sub-action (windowed chordal dual templates ⇒
+  density bound on ϑ̄) — yields ε-OPTIMALITY (see the ε-certificate paragraph):
+  the exact bracket **sup_w gap̄(w) ∈ [gap(cct)=0.069898, Γ₈=0.075309]**, cct
+  optimal to within ε=0.0054. Whether sup = gap(cct) is OPEN (NOT obstructed):
+  each Γ_k is rational and gap(cct) irrational, but rationals converge to
+  irrationals, so the τ_cct height result rules out only a SINGLE finite exact
+  rational certificate — not the limit, not global optimality [ADVERSARIALLY
+  CORRECTED: the earlier "obstructed by the τ_cct field" was a non-sequitur].
   ~~α-density/cis-fraction characterization~~ RESOLVED — THEOREM (CaseStudies
   §D3, key D3_alphaCisTheorem): ᾱ(w) ≥ max(4/3, 1 + f_c/2) for every word
   (letter-weighted potential certificate (0,−½,−1) with rates (3/2, 1)); hence
@@ -311,21 +315,32 @@ through the cascade gate-by-gate.
   min-max exactly 13/3 = 3·(4/3) + ⅓), and f_c = 2/3 without ccc forces all
   cis-runs equal to 2 by the run-average argument. Note the naive converse is
   false: cctt has f_c = 1/2 but ᾱ = 11/8. ~~Construct the explicit ε-optimality
-  certificate~~ RESOLVED — CONSTRUCTED (EpsilonCertificate.wl, key
-  D3_epsilonCertificate): a window-7 transfer-SDP sub-action — 128 pairs of
-  exact rational PSD blocks Q (5×5, glue quad + apex) / R (4×4, X-triangle +
-  apex) per de Bruijn-7 node, closure potentials ψ, DP potentials Φ with fixed
-  strategy — proving **gap(w) ≤ Γ = 1541247/20000000 = 0.07706235 for EVERY
-  gluing word**, i.e. ε = 0.0071648 above the cct optimum. Assembly lemma:
-  blocks sum to M = [[I+B, e],[eᵀ, σ]] ⪰ 0 (uniform unit diagonal/border by
-  the edge equalities) ⇒ Schur ⇒ ϑ(ring) ≤ σ = Σd; Φ-telescoping ⇒
-  α(ring) ≥ Σr; ψ-closure summed over the word's closed de Bruijn walk
-  telescopes to gap ≤ Γ. All identities and 256 PSD facts exact rational,
-  re-verified independently in WL. Convergence: Γ(k) = 0.1667 (pinch), 0.1250,
-  0.1020, 0.0953, 0.0824, 0.07706 for k = 2..7 — ε roughly halves per window
-  step; ε → 0 exactly is the τ_cct field obstruction. Bonus: the Q/R clique
-  family solves the per-cycle transfer-SDP EXACTLY (< 10⁻⁶ loss on every
-  tested word) — a position-space word-density solver with no DFT symbol.
+  certificate~~ RESOLVED — CONSTRUCTED (EpsilonCertificate.wl [k=7],
+  EpsilonCertificate8.wl [k=8]; keys D3_epsilonCertificate,
+  D3_periodicOrbitSufficiency): a window-k transfer-SDP sub-action — per
+  de Bruijn-k node a pair of exact rational PSD blocks Q (5×5, glue quad + apex)
+  / R (4×4, X-triangle + apex), closure potentials ψ, DP potentials Φ with fixed
+  strategy — proving the **DENSITY bound gap̄(w) ≤ Γ_k for EVERY gluing word**
+  (Γ₇ = 1541247/20000000 = 0.0770624, Γ₈ = 941357/12500000 = 0.0753086; ε =
+  0.0054 above gap(cct) at k=8). IMPORTANT (adversarially corrected): this is an
+  L→∞ DENSITY bound, NOT a per-finite-ring bound. θ(ring_L) ≤ Σd is exact per
+  ring (Schur on M = [[I+B,e],[eᵀ,σ]] ⪰ 0), but the α side telescopes only up to
+  a bounded boundary, α(ring_L) ≥ Σr − 2·max|Φ| — so the EXACT per-ring form
+  α(ring) ≥ Σr is FALSE (cctt at L=4: α=5 < Σr=5.488, per-block gap 0.0839 > Γ₇);
+  both boundaries (ψ closed-walk-exact, Φ finite-valued) vanish under /L, giving
+  gap̄(w) ≤ Γ_k. The rigorous machine-checked core is the POINTWISE per-edge
+  bound σ(e) ≤ Γ_k (exact rational, all 256/512 edges). PERIODIC-ORBIT
+  SUFFICIENCY (for the certified cocycle, NOT the true functional): σ(e) =
+  d(x)−r(e)+ψ(x)−ψ(w) is locally constant on the de Bruijn-k SFT, so sup over ALL
+  words of the certified functional = max cycle mean of σ = Γ_k (Karp +
+  mean-payoff LP duality; a maximizing invariant measure for a locally-constant
+  potential sits on a periodic orbit) — realized at the certificate's BOTTLENECK
+  words (cttt)^∞ [k=7] / (ctt)^∞ [k=8], low cis-fraction, NOT cct. Hence no
+  aperiodic word beats the best periodic word for the certified bound. Γ_k =
+  0.1667, 0.1250, 0.1020, 0.0953, 0.0824, 0.0770624, 0.0753086 (k=2..8;
+  decrements non-monotone). Bonus: the Q/R clique family solves the per-cycle
+  transfer-SDP EXACTLY (word_density_transfer_sdp; < 10⁻⁶ loss) — position-space,
+  no DFT symbol.
   ~~Trans-CHAIN density~~ RESOLVED (key D3_transChainResolved): open trans
   chains have the SAME bulk density τ\* (increments 1.3767178 within
   certificates from m = 50 to 800; boundary constant ≈ 0.995), with
@@ -335,7 +350,11 @@ through the cascade gate-by-gate.
   Small-m accident: ϑ(trans-chain 5) = α = 8 exactly. Durable tools added to
   `lovasz_theta_sparse.py`: pentagon_chain_word, alpha_chain_word,
   word_density_transfer_sdp (exact position-space ϑ-density of any periodic
-  word; no symmetry reduction). All §6 mesh threads are now resolved; what
-  remains genuinely open at research grade: exact (ε → 0) global optimality
-  of (cct)^∞ — blocked by the τ_cct field — and the ergodic-optimization
-  proof that periodic orbits suffice.
+  word; no symmetry reduction). §6 mesh threads status: the RIGOROUS results are
+  gap̄(w) ≤ Γ_k for all words (density bound) and the bracket sup_w gap̄(w) ∈
+  [0.069898, 0.075309] (cct optimal to within ε=0.0054); periodic-orbit
+  sufficiency holds for the CERTIFIED cocycle. GENUINELY OPEN (not obstructed):
+  exact global optimality of (cct)^∞, i.e. whether sup = gap(cct) and whether
+  lim_k Γ_k = gap(cct); and periodic-orbit sufficiency for the TRUE gap
+  functional θ̄−ᾱ (which is not locally constant). The τ_cct height result
+  bears only on single finite exact rational certificates.
