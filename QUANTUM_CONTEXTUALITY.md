@@ -356,6 +356,13 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   templates ⇒ linear-in-window bound on ϑ̄, finite LP over de Bruijn flows) —
   but OBSTRUCTED: a cct-tight template must reproduce τ_cct, which provably has
   no small algebraic form, so rational certificates yield only ε-optimality.
-  Open: construct that explicit ε-certificate; α-density = 4/3 ⟺ cis-fraction
-  ≤ 2/3 characterization (verified p ≤ 12, unproven); trans-CHAIN density
-  closed form (numerically → τ\*?) — unverified.
+  ~~α-density/cis-fraction characterization~~ RESOLVED — THEOREM (CaseStudies
+  §D3, key D3_alphaCisTheorem): ᾱ(w) ≥ max(4/3, 1 + f_c/2) for every word
+  (letter-weighted potential certificate (0,−½,−1) with rates (3/2, 1)); hence
+  ᾱ = 4/3 ⟹ f_c ≤ 2/3, with equality iff w = (cct)^k — any ccc gives
+  ᾱ ≥ 4/3 + 1/(3p) strictly (adjusted max-plus cube of the cis step has
+  min-max exactly 13/3 = 3·(4/3) + ⅓), and f_c = 2/3 without ccc forces all
+  cis-runs equal to 2 by the run-average argument. Note the naive converse is
+  false: cctt has f_c = 1/2 but ᾱ = 11/8. Open: construct the explicit
+  ε-optimality certificate; trans-CHAIN density closed form (numerically →
+  τ\*?) — unverified.
