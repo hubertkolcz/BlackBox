@@ -415,10 +415,17 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   "CF = 4ν along the whole C₅ white-noise family" is explained: mixing stays inside
   the pentagon scenario, whose ratio is 4. Metric binding is a NO-GO within the
   cascade parity pool (exhaustive +1/+2, greedy; negative-cell witnesses never bind
-  to clicks) — an instance of the exclusivity principle. Genuinely open only: whether
-  an analogous CF↔ν rate exists for a specific non-cyclic graph (CHSH Ci(8;1,4) gives
-  2 empirically; the general classification is uncharted), which Camillo–Cervantes do
-  not cover.
+  to clicks) — an instance of the exclusivity principle. ~~Genuinely open: whether an
+  analogous CF↔ν rate exists for a non-cyclic graph~~ RESOLVED/CHARTED (`cf_nu.py`,
+  Python CF and ν LPs, 2026-07-12): the proportionality **CF = c·ν with a CONSTANT rate
+  along the ENTIRE white-noise family is NOT special to cyclic scenarios**. CHSH/PR gives
+  c = 2, the Peres–Mermin square gives c = 4 (both constant down to the noncontextuality
+  threshold), and in every case **c = 1/ν(extremal box) = the reciprocal maximal signed
+  negativity** — a scenario invariant, of which the cyclic n−1 (ν=1/(n−1)) is just the
+  cycle specialization. Mechanism: CF and ν are both piecewise-linear in visibility and
+  vanish together (CF=0 ⟺ ν=0), so their ratio is constant within a linear piece. So a
+  CF↔ν rate law extends well beyond cyclic systems (which Camillo–Cervantes cover only for
+  cycles); the rate is 1/ν_max, not universally n−1.
    The independent re-derivation (`CF-negativity-proof.md`) proves it unconditionally for the odd n-cycle: Lemma 0 (each contextual C_n model violates exactly one cycle facet, parity), Lemma 1 (Wright ν = 1/(n−1) by G-symmetrisation), an explicit dual witness w_{i,(s,t)} = (1/n + γ*_i st)/(n−1) for the lower bound, and Lemma 2 (e₀ = (e−CF·W)/(1−CF) ∈ P_NC via the odd-cycle telescoping identity |m_i−m_{i+1}| ≤ Σ_{j≠i}|m_j+m_{j+1}|).
 - n-cycle generalizations (C₇, C₉...) and their circuits; run encoding B on real
   gate hardware as a genuine platform test.
