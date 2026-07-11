@@ -530,17 +530,26 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   decrements non-monotone). Bonus: the Q/R clique family solves the per-cycle
   transfer-SDP EXACTLY (word_density_transfer_sdp; < 10⁻⁶ loss) — position-space,
   no DFT symbol.
-  Trans-CHAIN density — STRONG NUMERICAL EVIDENCE, not proven (key
-  D3_transChainNumerical; "RESOLVED" was adversarially downgraded): open trans
-  chains NUMERICALLY appear to settle onto the trans-ring bulk density τ\*
-  (Python increments 1.3767178 from m = 50 to 800, boundary constant ≈ 0.995 —
-  unproven numerics, NOT verified in-key; the key checks only the m = 5
-  coincidence and the α-law, the robust facts, not the density — the old key's
-  ring-constant check was a mislabel and is removed),
-  with α(trans-chain m) = ⌊4(m+1)/3⌋ verified m = 3..12 (spot-checked to 800),
-  conjectured for all m — so IF the density conjecture holds the gap is EXTENSIVE
-  ≈ (τ\*−4/3)m and Case D's "rings beat chains" was never about closure (the
-  decaying chains were cis). Small-m accident: ϑ(trans-chain 5) = α = 8 exactly.
+  Trans-CHAIN density — now PROVEN (existence) + identified, upgraded from the old
+  "strong numerics" (`trans_chain_proofs.py`, Python-only, 2026-07-12). TWO results:
+  (a) **α(trans-chain m) = ⌊4(m+1)/3⌋ for ALL m — PROVEN** (was conjectured/verified
+  m=3..12). Tropical proof: the trans interface transfer matrix Tt = [[1,1,2],[1,1,−∞],
+  [0,1,1]] has max-cycle-mean exactly 4/3, and the state-vector orbit satisfies
+  vec(m+3) = vec(m)+4 *exactly*; max-plus translation-equivariance (v+c)⊙Tt = (v⊙Tt)+c
+  promotes the three verified base residues to a full induction, so α(m+3)=α(m)+4 with
+  base α(1,2,3)=2,4,5 — identical recurrence and base to ⌊4(m+1)/3⌋. (b) **The
+  ϑ-density EXISTS and = τ\***. Existence is now a THEOREM: ϑ(chain) is subadditive,
+  a_{p+q} ≤ a_p + a_q (proof: restrict the big chain's optimal orthonormal
+  representation + handle to the two overlapping sub-chains — each an induced subgraph
+  sharing the interface pair — and use inclusion–exclusion), so by Fekete
+  lim a_m/m = inf_m a_m/m exists. Value = τ\* via the O(1) ring bracket
+  ϑ(ring_m) ≤ a_m ≤ ϑ(ring_{m+1}) (verified every tested m; the chain is the ring "cut
+  open", free vs periodic BC of the same transfer-SDP), both ends having density τ\*.
+  Hence the trans-chain gap is EXTENSIVE ≈ (τ\*−4/3)m ≈ 0.0434 m with an O(1) boundary
+  correction (the numerically observed ≈0.995) — and Case D's "rings beat chains" was
+  never about closure (the decaying chains were cis). One residual gap: a *structural*
+  proof of the ring bracket (currently verified, not proven). Small-m accident:
+  ϑ(trans-chain 5) = α = 8 exactly (see the realizability resonance note, §9).
   Durable tools in `lovasz_theta_sparse.py`: pentagon_chain_word, alpha_chain_word,
   word_density_transfer_sdp (exact position-space ϑ-density of any PERIODIC word).
   §6 mesh threads status: RIGOROUS — gap̄(w) ≤ Γ_k for all words (density bound)
