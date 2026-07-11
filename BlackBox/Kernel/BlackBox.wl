@@ -45,6 +45,7 @@ DLADimension::usage = "DLADimension[gens] gives the dimension of the dynamical L
 CycleORProduct::usage = "CycleORProduct[{n1, n2, ...}] gives the OR (conormal) product of the cycles C_n1, C_n2, ... on explicit tuple vertices: joint events are exclusive iff exclusive in some factor. The composition primitive for Consistent-Exclusivity tests across independent experiments.";
 QuantumEventProbability::usage = "QuantumEventProbability[n] gives the per-event probability cos(Pi/n)/(1+cos(Pi/n)) of the quantum-maximal n-cycle model (Araujo et al., PRA 88, 022118); for n = 5 it is 1/Sqrt[5].";
 PentagonRing::usage = "PentagonRing[n] gives the ring of n single-edge-glued pentagons (3n vertices, 4n edges). Theorem (proven 10 July 2026): IndependenceNumber[PentagonRing[n]] == Floor[4n/3].";
+CEFilterMixed::usage = "CEFilterMixed[{{g1, p1}, {g2, p2}, ...}] applies the Consistent-Exclusivity filter to the independent composition of DIFFERENT experiments: exclusivity graphs g_i with assignments p_i (vectors in VertexList order); joint events are exclusive iff exclusive in some factor and weights multiply. Same return keys as CEFilter plus \"MaxLoad\" (worst clique load even when passing). Exhaustive clique enumeration - practical for two factors / a few hundred product vertices.";
 Begin["`Private`"];
 
 (* ------------------------------------------------------------------ *)
@@ -158,18 +159,31 @@ CEFilter[g_Graph, p_List, k_Integer: 2] := Module[
   viol = Select[sums, # > 1 + 10^-9 &];
   <|"Passes" -> viol === {}, "ViolatingCliques" -> Length[viol],
     "Worst" -> If[viol === {}, Missing["NotViolated"], Max[viol]],
+    "MaxLoad" -> Max[sums],
+    "CliqueCount" -> Length[cliques], "Omega" -> Max[Length /@ cliques]|>];
+
+CEFilterMixed[factors : {{_Graph, _List} ..}] := Module[
+  {hs, ams, ns, tuples, adjQ, hp, cliques, weight, sums, viol},
+  hs = IndexGraph[#[[1]]] & /@ factors; ams = Normal[AdjacencyMatrix[#]] & /@ hs;
+  ns = VertexCount /@ hs; tuples = Tuples[Range /@ ns];
+  adjQ[u_, v_] := Or @@ Table[ams[[j]][[u[[j]], v[[j]]]] == 1, {j, Length[ns]}];
+  hp = Graph[tuples, UndirectedEdge @@@ Select[Subsets[tuples, {2}], adjQ @@ # &]];
+  cliques = FindClique[hp, Infinity, All];
+  weight[t_] := Product[factors[[j, 2]][[t[[j]]]], {j, Length[ns]}];
+  sums = Total[weight /@ #] & /@ cliques;
+  viol = Select[sums, # > 1 + 10^-9 &];
+  <|"Passes" -> viol === {}, "ViolatingCliques" -> Length[viol],
+    "Worst" -> If[viol === {}, Missing["NotViolated"], Max[viol]],
+    "MaxLoad" -> Max[sums],
     "CliqueCount" -> Length[cliques], "Omega" -> Max[Length /@ cliques]|>];
 
 (* ------------------------------------------------------------------ *)
 (* the n-cycle scenario                                                *)
 (* ------------------------------------------------------------------ *)
 
-CycleScenario[n_Integer /; n >= 3] := Module[{ctxs, glob, secs, M},
-  ctxs = Table[{i, Mod[i + 1, n]}, {i, 0, n - 1}];
-  glob = Tuples[{0, 1}, n];
-  secs = Flatten[Table[{c, s}, {c, ctxs}, {s, Tuples[{0, 1}, 2]}], 1];
-  M = Table[Boole[{t[[sec[[1, 1]] + 1]], t[[sec[[1, 2]] + 1]]} == sec[[2]]], {sec, secs}, {t, glob}];
-  <|"n" -> n, "Contexts" -> ctxs, "Sections" -> secs, "Incidence" -> M, "Assignments" -> glob|>];
+(* the n-cycle scenario is the arbitrary-cover scenario over the edge cover - one construction *)
+CycleScenario[n_Integer /; n >= 3] := Append[
+  CoverScenario[Range[0, n - 1], Table[{i, Mod[i + 1, n]}, {i, 0, n - 1}]], "n" -> n];
 
 CycleModel[n_Integer, p00_, p10_] := Flatten[Table[{p00, p10, p10, 0}, {n}]];
 CycleModel[n_Integer, "Quantum"] := With[{p = Simplify[Cos[Pi/n]/(1 + Cos[Pi/n])]}, CycleModel[n, Simplify[1 - 2 p], p]];

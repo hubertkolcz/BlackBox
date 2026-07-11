@@ -1,4 +1,4 @@
-# One-command verification of the whole repository (Windows PowerShell).
+﻿# One-command verification of the whole repository (Windows PowerShell).
 #   powershell -File RunAll.ps1
 # Test battery runs plain -file from its own directory (it Prints its markers);
 # each note runner uses -print all (its value is the verification Column).
@@ -8,7 +8,7 @@ $all = $true
 Push-Location (Join-Path $root "BlackBox\Tests")
 $out = & $ws -file BlackBoxTests.wl 2>&1 | Out-String
 Pop-Location
-$ok = ($out -match "ALL PASS: True") -and ($out -match "DEDUP PASS: True")
+$ok = ($out -match "ALL PASS: True") -and ($out -match "DEDUP PASS: True") -and ($out -match "UNIFY PASS: True")
 if (-not $ok) { $all = $false }
 Write-Output ("{0,-34} {1}" -f "BlackBox\Tests\BlackBoxTests.wl", $(if ($ok) { "OK" } else { "FAILED" }))
 foreach ($f in @("RunEssay.wl", "RunCaseStudies.wl", "RunHeptagonCatalysis.wl",
