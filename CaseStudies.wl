@@ -1,4 +1,4 @@
-(* ::Package:: *)
+﻿(* ::Package:: *)
 
 (* ::Title:: *)
 (*Case Studies: Four Non-Trivial Problems Resolved with the BlackBox Certificates*)
@@ -83,10 +83,7 @@ TableForm[colorTable, TableHeadings -> {{"C5", "Gr\[ODoubleDot]tzsch", "M\.b2"},
 (*Mixed OR (conormal) product of two cycles, with vertex tuples kept explicit:*)
 
 (* ::Input:: *)
-orMixed[ns_List] := Module[{V = Tuples[Range[0, # - 1] & /@ ns], adj},
-  adj[u_, v_] := Or @@ MapThread[MemberQ[{1, #3 - 1}, Mod[#1 - #2, #3]] &, {u, v, ns}];
-  Graph[V, UndirectedEdge @@@ Select[Subsets[V, {2}], adj @@ # &]]];
-pQuantum[n_] := Simplify[Cos[Pi/n]/(1 + Cos[Pi/n])];
+orMixed = CycleORProduct; pQuantum = QuantumEventProbability;   (* single implementations live in the paclet *)
 
 (* ::CodeText:: *)
 (*Two-factor products do NOT activate: \[Omega](C7\[Or]C5) = \[Omega](C9\[Or]C5) = 4, and the exact loads stay below 1 in both compositions (box\[CircleTimes]quantum and quantum\[CircleTimes]box):*)
@@ -141,10 +138,7 @@ yanLoad = (1/2) LovaszTheta[GraphComplement[CycleGraph[7]]];
 (*Ring builder \[LongDash] pentagon k shares edge {a[k-1], b[k-1]} with its predecessor, cyclically:*)
 
 (* ::Input:: *)
-pentagonRing[nb_ /; nb >= 3] := Module[{a, b, x, edges},
-  edges = Flatten[Table[{{a[Mod[k - 1, nb]], b[Mod[k - 1, nb]]}, {b[Mod[k - 1, nb]], a[k]},
-      {a[k], b[k]}, {b[k], x[k]}, {x[k], a[Mod[k - 1, nb]]}}, {k, 0, nb - 1}], 1];
-  Graph[DeleteDuplicates[Flatten[edges]], UndirectedEdge @@@ DeleteDuplicates[Sort /@ edges]]];
+pentagonRing = PentagonRing;   (* single implementation lives in the paclet; alpha = Floor[4N/3] is a theorem *)
 
 (* ::CodeText:: *)
 (*Rings vs chains, N = 3..10: gap \[CapitalDelta] = \[CurlyTheta] - \[Alpha] per topology (established alternative: a 2^(5N)-dimensional state vector):*)
