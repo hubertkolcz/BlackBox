@@ -157,6 +157,15 @@ arXiv:1010."
 }], "Item",ExpressionUUID->"f643c152-d26b-ff43-91b1-7800efee2888"],
 
 Cell[TextData[{
+ StyleBox["LovaszThetaSparse", "InlineCode"],
+ " \[LongDash] ",
+ "LovaszThetaSparse[g] gives the Lov\[AAcute]sz number \[CurlyTheta](g) by \
+chordal decomposition of the dual semidefinite program: one small block per \
+maximal clique of a chordal extension of g, so the cost scales with the \
+treewidth of g instead of its vertex count."
+}], "Item",ExpressionUUID->"a91c3d47-5e28-4b06-8f13-27d90c65e4b2"],
+
+Cell[TextData[{
  StyleBox["NoncontextualFraction", "InlineCode"],
  " \[LongDash] ",
  "NoncontextualFraction[scen, e] gives the noncontextual fraction NCF of the \

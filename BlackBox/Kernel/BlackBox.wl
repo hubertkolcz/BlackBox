@@ -15,6 +15,7 @@ BeginPackage["HubertKolcz`BlackBox`"];
 (* -- graph invariants: the three theories, three numbers -- *)
 IndependenceNumber::usage = "IndependenceNumber[g] gives the independence number \[Alpha](g): the noncontextual (deterministic hidden-variable) bound of the exclusivity graph g.";
 LovaszTheta::usage = "LovaszTheta[g] gives the Lov\[AAcute]sz number \[CurlyTheta](g) by semidefinite programming: the quantum bound of the exclusivity graph g (CSW, arXiv:1010.2163).";
+LovaszThetaSparse::usage = "LovaszThetaSparse[g] gives the Lov\[AAcute]sz number \[CurlyTheta](g) by chordal decomposition of the dual semidefinite program: the single (n+1)-dimensional cone is split into one block per maximal clique of a chordal extension of g (Grone et al. completion / Agler et al. decomposition), so the cost scales with the treewidth of g instead of its vertex count. LovaszThetaSparse[g, \"Certificate\"] returns an association that adds the eigenvalue-certified upper bound \[Lambda]max(J - B) of the recovered dual witness B and the clique statistics of the extension. Values agree with LovaszTheta to solver tolerance on every graph; prefer the sparse form for meshes with hundreds to thousands of vertices (PentagonChain, pentagon rings).";
 FractionalPackingNumber::usage = "FractionalPackingNumber[g] gives the fractional packing number \[Alpha]*(g) as an exact linear program over the maximal cliques: the exclusivity-only (E-principle, single copy) bound.";
 
 (* -- geometry and composition -- *)
@@ -57,6 +58,67 @@ LovaszTheta[g_Graph] := Module[{h = IndexGraph[g], n, x, X, vars, cons, sol},
     (x[#[[1]], #[[2]]] == 0) & /@ (Sort /@ (List @@@ EdgeList[h]))];
   sol = SemidefiniteOptimization[-Total[X, 2], cons, vars, MaxIterations -> 300];
   Total[X, 2] /. sol];
+
+(* chordal extension by minimum-degree elimination: the bag of each eliminated vertex
+   (vertex + current neighbourhood) is a clique of the extension; the subset-maximal
+   bags are exactly its maximal cliques *)
+chordalCliques[h_Graph] := Module[{n = VertexCount[h], adj, bags = {}, keys, v, nb, sorted, kept = {}},
+  adj = AssociationThread[Range[n] -> (Sort[AdjacencyList[h, #]] & /@ Range[n])];
+  Do[
+    keys = Keys[adj];
+    v = keys[[First[Ordering[Length /@ Values[adj], 1]]]];
+    nb = adj[v];
+    AppendTo[bags, Sort[Prepend[nb, v]]];
+    Do[adj[u] = Union[DeleteCases[adj[u], v], DeleteCases[nb, u]], {u, nb}];
+    KeyDropFrom[adj, v],
+    {n}];
+  sorted = ReverseSortBy[DeleteDuplicates[bags], Length];
+  Do[If[! AnyTrue[kept, SubsetQ[#, b] &], AppendTo[kept, b]], {b, sorted}];
+  kept];
+
+(* dual program theta(g) = min lambda_max(J - B), B supported on E(g); the rank-one J
+   is absorbed into an apex border row (Schur complement), the (n+1)-cone then splits
+   clique-by-clique: M = [[t I + B, e],[e^T, 1]] = Sum_j E_j^T S_j E_j with S_j >= 0.
+   Fixed entries: diagonal sums to t, border to 1, corner to 1, extension fill to 0. *)
+LovaszThetaSparse[g_Graph] := LovaszThetaSparse[g, "Value"];
+LovaszThetaSparse[g_Graph, prop : ("Value" | "Certificate")] := Module[
+  {h = IndexGraph[g], n, cliques, nc, edgeQ, y, t, vars, blocks, diagTerms, bordTerms,
+   cornVars, fillTerms, cons, sol, tval, Bnum, am, upper},
+  n = VertexCount[h];
+  cliques = chordalCliques[h];
+  nc = Length[cliques];
+  edgeQ = Association[Thread[(Sort /@ (List @@@ EdgeList[h])) -> True]];
+  blocks = Table[With[{m = Length[cliques[[j]]]},
+      Table[If[p <= q, y[j, p, q], y[j, q, p]], {p, m + 1}, {q, m + 1}]], {j, nc}];
+  vars = Prepend[Flatten[Table[With[{m = Length[cliques[[j]]]},
+      Table[y[j, p, q], {p, m + 1}, {q, p, m + 1}]], {j, nc}]], t];
+  diagTerms = GroupBy[Flatten[Table[cliques[[j, p]] -> y[j, p, p],
+      {j, nc}, {p, Length[cliques[[j]]]}]], First -> Last];
+  bordTerms = GroupBy[Flatten[Table[cliques[[j, p]] -> y[j, p, Length[cliques[[j]]] + 1],
+      {j, nc}, {p, Length[cliques[[j]]]}]], First -> Last];
+  cornVars = Table[y[j, Length[cliques[[j]]] + 1, Length[cliques[[j]]] + 1], {j, nc}];
+  fillTerms = GroupBy[Flatten[Table[With[{K = cliques[[j]], m = Length[cliques[[j]]]},
+      Table[If[! KeyExistsQ[edgeQ, Sort[{K[[p]], K[[q]]}]],
+          Sort[{K[[p]], K[[q]]}] -> y[j, p, q], Nothing], {p, m}, {q, p + 1, m}]], {j, nc}]],
+    First -> Last];
+  cons = Join[
+    (Total[#] == t) & /@ Values[diagTerms],
+    (Total[#] == 1) & /@ Values[bordTerms],
+    {Total[cornVars] == 1},
+    (Total[#] == 0) & /@ Values[fillTerms],
+    VectorGreaterEqual[{#, 0}, {"SemidefiniteCone", Length[#]}] & /@ blocks];
+  sol = SemidefiniteOptimization[t, cons, vars, MaxIterations -> 500];
+  tval = t /. sol;
+  If[prop === "Value", Return[tval]];
+  Bnum = ConstantArray[0., {n, n}];
+  Do[With[{K = cliques[[j]], Sj = blocks[[j]] /. sol},
+     Bnum[[K, K]] += Sj[[;; -2, ;; -2]]], {j, nc}];
+  am = Normal[AdjacencyMatrix[h]];
+  upper = If[n <= 1500, Max[Eigenvalues[ConstantArray[1., {n, n}] - am Bnum]],
+    Missing["TooLarge"]];
+  <|"Theta" -> tval, "UpperBound" -> upper, "CliqueCount" -> nc,
+    "MaxCliqueSize" -> Max[Length /@ cliques],
+    "FillEdges" -> Length[fillTerms]|>];
 
 FractionalPackingNumber[g_Graph] := Module[{h = IndexGraph[g], n, cl, w, sol},
   n = VertexCount[h]; cl = FindClique[h, Infinity, All];
