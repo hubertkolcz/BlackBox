@@ -422,6 +422,30 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
    The independent re-derivation (`CF-negativity-proof.md`) proves it unconditionally for the odd n-cycle: Lemma 0 (each contextual C_n model violates exactly one cycle facet, parity), Lemma 1 (Wright ν = 1/(n−1) by G-symmetrisation), an explicit dual witness w_{i,(s,t)} = (1/n + γ*_i st)/(n−1) for the lower bound, and Lemma 2 (e₀ = (e−CF·W)/(1−CF) ∈ P_NC via the odd-cycle telescoping identity |m_i−m_{i+1}| ≤ Σ_{j≠i}|m_j+m_{j+1}|).
 - n-cycle generalizations (C₇, C₉...) and their circuits; run encoding B on real
   gate hardware as a genuine platform test.
+- **Pentagon-mesh realizability — dimension resolved, noise quantified, lab run still
+  open (`realizability.py`, 2026-07-12).** The vague "does a real device realize the
+  ϑ-density advantage?" is now two hardware-deciding curves in the chain length N (open
+  trans chain of N pentagons), triple-checked across three independent SDP paths (dense
+  CLARABEL, dense SCS, the chordal-decomposition solver). (i) **Dimension is *not* a
+  barrier: d(N) = 3 for every N.** The optimal ϑ-SDP Gram matrix has rank 3 at every
+  chain length (interior-point returns the max-rank optimum, so 3 is the minimum
+  orthonormal-representation dimension — a single pentagon already forces 3). So **the
+  same qutrit** — the 3-mode single-photon / spin-1 system Lapkiewicz et al. already ran
+  for one pentagon (§3) — realizes the CSW bound of an *arbitrarily long* chain; the
+  resource that grows is the number of measurement contexts (3N+2 rank-1 projectors), not
+  the Hilbert dimension. This is the strong, near-term-friendly half of the answer. (ii)
+  **Noise is the real ceiling.** The relative margin ϑ/α shrinks from √5/2 = 1.118 (one
+  pentagon) toward 3τ\*/4 = 1.0325 (a ~3.25% margin), so the critical white-noise
+  visibility v\* = α/ϑ rises from 0.894 toward 4/(3τ\*) = 0.9685: the advantage is
+  extensive but *thin*, demanding ~93% visibility at a few pentagons and ~96.8%
+  asymptotically. (iii) Exact sub-result: ϑ = α *exactly* at N = 2 and N = 5 only (not
+  periodic — N = 8, 11 do not resonate), so those two trans chains carry **no** quantum
+  advantage despite being built from contextual pentagons — a sharp instance of the
+  bond-dependence boundary B1 (§10). What remains genuinely open: an actual laboratory
+  run, and a full device error model — these are idealized projective-measurement /
+  isotropic-noise targets (computable bounds), and a sequential-measurement test still
+  faces the compatibility/detection loopholes of §3, so this quantifies the *target*, not
+  a realized advantage.
 - Sequential-game quantum strategy demo end-to-end (Alice prefix + Bob binary POVM).
 - Čech layer follow-ups: ~~Kochen–Specker covers (18-vector Cabello set)~~
   RESOLVED (SupportCohomology.wl KS section): the Peres–Mermin square (24/24)
