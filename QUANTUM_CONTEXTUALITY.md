@@ -154,7 +154,7 @@ sampler knows the context, which is exactly what NCHV models are forbidden.
 ### BlackBox paclet — the sheaf/Čech certificate layer (added 10 July 2026)
 
 The pipeline is packaged as the paclet `BlackBox/` (context
-`HubertKolcz`BlackBox``, 26 exported symbols, `Tests/BlackBoxTests.wl` →
+`HubertKolcz`BlackBox``, 27 exported symbols, `Tests/BlackBoxTests.wl` →
 ALL PASS: True). On top of the LP/SDP layer (α, ϑ, α\*, contextual fraction,
 `GlobalSectionQ`) it now carries the **possibilistic certificate layer** that
 replaced the cellular-sheaf Laplacian after the Laplacian's own pre-registered

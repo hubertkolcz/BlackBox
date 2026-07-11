@@ -169,3 +169,14 @@ DedupTest = <|
 |>;
 Print[DedupTest];
 Print["DEDUP PASS: ", And @@ Values[DedupTest]];
+
+(* unification layer (v1.3.0): scenario via cover, mixed CE filter, MaxLoad *)
+UnifyTest = <|
+  "cycleViaCover" -> CycleScenario[5]["Incidence"] === CoverScenario[Range[0, 4], Table[{i, Mod[i + 1, 5]}, {i, 0, 4}]]["Incidence"],
+  "maxLoadKey" -> Simplify[CEFilter[CycleGraph[5], ConstantArray[1/2, 5]]["MaxLoad"] - 5/4] === 0,
+  "mixedMatchesSameGraph" -> CEFilterMixed[{{CycleGraph[5], ConstantArray[1/2, 5]}, {CycleGraph[5], ConstantArray[1/2, 5]}}]["Worst"] === CEFilter[CycleGraph[5], ConstantArray[1/2, 5]]["Worst"],
+  "mixedHeptagonPentagon" -> Module[{r = CEFilterMixed[{{CycleGraph[7], ConstantArray[1/2, 7]}, {CycleGraph[5], ConstantArray[1/Sqrt[5], 5]}}]},
+    r["Passes"] && r["Omega"] == 4 && Simplify[r["MaxLoad"] - 2/Sqrt[5]] === 0]
+|>;
+Print[UnifyTest];
+Print["UNIFY PASS: ", And @@ Values[UnifyTest]];

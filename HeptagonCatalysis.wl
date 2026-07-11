@@ -1,4 +1,4 @@
-(* ::Package:: *)
+﻿(* ::Package:: *)
 
 (* ::Title:: *)
 (*A Qutrit Catalyst Activates the Heptagon PR Box*)
@@ -24,10 +24,7 @@
 (* ::Input:: *)
 PacletDirectoryLoad[FileNameJoin[{Quiet@Check[NotebookDirectory[], Directory[]], "BlackBox"}]];
 Needs["HubertKolcz`BlackBox`"]; Quiet[Remove /@ Select["Global`" <> # & /@ Names["HubertKolcz`BlackBox`*"], NameQ]];
-orMixed[ns_List] := Module[{V = Tuples[Range[0, # - 1] & /@ ns], adj},
-  adj[u_, v_] := Or @@ MapThread[MemberQ[{1, #3 - 1}, Mod[#1 - #2, #3]] &, {u, v, ns}];
-  Graph[V, UndirectedEdge @@@ Select[Subsets[V, {2}], adj @@ # &]]];
-pQuantum[n_] := Simplify[Cos[Pi/n]/(1 + Cos[Pi/n])];
+orMixed = CycleORProduct; pQuantum = QuantumEventProbability;   (* single implementations live in the paclet *)
 
 (* ::Section:: *)
 (*One Box, One Catalyst: No Activation (Exact Margin 2/Sqrt[5])*)

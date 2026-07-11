@@ -66,6 +66,15 @@ factorization rule P(e1,."
 }], "Item",ExpressionUUID->"d2acfc61-322e-704c-a608-edc5c09dbda8"],
 
 Cell[TextData[{
+ StyleBox["CEFilterMixed", "InlineCode"],
+ " \[LongDash] ",
+ "CEFilterMixed[{{g1, p1}, {g2, p2}, ...}] applies the Consistent-Exclusivity \
+filter to the independent composition of DIFFERENT experiments: exclusivity \
+graphs g_i with assignments p_i (vectors in VertexList order); joint events \
+are exclusive iff exclusive in some factor and weights multiply."
+}], "Item",ExpressionUUID->"3a86d17f-92c4-4b5e-8d09-6ef42b71c5a8"],
+
+Cell[TextData[{
  StyleBox["ContextualFraction", "InlineCode"],
  " \[LongDash] ",
  "ContextualFraction[scen, e] gives CF = 1 - NoncontextualFraction[scen, e], \
