@@ -151,13 +151,55 @@ Results: ideal S = −3.944; realistic (V = 0.977, 1° misalignment) S ≈ −3.
 Caveat: a classical simulator reproduces statistics, not evidential force — the
 sampler knows the context, which is exactly what NCHV models are forbidden.
 
+### kcbs_wigner_flow.wl — Wigner-negativity flow through the cascade (runner: RunWignerFlow.wl)
+Companion note to kcbs_circuit.wl §11/§13. Discrete Wigner function of every prefix
+of [P, T1, T2, T3, T4]: input |0⟩ → 0; all five prefixes → exactly 2/√5 − 2/3
+≈ 0.227761 (two cells of depth 1/3 − 1/√5 each; closed forms verified symbolically,
+using c₂ = cos(π/5)/(1+cos(π/5)) ≡ 1/√5). Negativity is created once, by P, and
+conserved by every T_k at the SAME two phase-space cells — the column of the mode
+the detectors never monitor (column sums to the no-click probability 1 − 2/√5;
+monitored-mode columns pointwise non-negative in every context; mode marginals ≡
+Born probabilities). What moves is positive quasi-probability, alternating between
+two exact patterns ((1 ± 2s)/(3√5), (1 ∓ s)/(3√5), s = √(√5−2)) in step with the
+detector alternation (handedness sign of the stage frame). Conservation is an orbit
+property, not a gate property: each T_k is non-Clifford, creating negativity ≈ 0.324
+from two of three basis states (sparing its shared-detector mode); P makes all
+three negative. Bonus identity: every T_k is a Givens rotation with cos θ = (√5−1)/2
+= 1/φ (next-nearest pentagram overlap). Machine-checkable `WignerFlowVerification`
+(16 checks) → OK. Headless: `wolframscript -file RunWignerFlow.wl -print all`.
+
+### kcbs_ledger.wl — the phase-space ledger of the Born rule (runner: RunLedger.wl)
+Resolves the state/clicks segregation posed by kcbs_wigner_flow.wl. (1) Two-sided
+ledger: p = 3 Σ_λ W_E(λ)W_ρ(λ) reproduces the Born rule exactly at every cut of
+every context; the Heisenberg cut puts ALL negativity in the effects (all ten
+pentagon effects Wigner-negative, 0.20–0.33 each; state |0⟩ clean), the Schrödinger
+cut all in the state; the minimum over cuts is 2/√5 − 2/3, at the Schrödinger cut —
+the flow note's accounting was the cheapest ledger, and no cut balances to zero.
+(2) Frame-free invariant by exact LP (RevisedSimplex over ℚ(√5)): minimal negative
+weight ν = (√5−2)/2 over noncontextual decompositions; contextual fraction
+CF = 2√5 − 4 = 4ν; bridge N_Wigner = 1/3 − ν/(1+ν), with ν/(1+ν) = the no-click
+probability 1 − 2/√5. (3) White-noise scan ρ_V = V|ψ⟩⟨ψ| + (1−V)𝟙/3: N(V) dies at
+V\* = (10+9√5)/61 ≈ 0.4938, ν and CF share the KCBS threshold V_c = (5+3√5)/20 ≈
+0.5854 ⇒ window (V\*, V_c) of Wigner-negative yet KCBS-noncontextual states — the
+badges decouple; CF = 4ν holds along the ENTIRE family and CF is exactly linear
+above threshold. (4) The phase-point operators (reconstructed from the framework by
+linearity) are parity observables (spectrum {1,1,−1}, Tr[A_λA_μ] = 3δ): each
+negative cell is a sharp binary witness with minus-probability exactly
+3/(2√5) ≈ 0.6708 > 1/2; the witness eigenvectors have NO support on the undetected
+mode (readout interferes the monitored modes). Enlarged event graph (5 clicks +
+5 pass events + 2 witnesses): connected across the badges via the stage-1 pass
+event, but α = 6, θ ≈ 6 > joint quantum sum 5 − 2/√5 ≈ 4.106 — no joint CSW
+violation (exclusivity binds topologically, not metrically). Machine-checkable
+`LedgerVerification` (21 checks) → OK. Headless:
+`wolframscript -file RunLedger.wl -print all`.
+
 ## 7. Wigner negativity toolchain (Wolfram Community, N. Murzin)
 
 Source: "On quantum amplitudes, correlations and negativity"
 (https://community.wolfram.com/groups/-/m/t/3026423). Framework tools:
 `QuantumWignerTransform`, `QuantumWeylTransform`, `QuantumPhaseSpaceTransform`,
-`QuantumWignerMICTransform`. Adopted in essay §11. Open thread: track negativity flow
-through the cascade gate-by-gate.
+`QuantumWignerMICTransform`. Adopted in essay §11. The open thread — track negativity
+flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see §6).
 
 ## 8. Key references
 
@@ -174,7 +216,14 @@ through the cascade gate-by-gate.
 ## 9. Open threads
 
 - Push the repo to GitHub (blocked: gh token for `hubertkolcz` invalid; no remote yet).
-- Gate-by-gate negativity flow through the cascade (Weyl/MIC transforms).
+- ~~Gate-by-gate negativity flow through the cascade~~ — done 2026-07-10,
+  kcbs_wigner_flow.wl (WignerTransform route). Remaining variant: phase-space view
+  of the T gates as channels (QuantumWeylTransform / MIC representations).
+- From kcbs_ledger.wl (2026-07-10): is CF = 4ν a theorem (all n-cycles? all noise
+  families?) or a C₅ accident — observed exactly along the whole white-noise family;
+  and can a better-chosen set of parity events give the enlarged event graph a
+  METRIC binding (joint CSW violation), or is α ≥ quantum sum unavoidable when
+  witness events are added to the pentagon?
 - n-cycle generalizations (C₇, C₉...) and their circuits; run encoding B on real
   gate hardware as a genuine platform test.
 - Sequential-game quantum strategy demo end-to-end (Alice prefix + Bob binary POVM).
