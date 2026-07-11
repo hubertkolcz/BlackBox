@@ -227,6 +227,26 @@ TableForm[cohomTable, TableHeadings -> {None, {"model", "{C0, C1, C2}", "rk H0",
 (*Structure worth recording: (i) H^0 is multiplicative on the product cover \[LongDash] 36 = 6^2 for quantum\[CircleTimes]quantum, 1 = 1^2 for Wright\[CircleTimes]Wright; (ii) on every single-cycle cover of this census H^1 has free rank 1 (the nerve circle) except C6 Wright where it is 2 \[LongDash] the group remembers the support, not just the nerve; (iii) on the product cover the C^2 correction kills H^1 entirely (free rank 0), so all the contextuality information there sits in the relative layer, exactly where CechObstruction reads it; (iv) no torsion appears anywhere in this ABSOLUTE census, but the RELATIVE classes do carry it: every GHZ obstruction class has order exactly 2 (\"ObstructionOrder\" in CechObstruction), while Hardy's nonextendable section has order 1 \[LongDash] its false negative is integral, not an artifact of working over Q.*)
 
 (* ::Section:: *)
+(*The Relative Group, Where \[Gamma] Actually Lives*)
+
+(* ::Text:: *)
+(*The final layer: H^1 of the relative presheaf F~ = ker(F -> F|C0) itself, as a group (CechRelativeCohomology). Its cochain modules are spanned by DIFFERENCES of support sections agreeing on the overlap with the distinguished context, so F~(C0) = 0 \[LongDash] and that single fact makes the construction self-validating: a lift of a section s of C0 to a compatible family must have C0-component exactly s, so the order of the explicit connecting cocycle \[Gamma](s) = \[Delta]0(lift) in H^1(F~) MUST equal CechObstruction's independently computed \"ObstructionOrder\". The table checks this for every section, at two different choices of C0 per model.*)
+
+(* ::Input:: *)
+relRows = {{"C5 classical", scen5, CycleModel[5, "Classical"], chC, 1}, {"C5 Wright", scen5, CycleModel[5, "Wright"], chW, 1},
+   {"PR box", scen4, ePR, chPR, 4}, {"Hardy", scen4, eHardy, chH, 2}, {"GHZ", ghzScen, ghzModel, chGHZ, 1},
+   {"Peres-Mermin", pmScen, pmModel, chPM, 6}, {"CEG 18-ray", scen18, e18, ch18, 1}};
+relTable = Table[Module[{rel = CechRelativeCohomology[r[[2]], r[[3]], r[[5]]], match},
+    match = And @@ Table[rel["GammaOrders"][s0] === r[[4]]["ObstructionOrder"][{r[[2]]["Contexts"][[r[[5]]]], s0}],
+       {s0, Keys[rel["GammaOrders"]]}];
+    {r[[1]], rel["H1FreeRank"], rel["H1Torsion"], Tally[Values[rel["GammaOrders"]]],
+     rel["GammaCocyclesVerified"] && rel["ComplexCloses"], match}], {r, relRows}];
+TableForm[relTable, TableHeadings -> {None, {"model (c0)", "rk H1(F~)", "torsion", "\[Gamma] orders", "cocycles+closes", "= ObstructionOrder"}}]
+
+(* ::Text:: *)
+(*The relative group is the contextuality group of the model, exactly. For the parity models \[LongDash] GHZ, the Peres-Mermin square, the 18 rays \[LongDash] H^1(F~) \[TildeEqual] Z/2: one two-torsion class, and every \[Gamma](s) hits it. For the box models H^1(F~) \[TildeEqual] Z and the classes have infinite order. For the classical model and for Hardy the group answer is even sharper than the false-negative bookkeeping: H^1(F~) = 0 \[LongDash] Hardy's \[Gamma] does not merely happen to vanish, it lives in a TRIVIAL group; no choice of coefficients in this presheaf could ever have detected it. The census of absolute groups was topology plus support; the relative group is the obstruction theory itself, and its dichotomy Z/2 vs Z is the torsion dichotomy of the orders section restated structurally.*)
+
+(* ::Section:: *)
 (*Verification*)
 
 (* ::Input:: *)
@@ -279,6 +299,10 @@ SupportCohomologyVerification = <|
   "cohomProductH1Vanishes" -> ccWW["H1FreeRank"] == 0 && ccQQ["H1FreeRank"] == 0 &&
      ccWW["CochainRanks"] == {100, 700, 2200},
   "cohomNoTorsionInCensus" -> AllTrue[{ccC, ccQ, ccW, ccW6, ccU, ccPR, ccH, ccG, ccWW, ccQQ}, #["H1Torsion"] === {} &],
+  "relativeGroupDichotomy" -> relTable[[All, 2 ;; 3]] ===
+     {{0, {}}, {1, {}}, {1, {}}, {0, {}}, {0, {2}}, {0, {2}}, {0, {2}}},
+  "relativeOrdersMatchObstruction" -> AllTrue[relTable[[All, 6]], TrueQ] &&
+     AllTrue[relTable[[All, 5]], TrueQ],
   "verdict" -> "ADOPT: the support-presheaf Cech obstruction joins the core as the possibilistic-layer certificate; the Laplacian stays a no-disturbance projector only"
 |>;
 SupportCohomologyVerification["OK"] = And @@ Cases[Values[SupportCohomologyVerification], _?BooleanQ];

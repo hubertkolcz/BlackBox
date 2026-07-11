@@ -1,0 +1,10 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(* Beginning of Notebook Content *)
+Notebook[{Cell["CechRelativeCohomology", "ObjectName", ExpressionUUID -> "cea99922-e73d-45d3-979e-0185b9d91b6c"], Cell["CechRelativeCohomology[scen, e, c0] gives the RELATIVE \[CapitalCHacek]ech cohomology of the Z-linearized support presheaf of the empirical model e with respect to the distinguished context c0 (an index into scen[\"Contexts\"], or the context itself): the presheaf F~ = ker(F -> F|c0), whose value on U is spanned by differences of support sections agreeing on U \[Intersection] c0 (so F~(c0) = 0). Returns \"H0Rank\", \"H1FreeRank\", \"H1Torsion\", \"CochainRanks\", \"ComplexCloses\", and \"GammaOrders\": for every support section s of c0 the explicit connecting-map cocycle \[Gamma](s) = \[Delta]0(lift of s) is built and its exact order in H^1(F~) is computed by Smith normal form. Because F~(c0) = 0, that order provably equals CechObstruction's \"ObstructionOrder\" - a built-in cross-validation of the construction. H^1(F~) is the group where the obstruction actually lives: Z/2 for GHZ and the Peres-Mermin square (pure 2-torsion), Z for the Wright and PR boxes, and 0 for the Hardy model - its false negative is structural.", "Usage", ExpressionUUID -> "5164f9dd-45f8-4083-87a9-33112ae72926"], Cell["Basic Examples", "Section", ExpressionUUID -> "3c59021b-8f29-4bdb-819b-2ebc6b4a9fc1"], Cell[BoxData[RowBox[{RowBox[{"CechRelativeCohomology", "[", RowBox[{RowBox[{"CycleScenario", "[", "5", "]"}], ",", RowBox[{"CycleModel", "[", RowBox[{"5", ",", "\"Wright\""}], "]"}], ",", "1"}], "]"}], "[", "\"H1FreeRank\"", "]"}]], "Input", ExpressionUUID -> "2f5a2804-90cc-40a9-8b79-c44e0871081e"]}, FrontEndVersion -> "15.0 for Microsoft Windows (64-bit) (May 19, 2026)", StyleDefinitions -> "Default.nb", ExpressionUUID -> "98c7105e-6caf-4e95-b735-32dac419bb9b"]
+(* End of Notebook Content *)

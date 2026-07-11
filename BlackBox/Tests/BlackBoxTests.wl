@@ -75,6 +75,13 @@ cegScen = <|"X" -> cegRays, "Outcomes" -> Association[# -> {0, 1} & /@ cegRays],
 cegModel = Flatten[Table[If[Total[s] == 1, 1/4, 0], {c, cegTetrads}, {s, Tuples[{0, 1}, 4]}]];
 chCEG = CechObstruction[cegScen, cegModel];
 avnCEG = AvNArgument[cegScen, cegModel];
+relGHZ = CechRelativeCohomology[ghzScen, ghzModel, 1];
+relW = CechRelativeCohomology[scen5, CycleModel[5, "Wright"], 1];
+relH = CechRelativeCohomology[scen4, eHardy, 2];
+relPM = CechRelativeCohomology[pmScen, pmModel, 6];
+relMatch[rel_, ch_, scn_, c0_] := And @@ Table[
+   rel["GammaOrders"][s0] === ch["ObstructionOrder"][{scn["Contexts"][[c0]], s0}],
+   {s0, Keys[rel["GammaOrders"]]}];
 
 SmokeTest = <|
   "alpha" -> IndependenceNumber[c5] == 2,
@@ -175,6 +182,14 @@ SmokeTest = <|
   "ksPeresMermin" -> chPM["ObstructedCount"] == 24 && chPM["CohStronglyContextual"] &&
      chPM["GlobalSupportSize"] == 0 && avnPM["AvN"] && avnPM["EquationCount"] == 6 &&
      AllTrue[Values[chPM["ObstructionOrder"]], # === 2 &],
+  "cechRelativeGroups" -> {relGHZ["H1FreeRank"], relGHZ["H1Torsion"]} === {0, {2}} &&
+     {relPM["H1FreeRank"], relPM["H1Torsion"]} === {0, {2}} &&
+     {relW["H1FreeRank"], relW["H1Torsion"]} === {1, {}} &&
+     relH["H1FreeRank"] == 0 && relH["H1Torsion"] === {} &&
+     AllTrue[{relGHZ, relW, relH, relPM}, #["ComplexCloses"] && #["GammaCocyclesVerified"] &],
+  "cechRelativeMatchesObstruction" -> relMatch[relGHZ, chGHZ, ghzScen, 1] &&
+     relMatch[relW, chW, scen5, 1] && relMatch[relH, chH, scen4, 2] &&
+     relMatch[relPM, chPM, pmScen, 6],
   "ksCEG18" -> Length[cegRays] == 18 &&
      AllTrue[cegTetrads, AllTrue[Subsets[#, {2}], #[[1]] . #[[2]] == 0 &] &] &&
      chCEG["ObstructedCount"] == 36 && chCEG["CohStronglyContextual"] &&

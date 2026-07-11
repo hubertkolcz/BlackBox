@@ -56,6 +56,17 @@ arXiv:1502."
 }], "Item",ExpressionUUID->"7f2a9c41-88d3-4b46-9a17-c3e5d20b6a94"],
 
 Cell[TextData[{
+ StyleBox["CechRelativeCohomology", "InlineCode"],
+ " \[LongDash] ",
+ "CechRelativeCohomology[scen, e, c0] gives the RELATIVE \:010cech cohomology \
+of the Z-linearized support presheaf of the empirical model e with respect \
+to the distinguished context c0 (an index into scen[\"Contexts\"], or the \
+context itself): the presheaf F~ = ker(F -> F|c0), whose value on U is \
+spanned by differences of support sections agreeing on U \[Intersection] c0 \
+(so F~(c0) = 0)."
+}], "Item",ExpressionUUID->"8b3f5a29-6d17-4e84-9c02-a4d7e58f1b63"],
+
+Cell[TextData[{
  StyleBox["CEFilter", "InlineCode"],
  " \[LongDash] ",
  "CEFilter[g, p] and CEFilter[g, p, k] apply the Consistent-Exclusivity \
