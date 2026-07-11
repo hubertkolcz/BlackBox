@@ -71,7 +71,7 @@ TableForm[{
 (*CHSH Cross-Validation: the PR Box, and Hardy as the Documented False Negative*)
 
 (* ::CodeText:: *)
-(*The 4-cycle is the CHSH scenario (measurements a1, b1, a2, b2 around the cycle). The PR box must come out obstructed at all 8 sections (arXiv:1502.03097, Sec. 4); the Hardy model \[LongDash] exact rationals from the state (|00> + |01> + |10>)/Sqrt[3] with X/Z measurements \[LongDash] is the canonical FALSE NEGATIVE: logically contextual (its (a1, b1) = (0, 0) section extends to no global assignment), yet \[Gamma] vanishes everywhere:*)
+(*The 4-cycle is the CHSH scenario (measurements a1, b1, a2, b2 around the cycle). The PR box must come out obstructed at all 8 sections (the brute-force PR-box computation is Abramsky-Mansfield-Barbosa, arXiv:1111.3620, Sec. 4-5, not arXiv:1502.03097 as an earlier version of this note said - the two papers are easy to conflate, see BlackBox.wl's CechObstruction comment for the full correction); the Hardy model \[LongDash] exact rationals from the state (|00> + |01> + |10>)/Sqrt[3] with X/Z measurements \[LongDash] is the canonical FALSE NEGATIVE, ALSO already in 1111.3620: logically contextual (its (a1, b1) = (0, 0) section extends to no global assignment), yet \[Gamma] vanishes everywhere:*)
 
 (* ::Input:: *)
 scen4 = CycleScenario[4];

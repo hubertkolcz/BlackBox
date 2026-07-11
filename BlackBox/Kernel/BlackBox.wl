@@ -15,7 +15,7 @@ BeginPackage["HubertKolcz`BlackBox`"];
 (* -- graph invariants: the three theories, three numbers -- *)
 IndependenceNumber::usage = "IndependenceNumber[g] gives the independence number \[Alpha](g): the noncontextual (deterministic hidden-variable) bound of the exclusivity graph g.";
 LovaszTheta::usage = "LovaszTheta[g] gives the Lov\[AAcute]sz number \[CurlyTheta](g) by semidefinite programming: the quantum bound of the exclusivity graph g (CSW, arXiv:1010.2163).";
-LovaszThetaSparse::usage = "LovaszThetaSparse[g] gives the Lov\[AAcute]sz number \[CurlyTheta](g) by chordal decomposition of the dual semidefinite program: the single (n+1)-dimensional cone is split into one block per maximal clique of a chordal extension of g (Grone et al. completion / Agler et al. decomposition), so the cost scales with the treewidth of g instead of its vertex count. LovaszThetaSparse[g, \"Certificate\"] returns an association that adds the eigenvalue-certified upper bound \[Lambda]max(J - B) of the recovered dual witness B and the clique statistics of the extension. Values agree with LovaszTheta to solver tolerance on every graph; prefer the sparse form for meshes with hundreds to thousands of vertices (PentagonChain, pentagon rings).";
+LovaszThetaSparse::usage = "LovaszThetaSparse[g] gives the Lov\[AAcute]sz number \[CurlyTheta](g) by chordal decomposition of the dual semidefinite program: the single (n+1)-dimensional cone is split into one block per maximal clique of a chordal extension of g (Grone-Johnson-S\[AAcute]-Wolkowicz 1984 / Agler-Helton-McCullough-Rodman completion), so the cost scales with the treewidth of g instead of its vertex count. LovaszThetaSparse[g, \"Certificate\"] returns an association that adds the eigenvalue-certified upper bound \[Lambda]max(J - B) of the recovered dual witness B and the clique statistics of the extension. Values agree with LovaszTheta to solver tolerance on every graph; prefer the sparse form for meshes with hundreds to thousands of vertices (PentagonChain, pentagon rings). NOT a new algorithm (adversarial novelty audit, 11-12 July 2026): chordal/matrix-completion SDP decomposition dates to Fukuda-Kojima-Murota-Nakata (SIAM J. Optim. 2000/2001), the Lov\[AAcute]sz-theta SDP has been its standard benchmark since Borchers' SDPLIB (1999, instances theta1-theta6), and R. Zhang (arXiv:2306.15288, Math. Programming 2024) already solves theta via this exact route on graphs up to n=13659. What is new here is only the application to pentagon-chain/ring mesh graphs specifically, cross-validated in Wolfram Language and Python/Clarabel (lovasz_theta_sparse.py) at 10^4-10^5 vertices; see that file's header for the DFT/Fourier symmetry-reduction route for Z_N-symmetric graphs, which is likewise prior art (Brimkov-Codenotti-Crespi-Leoncini 2000; Brimkov et al., ECCC TR03-081, 2003; subsumed generally by de Klerk-Pasechnik-Schrijver, Math. Program. 109, 2007).";
 FractionalPackingNumber::usage = "FractionalPackingNumber[g] gives the fractional packing number \[Alpha]*(g) as an exact linear program over the maximal cliques: the exclusivity-only (E-principle, single copy) bound.";
 
 (* -- geometry and composition -- *)
@@ -255,11 +255,26 @@ CoverScenario[X_List, cover_List, outcomes_ : {0, 1}] := Module[{outs, glob, pos
 restrictSection[c_, s_, u_] := s[[Flatten[Position[c, #] & /@ u]]];
 
 (* gamma(s) = 0 iff s extends to a compatible family of Z-linear combinations of
-   support sections (arXiv:1502.03097, Prop. 4.4). Decision order per section:
-   a deterministic global witness gives order 1; exact rank refutation over Q
-   gives order Infinity; otherwise the exact order of the class - the least n
-   with n*b in the integer column lattice of the pinned system - comes from the
-   Smith normal form: n = LCM_i d_i/gcd(d_i, (u.b)_i). Obstructed = order > 1. *)
+   support sections (Abramsky-Mansfield-Barbosa, "The Cohomology of Non-Locality
+   and Contextuality," arXiv:1111.3620 (2011/2012) - defines the obstruction and
+   computes it by brute-force enumeration for Hardy/PR-box/GHZ/Peres-Mermin/CEG;
+   NOT arXiv:1502.03097 "Contextuality, Cohomology and Paradox" [Abramsky-Barbosa-
+   Kishida-Lal-Mansfield, 2015], which reformulates the same obstruction via the
+   snake lemma and generalizes AvN to arbitrary rings - the two are companion
+   papers, easy to conflate, and no "Prop. 4.4" IP-feasibility statement exists in
+   either; nearest analogue is 1111.3620's Prop. 6.1, a GCD necessary condition).
+   Decision order per section: a deterministic global witness gives order 1;
+   exact rank refutation over Q gives order Infinity; otherwise the exact order
+   of the class - the least n with n*b in the integer column lattice of the
+   pinned system - comes from the Smith normal form: n = LCM_i d_i/gcd(d_i,
+   (u.b)_i). Obstructed = order > 1. NOVELTY NOTE (adversarial audit, 11-12 July
+   2026): general algorithmic decision procedures for gamma(s) already exist
+   (brute force in 1111.3620 itself; a provably-correct joint-model iteration for
+   cyclic/CCP covers in G. Caru's Oxford tech report, condensed as arXiv:1701.00656)
+   and AvN over composite Z_d is already covered abstractly by 1502.03097's
+   arbitrary-ring generalization - what is not found anywhere in that literature
+   is computing the exact ORDER of the obstruction via Smith normal form (below),
+   not just its vanishing. *)
 CechObstruction[scen_Association, e_List] := Module[
   {ctxs = scen["Contexts"], secs = scen["Sections"], glob = scen["Assignments"],
    X, outs, pos, m, ctxIdx, supp, cols, colIdx, pairs, rows, A, e2, Se, SeR,

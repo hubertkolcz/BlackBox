@@ -1,5 +1,14 @@
 """Sparsity-exploiting Lovasz theta -- companion solver to BlackBox`LovaszThetaSparse.
 
+NOT a new method (adversarial novelty audit, 11-12 July 2026): route 1 (chordal
+decomposition) is Fukuda-Kojima-Murota-Nakata (2000/2001) applied to theta specifically
+at comparable scale by R. Zhang, arXiv:2306.15288 / Math. Programming (2024), n=13659.
+Route 2 (DFT block-diagonalization for cyclic-symmetric graphs) is Brimkov-Codenotti-
+Crespi-Leoncini (LNCS 1767, 2000) and Brimkov et al. (ECCC TR03-081, 2003), subsumed
+generally by de Klerk-Pasechnik-Schrijver (Math. Program. 109, 2007). What is new here
+is only the application to pentagon-chain/ring meshes from quantum contextuality and the
+dual Wolfram/Python validation, not the underlying algorithms.
+
 Two independent exact routes to theta(G) for pentagon meshes with 10^4..10^5 blocks:
 
 1. chordal_theta(n, edges): general sparse graphs.
