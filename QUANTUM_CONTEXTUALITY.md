@@ -308,7 +308,8 @@ density rise 1.377 → 1.5 does not exist.
   stays EXTENSIVE with algebraic slope: ϑ − α = (τ\* − 4/3)·N = 0.0433844126·N
   (= 4 338.8 at N = 10⁵, exact instead of bracketed).
 - **cis ring** (PentagonChain closed up): **ϑ(N) = N + ϑ(C_N) — a THEOREM**, and
-  **α = ⌊3N/2⌋ — also a THEOREM** (CaseStudies §D3, machine-checked construction).
+  **α = ⌊3N/2⌋ — also a THEOREM** (CaseStudies §D3; proven by the analytic argument
+  below, with the explicit rail-umbrella witness spot-checked at N∈{5,7,9,11}).
   ϑ upper: delete the N glue edges → C_N ⊔ C₂N; monotonicity + additivity +
   ϑ(C₂N) = N (perfect). ϑ lower: one-extra-dimension orthonormal representation —
   rail = optimal C_N umbrella, every c3 vertex = the handle itself, every c2
@@ -348,9 +349,12 @@ unit cell yields a 9×9 DFT symbol with 12 edge-orbit parameters; the mesh's
 reflection automorphism (|Aut(cct-ring of m cells)| = 2m, machine-checked) pairs
 them to 7, and the continuum minimax has the same active-set shape as τ\* (J-block
 + ONE interior frequency, φ ≈ 0.70345π). Newton on the reduced KKT at 320 digits
-(residual 10⁻³¹⁹, positive multipliers, witness feasible over a 2²⁰-point grid;
-convexity + automorphism averaging ⇒ GLOBAL optimum) pins
-ϑ/L = 1.40323086923899745105894248… exactly — but LLL integer-relation search on
+(residual 10⁻³¹⁹, positive multipliers, witness feasible over a 2²⁰-point grid)
+pins ϑ/L = 1.40323086923899745105894248… — global optimality ARGUED (the
+eigenvalue minimax is convex, so a strictly-feasible KKT point is global) but NOT
+machine-certified (feasibility is numerical on a finite grid, no interval/SOS
+bound); the value is numerically certified to ~300 digits. LLL integer-relation
+search on
 250 matched digits EXCLUDES any minimal polynomial of degree ≤ 36 with coefficient
 height ≲ 10⁶ (≲ 10⁶⁰ at degree 3), for the density, cos φ, and every witness
 parameter. Contrast: τ\* is a cubic with two-digit coefficients. The algebraic
@@ -506,23 +510,45 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   decrements non-monotone). Bonus: the Q/R clique family solves the per-cycle
   transfer-SDP EXACTLY (word_density_transfer_sdp; < 10⁻⁶ loss) — position-space,
   no DFT symbol.
-  ~~Trans-CHAIN density~~ RESOLVED (key D3_transChainResolved): open trans
-  chains have the SAME bulk density τ\* (increments 1.3767178 within
-  certificates from m = 50 to 800; boundary constant ≈ 0.995), with
-  α(trans-chain m) = ⌊4(m+1)/3⌋ at every computed point — the gap is
-  EXTENSIVE ≈ (τ\*−4/3)m, so Case D's "rings beat chains" was never about
-  closure: the decaying chains were cis, and orientation is the whole story.
-  Small-m accident: ϑ(trans-chain 5) = α = 8 exactly. Durable tools added to
-  `lovasz_theta_sparse.py`: pentagon_chain_word, alpha_chain_word,
-  word_density_transfer_sdp (exact position-space ϑ-density of any periodic
-  word; no symmetry reduction). §6 mesh threads status: the RIGOROUS results are
-  gap̄(w) ≤ Γ_k for all words (density bound) and the bracket sup_w gap̄(w) ∈
-  [0.069898, 0.075309] (cct optimal to within ε=0.0054); periodic-orbit
-  sufficiency holds for the CERTIFIED cocycle. GENUINELY OPEN (not obstructed):
-  exact global optimality of (cct)^∞, i.e. whether sup = gap(cct) and whether
-  lim_k Γ_k = gap(cct); and periodic-orbit sufficiency for the TRUE gap
-  functional θ̄−ᾱ (which is not locally constant). The τ_cct height result
-  bears only on single finite exact rational certificates.
+  Trans-CHAIN density — STRONG NUMERICAL EVIDENCE, not proven (key
+  D3_transChainNumerical; "RESOLVED" was adversarially downgraded): open trans
+  chains NUMERICALLY appear to settle onto the trans-ring bulk density τ\*
+  (Python increments 1.3767178 from m = 50 to 800, boundary constant ≈ 0.995 —
+  unproven numerics, NOT verified in-key; the key checks only the m = 5
+  coincidence and the α-law, the robust facts, not the density — the old key's
+  ring-constant check was a mislabel and is removed),
+  with α(trans-chain m) = ⌊4(m+1)/3⌋ verified m = 3..12 (spot-checked to 800),
+  conjectured for all m — so IF the density conjecture holds the gap is EXTENSIVE
+  ≈ (τ\*−4/3)m and Case D's "rings beat chains" was never about closure (the
+  decaying chains were cis). Small-m accident: ϑ(trans-chain 5) = α = 8 exactly.
+  Durable tools in `lovasz_theta_sparse.py`: pentagon_chain_word, alpha_chain_word,
+  word_density_transfer_sdp (exact position-space ϑ-density of any PERIODIC word).
+  §6 mesh threads status: RIGOROUS — gap̄(w) ≤ Γ_k for all words (density bound)
+  and the bracket sup_w gap̄(w) ∈ [0.069898, 0.075309] (cct optimal to within
+  ε=0.0054); periodic-orbit sufficiency for the CERTIFIED cocycle. STRONG
+  EVIDENCE (key D3_globalOptimalityEvidence) — cct is a SHARP ISOLATED peak:
+  every balanced/Christoffel word of period ≤ 21 near slope 2/3 has gap-density
+  ≥ 0.012 below cct, the α-cis theorem (cct uniquely hits ᾱ=4/3) being the
+  mechanism, so an aperiodic (Sturmian) beat is implausible. GENUINELY OPEN (not
+  obstructed): exact global optimality of (cct)^∞ (sup = gap(cct)?), whether
+  lim_k Γ_k = gap(cct), and periodic-orbit sufficiency for the TRUE functional
+  θ̄−ᾱ. This is ergodic optimization of the SAME genus as joint-spectral-radius
+  optimization, where the finiteness property (periodic optimum) is FALSE in
+  general (Bousch–Mairesse 2002, aperiodic Sturmian maximizers) — so the open
+  question is genuinely hard and cct optimality is plausible-but-not-guaranteed.
+  A proof would need ϑ̄(W) − ϑ̄(cct) ≤ ᾱ(W) − 4/3 for all W (⟺ gap(W) ≤ gap(cct)).
+  RIGOROUS REDUCTION of that inequality (key D3_inequalityReduction, NOT a full
+  proof): two already-proven ingredients bracket it — (1) the α\*-cap
+  ϑ̄(W) ≤ α\*-density = 3/2 (Lemma A) gives gap(W) ≤ 3/2 − ᾱ(W), so the inequality
+  holds EXACTLY whenever ᾱ(W) ≥ 3/2 − gap(cct) = 1.4301025; (2) the ε-certificate
+  gives gap(W) ≤ Γ_8 = 0.0753086, i.e. gap(W) ≤ gap(cct) + 0.00541 for all W.
+  COMBINED: proven for every word with ᾱ(W) ≥ 1.4301025 and within 0.0054
+  everywhere; it reduces to the single narrow window ᾱ(W) ∈ [4/3, 1.4301025) —
+  the low-classical-density "cct-like" words (equality at cct), exactly where an
+  aperiodic Sturmian competitor would live. Closing the window needs Γ_k → gap(cct)
+  (open; the certificate bottleneck migrates away from cct) or a new ϑ̄ bound
+  tighter than 3/2 there. The τ_cct height result bears only on single finite
+  exact rational certificates.
 
 ## 10. Positioning: the atomic-GE program — reach and boundaries
 
