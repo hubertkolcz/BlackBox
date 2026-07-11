@@ -67,6 +67,14 @@ SmokeTest = <|
   "glue" -> Through[{VertexCount, EdgeCount}[GlueGraphs[c5, VertexReplace[c5, Thread[Range[5] -> Range[6, 10]]], {6 -> 1, 7 -> 2}]]] == {8, 9},
   "chain" -> Through[{VertexCount, EdgeCount}[PentagonChain[2]]] == {8, 9},
   "chainTheta" -> Abs[LovaszTheta[PentagonChain[3]] - 5.1366] < 10^-3,
+  "thetaSparsePentagon" -> Abs[LovaszThetaSparse[c5] - Sqrt[5.]] < 10^-5,
+  "thetaSparseMatchesDense" -> Abs[LovaszThetaSparse[PentagonChain[3]] - LovaszTheta[PentagonChain[3]]] < 10^-5 &&
+    Abs[LovaszThetaSparse[PetersenGraph[5, 2]] - 4.] < 10^-5,
+  "thetaSparseEdgeCases" -> Abs[LovaszThetaSparse[Graph[Range[8], {}]] - 8.] < 10^-5 &&
+    Abs[LovaszThetaSparse[CompleteGraph[6]] - 1.] < 10^-5,
+  "thetaSparseCertificate" -> Module[{cert = LovaszThetaSparse[CycleGraph[7], "Certificate"]},
+    cert["UpperBound"] >= cert["Theta"] - 10^-7 && Abs[cert["UpperBound"] - cert["Theta"]] < 10^-5 &&
+      cert["MaxCliqueSize"] == 3 && cert["FillEdges"] == 4],
   "ceQuantum" -> ceQ["Passes"] && ceQ["CliqueCount"] == 535 && ceQ["Omega"] == 5,
   "ceWright" -> ! ceW["Passes"] && ceW["ViolatingCliques"] == 10 && Abs[ceW["Worst"] - 5/4] < 10^-12,
   "ceC7NoActivation" -> ce7["Passes"] && ce7["Omega"] == 4,
@@ -152,3 +160,12 @@ SmokeTest = <|
 |>;
 Print[SmokeTest];
 Print["ALL PASS: ", And @@ Values[SmokeTest]];
+
+(* dedup layer (v1.2.0): the shared constructions promoted from the notes *)
+DedupTest = <|
+  "cycleORProduct" -> Through[{VertexCount, EdgeCount}[CycleORProduct[{7, 5}]]] == {35, 350},
+  "quantumEventProbability" -> Simplify[QuantumEventProbability[5] - 1/Sqrt[5]] === 0,
+  "pentagonRingTheorem" -> And @@ Table[IndependenceNumber[PentagonRing[n]] == Floor[4 n/3], {n, {5, 9, 12}}]
+|>;
+Print[DedupTest];
+Print["DEDUP PASS: ", And @@ Values[DedupTest]];

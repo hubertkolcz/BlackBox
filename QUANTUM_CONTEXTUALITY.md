@@ -154,7 +154,7 @@ sampler knows the context, which is exactly what NCHV models are forbidden.
 ### BlackBox paclet — the sheaf/Čech certificate layer (added 10 July 2026)
 
 The pipeline is packaged as the paclet `BlackBox/` (context
-`HubertKolcz`BlackBox``, 22 exported symbols, `Tests/BlackBoxTests.wl` →
+`HubertKolcz`BlackBox``, 26 exported symbols, `Tests/BlackBoxTests.wl` →
 ALL PASS: True). On top of the LP/SDP layer (α, ϑ, α\*, contextual fraction,
 `GlobalSectionQ`) it now carries the **possibilistic certificate layer** that
 replaced the cellular-sheaf Laplacian after the Laplacian's own pre-registered
@@ -186,14 +186,155 @@ Verification essay: `SupportCohomology.wl` + `RunSupportCohomology.wl`
 OK -> True), including the two-copy product cover of ab_sheaf.wl
 (Wright⊗Wright 100/100 obstructed; quantum⊗quantum clean, |Sₑ| = 11²) and a
 census cross-validated against Cech-Cohomology-of-Ulrey-Models-AB-Sheaf.nb.
+### kcbs_wigner_flow.wl — Wigner-negativity flow through the cascade (runner: RunWignerFlow.wl)
+Companion note to kcbs_circuit.wl §11/§13. Discrete Wigner function of every prefix
+of [P, T1, T2, T3, T4]: input |0⟩ → 0; all five prefixes → exactly 2/√5 − 2/3
+≈ 0.227761 (two cells of depth 1/3 − 1/√5 each; closed forms verified symbolically,
+using c₂ = cos(π/5)/(1+cos(π/5)) ≡ 1/√5). Negativity is created once, by P, and
+conserved by every T_k at the SAME two phase-space cells — the column of the mode
+the detectors never monitor (column sums to the no-click probability 1 − 2/√5;
+monitored-mode columns pointwise non-negative in every context; mode marginals ≡
+Born probabilities). What moves is positive quasi-probability, alternating between
+two exact patterns ((1 ± 2s)/(3√5), (1 ∓ s)/(3√5), s = √(√5−2)) in step with the
+detector alternation (handedness sign of the stage frame). Conservation is an orbit
+property, not a gate property: each T_k is non-Clifford, creating negativity ≈ 0.324
+from two of three basis states (sparing its shared-detector mode); P makes all
+three negative. Bonus identity: every T_k is a Givens rotation with cos θ = (√5−1)/2
+= 1/φ (next-nearest pentagram overlap). Machine-checkable `WignerFlowVerification`
+(16 checks) → OK. Headless: `wolframscript -file RunWignerFlow.wl -print all`.
+
+### kcbs_ledger.wl — the phase-space ledger of the Born rule (runner: RunLedger.wl)
+Resolves the state/clicks segregation posed by kcbs_wigner_flow.wl. (1) Two-sided
+ledger: p = 3 Σ_λ W_E(λ)W_ρ(λ) reproduces the Born rule exactly at every cut of
+every context; the Heisenberg cut puts ALL negativity in the effects (all ten
+pentagon effects Wigner-negative, 0.20–0.33 each; state |0⟩ clean), the Schrödinger
+cut all in the state; the minimum over cuts is 2/√5 − 2/3, at the Schrödinger cut —
+the flow note's accounting was the cheapest ledger, and no cut balances to zero.
+(2) Frame-free invariant by exact LP (RevisedSimplex over ℚ(√5)): minimal negative
+weight ν = (√5−2)/2 over noncontextual decompositions; contextual fraction
+CF = 2√5 − 4 = 4ν; bridge N_Wigner = 1/3 − ν/(1+ν), with ν/(1+ν) = the no-click
+probability 1 − 2/√5. (3) White-noise scan ρ_V = V|ψ⟩⟨ψ| + (1−V)𝟙/3: N(V) dies at
+V\* = (10+9√5)/61 ≈ 0.4938, ν and CF share the KCBS threshold V_c = (5+3√5)/20 ≈
+0.5854 ⇒ window (V\*, V_c) of Wigner-negative yet KCBS-noncontextual states — the
+badges decouple; CF = 4ν holds along the ENTIRE family and CF is exactly linear
+above threshold. (4) The phase-point operators (reconstructed from the framework by
+linearity) are parity observables (spectrum {1,1,−1}, Tr[A_λA_μ] = 3δ): each
+negative cell is a sharp binary witness with minus-probability exactly
+3/(2√5) ≈ 0.6708 > 1/2; the witness eigenvectors have NO support on the undetected
+mode (readout interferes the monitored modes). Enlarged event graph (5 clicks +
+5 pass events + 2 witnesses): connected across the badges via the stage-1 pass
+event, but α = 6, θ ≈ 6 > joint quantum sum 5 − 2/√5 ≈ 4.106 — no joint CSW
+violation (exclusivity binds topologically, not metrically). Machine-checkable
+`LedgerVerification` (21 checks) → OK. Headless:
+`wolframscript -file RunLedger.wl -print all`.
+
+### LovaszThetaSparse + lovasz_theta_sparse.py — exact ϑ at 10⁵ pentagon blocks, and the cis/trans CORRECTION (commit c906427, CaseStudies.wl §D3)
+
+**Method.** The dense primal SDP behind `LovaszTheta` (n(n+1)/2 variables) saturates
+near 150 vertices. `LovaszThetaSparse` (BlackBox v1.1.0) uses the Lovász dual
+ϑ = min λ_max(J − B) with B supported on the edges, absorbs the rank-one J = ee^T
+into one Schur border row, and splits the (n+1)-cone along the maximal cliques of a
+min-degree chordal extension (Grone completion / Agler decomposition) — one PSD block
+of size ≤ treewidth+2 per clique, plus the unconditional self-certificate
+ϑ ≤ λ_max(J − B) from the recovered witness. Validated against the dense SDP on 25
+graphs to ≤ 4·10⁻⁶. At scale: `lovasz_theta_sparse.py` (Clarabel; ring N = 10⁴
+certified to 1.3·10⁻⁵ rel in ~1 min, N = 10⁵ = 4.6M variables in ~6 min), plus an
+independent Z_N-symmetry route (DFT block-diagonalization of the block-circulant dual
+into 3×3 Hermitian symbols, 4 orbit parameters, frequency cutting planes,
+all-frequency eigenvalue certificate) exact past N = 10⁶ in seconds. Numerical
+caveat: both routes must be O(1)-conditioned (border rescaled by 1/√n / symbols in
+density units), else the interior point biases high at N ≥ 10⁴.
+
+**The correction.** Edge-glued pentagon meshes carry a hidden binary design
+parameter, the gluing ORIENTATION: each pentagon meets its glue edge {u,v} with a
+one-edge side and a two-edge side; attaching consecutive short sides to the SAME
+endpoint (**cis**) is what `PentagonChain` builds (the c1-vertices form a rail);
+ALTERNATING endpoints (**trans**) is what the CaseStudies ring builder builds. The
+two families are NOT isomorphic, proven by the dense solver itself:
+ϑ(trans-ring 21) = 28.8676 < ϑ(cis-chain 19) = 29.0399, and ϑ is monotone under
+induced subgraphs, so cis chains do not embed in trans rings. Consequently the
+previously "certified" scaling bracket ϑ(ring 10⁵) ∈ [142 491, 150 000] is
+WITHDRAWN — its disjoint-chain lower bound anchored cis-chain values
+(ϑ(chain 31) = 47.0268, itself correct) in the wrong family — and the expected
+density rise 1.377 → 1.5 does not exist.
+
+**Exact laws (all machine-verified, both solvers agreeing to certificate level):**
+- **trans ring** (the CaseStudies mesh): ϑ = τ\*·N − o(N) with the density limit an
+  ALGEBRAIC NUMBER in closed form:
+  **τ\* = Root[49x³ − 128x² − 75x + 218, middle root] = 1.3767177459158590533…**
+  = 128/147 + (2√27409/147)·cos(⅓ arccos(−2852191/27409^{3/2}) − 2π/3),
+  27409 = 128² + 3·49·75. Derivation: the ring's reflection automorphism forces
+  β_bx = γ_ax, KKT stationarity factors as (u−2g)(u+2gc) = 0 giving β_ab = 2γ_ba,
+  and Gröbner elimination of the remaining polynomial KKT system leaves this single
+  cubic; the dual witness lies in ℚ(τ\*) — g = (53τ²−121τ+218)/458,
+  h = (327−67τ−35τ²)/229, cos θ\* = (1715τ²+77τ−3428)/916, θ\* ≈ 0.52486π — and
+  feasibility on the whole frequency circle reduces to the perfect square
+  4gh²(c−c\*)² ≥ 0, so a handful of RootReduce-exact zeros certify global
+  optimality (convex minimax, positive multipliers; machine-checked in
+  CaseStudies §D3, key D3_densityClosedForm).
+  Density is FLAT: 1.37656 (N = 15, 30) → 1.3766680 (10²) → 1.3767169 (10³) →
+  1.3767178 (10⁴–10⁶) → τ\*. ϑ(10⁵) = 137 671.775 (solver; rigorously
+  ≤ 10⁵τ\* = 137 671.7746). The theorem α = ⌊4N/3⌋ is untouched, so the quantum gap
+  stays EXTENSIVE with algebraic slope: ϑ − α = (τ\* − 4/3)·N = 0.0433844126·N
+  (= 4 338.8 at N = 10⁵, exact instead of bracketed).
+- **cis ring** (PentagonChain closed up): **ϑ(N) = N + ϑ(C_N) — a THEOREM**, and
+  **α = ⌊3N/2⌋ — also a THEOREM** (CaseStudies §D3, machine-checked construction).
+  ϑ upper: delete the N glue edges → C_N ⊔ C₂N; monotonicity + additivity +
+  ϑ(C₂N) = N (perfect). ϑ lower: one-extra-dimension orthonormal representation —
+  rail = optimal C_N umbrella, every c3 vertex = the handle itself, every c2
+  vertex = the appended basis vector; value ϑ(C_N) + N. α upper: each of the N
+  pentagons induces exactly C5 (independence 2); window-counting weighs c1, c2
+  twice and c3 once → 2(s1+s2)+s3 ≤ 2N → |S| ≤ N + s3/2 ≤ 3N/2. α lower: all c3's
+  + alternate rail vertices. Even N collapses the whole sandwich,
+  α = ϑ = α\* = 3N/2 — NO quantum gap; odd N approaches it with deficit π²/8N and
+  bounded gap ϑ − α → 1/2.
+- **cis chains**: ϑ = (3m+2)/2 exactly at even m (the parity law's ϑ = α case);
+  per-block increments → 3/2.
+
+**Reading:** the bulk quantum advantage of pentagon meshes is set by the gluing
+orientation (trans: ≈ 0.0434 per block, extensive), not by closing the topology —
+closure and block parity only modulate it; the cis family saturates the exclusivity
+bound α\* classically and carries no bulk gap.
+
+**The optimal gluing word (follow-up computation).** Treating a mesh as a binary
+necklace over {cis, trans}, pure trans is NOT gap-optimal: the word **(cct)^∞** —
+two cis gluings, then one trans "reset" — keeps the trans staircase α/L = 4/3 while
+lifting ϑ/L to 1.40323086923899745 (continuum-certified, below), i.e. **gap
+0.0698975 per block = 1.6111× the pure-trans gap**. Method: exact α densities as
+max-plus cycle means of a 3-state interface transfer DP (exact rational arithmetic;
+the pure-trans staircase is its transfer matrix's 3-cycle gaining 4 per 3 blocks);
+certified chordal ϑ at 1200–2400 blocks; exhaustive sweep of all binary bracelets
+of period ≤ 6, and over periods ≤ 12 every word with α-density 4/3 has cis-fraction
+≤ 2/3 with equality UNIQUELY for cct (its best higher-period rivals cctcctctt,
+cctcctcctctt rank strictly below). Design rule: trans letters protect the classical
+bound (each t breaks the cis rail before it can lift α), cis letters buy quantum
+value; the optimum is the densest cis packing α tolerates. Refined conjecture:
+(cct)^∞ is globally optimal over all gluing words. Tooling:
+`lovasz_theta_sparse.py words`; WL anchor wordRing/cct in CaseStudies §D3
+(key D3_gluingWordOptimum).
+
+**No τ\*-style closed form for the cct density — a finding in itself.** The (cct)
+unit cell yields a 9×9 DFT symbol with 12 edge-orbit parameters; the mesh's
+reflection automorphism (|Aut(cct-ring of m cells)| = 2m, machine-checked) pairs
+them to 7, and the continuum minimax has the same active-set shape as τ\* (J-block
++ ONE interior frequency, φ ≈ 0.70345π). Newton on the reduced KKT at 320 digits
+(residual 10⁻³¹⁹, positive multipliers, witness feasible over a 2²⁰-point grid;
+convexity + automorphism averaging ⇒ GLOBAL optimum) pins
+ϑ/L = 1.40323086923899745105894248… exactly — but LLL integer-relation search on
+250 matched digits EXCLUDES any minimal polynomial of degree ≤ 36 with coefficient
+height ≲ 10⁶ (≲ 10⁶⁰ at degree 3), for the density, cos φ, and every witness
+parameter. Contrast: τ\* is a cubic with two-digit coefficients. The algebraic
+complexity of the symbol minimax explodes with word period; at period 3 the exact
+object standing in for a closed form is the polynomial KKT system itself
+(CaseStudies §D3, key D3_cctDensityCharacterized).
 
 ## 7. Wigner negativity toolchain (Wolfram Community, N. Murzin)
 
 Source: "On quantum amplitudes, correlations and negativity"
 (https://community.wolfram.com/groups/-/m/t/3026423). Framework tools:
 `QuantumWignerTransform`, `QuantumWeylTransform`, `QuantumPhaseSpaceTransform`,
-`QuantumWignerMICTransform`. Adopted in essay §11. Open thread: track negativity flow
-through the cascade gate-by-gate.
+`QuantumWignerMICTransform`. Adopted in essay §11. The open thread — track negativity
+flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see §6).
 
 ## 8. Key references
 
@@ -212,11 +353,57 @@ through the cascade gate-by-gate.
 
 ## 9. Open threads
 
-- Push the repo to GitHub (blocked: gh token for `hubertkolcz` invalid; no remote yet).
-- Gate-by-gate negativity flow through the cascade (Weyl/MIC transforms).
+- Push the repo to GitHub. Local side is READY (2026-07-10): all branches merged
+  into master, README + LICENSE (MIT) added, full verification battery re-run on
+  the merged tree. Remaining: re-auth (`gh auth login`, token for `hubertkolcz`
+  invalid), decide account (hubertkolcz vs WaverQ org), name, visibility, then
+  `gh repo create <name> --source . --remote origin` and push.
+- ~~Gate-by-gate negativity flow through the cascade~~ — done 2026-07-10,
+  kcbs_wigner_flow.wl (WignerTransform route). Remaining variant: phase-space view
+  of the T gates as channels (QuantumWeylTransform / MIC representations).
+- From kcbs_ledger.wl (2026-07-10): is CF = 4ν a theorem (all n-cycles? all noise
+  families?) or a C₅ accident — observed exactly along the whole white-noise family;
+  and can a better-chosen set of parity events give the enlarged event graph a
+  METRIC binding (joint CSW violation), or is α ≥ quantum sum unavoidable when
+  witness events are added to the pentagon?
 - n-cycle generalizations (C₇, C₉...) and their circuits; run encoding B on real
   gate hardware as a genuine platform test.
 - Sequential-game quantum strategy demo end-to-end (Alice prefix + Bob binary POVM).
 - Čech layer follow-ups: Kochen–Specker covers (18-vector Cabello set) through
   `CoverScenario`/`CechObstruction`; relative H¹ as a group (γ lives there — only
   the per-class orders are computed so far); AvN over non-prime rings.
+- Pentagon meshes (§6, cis/trans correction): ~~closed form for the trans-ring
+  density constant~~ RESOLVED — τ\* = Root[49x³ − 128x² − 75x + 218, 2], exact KKT
+  certificate in §6/CaseStudies §D3. ~~Prove ϑ(cis-ring N) = N + ϑ(C_N) and
+  α(cis-ring N) = ⌊3N/2⌋~~ RESOLVED — both are theorems now (§6/§D3: subgraph
+  monotonicity + one-extra-dimension representation; pentagon window counting).
+  ~~Is the extensive trans gap optimal over all gluing words?~~ RESOLVED — NO:
+  (cct)^∞ beats it by 61% (gap 0.0698975 per block, §6). ~~Closed form for the
+  cct density~~ RESOLVED — negatively: certified global optimum
+  1.40323086923899745105894248 (320-digit KKT), but LLL excludes any minimal
+  polynomial of degree ≤ 36 with height ≲ 10⁶; the exact characterization is the
+  KKT system (§6). Global optimality of (cct)^∞ — PARTIALLY RESOLVED
+  (machine-checked lemmas, CaseStudies §D3 key D3_towardsGlobalOptimality):
+  LEMMA A, α\* = 3L/2 for every gluing word (uniform ½-packing + a
+  word-independent fractional edge cover: ½ on each block's (B,X) edge and its
+  two glue-in edges, covering every vertex exactly once) hence ϑ̄ ≤ 3/2
+  universally; LEMMA B, ᾱ ≥ 4/3 for every word (potential certificate
+  φ = (0,−⅓,−⅔) on the 3-state interface DP: six inequalities, all ≥ 4/3,
+  telescoping along any word); PINCH: gap ≤ min(ϑ̄−4/3, 3/2−ᾱ) ≤ 1/6, and any
+  cct-beater needs ϑ̄ > 1.40323087 AND ᾱ < 1.4301025 simultaneously;
+  EXHAUSTIVE: all aperiodic bracelets p ≤ 9 certified below cct (max 0.0685 at
+  cctcctctt; overall runner-up cctcctcctctt at 0.0689 vs 0.0698975). The
+  completion is identified — a transfer-SDP sub-action (windowed chordal dual
+  templates ⇒ linear-in-window bound on ϑ̄, finite LP over de Bruijn flows) —
+  but OBSTRUCTED: a cct-tight template must reproduce τ_cct, which provably has
+  no small algebraic form, so rational certificates yield only ε-optimality.
+  ~~α-density/cis-fraction characterization~~ RESOLVED — THEOREM (CaseStudies
+  §D3, key D3_alphaCisTheorem): ᾱ(w) ≥ max(4/3, 1 + f_c/2) for every word
+  (letter-weighted potential certificate (0,−½,−1) with rates (3/2, 1)); hence
+  ᾱ = 4/3 ⟹ f_c ≤ 2/3, with equality iff w = (cct)^k — any ccc gives
+  ᾱ ≥ 4/3 + 1/(3p) strictly (adjusted max-plus cube of the cis step has
+  min-max exactly 13/3 = 3·(4/3) + ⅓), and f_c = 2/3 without ccc forces all
+  cis-runs equal to 2 by the run-average argument. Note the naive converse is
+  false: cctt has f_c = 1/2 but ᾱ = 11/8. Open: construct the explicit
+  ε-optimality certificate; trans-CHAIN density closed form (numerically →
+  τ\*?) — unverified.

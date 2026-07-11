@@ -40,15 +40,16 @@ the `BeginPackage` line of Kernel/BlackBox.wl.
   Kernel extension.
 ☑ Kernel/BlackBox.wl — single-context implementation, usage message for every
   exported symbol.
-☑ Tests/BlackBoxTests.wl — 52-check battery against the kernel-verified
-  pipeline values and the support-cohomology/AvN gates (`wolframscript -file
-  BlackBoxTests.wl` → ALL PASS: True).
+☑ Tests/BlackBoxTests.wl — 56-check battery (SmokeTest) + 3-check dedup layer
+  against the kernel-verified pipeline values and the support-cohomology/AvN
+  gates (`wolframscript -file BlackBoxTests.wl` → ALL PASS: True and
+  DEDUP PASS: True).
 ☐ PROHIBITED in PacletInfo: `"Updating" -> Automatic`. (Not present ✓ —
   keep it that way.)
 
 ### 4. Documentation (pages exist; a polish pass remains before submission)
 
-☑ One reference page (.nb) per exported symbol (all 22) under
+☑ One reference page (.nb) per exported symbol (all 26) under
   Documentation/English/ReferencePages/Symbols/ — headlessly generated
   skeletons: ObjectName + Usage (full sentences) + one Basic Example each.
   Remaining before submission: Scope sections (one example per input
