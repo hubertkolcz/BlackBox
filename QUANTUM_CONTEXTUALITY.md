@@ -315,7 +315,11 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
 
 ## 9. Open threads
 
-- Push the repo to GitHub (blocked: gh token for `hubertkolcz` invalid; no remote yet).
+- Push the repo to GitHub. Local side is READY (2026-07-10): all branches merged
+  into master, README + LICENSE (MIT) added, full verification battery re-run on
+  the merged tree. Remaining: re-auth (`gh auth login`, token for `hubertkolcz`
+  invalid), decide account (hubertkolcz vs WaverQ org), name, visibility, then
+  `gh repo create <name> --source . --remote origin` and push.
 - ~~Gate-by-gate negativity flow through the cascade~~ — done 2026-07-10,
   kcbs_wigner_flow.wl (WignerTransform route). Remaining variant: phase-space view
   of the T gates as channels (QuantumWeylTransform / MIC representations).
