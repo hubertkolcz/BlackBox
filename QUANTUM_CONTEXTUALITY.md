@@ -369,9 +369,15 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
 - n-cycle generalizations (C₇, C₉...) and their circuits; run encoding B on real
   gate hardware as a genuine platform test.
 - Sequential-game quantum strategy demo end-to-end (Alice prefix + Bob binary POVM).
-- Čech layer follow-ups: Kochen–Specker covers (18-vector Cabello set) through
-  `CoverScenario`/`CechObstruction`; relative H¹ as a group (γ lives there — only
-  the per-class orders are computed so far); AvN over non-prime rings.
+- Čech layer follow-ups: ~~Kochen–Specker covers (18-vector Cabello set)~~
+  RESOLVED (SupportCohomology.wl KS section): the Peres–Mermin square (24/24)
+  and the CEG 18-ray set (36/36, geometry machine-verified) are both convicted
+  with ALL obstruction classes of order EXACTLY 2, and both AvN theories are
+  the textbook parity proofs recovered mechanically — with the box models all
+  of infinite order, the census now shows a clean TORSION DICHOTOMY between
+  parity-type and box-type strong contextuality. Remaining: relative H¹ as a
+  group (γ lives there — only the per-class orders are computed so far); AvN
+  over non-prime rings.
 - Pentagon meshes (§6, cis/trans correction): ~~closed form for the trans-ring
   density constant~~ RESOLVED — τ\* = Root[49x³ − 128x² − 75x + 218, 2], exact KKT
   certificate in §6/CaseStudies §D3. ~~Prove ϑ(cis-ring N) = N + ϑ(C_N) and
