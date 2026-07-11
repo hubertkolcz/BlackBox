@@ -434,11 +434,18 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   for one pentagon (§3) — realizes the CSW bound of an *arbitrarily long* chain; the
   resource that grows is the number of measurement contexts (3N+2 rank-1 projectors), not
   the Hilbert dimension. This is the strong, near-term-friendly half of the answer. (ii)
-  **Noise is the real ceiling.** The relative margin ϑ/α shrinks from √5/2 = 1.118 (one
-  pentagon) toward 3τ\*/4 = 1.0325 (a ~3.25% margin), so the critical white-noise
-  visibility v\* = α/ϑ rises from 0.894 toward 4/(3τ\*) = 0.9685: the advantage is
-  extensive but *thin*, demanding ~93% visibility at a few pentagons and ~96.8%
-  asymptotically. (iii) Exact sub-result: ϑ = α *exactly* at N = 2 and N = 5 only (not
+  **Noise: a fixed per-measurement fidelity, NOT an accumulating one; the true limiter is
+  statistical.** Under the standard isotropic model ρ = v|ψ⟩⟨ψ| + (1−v)I/3 the CSW value is
+  v·ϑ + (1−v)(3N+2)/3, so the critical visibility v\*(N) = (α−(3N+2)/3)/(ϑ−(3N+2)/3) → 
+  1/(3(τ\*−1)) = **0.885** (bulk), rising from 0.585 (one pentagon) — equivalently each
+  measurement tolerates depolarizing error up to q\* → (τ\*−4/3)/(τ\*−1) = 0.115. Because a
+  CSW test estimates each event probability on *freshly prepared* states, per-context noise
+  does **not accumulate** with N: the ~88.5% visibility requirement is fixed, independent of
+  chain length. The real large-N ceiling is **statistical** — the relative margin (ϑ−α)/α
+  shrinks to 3τ\*/4 − 1 = 0.033, so certifying the advantage needs ~1/margin² ≈ 945× the
+  single-pentagon runs. [Correction: an earlier version of this bullet gave v\* = α/ϑ →
+  0.9685; that used a wrong noise floor of 0 and overstated the requirement — the isotropic
+  I/3 floor is the standard model.] (iii) Exact sub-result: ϑ = α *exactly* at N = 2 and N = 5 only (not
   periodic — N = 8, 11 do not resonate), so those two trans chains carry **no** quantum
   advantage despite being built from contextual pentagons — a sharp instance of the
   bond-dependence boundary B1 (§10). What remains genuinely open: an actual laboratory

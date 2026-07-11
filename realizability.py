@@ -15,13 +15,20 @@ that vague item into two quantified, hardware-deciding curves in the chain lengt
       realizes the CSW bound of an ARBITRARILY LONG chain. The resource that grows is the
       number of measurement contexts (3N+2 rank-1 projectors), NOT the system dimension.
 
-  (2) NOISE: critical white-noise visibility v*(N) = alpha(N)/theta(N).
-      Under the standard CSW isotropic-noise model the contextual value is
-      v*theta + (1-v)*(noise floor); the advantage survives iff visibility v > alpha/theta.
-      FINDING: v* rises from 0.8944 (single pentagon) toward the density limit
-      4/(3 tau*) = 0.96849 as N grows -- the relative margin theta/alpha shrinks to
-      3 tau*/4 = 1.0325 (a ~3.25% margin). Extensive but THIN: each pentagon adds absolute
-      advantage yet dilutes the relative margin, so required visibility rises with N.
+  (2) NOISE (standard ISOTROPIC model rho = v|psi><psi| + (1-v) I/3): the CSW value is
+      S(v) = v*theta + (1-v)*(3N+2)/3, since each of the M=3N+2 rank-1 events gets floor
+      1/3 from the maximally mixed qutrit. Advantage survives iff S(v) > alpha, i.e.
+      v > v*(N) = (alpha - (3N+2)/3)/(theta - (3N+2)/3).
+      FINDING: v*(N) -> 1/(3(tau*-1)) = 0.88484 (bulk), rising from 0.58541 (single
+      pentagon); equivalently each measurement tolerates depolarizing error up to
+      q* -> (tau*-4/3)/(tau*-1) = 0.11516. CRUCIALLY, because a CSW test estimates each
+      event probability on FRESHLY prepared states (not a sequential cascade), per-context
+      noise does NOT accumulate with N -- the visibility requirement is a FIXED ~88.5%,
+      INDEPENDENT of chain length. The real large-N limiter is STATISTICAL, not noise:
+      the relative margin (theta-alpha)/alpha shrinks to 3*tau*/4 - 1 = 0.0325, so
+      certifying the advantage needs ~1/margin^2 ~ 945x the single-pentagon runs.
+      [Correction: an earlier version reported v* = alpha/theta -> 0.9685; that used a
+      wrong noise floor of 0 (no I/3 contribution) and overstated the requirement.]
 
   Plus a small exact sub-result: theta = alpha EXACTLY at N=2 and N=5 only (not periodic;
   N=8,11 do not resonate) -- those two trans chains carry NO quantum advantage despite
@@ -69,12 +76,34 @@ def profile(nmax=11):
     return rows
 
 
+def noise_profile(nmax=11):
+    """Isotropic-noise critical visibility v*(N) and relative margin (statistical cost)."""
+    out = []
+    for N in range(1, nmax + 1):
+        n, edges = pentagon_chain_word("t" * (N - 1))
+        th, _ = theta_gram(n, edges)
+        a = alpha_chain_word("t" * (N - 1))
+        floor = (3 * N + 2) / 3
+        out.append(dict(N=N, theta=th, alpha=a,
+                        vstar_iso=(a - floor) / (th - floor),   # isotropic critical visibility
+                        margin=(th - a) / a))                   # relative margin
+    return out
+
+
 def main():
     print(f"{'N':>2} {'verts':>5} {'theta':>10} {'alpha':>5} {'th/alpha':>9} "
           f"{'v*=a/th':>8} {'dim d(N)':>8}")
     for r in profile():
         print(f"{r['N']:>2} {r['verts']:>5} {r['theta']:>10.6f} {r['alpha']:>5} "
               f"{r['ratio']:>9.6f} {r['vstar']:>8.5f} {r['dim']:>8}")
+    print()
+    print("Isotropic-noise ceiling (rho = v|psi><psi| + (1-v) I/3): v*(N) and margin")
+    for r in noise_profile():
+        print(f"  N={r['N']:>2}: v*_iso={r['vstar_iso']:.5f}  rel-margin={r['margin']:.5f}")
+    print(f"  bulk: v*_iso -> 1/(3(tau*-1)) = {1/(3*(TAU_STAR-1)):.6f}; "
+          f"per-measurement error q* -> {(TAU_STAR-4/3)/(TAU_STAR-1):.6f}; "
+          f"margin -> {3*TAU_STAR/4-1:.5f} (~{(3*TAU_STAR/4-1)**-2:.0f}x runs). "
+          f"No noise accumulation with N (fresh-state measurements).")
     print()
     print(f"Limits N->inf:  theta/N -> tau* = {TAU_STAR:.7f},  alpha/N -> 4/3 = {4/3:.7f}")
     print(f"  relative margin  theta/alpha -> 3 tau*/4      = {3*TAU_STAR/4:.7f}")
