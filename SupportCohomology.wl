@@ -139,6 +139,26 @@ TableForm[avnTable, TableHeadings -> {None, {"model", "equations", "AvN", "CSC",
 (*Reading. The AvN layer is the cheap end of the hierarchy \[LongDash] no cohomology, no LP, just parity bookkeeping over GF(2) \[LongDash] and it convicts GHZ, the Wright boxes (odd cycles and their products; the 5 equations x_i + x_{i+1} = 1 around C5 are the parity argument verbatim), and the PR box. It correctly refuses the Hardy model (no nontrivial equations survive its support), whose strong contextuality fails and whose \[Gamma] is the documented false negative one level up. The even-cycle control C6 carries 6 equations that ARE jointly satisfiable \[LongDash] AvN distinguishes odd from even for the same local data, exactly as the cohomology does.*)
 
 (* ::Section:: *)
+(*Beyond Binary: a Z3 Box on the Square*)
+
+(* ::Text:: *)
+(*CoverScenario accepts per-measurement outcome sets, and both \:010cech functions are outcome-agnostic (the obstruction's overlap equations range over the declared outcomes; the cohomology is built from restriction images). The demonstration model: three-outcome measurements on the 4-cycle, support y - x = 0 (mod 3) on three edges and y - x = 1 on the fourth \[LongDash] the Z3 analogue of the PR box. One honest scope note: the pentad-extended cover of ab_sheaf.wl Sec. 3 is NOT the multi-outcome showcase, deliberately \[LongDash] its composite 6-outcome context shares no measurement with the product contexts, so the Wright product dies there at local existence (C^0, remainder -1/4), before any gluing question; that phenomenon is already settled in ab_sheaf.wl.*)
+
+(* ::Input:: *)
+z3Scen = CoverScenario[Range[0, 3], Table[{i, Mod[i + 1, 4]}, {i, 0, 3}], Range[0, 2]];
+z3Model = Flatten[Table[If[Mod[s[[2]] - s[[1]], 3] == If[c == 3, 1, 0], 1/3, 0],
+   {c, 0, 3}, {s, Tuples[Range[0, 2], 2]}]];
+chZ3 = CechObstruction[z3Scen, z3Model]; avnZ3 = AvNArgument[z3Scen, z3Model, 3];
+z3Ctl = Flatten[Table[If[Mod[s[[2]] - s[[1]], 3] == 0, 1/3, 0], {c, 0, 3}, {s, Tuples[Range[0, 2], 2]}]];
+chZ3c = CechObstruction[z3Scen, z3Ctl];
+{Row[{"Z3 box \[Gamma]: ", chZ3["ObstructedCount"], "/", chZ3["SectionCount"], ", strong certificate: ", chZ3["CohStronglyContextual"]}],
+ Row[{"Z3 box AvN over GF(3): ", avnZ3["AvN"], ", equations: "}], avnZ3["Equations"],
+ Row[{"unshifted control: \[Gamma] ", chZ3c["ObstructedCount"], "/", chZ3c["SectionCount"], ", |Se| = ", chZ3c["GlobalSupportSize"], ", global section: ", GlobalSectionQ[z3Scen, N@z3Ctl]}]}
+
+(* ::Text:: *)
+(*The shifted box is convicted twice over: every one of the 12 support sections is \[Gamma]-obstructed (the compatibility system forces the coefficient vector around the cycle through one shift, and a pinned generator cannot return to itself), and the GF(3) theory {x + 2y \[Congruent] 0, 0, 0, 2} sums to 0 \[Congruent] 2. The unshifted control extends (|Se| = 3, a nonnegative global section exists) \[LongDash] same local outcome sets, same marginals, opposite verdict, which is what a certificate is for.*)
+
+(* ::Section:: *)
 (*The Absolute Groups: H^0 and H^1 of the Linearized Support Presheaf*)
 
 (* ::Text:: *)
@@ -191,6 +211,10 @@ SupportCohomologyVerification = <|
      avnGHZ["Equations"][[All, 3]] === {0, 1, 1, 1},
   "avnCensusPattern" -> avnTable[[All, 3]] === {False, False, True, False, True, False, True, True, False},
   "avnImpliesCSC" -> AllTrue[avnTable[[All, 5]], TrueQ],
+  "z3BoxConvictedTwice" -> chZ3["ObstructedCount"] == 12 && chZ3["CohStronglyContextual"] &&
+     avnZ3["AvN"] && avnZ3["Equations"][[All, 3]] === {0, 0, 0, 2},
+  "z3ControlExtends" -> chZ3c["ObstructedCount"] == 0 && chZ3c["GlobalSupportSize"] == 3 &&
+     GlobalSectionQ[z3Scen, N@z3Ctl],
   "cohomCensusMatchesUlreyNotebook" -> ({#["H0Rank"], #["H1FreeRank"], #["H1Torsion"]} & /@ {ccU, ccPR, ccH}) ===
      {{9, 1, {}}, {1, 1, {}}, {6, 1, {}}},
   "cohomComplexCloses" -> AllTrue[{ccC, ccQ, ccW, ccW6, ccU, ccPR, ccH, ccG, ccWW, ccQQ}, #["ComplexCloses"] &],

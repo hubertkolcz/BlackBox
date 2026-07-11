@@ -44,6 +44,13 @@ ccPR = CechCohomology[scen4, ePR];
 ccH = CechCohomology[scen4, eHardy];
 ccWW = CechCohomology[scenProd, prodModel[CycleModel[5, "Wright"], CycleModel[5, "Wright"]]];
 ccQQ = CechCohomology[scenProd, prodModel[CycleModel[5, "Quantum"], CycleModel[5, "Quantum"]]];
+z3Scen = CoverScenario[Range[0, 3], Table[{i, Mod[i + 1, 4]}, {i, 0, 3}], Range[0, 2]];
+z3Model = Flatten[Table[If[Mod[s[[2]] - s[[1]], 3] == If[c == 3, 1, 0], 1/3, 0],
+   {c, 0, 3}, {s, Tuples[Range[0, 2], 2]}]];
+chZ3 = CechObstruction[z3Scen, z3Model];
+avnZ3 = AvNArgument[z3Scen, z3Model, 3];
+chZ3c = CechObstruction[z3Scen, Flatten[Table[If[Mod[s[[2]] - s[[1]], 3] == 0, 1/3, 0],
+    {c, 0, 3}, {s, Tuples[Range[0, 2], 2]}]]];
 ghzScen = CoverScenario[{"aX", "aY", "bX", "bY", "cX", "cY"},
   {{"aX", "bX", "cX"}, {"aX", "bY", "cY"}, {"aY", "bX", "cY"}, {"aY", "bY", "cX"}}];
 ghzModel = Flatten[Table[If[Mod[Total[s], 2] == par, 1/4, 0], {par, {0, 1, 1, 1}}, {s, Tuples[{0, 1}, 3]}]];
@@ -125,6 +132,14 @@ SmokeTest = <|
   "avnImpliesCohStrong" -> AllTrue[{{avnGHZ["AvN"], chGHZ}, {avnOf[scen5, CycleModel[5, "Wright"]], chW},
        {avnOf[scen4, ePR], chPR}, {avnOf[scen4, eHardy], chH}},
      Function[p, ! p[[1]] || p[[2]]["CohStronglyContextual"]]],
+  "z3BoxAllObstructed" -> chZ3["ObstructedCount"] == 12 && chZ3["SectionCount"] == 12 &&
+     chZ3["CohStronglyContextual"] && chZ3["StronglyContextual"] && chZ3["SupportNoSignalling"],
+  "z3AvNOverGF3" -> avnZ3["AvN"] && avnZ3["EquationCount"] == 4 &&
+     avnZ3["Equations"][[All, 2]] === ConstantArray[{1, 2}, 4] && avnZ3["Equations"][[All, 3]] === {0, 0, 0, 2} &&
+     Quiet[AvNArgument[z3Scen, z3Model]] === $Failed,
+  "z3ControlNoncontextual" -> chZ3c["ObstructedCount"] == 0 && chZ3c["GlobalSupportSize"] == 3 &&
+     GlobalSectionQ[z3Scen, N@Flatten[Table[If[Mod[s[[2]] - s[[1]], 3] == 0, 1/3, 0],
+        {c, 0, 3}, {s, Tuples[Range[0, 2], 2]}]]],
   "fourGenerators" -> Length[gens] == 4,
   "generatorSpan" -> MatrixRank[So3Axis /@ gens, Tolerance -> 10^-8] == 2,
   "dlaCloses" -> DLADimension[gens] == 3

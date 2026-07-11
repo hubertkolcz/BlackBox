@@ -77,10 +77,10 @@ Cell[TextData[{
  " \[LongDash] ",
  "CoverScenario[X, cover] gives the contextuality scenario of an arbitrary \
 measurement cover as an association: measurements X, contexts = the elements \
-of cover (ordered measurement lists), section order per context (Tuples[{0,1}, \
-Length[context]]), the Abramsky-Brandenburger incidence matrix \"Incidence\" \
-relating deterministic global assignments to context sections, and \
-\"Assignments\" (the 2^Length[X] global assignments)."
+of cover (ordered measurement lists), section order per context (Tuples of \
+the outcome sets in context order), the Abramsky-Brandenburger incidence \
+matrix \"Incidence\" relating deterministic global assignments to context \
+sections, \"Assignments\" (all global assignments), and \"Outcomes\"."
 }], "Item",ExpressionUUID->"2b8e5d17-6c94-4f0a-b3d2-91a47e08c5f3"],
 
 Cell[TextData[{
