@@ -576,13 +576,21 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   §6 mesh threads status: RIGOROUS — gap̄(w) ≤ Γ_k for all words (density bound)
   and the bracket sup_w gap̄(w) ∈ [0.069898, 0.075309] (cct optimal to within
   ε=0.0054); periodic-orbit sufficiency for the CERTIFIED cocycle. STRONG
-  EVIDENCE (key D3_globalOptimalityEvidence) — cct is a SHARP ISOLATED peak:
-  every balanced/Christoffel word of period ≤ 21 near slope 2/3 has gap-density
-  ≥ 0.012 below cct, the α-cis theorem (cct uniquely hits ᾱ=4/3) being the
-  mechanism, so an aperiodic (Sturmian) beat is implausible. GENUINELY OPEN (not
-  obstructed): exact global optimality of (cct)^∞ (sup = gap(cct)?), whether
-  lim_k Γ_k = gap(cct), and periodic-orbit sufficiency for the TRUE functional
-  θ̄−ᾱ. This is ergodic optimization of the SAME genus as joint-spectral-radius
+  EVIDENCE (key D3_globalOptimalityEvidence; strengthened 2026-07-12 by an
+  EXHAUSTIVE all-word census, `word_census.py`) — cct is a SHARP ISOLATED peak.
+  The prior evidence covered only balanced/Christoffel words of period ≤ 21; the
+  new census computes gap̄(w) for **every binary necklace up to period 17**
+  (~15000+ words, not just balanced ones) and finds cct and its powers the
+  **unique** maximum, gap̄ = 0.0698975 — **no word beats cct**, runner-ups are
+  cct-perturbations (cctcctccttct …) ≈ 0.001 below. With the α-cis theorem (cct
+  uniquely hits ᾱ=4/3) as the mechanism, an aperiodic (Sturmian) beat is now very
+  implausible. This is a rigorous LOWER bracket sup_w gap̄(w) ≥ gap(cct). GENUINELY
+  OPEN (not obstructed): exact global optimality of (cct)^∞ (sup = gap(cct)?),
+  whether lim_k Γ_k = gap(cct), and periodic-orbit sufficiency for the TRUE
+  functional θ̄−ᾱ. Tightening the UPPER bracket (Γ_9, Γ_10) as a *certified* bound
+  needs the exact-rational windowed transfer-SDP certificate (EpsilonCertificate*.wl,
+  Wolfram); a Python-only pass cannot reproduce it, so the rigorous upper bracket
+  stands at Γ_8 = 0.0753086. This is ergodic optimization of the SAME genus as joint-spectral-radius
   optimization, where the finiteness property (periodic optimum) is FALSE in
   general (Bousch–Mairesse 2002, aperiodic Sturmian maximizers) — so the open
   question is genuinely hard and cct optimality is plausible-but-not-guaranteed.
