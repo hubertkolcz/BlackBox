@@ -193,6 +193,30 @@ violation (exclusivity binds topologically, not metrically). Machine-checkable
 `LedgerVerification` (21 checks) → OK. Headless:
 `wolframscript -file RunLedger.wl -print all`.
 
+### kcbs_epilogue.wl — closing the Wigner thread (runner: RunEpilogue.wl)
+Three verdicts, 17 checks → OK. (1) CURRENCY LAW: CF = (n−1)·ν on the n-cycle —
+ratios 4/6/8/10 at quantum max for n = 5/7/9/11 (to 1e−10); EXACT at the Wright
+boxes (rational Simplex: ν = 1/(n−1), CF = 1, n = 5,7,9) and at the C5 quantum
+point (RevisedSimplex: CF = 4ν); ratio 6 along the entire C7 white-noise family;
+ratio 4 at 40 random ASYMMETRIC quantum models and 23 random NONQUANTUM models
+on C5 — the law holds polytope-wide, not just on the symmetric slice. Analytic
+proof left open (route: the complete n-cycle inequality set, Araújo–Quintino–
+Budroni–Terra Cunha–Cabello, PRA 88, 022118). (2) BINDING NO-GO: all 45 cascade
+parity witnesses (5 wire points × 9 cells) pulled to one arena; 35 pentagon
+edges with a pointed structure — every positive-cell witness binds to exactly
+one click, the two negative-cell witnesses (the events that certify negativity,
+p₋ = 3/(2√5) > 1/2) bind to NONE at any wire point; no two high-p witnesses can
+ever be exclusive (3/√5 > 1 would break the Born rule); every single addition to
+the pentagon raises α (best pentagon+1 violation is negative), best pentagon+2
+= 0.012 ≪ √5−2 ≈ 0.236, greedy growth stops at the bare pentagon. The pentagon
+is the metric optimum of its own phase-space witness pool: the badges share
+topology, never strength. (3) CHANNEL LEDGER: Choi-state Wigner negativity
+(framework two-qutrit transform ≡ A_λ⊗A_μ pairing, agreement 1e−15): Id and
+X(shift) → 0 (Clifford); P → 0.747106; all four T's → exactly equal 0.725972
+(affine permutations of Z₃ are Clifford). Every cascade gate is strongly
+magic-capable as a channel — the flow note's conservation is purely an orbit
+fact. Headless: `wolframscript -file RunEpilogue.wl -print all`.
+
 ### LovaszThetaSparse + lovasz_theta_sparse.py — exact ϑ at 10⁵ pentagon blocks, and the cis/trans CORRECTION (commit c906427, CaseStudies.wl §D3)
 
 **Method.** The dense primal SDP behind `LovaszTheta` (n(n+1)/2 variables) saturates
@@ -321,13 +345,17 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   invalid), decide account (hubertkolcz vs WaverQ org), name, visibility, then
   `gh repo create <name> --source . --remote origin` and push.
 - ~~Gate-by-gate negativity flow through the cascade~~ — done 2026-07-10,
-  kcbs_wigner_flow.wl (WignerTransform route). Remaining variant: phase-space view
-  of the T gates as channels (QuantumWeylTransform / MIC representations).
-- From kcbs_ledger.wl (2026-07-10): is CF = 4ν a theorem (all n-cycles? all noise
-  families?) or a C₅ accident — observed exactly along the whole white-noise family;
-  and can a better-chosen set of parity events give the enlarged event graph a
-  METRIC binding (joint CSW violation), or is α ≥ quantum sum unavoidable when
-  witness events are added to the pentagon?
+  kcbs_wigner_flow.wl (WignerTransform route). ~~Remaining variant: phase-space
+  view of the T gates as channels~~ — done, kcbs_epilogue.wl §4 (Choi–Wigner
+  route; a Weyl/MIC re-derivation would be representational, not new physics).
+- ~~From kcbs_ledger.wl: is CF = 4ν a theorem? metric binding possible?~~ —
+  settled by kcbs_epilogue.wl (2026-07-10): the law is CF = (n−1)·ν, machine-
+  established across the n-cycle no-signalling polytope (exact at Wright and C5
+  quantum points); metric binding is a NO-GO within the cascade parity pool
+  (exhaustive +1/+2, greedy; negative-cell witnesses never bind to clicks).
+  Still open: the analytic PROOF of CF = (n−1)ν (candidate route: complete
+  n-cycle inequality set, PRA 88, 022118, + piecewise-linearity of both LP
+  values); and whether the law extends beyond cycles (CHSH graph Ci(8;1,4)?).
 - n-cycle generalizations (C₇, C₉...) and their circuits; run encoding B on real
   gate hardware as a genuine platform test.
 - Sequential-game quantum strategy demo end-to-end (Alice prefix + Bob binary POVM).
