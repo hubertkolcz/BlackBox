@@ -244,6 +244,16 @@ PRA 88, 022118); for n = 5 it is 1/Sqrt[5]."
 }], "Item",ExpressionUUID->"c58f0e27-6d43-49b2-9a81-e35d708c14b7"],
 
 Cell[TextData[{
+ StyleBox["SignedNegativity", "InlineCode"],
+ " \[LongDash] ",
+ "SignedNegativity[scen, e] gives the negativity of the empirical model e: the \
+minimal total negative weight of a quasi-probability over deterministic global \
+assignments reproducing e. It vanishes exactly when e is noncontextual; on the \
+n-cycle CF = (n-1)*SignedNegativity (so the pentagon identity CF = 4 nu is the \
+n = 5 case), while CHSH and GHZ give CF/nu = 2."
+}], "Item",ExpressionUUID->"1d9c4e6a-2f3b-4c7d-8e5f-a06b3c294d78"],
+
+Cell[TextData[{
  StyleBox["So3Axis", "InlineCode"],
  " \[LongDash] ",
  "So3Axis[m] gives the rotation-axis vector (vee map) of the antisymmetric \

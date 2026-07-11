@@ -30,6 +30,7 @@ CycleModel::usage = "CycleModel[n, p00, p10] gives the symmetric empirical model
 NoncontextualFraction::usage = "NoncontextualFraction[scen, e] gives the noncontextual fraction NCF of the empirical model e in the scenario scen (Abramsky-Barbosa-Mansfield, PRL 119, 050504): the maximal total weight of a subprobability mixture of deterministic global assignments dominated by e.";
 ContextualFraction::usage = "ContextualFraction[scen, e] gives CF = 1 - NoncontextualFraction[scen, e], the contextual resource content of the empirical model e.";
 GlobalSectionQ::usage = "GlobalSectionQ[scen, e] gives True if the empirical model e extends to a global probability distribution (a nonnegative global section of the Abramsky-Brandenburger presheaf): the model is noncontextual.";
+SignedNegativity::usage = "SignedNegativity[scen, e] gives the negativity of the empirical model e: the minimal total negative weight of a quasi-probability distribution over deterministic global assignments that reproduces e (an exact L1-minimization LP, min (Sum|c|-1)/2 subject to M.c = e). It is 0 exactly when e is noncontextual, and equals CF = 0 iff SignedNegativity = 0. This is a SHEAF-LEVEL resource measure of the empirical model, distinct from the Wigner negativity of a state. The relation to the contextual fraction is scenario-dependent, NOT universal: on the n-cycle CF = (n-1)*SignedNegativity for both the quantum-maximal and Wright models (so the pentagon identity CF = 4 nu is the n = 5 case), while the CHSH PR box and GHZ give CF/nu = 2.";
 PossibilisticSupport::usage = "PossibilisticSupport[scen, e] gives the possibilistic global support S_e of the empirical model e: association with \"Size\" (number of global assignments consistent with the support of e) and \"Empty\" (True means strong contextuality, AB Sec. 6).";
 CycleCoboundary::usage = "CycleCoboundary[n] gives the cellular-sheaf coboundary \[Delta] (2n x 4n) of the n-cycle cover with marginalization restriction maps (Hansen-Ghrist, arXiv:1808.01513): ker(\[Delta]\[Transpose]\[Delta]) = the no-disturbance models.";
 HarmonicResidual::usage = "HarmonicResidual[delta, e] gives Norm[delta . e]: the no-disturbance (signalling) residual of the model e. It vanishes on every no-disturbance model and is provably blind to contextuality - use it as a projector diagnostic, not a contextuality measure.";
@@ -207,6 +208,17 @@ GlobalSectionQ[scen_Association, e_List] := Module[{M = scen["Incidence"], m, va
   sol = Quiet@LinearOptimization[ConstantArray[0., m] . vars,
       Join[Thread[M . vars == e], Thread[vars >= 0]], vars];
   ListQ[sol] && FreeQ[sol, Indeterminate]];
+
+(* min total negative weight of a quasi-probability over deterministic assignments
+   reproducing e: min (Sum|c|-1)/2  s.t.  M.c = e, Sum c = 1 (the normalization is
+   implied by no-disturbance but is pinned explicitly so nu >= 0 holds exactly) *)
+SignedNegativity[scen_Association, e_List, opts___Rule] := Module[
+  {M = scen["Incidence"], n, c, t, val},
+  n = Dimensions[M][[2]]; c = Array[\[FormalC], n]; t = Array[\[FormalT], n];
+  val = Quiet@LinearOptimization[Total[t],
+     Join[Thread[M . c == e], {Total[c] == 1}, Thread[t - c >= 0], Thread[t + c >= 0]],
+     Join[c, t], {"PrimalMinimumValue"}, opts];
+  (val[[1]] - 1)/2];
 
 PossibilisticSupport[scen_Association, e_List] := Module[
   {M = scen["Incidence"], glob = scen["Assignments"], supp, ok},

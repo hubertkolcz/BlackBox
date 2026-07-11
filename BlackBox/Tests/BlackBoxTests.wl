@@ -122,6 +122,14 @@ SmokeTest = <|
   "sectionClassical" -> GlobalSectionQ[scen5, eC],
   "noSectionQuantum" -> ! GlobalSectionQ[scen5, eQ],
   "noSectionWright" -> ! GlobalSectionQ[scen5, eW],
+  "negPentagonQuantum" -> Simplify[SignedNegativity[scen5, CycleModel[5, "Quantum"]] - (Sqrt[5] - 2)/2] === 0,
+  "negCfIs4NuPentagon" -> Simplify[ContextualFraction[scen5, CycleModel[5, "Quantum"]] ==
+     4 SignedNegativity[scen5, CycleModel[5, "Quantum"]]],
+  "negCycleLawC7" -> ContextualFraction[scen7, CycleModel[7, "Wright"]] ==
+     6 SignedNegativity[scen7, CycleModel[7, "Wright"]] &&
+     SignedNegativity[scen5, CycleModel[5, "Wright"]] == 1/4,
+  "negNotUniversal" -> SignedNegativity[scen5, CycleModel[5, "Classical"]] == 0 &&
+     Simplify[ContextualFraction[scen5, N@CycleModel[5, "Wright"]]/SignedNegativity[scen5, N@CycleModel[5, "Wright"]]] != 2,
   "supportQuantumLucas" -> PossibilisticSupport[scen5, eQ]["Size"] == 11,
   "supportWrightEmpty" -> PossibilisticSupport[scen5, eW]["Empty"],
   "coboundaryRank" -> MatrixRank[del5] == 9,

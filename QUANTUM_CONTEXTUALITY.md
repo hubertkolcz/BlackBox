@@ -361,11 +361,19 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
 - ~~Gate-by-gate negativity flow through the cascade~~ — done 2026-07-10,
   kcbs_wigner_flow.wl (WignerTransform route). Remaining variant: phase-space view
   of the T gates as channels (QuantumWeylTransform / MIC representations).
-- From kcbs_ledger.wl (2026-07-10): is CF = 4ν a theorem (all n-cycles? all noise
-  families?) or a C₅ accident — observed exactly along the whole white-noise family;
-  and can a better-chosen set of parity events give the enlarged event graph a
-  METRIC binding (joint CSW violation), or is α ≥ quantum sum unavoidable when
-  witness events are added to the pentagon?
+- From kcbs_ledger.wl (2026-07-10): ~~is CF = 4ν a theorem or a C₅ accident?~~
+  RESOLVED at the sheaf level (`SignedNegativity.wl` + `RunSignedNegativity.wl`,
+  8 checks OK; new paclet fn `SignedNegativity[scen, e]` = min negative mass of a
+  signed decomposition over deterministic assignments). It is a PENTAGON ACCIDENT:
+  the constant 4 is n−1. Within a fixed n-cycle scenario CF = (n−1)ν for BOTH the
+  quantum and Wright models — exact for n=5 (4), n=7 (6, FullSimplify), n=9 Wright
+  (ν=1/8, ratio 8); across scenarios the ratio genuinely varies (CHSH PR and GHZ
+  give CF/ν = 2), so no universal constant exists. The ledger's "CF = 4ν along the
+  whole C₅ white-noise family" is explained: mixing stays inside the pentagon
+  scenario, whose ratio is 4. Only scenario-independent fact: CF = 0 ⇔ ν = 0.
+  STILL OPEN (metric binding): can a better-chosen set of parity events give the
+  enlarged event graph a joint CSW violation, or is α ≥ quantum sum unavoidable
+  when witness events are added to the pentagon?
 - n-cycle generalizations (C₇, C₉...) and their circuits; run encoding B on real
   gate hardware as a genuine platform test.
 - Sequential-game quantum strategy demo end-to-end (Alice prefix + Bob binary POVM).
