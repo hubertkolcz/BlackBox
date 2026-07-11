@@ -228,10 +228,10 @@ Column[{EssayVerification, "OK" -> And @@ Values[EssayVerification]}]
 (*Future Work*)
 
 (* ::Item:: *)
-(*Run the k = 3 activation probe on the heptagon (343-vertex OR cube; probe pre-registered in the pipeline, currently disabled) and chart the open cells of arXiv:2411.09773.*)
+(*DONE since this essay was written: the k = 3 heptagon cell is settled by citation (Choudhary-Barbosa, arXiv:2411.09773, Thm. 12, plus a product bound) in activation.wl, and the full "does a fixed quantum pentagon activate every n-cycle box beyond n = 7" question is settled NEGATIVE by exhaustive search in HeptagonCatalysis.wl (n = 7 is the unique activated length, a theorem).*)
 
 (* ::Item:: *)
-(*Replace the rejected Laplacian with \[CapitalCCedilla]ech cohomology of the support presheaf (Abramsky-Mansfield-Barbosa, arXiv:1502.03097) as the sheaf-level measure, on the same CycleScenario datatype.*)
+(*DONE since this essay was written: SupportCohomology.wl replaces the rejected Laplacian with \[CapitalCCedilla]ech cohomology of the support presheaf on the CycleScenario datatype, following Abramsky-Mansfield-Barbosa, "The Cohomology of Non-Locality and Contextuality," arXiv:1111.3620 (2011/2012) - not arXiv:1502.03097, a related but different companion paper; see BlackBox.wl's CechObstruction comment for the two papers' precise division of labor.*)
 
 (* ::Item:: *)
 (*Correlate DLA growth with contextual fraction under composition on pentagon meshes \[LongDash] the FEM study design (H1-H5) built on PentagonChain.*)
