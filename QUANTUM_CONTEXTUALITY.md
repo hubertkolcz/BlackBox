@@ -382,7 +382,13 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   negative is structural — its γ lives in the trivial group). Because F~(C0)=0
   the construction is self-validating: the explicit connecting cocycle's order
   provably equals CechObstruction's ObstructionOrder, checked per section.
-  Remaining: AvN over non-prime rings.
+  ~~AvN over non-prime rings~~ RESOLVED: `AvNArgument[scen, e, d]` now takes any
+  d ≥ 2 (Z_d need not be a field) via a Smith-form lattice-solvability test that
+  reduces to the GF(d) rank test for prime d; for composite d it retains
+  non-unit-coefficient equations (the 2x = 2 mod 4 relations). Demo: the Z₄ shift
+  box on the square is AvN over Z₄ with a witness that is CONSISTENT mod 2 — a
+  strictly-modular obstruction no prime reduction can see. Čech-layer follow-ups
+  are now all closed.
 - Pentagon meshes (§6, cis/trans correction): ~~closed form for the trans-ring
   density constant~~ RESOLVED — τ\* = Root[49x³ − 128x² − 75x + 218, 2], exact KKT
   certificate in §6/CaseStudies §D3. ~~Prove ϑ(cis-ring N) = N + ϑ(C_N) and

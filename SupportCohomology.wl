@@ -227,6 +227,27 @@ TableForm[cohomTable, TableHeadings -> {None, {"model", "{C0, C1, C2}", "rk H0",
 (*Structure worth recording: (i) H^0 is multiplicative on the product cover \[LongDash] 36 = 6^2 for quantum\[CircleTimes]quantum, 1 = 1^2 for Wright\[CircleTimes]Wright; (ii) on every single-cycle cover of this census H^1 has free rank 1 (the nerve circle) except C6 Wright where it is 2 \[LongDash] the group remembers the support, not just the nerve; (iii) on the product cover the C^2 correction kills H^1 entirely (free rank 0), so all the contextuality information there sits in the relative layer, exactly where CechObstruction reads it; (iv) no torsion appears anywhere in this ABSOLUTE census, but the RELATIVE classes do carry it: every GHZ obstruction class has order exactly 2 (\"ObstructionOrder\" in CechObstruction), while Hardy's nonextendable section has order 1 \[LongDash] its false negative is integral, not an artifact of working over Q.*)
 
 (* ::Section:: *)
+(*Beyond Prime Moduli: AvN over Z4*)
+
+(* ::Text:: *)
+(*The All-vs-Nothing layer works over any Z_d, d >= 2 \[LongDash] not only prime fields. For composite d, Z_d is not a field and \"rank over Z_d\" is ill-posed; consistency of the theory is decided instead by exact lattice solvability (Smith normal form of the integer coefficient matrix), which reduces to the GF(d) rank test exactly when d is prime. Two things change for composite d: the theory keeps equations with NON-unit coefficient vectors \[LongDash] the 2x = 2 (mod 4) relations that a prime reduction cannot express \[LongDash] and the resulting witness can be genuinely modular. The demonstration: the Z4 shift box on the square, support y - x = 0 (mod 4) on three edges and y - x = 2 on the fourth.*)
+
+(* ::Input:: *)
+z4Scen = CoverScenario[Range[0, 3], Table[{i, Mod[i + 1, 4]}, {i, 0, 3}], Range[0, 3]];
+z4Model = Flatten[Table[If[Mod[s[[2]] - s[[1]], 4] == If[c == 3, 2, 0], 1/4, 0], {c, 0, 3}, {s, Tuples[Range[0, 3], 2]}]];
+avnZ4 = AvNArgument[z4Scen, z4Model, 4];
+z4A = Table[Module[{row = ConstantArray[0, 4]}, MapThread[(row[[#1 + 1]] = #2) &, {eq[[1]], eq[[2]]}]; row], {eq, avnZ4["Equations"]}];
+z4b = avnZ4["Equations"][[All, 3]];
+z4Mod2 = MatrixRank[z4A, Modulus -> 2] == MatrixRank[MapThread[Append, {z4A, z4b}], Modulus -> 2];
+{Row[{"Z4 shift box AvN over Z4: ", avnZ4["AvN"], ", ", avnZ4["EquationCount"], " equations"}],
+ Row[{"contains a non-unit (all-even) coefficient equation: ", AnyTrue[avnZ4["Equations"], #[[2]] =!= {0, 0} && AllTrue[#[[2]], EvenQ] &]}],
+ Row[{"same equation system is CONSISTENT mod 2 (the witness is genuinely Z4): ", z4Mod2}],
+ Row[{"unshifted control extends: ", ! AvNArgument[z4Scen, Flatten[Table[If[Mod[s[[2]] - s[[1]], 4] == 0, 1/4, 0], {c, 0, 3}, {s, Tuples[Range[0, 3], 2]}]], 4]["AvN"]}]}
+
+(* ::Text:: *)
+(*The certificate is a strict Z4 phenomenon: the shift sum around the cycle equals 2, so the theory is inconsistent mod 4 (0 = 2), yet reducing the SAME integer equation system mod 2 turns the right-hand side to 0 and the system becomes solvable \[LongDash] no prime-modulus AvN argument could have detected it. The unit-coefficient equations alone would give only the mod-2 shadow; the all-even equations 2x = 2 (mod 4), which the prime path discards, are exactly what carries the obstruction. AvN over composite rings is therefore strictly stronger than the union of its prime-field reductions.*)
+
+(* ::Section:: *)
 (*The Relative Group, Where \[Gamma] Actually Lives*)
 
 (* ::Text:: *)
@@ -292,6 +313,8 @@ SupportCohomologyVerification = <|
        Values[chZ3["ObstructionOrder"]]], # === Infinity &],
   "z3ControlExtends" -> chZ3c["ObstructedCount"] == 0 && chZ3c["GlobalSupportSize"] == 3 &&
      GlobalSectionQ[z3Scen, N@z3Ctl],
+  "avnCompositeZ4" -> avnZ4["AvN"] && avnZ4["EquationCount"] == 8 && z4Mod2 &&
+     AnyTrue[avnZ4["Equations"], #[[2]] =!= {0, 0} && AllTrue[#[[2]], EvenQ] &],
   "cohomCensusMatchesUlreyNotebook" -> ({#["H0Rank"], #["H1FreeRank"], #["H1Torsion"]} & /@ {ccU, ccPR, ccH}) ===
      {{9, 1, {}}, {1, 1, {}}, {6, 1, {}}},
   "cohomComplexCloses" -> AllTrue[{ccC, ccQ, ccW, ccW6, ccU, ccPR, ccH, ccG, ccWW, ccQQ}, #["ComplexCloses"] &],

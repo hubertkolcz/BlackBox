@@ -75,6 +75,14 @@ cegScen = <|"X" -> cegRays, "Outcomes" -> Association[# -> {0, 1} & /@ cegRays],
 cegModel = Flatten[Table[If[Total[s] == 1, 1/4, 0], {c, cegTetrads}, {s, Tuples[{0, 1}, 4]}]];
 chCEG = CechObstruction[cegScen, cegModel];
 avnCEG = AvNArgument[cegScen, cegModel];
+z4Scen = CoverScenario[Range[0, 3], Table[{i, Mod[i + 1, 4]}, {i, 0, 3}], Range[0, 3]];
+z4Model = Flatten[Table[If[Mod[s[[2]] - s[[1]], 4] == If[c == 3, 2, 0], 1/4, 0], {c, 0, 3}, {s, Tuples[Range[0, 3], 2]}]];
+avnZ4 = AvNArgument[z4Scen, z4Model, 4];
+z4A = Table[Module[{row = ConstantArray[0, 4]}, MapThread[(row[[#1 + 1]] = #2) &, {eq[[1]], eq[[2]]}]; row], {eq, avnZ4["Equations"]}];
+z4b = avnZ4["Equations"][[All, 3]];
+z4Mod2Shadow = MatrixRank[z4A, Modulus -> 2] == MatrixRank[MapThread[Append, {z4A, z4b}], Modulus -> 2];
+z4Model0 = Flatten[Table[If[Mod[s[[2]] - s[[1]], 4] == 0, 1/4, 0], {c, 0, 3}, {s, Tuples[Range[0, 3], 2]}]];
+avnZ4ctl = AvNArgument[z4Scen, z4Model0, 4];
 relGHZ = CechRelativeCohomology[ghzScen, ghzModel, 1];
 relW = CechRelativeCohomology[scen5, CycleModel[5, "Wright"], 1];
 relH = CechRelativeCohomology[scen4, eHardy, 2];
@@ -182,6 +190,12 @@ SmokeTest = <|
   "ksPeresMermin" -> chPM["ObstructedCount"] == 24 && chPM["CohStronglyContextual"] &&
      chPM["GlobalSupportSize"] == 0 && avnPM["AvN"] && avnPM["EquationCount"] == 6 &&
      AllTrue[Values[chPM["ObstructionOrder"]], # === 2 &],
+  "avnComposite Z4" -> avnZ4["AvN"] && avnZ4["EquationCount"] == 8 &&
+     AnyTrue[avnZ4["Equations"], #[[2]] =!= {0, 0} && AllTrue[#[[2]], EvenQ] &] &&
+     z4Mod2Shadow && ! avnZ4ctl["AvN"] && GlobalSectionQ[z4Scen, N@z4Model0],
+  "avnPrimeRegression" -> avnGHZ["AvN"] && avnGHZ["Equations"][[All, 2]] === ConstantArray[{1, 1, 1}, 4] &&
+     avnZ3["AvN"] && avnZ3["Equations"][[All, 2]] === ConstantArray[{1, 2}, 4] &&
+     avnZ3["Equations"][[All, 3]] === {0, 0, 0, 2},
   "cechRelativeGroups" -> {relGHZ["H1FreeRank"], relGHZ["H1Torsion"]} === {0, {2}} &&
      {relPM["H1FreeRank"], relPM["H1Torsion"]} === {0, {2}} &&
      {relW["H1FreeRank"], relW["H1Torsion"]} === {1, {}} &&

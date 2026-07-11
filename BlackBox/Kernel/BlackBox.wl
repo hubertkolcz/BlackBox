@@ -36,8 +36,9 @@ HarmonicResidual::usage = "HarmonicResidual[delta, e] gives Norm[delta . e]: the
 CoverScenario::usage = "CoverScenario[X, cover] gives the contextuality scenario of an arbitrary measurement cover as an association: measurements X, contexts = the elements of cover (ordered measurement lists), section order per context (Tuples of the outcome sets in context order), the Abramsky-Brandenburger incidence matrix \"Incidence\" relating deterministic global assignments to context sections, \"Assignments\" (all global assignments), and \"Outcomes\". CoverScenario[X, cover, outcomes] uses the outcome list outcomes for every measurement (default {0, 1}), or per-measurement outcome lists when outcomes is an association over X. CycleScenario[n] is the binary n-cycle special case.";
 CechCohomology::usage = "CechCohomology[scen, e] gives the absolute \:010cech cohomology of the Z-linearized support presheaf of the empirical model e over the cover of scen: an association with \"H0Rank\" (rank of the module of compatible Z-linear families = global sections), \"H1FreeRank\" and \"H1Torsion\" (elementary divisors > 1 of the degree-0 coboundary, by Smith normal form), \"CochainRanks\" ({C^0, C^1, C^2} over contexts, pairwise and triple overlaps, each the free Z-module on the restriction image of the support), \"CoboundaryRanks\", \"ComplexCloses\" (the verified identity \[Delta]1 . \[Delta]0 = 0), and \"SupportNoSignalling\". H^1 = ker \[Delta]1 / im \[Delta]0 is computed for arbitrary covers (the C^2 term handles nonempty triple overlaps). These are AMBIENT invariants: the per-section obstruction classes \[Gamma](s) of CechObstruction live in the RELATIVE H^1, so a nonzero absolute H^1 is not itself a contextuality certificate (the PR box and the noncontextual uniform model both have H^1 = Z on the CHSH cover).";
 CechRelativeCohomology::usage = "CechRelativeCohomology[scen, e, c0] gives the RELATIVE \:010cech cohomology of the Z-linearized support presheaf of the empirical model e with respect to the distinguished context c0 (an index into scen[\"Contexts\"], or the context itself): the presheaf F~ = ker(F -> F|c0), whose value on U is spanned by differences of support sections agreeing on U \[Intersection] c0 (so F~(c0) = 0). Returns \"H0Rank\", \"H1FreeRank\", \"H1Torsion\", \"CochainRanks\", \"ComplexCloses\", and \"GammaOrders\": for every support section s of c0 the explicit connecting-map cocycle \[Gamma](s) = \[Delta]0(lift of s) is built and its exact order in H^1(F~) is computed by Smith normal form. Because F~(c0) = 0, that order provably equals CechObstruction's \"ObstructionOrder\" - a built-in cross-validation of the construction. H^1(F~) is the group where the obstruction actually lives: Z/2 for GHZ and the Peres-Mermin square (pure 2-torsion), Z for the Wright and PR boxes, and 0 for the Hardy model - its false negative is structural.";
-AvNArgument::usage = "AvNArgument[scen, e] and AvNArgument[scen, e, d] give the All-vs-Nothing argument of the empirical model e on the scenario scen over Z_d (default d = 2; d must be prime), following Abramsky-Barbosa-Kishida-Lal-Mansfield, arXiv:1502.03097 Sec. 6: the theory of e collects every Z_d-affine equation Sum c_m x_m = a (mod d) satisfied by ALL support sections of a context; the model is AvN when the joint theory is inconsistent, decided by an exact rank test over GF(d). AvN certifies strong contextuality, and every AvN model is cohomologically strongly contextual, so \"AvN\" -> True implies CechObstruction[scen, e][\"CohStronglyContextual\"]. Returns an association with keys \"Modulus\", \"Equations\" (as {context, coefficient tuple, rhs}, coefficients normalized to leading entry 1), \"EquationCount\", \"Consistent\", and \"AvN\". GHZ is the canonical AvN model (the four Mermin parity equations); the Hardy model is not AvN, matching its non-strong contextuality.";
+AvNArgument::usage = "AvNArgument[scen, e] and AvNArgument[scen, e, d] give the All-vs-Nothing argument of the empirical model e on the scenario scen over Z_d (default d = 2; d is any integer >= 2, prime or composite), following Abramsky-Barbosa-Kishida-Lal-Mansfield, arXiv:1502.03097 Sec. 6: the theory of e collects every Z_d-affine equation Sum c_m x_m = a (mod d) satisfied by ALL support sections of a context; the model is AvN when the joint theory is inconsistent. Consistency is decided by an exact lattice-solvability test (Smith normal form of the integer coefficient matrix), valid over any Z_d and reducing to the GF(d) rank test when d is prime. For composite d the theory retains equations with NON-unit coefficient vectors (e.g. the 2x = 2 relations mod 4), which no prime-modulus reduction can see; equations are canonicalized only up to multiplication by units. AvN certifies strong contextuality, and every AvN model is cohomologically strongly contextual, so \"AvN\" -> True implies CechObstruction[scen, e][\"CohStronglyContextual\"]. Returns an association with keys \"Modulus\", \"Equations\" (as {context, coefficient tuple, rhs}), \"EquationCount\", \"Consistent\", and \"AvN\". GHZ is the canonical AvN model over Z_2 (the four Mermin parity equations); the Z_3 box on the square is AvN over Z_3; the Z_4 shift box is AvN over Z_4 with a witness invisible mod 2; the Hardy model is not AvN, matching its non-strong contextuality.";
 AvNArgument::outs = "AvN over Z_`1` requires every measurement of the scenario to take outcomes {0, ..., `2`}.";
+AvNArgument::mod = "The modulus `1` must be an integer >= 2.";
 CechObstruction::usage = "CechObstruction[scen, e] gives the \:010cech cohomological obstruction data of the support presheaf of the empirical model e on the scenario scen (Abramsky-Mansfield-Barbosa; Abramsky-Barbosa-Kishida-Lal-Mansfield, arXiv:1502.03097): a support section s over a context is obstructed when its class \[Gamma](s) in the first \:010cech cohomology of the relative Z-linearized support presheaf is nonzero, equivalently (arXiv:1502.03097, Prop. 4.4) when NO compatible family of Z-linear combinations of support sections restricts to s. Returns an association with keys \"Obstructed\"/\"ObstructedCount\"/\"SectionCount\", \"ObstructionOrder\" ({context, section} -> least n >= 1 with n \[Gamma](s) = 0, by Smith normal form: 1 means \[Gamma](s) = 0, Infinity means rationally obstructed, finite n > 1 is pure relative torsion - every GHZ class has order exactly 2), \"NonextendableSections\" (sections with no global support assignment through them) and \"FalseNegatives\", \"GlobalSupportSize\", \"H0Rank\" (rank of the compatible-family module), \"SupportNoSignalling\", and the witness flags \"CohLogicallyContextual\" (some \[Gamma](s) != 0: certifies logical contextuality) and \"CohStronglyContextual\" (every \[Gamma](s) != 0: certifies strong contextuality). Vanishing of \[Gamma] is not conclusive - the Hardy model is the canonical false negative.";
 
 (* -- the Lie-Poisson interface of the KCBS cascade -- *)
@@ -446,31 +447,42 @@ CechRelativeCohomology[scen_Association, e_List, c0spec_] := Module[
     "ComplexCloses" -> closes, "GammaCocyclesVerified" -> cocyclesOK,
     "GammaOrders" -> orders|>];
 
-AvNArgument[scen_Association, e_List, d : _Integer?PrimeQ : 2] := Module[
+(* affine Z_d-solvability of A x = b (mod d) for ANY d >= 2 (Z_d need not be a
+   field): from the Smith normal form A = U r V, x exists iff GCD(r_ii, d) | (U b)_i
+   for every row (r_ii = 0 past the diagonal, GCD(0, d) = d). Reduces to the GF(d)
+   rank test when d is prime. *)
+avnSolvableQ[A_, b_, d_] := A === {} || Module[{sm = SmithDecomposition[A], c, rows, cols},
+  c = Mod[sm[[1]] . b, d]; rows = Length[A]; cols = Length[A[[1]]];
+  AllTrue[Range[rows], Mod[c[[#]], GCD[If[# <= Min[rows, cols], sm[[2]][[#, #]], 0], d]] == 0 &]];
+
+AvNArgument[scen_Association, e_List, d : _Integer : 2] := Module[
   {ctxs = scen["Contexts"], secs = scen["Sections"], X, outs, m, ctxIdx, supp,
-   xIdx, eqs = {}, A, b, consistent},
+   xIdx, units, eqs = {}, A, b, con},
+  If[d < 2, Message[AvNArgument::mod, d]; Return[$Failed]];
   X = Lookup[scen, "X", Union @@ ctxs];
   outs = Lookup[scen, "Outcomes", Association[# -> {0, 1} & /@ X]];
   If[! AllTrue[X, Sort[outs[#]] === Range[0, d - 1] &],
    Message[AvNArgument::outs, d, d - 1]; Return[$Failed]];
   m = Length[ctxs]; ctxIdx = AssociationThread[ctxs -> Range[m]];
   xIdx = AssociationThread[X -> Range[Length[X]]];
+  units = Select[Range[d - 1], GCD[#, d] == 1 &];
   supp = Table[{}, {m}];
   Do[If[e[[k]] > 10^-12, AppendTo[supp[[ctxIdx[secs[[k, 1]]]]], secs[[k, 2]]]], {k, Length[secs]}];
-  Do[Module[{C = ctxs[[i]], S = supp[[i]], cvecs},
-    cvecs = Select[Tuples[Range[0, d - 1], Length[C]],
-      # =!= ConstantArray[0, Length[C]] && First[DeleteCases[#, 0]] == 1 &];
-    Do[Module[{vals = DeleteDuplicates[Mod[c . #, d] & /@ S]},
-      If[S =!= {} && Length[vals] == 1, AppendTo[eqs, {i, c, First[vals]}]]], {c, cvecs}]],
-   {i, m}];
+  (* per context: every nonzero coefficient vector whose support-value is constant
+     mod d, canonicalized under multiplication by units (unit multiples are the same
+     equation; NON-unit multiples are kept - they carry the extra content of a
+     composite ring and reduce to leading-entry-1 exactly when d is prime) *)
+  Do[If[supp[[i]] =!= {}, Module[{S = supp[[i]], reps},
+    reps = DeleteDuplicates[Cases[Rest[Tuples[Range[0, d - 1], Length[ctxs[[i]]]]],
+       c_ /; Length[DeleteDuplicates[Mod[c . #, d] & /@ S]] == 1 :>
+        First[Sort[Table[{Mod[u c, d], Mod[u First[Mod[c . #, d] & /@ S], d]}, {u, units}]]]]];
+    Do[AppendTo[eqs, {i, ce[[1]], ce[[2]]}], {ce, reps}]]], {i, m}];
   A = Table[Module[{row = ConstantArray[0, Length[X]]},
      MapThread[(row[[xIdx[#1]]] = #2) &, {ctxs[[eq[[1]]]], eq[[2]]}]; row], {eq, eqs}];
-  b = eqs[[All, 3]];
-  consistent = eqs === {} ||
-    MatrixRank[A, Modulus -> d] == MatrixRank[MapThread[Append, {A, b}], Modulus -> d];
+  b = eqs[[All, 3]]; con = avnSolvableQ[A, b, d];
   <|"Modulus" -> d, "EquationCount" -> Length[eqs],
     "Equations" -> ({ctxs[[#[[1]]]], #[[2]], #[[3]]} & /@ eqs),
-    "Consistent" -> consistent, "AvN" -> ! consistent|>];
+    "Consistent" -> con, "AvN" -> ! con|>];
 
 (* ------------------------------------------------------------------ *)
 (* the Lie-Poisson interface                                           *)
