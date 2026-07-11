@@ -228,6 +228,36 @@ violation (exclusivity binds topologically, not metrically). Machine-checkable
 `LedgerVerification` (21 checks) → OK. Headless:
 `wolframscript -file RunLedger.wl -print all`.
 
+### kcbs_epilogue.wl — closing the Wigner thread (runner: RunEpilogue.wl)
+Three verdicts, 21 checks → OK. (1) CURRENCY LAW: CF = (n−1)·ν on the n-cycle —
+ratios 4/6/8/10 at quantum max for n = 5/7/9/11 (deviations < 1e−9, checks at
+1e−6); EXACT at the Wright boxes (rational Simplex: ν = 1/(n−1), CF = 1,
+n = 5,7,9) and at the C5 quantum point (RevisedSimplex: CF = 4ν); ratio 6 across
+the contextual range of the C7 white-noise family (V = 0.70–1, V_c ≈ 0.677);
+ratio 4 at 40 random ASYMMETRIC quantum models and 23 random contextual
+no-signalling mixtures, 9 of them certified beyond-quantum (they violate the C5
+correlator quantum bound 4√5−5, calibrated on the KCBS-maximal state) — the law
+holds polytope-wide, not just on the symmetric slice. Analytic proof left open
+(route: the complete n-cycle inequality set, Araújo–Quintino–
+Budroni–Terra Cunha–Cabello, PRA 88, 022118). (2) BINDING NO-GO: all 45 cascade
+parity witnesses (5 wire points × 9 cells) pulled to one arena; 35 pentagon
+edges with a pointed structure — every positive-cell witness binds to exactly
+one click, the two negative-cell witnesses (the events that certify negativity,
+p₋ = 3/(2√5) > 1/2) bind to NONE at any wire point; no two high-p witnesses can
+ever be exclusive (3/√5 > 1 would break the Born rule); every single addition to
+the pentagon raises α (best pentagon+1 violation is negative), best pentagon+2
+= 0.012 ≪ √5−2 ≈ 0.236, greedy growth stops at the bare pentagon. The pentagon
+is the metric optimum of its own phase-space witness pool: the badges share
+topology, never strength. (3) CHANNEL LEDGER: Choi-state Wigner negativity
+(framework two-qutrit transform ≡ A_λ⊗A_μ pairing, agreement 1e−15): Id and
+X(shift) → 0 (Clifford); P → 0.747106; every T → 0.725972. NEW structural fact
+surfaced en route: T3 = T1 and T4 = T2 to machine precision — the cascade is
+gate-periodic, [P, T1, T2, T1, T2] — and T2 = Π·T1·Πᵀ for a basis permutation Π
+(machine-checked); permutations are affine on Z₃, hence Clifford, so the equal
+channel values are explained, not coincidental. Every cascade gate is strongly
+magic-capable as a channel — the flow note's conservation is purely an orbit
+fact. Headless: `wolframscript -file RunEpilogue.wl -print all`.
+
 ### LovaszThetaSparse + lovasz_theta_sparse.py — exact ϑ at 10⁵ pentagon blocks, and the cis/trans CORRECTION (commit c906427, CaseStudies.wl §D3)
 
 **Method.** The dense primal SDP behind `LovaszTheta` (n(n+1)/2 variables) saturates
@@ -359,21 +389,26 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   invalid), decide account (hubertkolcz vs WaverQ org), name, visibility, then
   `gh repo create <name> --source . --remote origin` and push.
 - ~~Gate-by-gate negativity flow through the cascade~~ — done 2026-07-10,
-  kcbs_wigner_flow.wl (WignerTransform route). Remaining variant: phase-space view
-  of the T gates as channels (QuantumWeylTransform / MIC representations).
-- From kcbs_ledger.wl (2026-07-10): ~~is CF = 4ν a theorem or a C₅ accident?~~
-  RESOLVED at the sheaf level (`SignedNegativity.wl` + `RunSignedNegativity.wl`,
-  8 checks OK; new paclet fn `SignedNegativity[scen, e]` = min negative mass of a
-  signed decomposition over deterministic assignments). It is a PENTAGON ACCIDENT:
-  the constant 4 is n−1. Within a fixed n-cycle scenario CF = (n−1)ν for BOTH the
-  quantum and Wright models — exact for n=5 (4), n=7 (6, FullSimplify), n=9 Wright
-  (ν=1/8, ratio 8); across scenarios the ratio genuinely varies (CHSH PR and GHZ
-  give CF/ν = 2), so no universal constant exists. The ledger's "CF = 4ν along the
-  whole C₅ white-noise family" is explained: mixing stays inside the pentagon
-  scenario, whose ratio is 4. Only scenario-independent fact: CF = 0 ⇔ ν = 0.
-  STILL OPEN (metric binding): can a better-chosen set of parity events give the
-  enlarged event graph a joint CSW violation, or is α ≥ quantum sum unavoidable
-  when witness events are added to the pentagon?
+  kcbs_wigner_flow.wl (WignerTransform route). ~~Remaining variant: phase-space
+  view of the T gates as channels~~ — done, kcbs_epilogue.wl §4 (Choi–Wigner
+  route; a Weyl/MIC re-derivation would be representational, not new physics).
+- ~~From kcbs_ledger.wl: is CF = 4ν a theorem or a C₅ accident? metric binding
+  possible?~~ — RESOLVED, and by TWO independent derivations that agree on the
+  law **CF = (n−1)·ν** (a pentagon accident: the "4" is n−1). (i) Sheaf level:
+  `SignedNegativity.wl` + `RunSignedNegativity.wl` (8 checks OK) with the new
+  paclet fn `SignedNegativity[scen, e]` = min negative mass of a signed
+  decomposition over deterministic assignments — exact for n=5 (4), n=7 (6,
+  FullSimplify), n=9 Wright (ν=1/8, ratio 8), for BOTH the quantum and Wright
+  models; across scenarios the ratio varies (CHSH PR and GHZ give CF/ν = 2), so
+  no universal constant, only CF = 0 ⇔ ν = 0. (ii) kcbs_epilogue.wl established
+  the same CF = (n−1)ν across the n-cycle no-signalling polytope and settled the
+  METRIC-BINDING half as a NO-GO within the cascade parity pool (exhaustive
+  +1/+2, greedy; negative-cell witnesses never bind to clicks). The ledger's
+  "CF = 4ν along the whole C₅ white-noise family" is explained: mixing stays
+  inside the pentagon scenario, whose ratio is 4. Still open: an analytic PROOF
+  of CF = (n−1)ν (candidate route: complete n-cycle inequality set PRA 88,
+  022118 + piecewise-linearity of both LP values); and whether the law extends
+  beyond cycles (CHSH graph Ci(8;1,4)?).
 - n-cycle generalizations (C₇, C₉...) and their circuits; run encoding B on real
   gate hardware as a genuine platform test.
 - Sequential-game quantum strategy demo end-to-end (Alice prefix + Bob binary POVM).
@@ -418,10 +453,14 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   cct-beater needs ϑ̄ > 1.40323087 AND ᾱ < 1.4301025 simultaneously;
   EXHAUSTIVE: all aperiodic bracelets p ≤ 9 certified below cct (max 0.0685 at
   cctcctctt; overall runner-up cctcctcctctt at 0.0689 vs 0.0698975). The
-  completion is identified — a transfer-SDP sub-action (windowed chordal dual
-  templates ⇒ linear-in-window bound on ϑ̄, finite LP over de Bruijn flows) —
-  but OBSTRUCTED: a cct-tight template must reproduce τ_cct, which provably has
-  no small algebraic form, so rational certificates yield only ε-optimality.
+  completion — a transfer-SDP sub-action (windowed chordal dual templates ⇒
+  density bound on ϑ̄) — yields ε-OPTIMALITY (see the ε-certificate paragraph):
+  the exact bracket **sup_w gap̄(w) ∈ [gap(cct)=0.069898, Γ₈=0.075309]**, cct
+  optimal to within ε=0.0054. Whether sup = gap(cct) is OPEN (NOT obstructed):
+  each Γ_k is rational and gap(cct) irrational, but rationals converge to
+  irrationals, so the τ_cct height result rules out only a SINGLE finite exact
+  rational certificate — not the limit, not global optimality [ADVERSARIALLY
+  CORRECTED: the earlier "obstructed by the τ_cct field" was a non-sequitur].
   ~~α-density/cis-fraction characterization~~ RESOLVED — THEOREM (CaseStudies
   §D3, key D3_alphaCisTheorem): ᾱ(w) ≥ max(4/3, 1 + f_c/2) for every word
   (letter-weighted potential certificate (0,−½,−1) with rates (3/2, 1)); hence
@@ -430,21 +469,32 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   min-max exactly 13/3 = 3·(4/3) + ⅓), and f_c = 2/3 without ccc forces all
   cis-runs equal to 2 by the run-average argument. Note the naive converse is
   false: cctt has f_c = 1/2 but ᾱ = 11/8. ~~Construct the explicit ε-optimality
-  certificate~~ RESOLVED — CONSTRUCTED (EpsilonCertificate.wl, key
-  D3_epsilonCertificate): a window-7 transfer-SDP sub-action — 128 pairs of
-  exact rational PSD blocks Q (5×5, glue quad + apex) / R (4×4, X-triangle +
-  apex) per de Bruijn-7 node, closure potentials ψ, DP potentials Φ with fixed
-  strategy — proving **gap(w) ≤ Γ = 1541247/20000000 = 0.07706235 for EVERY
-  gluing word**, i.e. ε = 0.0071648 above the cct optimum. Assembly lemma:
-  blocks sum to M = [[I+B, e],[eᵀ, σ]] ⪰ 0 (uniform unit diagonal/border by
-  the edge equalities) ⇒ Schur ⇒ ϑ(ring) ≤ σ = Σd; Φ-telescoping ⇒
-  α(ring) ≥ Σr; ψ-closure summed over the word's closed de Bruijn walk
-  telescopes to gap ≤ Γ. All identities and 256 PSD facts exact rational,
-  re-verified independently in WL. Convergence: Γ(k) = 0.1667 (pinch), 0.1250,
-  0.1020, 0.0953, 0.0824, 0.07706 for k = 2..7 — ε roughly halves per window
-  step; ε → 0 exactly is the τ_cct field obstruction. Bonus: the Q/R clique
-  family solves the per-cycle transfer-SDP EXACTLY (< 10⁻⁶ loss on every
-  tested word) — a position-space word-density solver with no DFT symbol.
+  certificate~~ RESOLVED — CONSTRUCTED (EpsilonCertificate.wl [k=7],
+  EpsilonCertificate8.wl [k=8]; keys D3_epsilonCertificate,
+  D3_periodicOrbitSufficiency): a window-k transfer-SDP sub-action — per
+  de Bruijn-k node a pair of exact rational PSD blocks Q (5×5, glue quad + apex)
+  / R (4×4, X-triangle + apex), closure potentials ψ, DP potentials Φ with fixed
+  strategy — proving the **DENSITY bound gap̄(w) ≤ Γ_k for EVERY gluing word**
+  (Γ₇ = 1541247/20000000 = 0.0770624, Γ₈ = 941357/12500000 = 0.0753086; ε =
+  0.0054 above gap(cct) at k=8). IMPORTANT (adversarially corrected): this is an
+  L→∞ DENSITY bound, NOT a per-finite-ring bound. θ(ring_L) ≤ Σd is exact per
+  ring (Schur on M = [[I+B,e],[eᵀ,σ]] ⪰ 0), but the α side telescopes only up to
+  a bounded boundary, α(ring_L) ≥ Σr − 2·max|Φ| — so the EXACT per-ring form
+  α(ring) ≥ Σr is FALSE (cctt at L=4: α=5 < Σr=5.488, per-block gap 0.0839 > Γ₇);
+  both boundaries (ψ closed-walk-exact, Φ finite-valued) vanish under /L, giving
+  gap̄(w) ≤ Γ_k. The rigorous machine-checked core is the POINTWISE per-edge
+  bound σ(e) ≤ Γ_k (exact rational, all 256/512 edges). PERIODIC-ORBIT
+  SUFFICIENCY (for the certified cocycle, NOT the true functional): σ(e) =
+  d(x)−r(e)+ψ(x)−ψ(w) is locally constant on the de Bruijn-k SFT, so sup over ALL
+  words of the certified functional = max cycle mean of σ = Γ_k (Karp +
+  mean-payoff LP duality; a maximizing invariant measure for a locally-constant
+  potential sits on a periodic orbit) — realized at the certificate's BOTTLENECK
+  words (cttt)^∞ [k=7] / (ctt)^∞ [k=8], low cis-fraction, NOT cct. Hence no
+  aperiodic word beats the best periodic word for the certified bound. Γ_k =
+  0.1667, 0.1250, 0.1020, 0.0953, 0.0824, 0.0770624, 0.0753086 (k=2..8;
+  decrements non-monotone). Bonus: the Q/R clique family solves the per-cycle
+  transfer-SDP EXACTLY (word_density_transfer_sdp; < 10⁻⁶ loss) — position-space,
+  no DFT symbol.
   ~~Trans-CHAIN density~~ RESOLVED (key D3_transChainResolved): open trans
   chains have the SAME bulk density τ\* (increments 1.3767178 within
   certificates from m = 50 to 800; boundary constant ≈ 0.995), with
@@ -454,7 +504,86 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   Small-m accident: ϑ(trans-chain 5) = α = 8 exactly. Durable tools added to
   `lovasz_theta_sparse.py`: pentagon_chain_word, alpha_chain_word,
   word_density_transfer_sdp (exact position-space ϑ-density of any periodic
-  word; no symmetry reduction). All §6 mesh threads are now resolved; what
-  remains genuinely open at research grade: exact (ε → 0) global optimality
-  of (cct)^∞ — blocked by the τ_cct field — and the ergodic-optimization
-  proof that periodic orbits suffice.
+  word; no symmetry reduction). §6 mesh threads status: the RIGOROUS results are
+  gap̄(w) ≤ Γ_k for all words (density bound) and the bracket sup_w gap̄(w) ∈
+  [0.069898, 0.075309] (cct optimal to within ε=0.0054); periodic-orbit
+  sufficiency holds for the CERTIFIED cocycle. GENUINELY OPEN (not obstructed):
+  exact global optimality of (cct)^∞, i.e. whether sup = gap(cct) and whether
+  lim_k Γ_k = gap(cct); and periodic-orbit sufficiency for the TRUE gap
+  functional θ̄−ᾱ (which is not locally constant). The τ_cct height result
+  bears only on single finite exact rational certificates.
+
+## 10. Positioning: the atomic-GE program — reach and boundaries
+
+The organizing premise of this repository is reductive: treat the **pentagon C₅ as
+the atom** of contextuality and the **graph-exclusivity (GE) layer** — exclusivity
+graph + Lovász ϑ (CSW, arXiv:1010.2163) — as the primary machinery, then try to
+*recreate* contextuality by building composites out of pentagon atoms. The accumulated
+results let us grade that program precisely: it succeeds completely at the
+**quantitative and compositional** face of cyclic contextuality, and it fails — in a
+mapped, informative way — at the reductive dream of one atom recreating
+contextuality-as-a-single-thing. The value is that the corpus *confirms the program
+within its scope and simultaneously charts the scope's three boundaries*, which is a
+stronger outcome than a bare "it works."
+
+**Where the program delivers.** (i) C₅ is the atom by theorem, not analogy: minimal
+cycle with α = 2 < ϑ = √5 < α\* = 5/2, triangle collapses by Specker (§4–5). (ii) CSW
+makes the quantum bound *equal a graph invariant* — "contextuality through the graph"
+is a theorem the pentagon is the paradigm of. (iii) It composes and **scales**: pentagon
+meshes give ϑ growing linearly (density τ\* ≈ 1.3767, α(ring N) = ⌊4N/3⌋ a theorem, §6)
+while any state-vector treatment grows as 2^(5N) — the atomic-graph route makes
+arbitrarily large contextual advantage *computable and certifiable* at 10⁵–10⁶ blocks
+(LovaszThetaSparse, the word-density transfer-SDP, EpsilonCertificate.wl). (iv) The atom
+acts as a *resource under composition*: one quantum pentagon activates a heptagon PR box
+that identical copies provably cannot (HeptagonCatalysis.wl). (v) The currency law
+CF = (n−1)·ν (kcbs_epilogue.wl) is one non-classicality currency reconstructed from
+another using only the cycle's own constant 2α.
+
+**The three boundaries.** (B1) **Composition is bond-dependent, not atom-determined.**
+The cis/trans discovery (§6): the same pentagon glued two ways gives an extensive
+quantum gap (trans) or *none* (cis saturates α\* classically). The atom under-determines
+the molecule; the bonds carry structure the atom doesn't — the gluing-word optimum
+(cct)^∞ makes that design space concrete. (B2) **The graph is a lossy projection of a
+taller stack** — graph ↦ sheaf ↦ phase-space. α/ϑ/α\* capture bounds but are blind to
+the possibilistic/cohomological layer: certifying strong contextuality (Wright box) and
+separating models with identical supports needed the AB sheaf and the Čech obstruction
+(SupportCohomology.wl), not the exclusivity graph; the harmonic/Laplacian residual is
+*blind to contextuality by construction*. (B3) **Non-classicality is not monolithic,**
+so one atom cannot recreate all of it: for the single qutrit, Wigner negativity and KCBS
+contextuality *come apart* (the noise window (0.494, 0.585), kcbs_ledger.wl), and even
+adjoining the pentagon's own phase-space parity witnesses cannot manufacture a stronger
+joint violation (the metric-binding no-go, kcbs_epilogue.wl). Even the atom's quantum
+bound √5 is a two-copy fact (C₅∨C₅, §5), not a clean single-graph one.
+
+**Practical applications.** Ordered from repo-ready to research-grade:
+
+- **Scalable graph-optimization tooling (ready now).** `LovaszThetaSparse` (chordal/Agler
+  decomposition), the Z_N-symmetry DFT route, and the position-space word-density
+  transfer-SDP are general large-graph ϑ solvers (10⁵–10⁶ vertices, certified), usable
+  well beyond contextuality — Shannon-capacity bracketing (CaseStudies §A), Mycielskian
+  chromatic bounds (§B), any sandwich-theorem problem. This is the most immediately
+  reusable output.
+- **Classical-simulation cost accounting.** Wigner negativity is the sampling overhead of
+  classical simulation (Pashayan–Wallman–Bartlett, PRL 115, 070501); the currency law
+  turns an easy LP (contextual fraction CF) into ν, i.e. into a *simulation-hardness /
+  magic budget* estimate for the whole n-cycle family — practical for benchmarking and
+  for resource accounting in magic-state schemes (Howard et al., Nature 510, 351:
+  contextuality supplies the magic; the channel ledger prices each gate).
+- **Certified randomness.** Contextuality certifies randomness; the scalable meshes yield
+  *extensive* certified randomness with linearly-growing certificates rather than the
+  exponential cost of a state-space treatment — a near-term device-independent-flavoured
+  protocol resource.
+- **Platform / hardware tests and dimension witnessing.** The circuits (encodings A/B) are
+  genuine contextuality tests *when run on real gate hardware* — qutrit dimension
+  witnessing and state self-testing — with the honest caveat (§3, kcbs_simulation.wl)
+  that a simulator reproduces statistics, not evidential force. Hardware remains the open
+  item (§9).
+- **Resource activation / cryptography (speculative).** The catalysis result is a
+  resource-theory primitive: individually inert copies made jointly useful by a fixed
+  qutrit catalyst — the natural direction is non-locality/contextuality distillation and
+  activation-based protocols.
+- **Methodological: a "which certificate for which task" map.** Knowing *where* the graph
+  layer is blind (B2, B3) is itself the practical payoff — it tells a practitioner to
+  reach for the graph invariant for bounds and scaling, the sheaf/Čech layer for
+  possibilistic/strong contextuality and paradox (AvN), and the phase-space negativity for
+  simulation cost and magic, rather than expecting any one of them to answer all three.
