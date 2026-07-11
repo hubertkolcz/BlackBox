@@ -120,3 +120,12 @@ SmokeTest = <|
 |>;
 Print[SmokeTest];
 Print["ALL PASS: ", And @@ Values[SmokeTest]];
+
+(* dedup layer (v1.2.0): the shared constructions promoted from the notes *)
+DedupTest = <|
+  "cycleORProduct" -> Through[{VertexCount, EdgeCount}[CycleORProduct[{7, 5}]]] == {35, 350},
+  "quantumEventProbability" -> Simplify[QuantumEventProbability[5] - 1/Sqrt[5]] === 0,
+  "pentagonRingTheorem" -> And @@ Table[IndependenceNumber[PentagonRing[n]] == Floor[4 n/3], {n, {5, 9, 12}}]
+|>;
+Print[DedupTest];
+Print["DEDUP PASS: ", And @@ Values[DedupTest]];
