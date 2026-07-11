@@ -325,6 +325,29 @@ optimalityLemmas = Module[{phi = {0, -1/3, -2/3}},
       {w, {"cct", "ctt", "cctt", "ctctt"}}], TrueQ]];
 optimalityLemmas
 
+(* ::Text:: *)
+(*The \[Alpha]-side characterization is now a THEOREM. For every gluing word, \[Alpha]-density >= max(4/3, 1 + fc/2) where fc is the cis-fraction; hence \[Alpha]-density = 4/3 forces fc <= 2/3, and if moreover fc = 2/3 the word IS (cct)^k; conversely (cct)^k attains 4/3. (The naive converse fails: cctt has fc = 1/2 but density 11/8.) Proof. (1) CERTIFICATE C: potentials (0, -1/2, -1) on the interface DP give adjusted gain >= 3/2 against every cis letter and >= 1 against every trans letter at every state \[LongDash] six inequalities, checked below \[LongDash] so telescoping yields density >= fc(3/2) + (1 - fc)(1) = 1 + fc/2, tight on the pure-cis/cct family. (2) THE ccc BONUS, walk-free: with Lemma B's potentials the adjusted max-plus CUBE of the cis step satisfies min over entry states of max over exits of (A^3) = 13/3 = 3(4/3) + 1/3, and segment-guarantees chain under concatenation, so any word containing ccc has density >= 4/3 + 1/(3p) > 4/3 strictly. (3) COMBINATORICS: fc = 2/3 makes the cis-runs between trans letters average exactly 2; density 4/3 rules out ccc by (2), capping every run at 2; average 2 under cap 2 forces every run = 2, i.e. the word is (cct)^k. (4) Attainment: the cct staircase \[Alpha] = \[LeftFloor]4L/3\[RightFloor] was anchored exactly above (L = 6, 9).*)
+
+(* ::CodeText:: *)
+(*The three certificate computations \[LongDash] certificate C, the adjusted max-plus cube, and the run-combinatorics closure enumerated through period 12:*)
+
+(* ::Input:: *)
+alphaCisTheorem = Module[{phiC = {0, -1/2, -1}, phiB = {0, -1/3, -2/3},
+    adjR, Acc, mpMul, A3, comb},
+   adjR[T_, phi_, i_] := Max[Table[T[[i, j]] + phi[[j]] - phi[[i]], {j, 3}]];
+   Acc = Table[dpTransfer["c"][[i, j]] + phiB[[j]] - phiB[[i]], {i, 3}, {j, 3}];
+   mpMul[X_, Y_] := Table[Max[Table[X[[i, k]] + Y[[k, j]], {k, 3}]], {i, 3}, {j, 3}];
+   A3 = mpMul[mpMul[Acc, Acc], Acc];
+   comb = AllTrue[Flatten[Table[If[Mod[p, 3] == 0,
+        Module[{ws = Select[Tuples[{"c", "t"}, p], Count[#, "c"] == 2 p/3 &&
+              ! StringContainsQ[StringJoin[#] <> StringJoin[#], "ccc"] &]},
+         AllTrue[ws, MemberQ[Table[RotateLeft[Characters[StringRepeat["cct", p/3]], r],
+             {r, 0, p - 1}], #] &]], True], {p, 3, 12}]], TrueQ];
+   AllTrue[Range[3], adjR[dpTransfer["c"], phiC, #] >= 3/2 &] &&
+    AllTrue[Range[3], adjR[dpTransfer["t"], phiC, #] >= 1 &] &&
+    Min[Table[Max[A3[[i]]], {i, 3}]] == 13/3 && comb];
+alphaCisTheorem
+
 (* ::Section:: *)
 (*Verification*)
 
@@ -380,6 +403,8 @@ CaseStudiesVerification = <|
      cctDensity < 1.4032316 (* the finite-L 2400 reading, corrected by the continuum solve *),
   "D3_towardsGlobalOptimality" -> optimalityLemmas &&
      Abs[(3/2 - (cctDensity - 4/3)) - 1.4301025] < 10^-6 &&
-     cctDensity - 4/3 < 1/6 (* the pinch bound is not saturated by cct *)
+     cctDensity - 4/3 < 1/6 (* the pinch bound is not saturated by cct *),
+  "D3_alphaCisTheorem" -> alphaCisTheorem &&
+     gluingWordAnchor[[2]] == 8 && gluingWordAnchor[[3]] == 12
 |>;
 Column[{CaseStudiesVerification, "OK" -> And @@ Values[CaseStudiesVerification]}]
