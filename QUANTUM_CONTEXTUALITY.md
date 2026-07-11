@@ -409,9 +409,12 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   METRIC-BINDING half as a NO-GO within the cascade parity pool (exhaustive
   +1/+2, greedy; negative-cell witnesses never bind to clicks). The ledger's
   "CF = 4ν along the whole C₅ white-noise family" is explained: mixing stays
-  inside the pentagon scenario, whose ratio is 4. ~~Analytic PROOF of
-  CF = (n−1)ν~~ COMPLETE & UNCONDITIONAL for every no-disturbance model on the
-  odd n-cycle (`CF-negativity-proof.md`, 11 July): (Lemma 0) every contextual
+  inside the pentagon scenario, whose ratio is 4. NOTE: the identity itself is
+  NOT new — it is Camillo–Cervantes Thm 2.1 (arXiv:2305.16574, 2023),
+  CNTF = (n−1)·CNT3 for cyclic systems, in the Contextuality-by-Default
+  literature (the earlier novelty pass searched past it). What follows is an
+  INDEPENDENT RE-DERIVATION (`CF-negativity-proof.md`), self-contained and
+  machine-verified but not original: (Lemma 0) every contextual
   C_n model violates exactly ONE cycle-inequality facet (parity: two odd
   patterns differ in even ≥2 coords ⇒ B_γ+B_γ′ ≤ 2(n−2)); (Lemma 1) Wright box
   ν = 1/(n−1) by G-symmetrisation; LOWER bound CF ≤ (n−1)ν via the explicit

@@ -1,6 +1,17 @@
 # CF = (n−1)·ν on the odd n-cycle — an analytic proof
 
-**Claim.** For odd `n ≥ 3`, every no-disturbance empirical model `e` on the n-cycle
+> **PROVENANCE (read first).** This theorem is **not new**. It is Camillo & Cervantes,
+> *"Measures of contextuality in cyclic systems and the negative probability measure
+> CNT3"* (arXiv:2305.16574, 2023), Theorem 2.1: `CNTF(R_n) = (n−1)·CNT3(R_n)` for every
+> cyclic n-system, where `CNTF` is the Abramsky–Barbosa–Mansfield contextual fraction
+> and `CNT3` is the L1-minimal signed-quasiprobability measure — the same object as `ν`
+> here. It lives in the **Contextuality-by-Default** literature (Dzhafarov–Cervantes),
+> which an earlier novelty pass of this project searched past. The proof below was
+> derived independently in this project before the citation was found; it is an
+> **independent re-derivation of a published result**, kept for its self-contained,
+> machine-verified form, **not** as an original theorem. Cite Camillo–Cervantes (2023).
+
+**Statement.** For odd `n ≥ 3`, every no-disturbance empirical model `e` on the n-cycle
 contextuality scenario satisfies
 
 > **CF(e) = (n − 1) · ν(e)**
@@ -8,7 +19,7 @@ contextuality scenario satisfies
 where `CF` is the contextual fraction and `ν` the signed-decomposition negativity
 `ν(e) = min{ ½(‖c‖₁ − 1) : M c = e }` (minimal total negative weight of a
 quasi-probability over the deterministic global assignments). This turns the observed
-`CF = 4ν` for the KCBS pentagon (`n = 5`) into a theorem, with the constant `4 = n − 1`.
+`CF = 4ν` for the KCBS pentagon (`n = 5`) into an instance, with the constant `4 = n − 1`.
 
 Verification companion: `SignedNegativity.wl`. All lemma values below were also checked
 in exact arithmetic (n = 5,7,9 and random asymmetric models).
