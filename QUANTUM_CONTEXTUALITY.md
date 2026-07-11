@@ -511,6 +511,7 @@ joint violation (the metric-binding no-go, kcbs_epilogue.wl). Even the atom's qu
 bound √5 is a two-copy fact (C₅∨C₅, §5), not a clean single-graph one.
 
 **Practical applications.** Ordered from repo-ready to research-grade:
+
 - **Scalable graph-optimization tooling (ready now).** `LovaszThetaSparse` (chordal/Agler
   decomposition), the Z_N-symmetry DFT route, and the position-space word-density
   transfer-SDP are general large-graph ϑ solvers (10⁵–10⁶ vertices, certified), usable
