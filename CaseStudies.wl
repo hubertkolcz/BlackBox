@@ -342,6 +342,81 @@ alphaCisTheorem = Module[{phiC = {0, -1/2, -1}, phiB = {0, -1/3, -2/3},
     Min[Table[Max[A3[[i]]], {i, 3}]] == 13/3 && comb];
 alphaCisTheorem
 
+(* ::Text:: *)
+(*THE EXPLICIT \[Epsilon]-OPTIMALITY CERTIFICATE. The transfer-SDP sub-action program is now constructed explicitly at window k = 7 and made exact: EpsilonCertificate.wl (in this directory) holds 128 pairs of rational PSD blocks Q (5\[Times]5, on the glue quad {u, v, A, B, apex}) and R (4\[Times]4, on {v, B, X, apex}) \[LongDash] one pair per de Bruijn-7 node \[LongDash] plus closure potentials \[Psi], DP potentials \[CapitalPhi] with a fixed strategy, and the rational bound \[CapitalGamma] = 1541247/20000000 = 0.07706235. THEOREM: every gluing word has extensive gap density at most \[CapitalGamma], i.e. within \[Epsilon] = 0.0071648 of the (cct) optimum. Assembly lemma: placed along ANY word ring, the blocks sum to M = [[I + B, e],[e^T, \[Sigma]]] \[LongDash] uniform unit diagonal and unit border by the edge equalities, edge-supported B, vanishing fills \[LongDash] and M is PSD as a sum of PSD liftings, so the Schur complement gives I + B >= ee^T/\[Sigma] and hence \[CurlyTheta](ring) <= \[Sigma] = \[Sum] d(node), d = Q[apex, apex] + R[apex, apex]. The \[CapitalPhi]-potentials give \[Alpha](ring) >= \[Sum] r(edge) by Lemma-B telescoping, with r derived exactly from \[CapitalPhi]. Summing the closure d(x) - r(e) <= \[CapitalGamma] + \[Psi](w) - \[Psi](x) over the word's CLOSED de Bruijn walk telescopes \[Psi] away: \[CurlyTheta]-density - \[Alpha]-density <= \[CapitalGamma]. Every identity and PSD fact is finite exact rational arithmetic, re-verified below independently of the generating code. Convergence of the construction: \[CapitalGamma](k) = 0.1667 (k = 2; the pinch), 0.1250, 0.1020, 0.0953, 0.0824, 0.07706 (k = 7) \[LongDash] each window step roughly halves \[Epsilon]; driving \[Epsilon] to 0 exactly is the \[Tau]cct number-field obstruction. Bonus discovery en route: the same Q/R clique family solves the PER-CYCLE transfer-SDP exactly (losses < 10^-6 against \[CurlyTheta]-density on every tested word) \[LongDash] a position-space exact word-density solver that never builds the DFT symbol.*)
+
+(* ::CodeText:: *)
+(*Load and exactly re-verify the certificate \[LongDash] node and edge equalities, 256 exact PSD checks, strategy-derived rates, closure \[LongDash] plus an end-to-end assembly check: the rational blocks assembled on small cct and pure-trans rings give exact PSD certificates dominating the dense-SDP \[CurlyTheta]:*)
+
+(* ::Input:: *)
+Get[FileNameJoin[{Quiet@Check[NotebookDirectory[], Directory[]], "EpsilonCertificate.wl"}]];
+epsilonCertificateCheck = Module[
+  {kE, nodesE, Qs, Rs, psiE, phiE, stratE, edgesE, ok = True, ratesE, gamE, dE,
+   iu = 1, iv = 2, ia = 3, ib = 4, ip = 5, jv = 1, jb = 2, jx = 3, jp = 4},
+  kE = EpsilonCertificate["k"]; nodesE = EpsilonCertificate["Nodes"];
+  Qs = EpsilonCertificate["Q"]; Rs = EpsilonCertificate["R"];
+  psiE = EpsilonCertificate["Psi"]; phiE = EpsilonCertificate["Phi"];
+  stratE = EpsilonCertificate["Strategy"]; gamE = EpsilonCertificate["Gamma"];
+  edgesE = Select[Tuples[nodesE, 2], StringDrop[#[[1]], 1] === StringDrop[#[[2]], -1] &];
+  Do[ok = ok && Rs[w][[jx, jx]] == 1 && Rs[w][[jx, jp]] == 1 &&
+     Qs[w][[iv, ia]] == 0 && Qs[w][[iu, ib]] == 0 &&
+     Qs[w][[iv, ib]] + Rs[w][[jv, jb]] == 0, {w, nodesE}];
+  Do[Module[{w = e[[1]], x = e[[2]], b, rA, rB},
+     b = StringTake[w, {-1}];
+     {rA, rB} = If[b === "c", {iu, iv}, {iv, iu}];
+     ok = ok &&
+       Qs[w][[ia, ia]] + Qs[x][[rA, rA]] + If[b === "t", Rs[x][[jv, jv]], 0] == 1 &&
+       Qs[w][[ib, ib]] + Rs[w][[jb, jb]] + Qs[x][[rB, rB]] +
+         If[b === "c", Rs[x][[jv, jv]], 0] == 1 &&
+       Qs[w][[ia, ip]] + Qs[x][[rA, ip]] + If[b === "t", Rs[x][[jv, jp]], 0] == 1 &&
+       Qs[w][[ib, ip]] + Rs[w][[jb, jp]] + Qs[x][[rB, ip]] +
+         If[b === "c", Rs[x][[jv, jp]], 0] == 1], {e, edgesE}];
+  ok = ok && AllTrue[nodesE, PositiveSemidefiniteMatrixQ[Qs[#]] &] &&
+    AllTrue[nodesE, PositiveSemidefiniteMatrixQ[Rs[#]] &];
+  ratesE = Association[Table[Module[{w = e[[1]], x = e[[2]], T},
+      T = dpTransfer[StringTake[w, {-1}]];
+      e -> Min[Table[Module[{sig = stratE[ToString[s - 1] <> "|" <> w <> ">" <> x]},
+          T[[s, sig]] + phiE[ToString[sig - 1] <> "|" <> x] -
+           phiE[ToString[s - 1] <> "|" <> w]], {s, 3}]]], {e, edgesE}]];
+  dE[x_] := Qs[x][[ip, ip]] + Rs[x][[jp, jp]];
+  ok = ok && AllTrue[edgesE, dE[#[[2]]] - ratesE[#] + psiE[#[[2]]] - psiE[#[[1]]] <= gamE &];
+  ok && gamE == 1541247/20000000];
+epsilonAssemblyCheck = Module[{assemble, kE = EpsilonCertificate["k"]},
+  assemble[word_String, reps_Integer] := Module[
+    {w = Characters[StringRepeat[word, reps]], L, n, M, dsum = 0, Qs, Rs},
+    Qs = EpsilonCertificate["Q"]; Rs = EpsilonCertificate["R"];
+    L = Length[w]; n = 3 L;
+    M = ConstantArray[0, {n + 1, n + 1}];
+    Do[Module[{km = Mod[j - 1, L], nd, u, v, qi, ri},
+      nd = StringJoin @@ Table[w[[Mod[j - (kE - 1) + i, L] + 1]], {i, 0, kE - 1}];
+      {u, v} = If[w[[Mod[j - 1, L] + 1]] === "c",
+        {3 km + 1, 3 km + 2}, {3 km + 2, 3 km + 1}];
+      qi = {u, v, 3 j + 1, 3 j + 2, n + 1}; ri = {v, 3 j + 2, 3 j + 3, n + 1};
+      M[[qi, qi]] += Qs[nd]; M[[ri, ri]] += Rs[nd];
+      dsum += Qs[nd][[5, 5]] + Rs[nd][[4, 4]]], {j, 0, L - 1}];
+    {PositiveSemidefiniteMatrixQ[M], dsum}];
+  Module[{cct = assemble["cct", 2], tt = assemble["t", 5]},
+    cct[[1]] && tt[[1]] &&
+     cct[[2]] > LovaszTheta[wordRing["cct", 2]] &&
+     tt[[2]] > LovaszTheta[wordRing["t", 5]]]];
+{epsilonCertificateCheck, epsilonAssemblyCheck, N[EpsilonCertificate["Gamma"]]}
+
+(* ::Text:: *)
+(*The last open thread: the TRANS-CHAIN density. Open trans-glued chains (PentagonChain with alternating orientation; builder pentagon_chain_word, CLI "transchain") settle onto the SAME bulk density as the trans ring: per-block increments equal \[Tau]* within the certificates (1.3767178 against 1.37671775, from m = 50 through m = 800, certgaps 10^-6..8\[CenterDot]10^-4), with boundary constant \[CurlyTheta] - \[Tau]* m -> 0.995(1). The exact interface DP gives \[Alpha](trans-chain m) = \[LeftFloor]4(m+1)/3\[RightFloor] at every computed point (m = 3..12 exhaustively below; m = 25..800 spot-checked), so the gap is EXTENSIVE, \[TildeTilde] (\[Tau]* - 4/3) m. Consequence, closing the reinterpretation of Case D: the "rings beat chains" dichotomy was never about closure \[LongDash] open trans chains carry the same bulk quantum advantage, and the decaying-gap chains of Case D were cis chains. Small-m accident mirroring the cis parity law: \[CurlyTheta](trans-chain 5) = \[Alpha] = 8 exactly. Durable tooling from this program, now part of lovasz_theta_sparse.py: pentagon_chain_word, alpha_chain_word, and word_density_transfer_sdp \[LongDash] the last solves ANY periodic word's exact \[CurlyTheta]-density in position space (validated against \[Tau]*, 3/2, and the cct density to 2\[CenterDot]10^-6), no symmetry reduction required.*)
+
+(* ::CodeText:: *)
+(*Trans-chain anchors: the m = 5 exact coincidence against the dense SDP, and the \[Alpha] staircase \[LeftFloor]4(m+1)/3\[RightFloor] exhaustively for m = 3..12:*)
+
+(* ::Input:: *)
+transChainWL[m_Integer] := Module[{edges = {}, u = 1, v = 2},
+  Do[Module[{a = 3 k + 3, b = 3 k + 4, x = 3 k + 5},
+    edges = Join[edges, {{u, v}, {u, a}, {a, b}, {b, x}, {x, v}}];
+    {u, v} = {b, a}], {k, 0, m - 1}];
+  Graph[Range[3 m + 2], UndirectedEdge @@@ DeleteDuplicates[Sort /@ edges]]];
+transChainAnchor = {LovaszTheta[transChainWL[5]], IndependenceNumber[transChainWL[5]],
+   Table[IndependenceNumber[transChainWL[m]] == Floor[4 (m + 1)/3], {m, 3, 12}]};
+transChainAnchor
+
 (* ::Section:: *)
 (*Verification*)
 
@@ -399,6 +474,13 @@ CaseStudiesVerification = <|
      Abs[(3/2 - (cctDensity - 4/3)) - 1.4301025] < 10^-6 &&
      cctDensity - 4/3 < 1/6 (* the pinch bound is not saturated by cct *),
   "D3_alphaCisTheorem" -> alphaCisTheorem &&
-     gluingWordAnchor[[2]] == 8 && gluingWordAnchor[[3]] == 12
+     gluingWordAnchor[[2]] == 8 && gluingWordAnchor[[3]] == 12,
+  "D3_epsilonCertificate" -> epsilonCertificateCheck && epsilonAssemblyCheck &&
+     EpsilonCertificate["Gamma"] == 1541247/20000000 &&
+     EpsilonCertificate["Gamma"] < 1/6 &&
+     Abs[N[EpsilonCertificate["Gamma"]] - (cctDensity - 4/3) - 0.0071648] < 10^-5,
+  "D3_transChainResolved" -> Abs[transChainAnchor[[1]] - 8] < 10^-5 &&
+     transChainAnchor[[2]] == 8 && AllTrue[transChainAnchor[[3]], TrueQ] &&
+     Abs[1.3767178 - transDensityLimit] < 10^-6
 |>;
 Column[{CaseStudiesVerification, "OK" -> And @@ Values[CaseStudiesVerification]}]

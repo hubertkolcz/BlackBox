@@ -1,0 +1,10 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(* Beginning of Notebook Content *)
+Notebook[{Cell["CEFilterMixed", "ObjectName", ExpressionUUID -> "053acee5-e3c2-45ec-9e8b-a752828ec36a"], Cell["CEFilterMixed[{{g1, p1}, {g2, p2}, ...}] applies the Consistent-Exclusivity filter to the independent composition of DIFFERENT experiments: exclusivity graphs g_i with assignments p_i (vectors in VertexList order); joint events are exclusive iff exclusive in some factor and weights multiply. Same return keys as CEFilter plus \"MaxLoad\" (worst clique load even when passing). Exhaustive clique enumeration - practical for two factors / a few hundred product vertices.", "Usage", ExpressionUUID -> "ad9a737f-53eb-46fe-9e26-2d88c9c591ff"], Cell["Basic Examples", "Section", ExpressionUUID -> "0372cb0a-97e6-4af4-a573-a6d0516a9712"], Cell[BoxData[RowBox[{RowBox[{"CEFilterMixed", "[", RowBox[{"{", RowBox[{RowBox[{"{", RowBox[{RowBox[{"CycleGraph", "[", "7", "]"}], ",", RowBox[{"ConstantArray", "[", RowBox[{FractionBox["1", "2"], ",", "7"}], "]"}]}], "}"}], ",", RowBox[{"{", RowBox[{RowBox[{"CycleGraph", "[", "5", "]"}], ",", RowBox[{"ConstantArray", "[", RowBox[{FractionBox["1", SqrtBox["5"]], ",", "5"}], "]"}]}], "}"}]}], "}"}], "]"}], "[", "\"Passes\"", "]"}]], "Input", ExpressionUUID -> "82ee9a6b-f140-4f0e-8911-f9b4c2f0ac22"]}, FrontEndVersion -> "15.0 for Microsoft Windows (64-bit) (May 19, 2026)", StyleDefinitions -> "Default.nb", ExpressionUUID -> "3e6d65cc-0364-4c1f-9e59-db689857d37c"]
+(* End of Notebook Content *)

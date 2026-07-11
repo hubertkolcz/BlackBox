@@ -10,13 +10,13 @@
 (*Hubert Ko\[LSlash]cz \[LongDash] July 2026. Companion to the pipeline's sheaf_laplacian.wl, whose own pre-registered gate REJECTED the cellular-sheaf Laplacian as a contextuality measure (harmonic residuals {0, 0, 0} on classical/quantum/Wright against CF {0, 2 Sqrt[5] - 4, 1}: linear least-squares over signed stalks sees exactly the no-disturbance layer and is provably blind to the cone condition where contextuality lives). That verdict pointed at the successor tool: the \:010cech obstruction of the SUPPORT presheaf (Abramsky-Mansfield-Barbosa, EPTCS 95; Abramsky-Barbosa-Kishida-Lal-Mansfield, "Contextuality, Cohomology and Paradox", arXiv:1502.03097; computed for Ulrey models in Cech-Cohomology-of-Ulrey-Models-AB-Sheaf.nb). This note is the gate test of that successor, now CechObstruction in the BlackBox paclet. Headless verification: wolframscript -file RunSupportCohomology.wl -print all (must end OK -> True).*)
 
 (* ::Abstract:: *)
-(*Linearize the support of an empirical model over the ring Z: over each context C, the free Z-module on the support sections; restriction = Z-linear extension of section restriction. A support section s is OBSTRUCTED when its class \[Gamma](s) in the first relative \:010cech cohomology is nonzero \[LongDash] equivalently (arXiv:1502.03097, Prop. 4.4) when no compatible family of Z-linear combinations of support sections restricts to s. \[Gamma](s) != 0 certifies that s extends to no global assignment (logical contextuality at s); \[Gamma] != 0 everywhere certifies strong contextuality. Pre-registered gate (semantics fixed before computation, attack-catalog style): ADOPT if the classical C5 model (1/5, 2/5, 2/5, 0) carries no obstruction, the Wright box a nonzero obstruction, and the quantum-maximal model is classified probabilistically contextual \[LongDash] the three models pairwise separated \[LongDash] where the Laplacian residual was blind ({0, 0, 0}); REJECT otherwise. Result: ADOPT. Classical 0/15 obstructed, quantum 0/15 (its support EQUALS the classical support \[LongDash] no support functional may separate them; the LP layer does), Wright 10/10: a cohomological certificate of strong contextuality. Corroboration: C7 (0/21 vs 14/14, |Se| = LucasL[7] = 29), even-cycle parity control (C6 Wright: 0/12, noncontextual), CHSH cross-validation against the literature (PR box 8/8; Hardy 0/13 with exactly one genuinely nonextendable section \[LongDash] the documented false negative of the Z-linear witness), and the two-copy product cover of ab_sheaf.wl (Wright\[CircleTimes]Wright 100/100, quantum\[CircleTimes]quantum 0/225, |Se| = 11^2). The absolute groups are computed too (CechCohomology, arbitrary covers, torsion by Smith normal form): the CHSH census reproduces the Ulrey-models notebook exactly, H^0 is multiplicative on the product cover (36 = 6^2), and the ambient H^1 \[LongDash] Z alike for the PR box and the noncontextual uniform model \[LongDash] confirms that the contextuality lives in the RELATIVE classes \[Gamma](s), nowhere else.*)
+(*Linearize the support of an empirical model over the ring Z: over each context C, the free Z-module on the support sections; restriction = Z-linear extension of section restriction. A support section s is OBSTRUCTED when its class \[Gamma](s) in the first relative \:010cech cohomology is nonzero \[LongDash] equivalently (arXiv:1502.03097, Prop. 4.4) when no compatible family of Z-linear combinations of support sections restricts to s. \[Gamma](s) != 0 certifies that s extends to no global assignment (logical contextuality at s); \[Gamma] != 0 everywhere certifies strong contextuality. Pre-registered gate (semantics fixed before computation, attack-catalog style): ADOPT if the classical C5 model (1/5, 2/5, 2/5, 0) carries no obstruction, the Wright box a nonzero obstruction, and the quantum-maximal model is classified probabilistically contextual \[LongDash] the three models pairwise separated \[LongDash] where the Laplacian residual was blind ({0, 0, 0}); REJECT otherwise. Result: ADOPT. Classical 0/15 obstructed, quantum 0/15 (its support EQUALS the classical support \[LongDash] no support functional may separate them; the LP layer does), Wright 10/10: a cohomological certificate of strong contextuality. Corroboration: C7 (0/21 vs 14/14, |Se| = LucasL[7] = 29), even-cycle parity control (C6 Wright: 0/12, noncontextual), CHSH cross-validation against the literature (PR box 8/8; Hardy 0/13 with exactly one genuinely nonextendable section \[LongDash] the documented false negative of the Z-linear witness), and the two-copy product cover of ab_sheaf.wl (Wright\[CircleTimes]Wright 100/100, quantum\[CircleTimes]quantum 0/225, |Se| = 11^2). The absolute groups are computed too (CechCohomology, arbitrary covers, torsion by Smith normal form): the CHSH census reproduces the Ulrey-models notebook exactly, H^0 is multiplicative on the product cover (36 = 6^2), and the ambient H^1 \[LongDash] Z alike for the PR box and the noncontextual uniform model \[LongDash] confirms that the contextuality lives in the RELATIVE classes \[Gamma](s), nowhere else. The exact order of each class (\"ObstructionOrder\", by Smith normal form) sharpens the census: GHZ's sixteen classes all have order EXACTLY 2 \[LongDash] rationally invisible, pure relative 2-torsion, the homological face of Mermin's mod-2 argument \[LongDash] while the odd-cycle boxes are obstructed with infinite order and Hardy's false negative is integral (order 1).*)
 
 (* ::Section:: *)
 (*Setting*)
 
 (* ::Text:: *)
-(*CechObstruction[scen, e] decides \[Gamma](s) per support section by three exact steps: a deterministic global witness (a global assignment through s consistent with the whole support) forces \[Gamma](s) = 0; failing that, exact rank of the compatibility system refutes rational solvability (hence Z-solvability); the residual rational-but-integer? cases go to FindInstance over the integers. Everything is exact arithmetic; no floating point enters any verdict.*)
+(*CechObstruction[scen, e] decides \[Gamma](s) per support section by three exact steps: a deterministic global witness (a global assignment through s consistent with the whole support) forces \[Gamma](s) = 0, order 1; failing that, exact rank of the compatibility system refutes rational solvability \[LongDash] order Infinity; the residual cases get the EXACT ORDER of the class (the least n with n \[Gamma](s) = 0) from the Smith normal form of the pinned system, reported under "ObstructionOrder" \[LongDash] a finite order > 1 is pure relative torsion, invisible to any rational method. Everything is exact arithmetic; no floating point enters any verdict.*)
 
 (* ::CodeText:: *)
 (*Load the library and repair any Global`-shadowing:*)
@@ -106,6 +106,63 @@ chQQ = CechObstruction[scenProd, prodModel[CycleModel[5, "Quantum"], CycleModel[
 (*Reading. On the fixed product cover \[LongDash] no pentad extension, no composite observable \[LongDash] the cohomological layer already expels the Wright product at every one of the 100 product sections: any compatible Z-linear product family would marginalize (sum coefficients over one copy's outcomes) to a single-copy compatible family, which the single-copy obstruction forbids. This is complementary to ab_sheaf.wl Sec. 3, where the QM-certified pentad extension kills the same model one level lower (local existence at C^0, remainder -1/4); and it is invisible to the GE/CE single-copy cap alpha* = 5/2, which admits the Wright box. The quantum product stays clean: 0/225 obstructed, |Se| = 121 = 11^2 \[LongDash] the product of the two Lucas-11 independent-set families, exactly as product structure demands.*)
 
 (* ::Section:: *)
+(*The GHZ Model, and the All-vs-Nothing Layer*)
+
+(* ::Text:: *)
+(*The other half of arXiv:1502.03097 (Sec. 6) is the All-vs-Nothing argument: collect every Z2-affine equation satisfied by ALL support sections of a context; the model is AvN when the joint theory is inconsistent. AvN certifies strong contextuality, and every AvN model is cohomologically strongly contextual \[LongDash] so AvN implies the \[Gamma]-certificate, and the two layers must agree wherever AvN fires. GHZ is the canonical AvN model and the canonical NON-CYCLE cover \[LongDash] three parties, X or Y each: exactly what CoverScenario exists for.*)
+
+(* ::CodeText:: *)
+(*The Mermin scenario and the GHZ model (parity 0 on XXX, parity 1 on the three XYY permutations); the theory is the four textbook equations, and their sum is 0 = 1:*)
+
+(* ::Input:: *)
+ghzScen = CoverScenario[{"aX", "aY", "bX", "bY", "cX", "cY"},
+  {{"aX", "bX", "cX"}, {"aX", "bY", "cY"}, {"aY", "bX", "cY"}, {"aY", "bY", "cX"}}];
+ghzModel = Flatten[Table[If[Mod[Total[s], 2] == par, 1/4, 0], {par, {0, 1, 1, 1}}, {s, Tuples[{0, 1}, 3]}]];
+chGHZ = CechObstruction[ghzScen, ghzModel]; avnGHZ = AvNArgument[ghzScen, ghzModel];
+{Row[{"GHZ \[Gamma]: ", chGHZ["ObstructedCount"], "/", chGHZ["SectionCount"], ", strong certificate: ", chGHZ["CohStronglyContextual"], ", |Se| = ", chGHZ["GlobalSupportSize"]}],
+ Row[{"GHZ AvN: ", avnGHZ["AvN"], ", equations: "}], avnGHZ["Equations"],
+ Row[{"GHZ obstruction orders (tally): ", Tally[Values[chGHZ["ObstructionOrder"]]]}]}
+
+(* ::Text:: *)
+(*The order column is the sharpest number in this note: every GHZ class has order EXACTLY 2 \[LongDash] \[Gamma](s) != 0 but 2 \[Gamma](s) = 0. The pinned compatibility system is rationally solvable (a rational method sees nothing), and the obstruction is pure 2-torsion of the relative cohomology: the mod-2 heart of the Mermin argument, now as an exact homological invariant. Contrast the whole rest of the census: Wright, PR and the Z3 box have infinite order (already obstructed over Q \[LongDash] the parity contradictions survive in every characteristic 0 ring), and Hardy's classes have order 1 (its Z-linear extension is genuinely integral). GHZ is the only model here that NEEDS the ring Z: over Q its obstruction is invisible, over Z_2 it is the AvN argument above.*)
+
+(* ::CodeText:: *)
+(*AvN across the whole census, with the cohomological strong certificate alongside \[LongDash] the implication AvN \[Implies] CSC holds row by row (the converse direction is not claimed: CSC models without parity structure exist outside this census):*)
+
+(* ::Input:: *)
+avnRows = {{"C5 classical", scen5, CycleModel[5, "Classical"], chC}, {"C5 quantum", scen5, CycleModel[5, "Quantum"], chQ},
+   {"C5 Wright", scen5, CycleModel[5, "Wright"], chW}, {"C6 Wright", CycleScenario[6], CycleModel[6, "Wright"], chW6},
+   {"PR box", scen4, ePR, chPR}, {"Hardy", scen4, eHardy, chH}, {"GHZ", ghzScen, ghzModel, chGHZ},
+   {"Wright\[CircleTimes]Wright", scenProd, prodModel[CycleModel[5, "Wright"], CycleModel[5, "Wright"]], chWW},
+   {"quantum\[CircleTimes]quantum", scenProd, prodModel[CycleModel[5, "Quantum"], CycleModel[5, "Quantum"]], chQQ}};
+avnTable = Module[{a}, Table[a = AvNArgument[r[[2]], r[[3]]];
+    {r[[1]], a["EquationCount"], a["AvN"], r[[4]]["CohStronglyContextual"], ! a["AvN"] || r[[4]]["CohStronglyContextual"]}, {r, avnRows}]];
+TableForm[avnTable, TableHeadings -> {None, {"model", "equations", "AvN", "CSC", "AvN \[Implies] CSC"}}]
+
+(* ::Text:: *)
+(*Reading. The AvN layer is the cheap end of the hierarchy \[LongDash] no cohomology, no LP, just parity bookkeeping over GF(2) \[LongDash] and it convicts GHZ, the Wright boxes (odd cycles and their products; the 5 equations x_i + x_{i+1} = 1 around C5 are the parity argument verbatim), and the PR box. It correctly refuses the Hardy model (no nontrivial equations survive its support), whose strong contextuality fails and whose \[Gamma] is the documented false negative one level up. The even-cycle control C6 carries 6 equations that ARE jointly satisfiable \[LongDash] AvN distinguishes odd from even for the same local data, exactly as the cohomology does.*)
+
+(* ::Section:: *)
+(*Beyond Binary: a Z3 Box on the Square*)
+
+(* ::Text:: *)
+(*CoverScenario accepts per-measurement outcome sets, and both \:010cech functions are outcome-agnostic (the obstruction's overlap equations range over the declared outcomes; the cohomology is built from restriction images). The demonstration model: three-outcome measurements on the 4-cycle, support y - x = 0 (mod 3) on three edges and y - x = 1 on the fourth \[LongDash] the Z3 analogue of the PR box. One honest scope note: the pentad-extended cover of ab_sheaf.wl Sec. 3 is NOT the multi-outcome showcase, deliberately \[LongDash] its composite 6-outcome context shares no measurement with the product contexts, so the Wright product dies there at local existence (C^0, remainder -1/4), before any gluing question; that phenomenon is already settled in ab_sheaf.wl.*)
+
+(* ::Input:: *)
+z3Scen = CoverScenario[Range[0, 3], Table[{i, Mod[i + 1, 4]}, {i, 0, 3}], Range[0, 2]];
+z3Model = Flatten[Table[If[Mod[s[[2]] - s[[1]], 3] == If[c == 3, 1, 0], 1/3, 0],
+   {c, 0, 3}, {s, Tuples[Range[0, 2], 2]}]];
+chZ3 = CechObstruction[z3Scen, z3Model]; avnZ3 = AvNArgument[z3Scen, z3Model, 3];
+z3Ctl = Flatten[Table[If[Mod[s[[2]] - s[[1]], 3] == 0, 1/3, 0], {c, 0, 3}, {s, Tuples[Range[0, 2], 2]}]];
+chZ3c = CechObstruction[z3Scen, z3Ctl];
+{Row[{"Z3 box \[Gamma]: ", chZ3["ObstructedCount"], "/", chZ3["SectionCount"], ", strong certificate: ", chZ3["CohStronglyContextual"]}],
+ Row[{"Z3 box AvN over GF(3): ", avnZ3["AvN"], ", equations: "}], avnZ3["Equations"],
+ Row[{"unshifted control: \[Gamma] ", chZ3c["ObstructedCount"], "/", chZ3c["SectionCount"], ", |Se| = ", chZ3c["GlobalSupportSize"], ", global section: ", GlobalSectionQ[z3Scen, N@z3Ctl]}]}
+
+(* ::Text:: *)
+(*The shifted box is convicted twice over: every one of the 12 support sections is \[Gamma]-obstructed (the compatibility system forces the coefficient vector around the cycle through one shift, and a pinned generator cannot return to itself), and the GF(3) theory {x + 2y \[Congruent] 0, 0, 0, 2} sums to 0 \[Congruent] 2. The unshifted control extends (|Se| = 3, a nonnegative global section exists) \[LongDash] same local outcome sets, same marginals, opposite verdict, which is what a certificate is for.*)
+
+(* ::Section:: *)
 (*The Absolute Groups: H^0 and H^1 of the Linearized Support Presheaf*)
 
 (* ::Text:: *)
@@ -121,15 +178,16 @@ ccW = CechCohomology[scen5, CycleModel[5, "Wright"]];
 ccU = CechCohomology[scen4, ConstantArray[1/4, 16]];
 ccPR = CechCohomology[scen4, ePR]; ccH = CechCohomology[scen4, eHardy];
 ccW6 = CechCohomology[CycleScenario[6], CycleModel[6, "Wright"]];
+ccG = CechCohomology[ghzScen, ghzModel];
 ccWW = CechCohomology[scenProd, prodModel[CycleModel[5, "Wright"], CycleModel[5, "Wright"]]];
 ccQQ = CechCohomology[scenProd, prodModel[CycleModel[5, "Quantum"], CycleModel[5, "Quantum"]]];
 cohomTable = MapThread[{#1, #2["CochainRanks"], #2["H0Rank"], #2["H1FreeRank"], #2["H1Torsion"], #2["ComplexCloses"]} &,
-  {{"C5 classical", "C5 quantum", "C5 Wright", "C6 Wright", "CHSH uniform", "PR box", "Hardy", "Wright\[CircleTimes]Wright", "quantum\[CircleTimes]quantum"},
-   {ccC, ccQ, ccW, ccW6, ccU, ccPR, ccH, ccWW, ccQQ}}];
+  {{"C5 classical", "C5 quantum", "C5 Wright", "C6 Wright", "CHSH uniform", "PR box", "Hardy", "GHZ", "Wright\[CircleTimes]Wright", "quantum\[CircleTimes]quantum"},
+   {ccC, ccQ, ccW, ccW6, ccU, ccPR, ccH, ccG, ccWW, ccQQ}}];
 TableForm[cohomTable, TableHeadings -> {None, {"model", "{C0, C1, C2}", "rk H0", "rk H1", "H1 torsion", "\[Delta]1\[Delta]0 = 0"}}]
 
 (* ::Text:: *)
-(*Structure worth recording: (i) H^0 is multiplicative on the product cover \[LongDash] 36 = 6^2 for quantum\[CircleTimes]quantum, 1 = 1^2 for Wright\[CircleTimes]Wright; (ii) on every single-cycle cover of this census H^1 has free rank 1 (the nerve circle) except C6 Wright where it is 2 \[LongDash] the group remembers the support, not just the nerve; (iii) on the product cover the C^2 correction kills H^1 entirely (free rank 0), so all the contextuality information there sits in the relative layer, exactly where CechObstruction reads it; (iv) no torsion appears anywhere in this census; where the integral question was genuinely live (Hardy's nonextendable section, rationally solvable) the vanishing class is witnessed by an explicit integer family through CechObstruction's FindInstance branch.*)
+(*Structure worth recording: (i) H^0 is multiplicative on the product cover \[LongDash] 36 = 6^2 for quantum\[CircleTimes]quantum, 1 = 1^2 for Wright\[CircleTimes]Wright; (ii) on every single-cycle cover of this census H^1 has free rank 1 (the nerve circle) except C6 Wright where it is 2 \[LongDash] the group remembers the support, not just the nerve; (iii) on the product cover the C^2 correction kills H^1 entirely (free rank 0), so all the contextuality information there sits in the relative layer, exactly where CechObstruction reads it; (iv) no torsion appears anywhere in this ABSOLUTE census, but the RELATIVE classes do carry it: every GHZ obstruction class has order exactly 2 (\"ObstructionOrder\" in CechObstruction), while Hardy's nonextendable section has order 1 \[LongDash] its false negative is integral, not an artifact of working over Q.*)
 
 (* ::Section:: *)
 (*Verification*)
@@ -151,13 +209,28 @@ SupportCohomologyVerification = <|
      chH["FalseNegatives"] === {{{0, 1}, {0, 0}}} && chH["H0Rank"] == 6,
   "productWrightExpelled" -> chWW["ObstructedCount"] == 100 && chWW["CohStronglyContextual"],
   "productQuantumSilent" -> chQQ["ObstructedCount"] == 0 && chQQ["GlobalSupportSize"] == 121,
+  "ghzAllObstructed" -> chGHZ["ObstructedCount"] == 16 && chGHZ["CohStronglyContextual"] &&
+     chGHZ["GlobalSupportSize"] == 0,
+  "ghzOrderExactlyTwo" -> AllTrue[Values[chGHZ["ObstructionOrder"]], # === 2 &],
+  "ordersElsewhere" -> AllTrue[Values[chW["ObstructionOrder"]], # === Infinity &] &&
+     AllTrue[Values[chPR["ObstructionOrder"]], # === Infinity &] &&
+     AllTrue[Values[chZ3["ObstructionOrder"]], # === Infinity &] &&
+     AllTrue[Values[chH["ObstructionOrder"]], # === 1 &],
+  "ghzAvNMermin" -> avnGHZ["AvN"] && avnGHZ["EquationCount"] == 4 &&
+     avnGHZ["Equations"][[All, 3]] === {0, 1, 1, 1},
+  "avnCensusPattern" -> avnTable[[All, 3]] === {False, False, True, False, True, False, True, True, False},
+  "avnImpliesCSC" -> AllTrue[avnTable[[All, 5]], TrueQ],
+  "z3BoxConvictedTwice" -> chZ3["ObstructedCount"] == 12 && chZ3["CohStronglyContextual"] &&
+     avnZ3["AvN"] && avnZ3["Equations"][[All, 3]] === {0, 0, 0, 2},
+  "z3ControlExtends" -> chZ3c["ObstructedCount"] == 0 && chZ3c["GlobalSupportSize"] == 3 &&
+     GlobalSectionQ[z3Scen, N@z3Ctl],
   "cohomCensusMatchesUlreyNotebook" -> ({#["H0Rank"], #["H1FreeRank"], #["H1Torsion"]} & /@ {ccU, ccPR, ccH}) ===
      {{9, 1, {}}, {1, 1, {}}, {6, 1, {}}},
-  "cohomComplexCloses" -> AllTrue[{ccC, ccQ, ccW, ccW6, ccU, ccPR, ccH, ccWW, ccQQ}, #["ComplexCloses"] &],
+  "cohomComplexCloses" -> AllTrue[{ccC, ccQ, ccW, ccW6, ccU, ccPR, ccH, ccG, ccWW, ccQQ}, #["ComplexCloses"] &],
   "cohomH0Multiplicative" -> ccQQ["H0Rank"] == ccQ["H0Rank"]^2 && ccWW["H0Rank"] == ccW["H0Rank"]^2,
   "cohomProductH1Vanishes" -> ccWW["H1FreeRank"] == 0 && ccQQ["H1FreeRank"] == 0 &&
      ccWW["CochainRanks"] == {100, 700, 2200},
-  "cohomNoTorsionInCensus" -> AllTrue[{ccC, ccQ, ccW, ccW6, ccU, ccPR, ccH, ccWW, ccQQ}, #["H1Torsion"] === {} &],
+  "cohomNoTorsionInCensus" -> AllTrue[{ccC, ccQ, ccW, ccW6, ccU, ccPR, ccH, ccG, ccWW, ccQQ}, #["H1Torsion"] === {} &],
   "verdict" -> "ADOPT: the support-presheaf Cech obstruction joins the core as the possibilistic-layer certificate; the Laplacian stays a no-disturbance projector only"
 |>;
 SupportCohomologyVerification["OK"] = And @@ Cases[Values[SupportCohomologyVerification], _?BooleanQ];

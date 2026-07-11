@@ -44,6 +44,19 @@ ccPR = CechCohomology[scen4, ePR];
 ccH = CechCohomology[scen4, eHardy];
 ccWW = CechCohomology[scenProd, prodModel[CycleModel[5, "Wright"], CycleModel[5, "Wright"]]];
 ccQQ = CechCohomology[scenProd, prodModel[CycleModel[5, "Quantum"], CycleModel[5, "Quantum"]]];
+z3Scen = CoverScenario[Range[0, 3], Table[{i, Mod[i + 1, 4]}, {i, 0, 3}], Range[0, 2]];
+z3Model = Flatten[Table[If[Mod[s[[2]] - s[[1]], 3] == If[c == 3, 1, 0], 1/3, 0],
+   {c, 0, 3}, {s, Tuples[Range[0, 2], 2]}]];
+chZ3 = CechObstruction[z3Scen, z3Model];
+avnZ3 = AvNArgument[z3Scen, z3Model, 3];
+chZ3c = CechObstruction[z3Scen, Flatten[Table[If[Mod[s[[2]] - s[[1]], 3] == 0, 1/3, 0],
+    {c, 0, 3}, {s, Tuples[Range[0, 2], 2]}]]];
+ghzScen = CoverScenario[{"aX", "aY", "bX", "bY", "cX", "cY"},
+  {{"aX", "bX", "cX"}, {"aX", "bY", "cY"}, {"aY", "bX", "cY"}, {"aY", "bY", "cX"}}];
+ghzModel = Flatten[Table[If[Mod[Total[s], 2] == par, 1/4, 0], {par, {0, 1, 1, 1}}, {s, Tuples[{0, 1}, 3]}]];
+chGHZ = CechObstruction[ghzScen, ghzModel];
+avnGHZ = AvNArgument[ghzScen, ghzModel];
+avnOf[scn_, ee_] := AvNArgument[scn, ee]["AvN"];
 
 SmokeTest = <|
   "alpha" -> IndependenceNumber[c5] == 2,
@@ -114,6 +127,33 @@ SmokeTest = <|
   "cechCohomProduct" -> ccWW["CochainRanks"] == {100, 700, 2200} && ccWW["H0Rank"] == 1 &&
      ccWW["H1FreeRank"] == 0 && ccWW["ComplexCloses"] &&
      ccQQ["H0Rank"] == 36 && ccQQ["H0Rank"] == ccQ["H0Rank"]^2 && ccQQ["ComplexCloses"],
+  "cechGHZAllObstructed" -> chGHZ["ObstructedCount"] == 16 && chGHZ["SectionCount"] == 16 &&
+     chGHZ["CohStronglyContextual"] && chGHZ["GlobalSupportSize"] == 0 && chGHZ["H0Rank"] == 7,
+  "avnGHZMermin" -> avnGHZ["AvN"] && avnGHZ["EquationCount"] == 4 &&
+     avnGHZ["Equations"][[All, 2]] === ConstantArray[{1, 1, 1}, 4] &&
+     avnGHZ["Equations"][[All, 3]] === {0, 1, 1, 1},
+  "avnCensus" -> (avnOf @@@ {{scen5, CycleModel[5, "Classical"]}, {scen5, CycleModel[5, "Wright"]},
+       {scen4, ePR}, {scen4, eHardy}, {CycleScenario[6], CycleModel[6, "Wright"]},
+       {scenProd, prodModel[CycleModel[5, "Wright"], CycleModel[5, "Wright"]]},
+       {scenProd, prodModel[CycleModel[5, "Quantum"], CycleModel[5, "Quantum"]]}}) ===
+     {False, True, True, False, False, True, False},
+  "avnImpliesCohStrong" -> AllTrue[{{avnGHZ["AvN"], chGHZ}, {avnOf[scen5, CycleModel[5, "Wright"]], chW},
+       {avnOf[scen4, ePR], chPR}, {avnOf[scen4, eHardy], chH}},
+     Function[p, ! p[[1]] || p[[2]]["CohStronglyContextual"]]],
+  "z3BoxAllObstructed" -> chZ3["ObstructedCount"] == 12 && chZ3["SectionCount"] == 12 &&
+     chZ3["CohStronglyContextual"] && chZ3["StronglyContextual"] && chZ3["SupportNoSignalling"],
+  "z3AvNOverGF3" -> avnZ3["AvN"] && avnZ3["EquationCount"] == 4 &&
+     avnZ3["Equations"][[All, 2]] === ConstantArray[{1, 2}, 4] && avnZ3["Equations"][[All, 3]] === {0, 0, 0, 2} &&
+     Quiet[AvNArgument[z3Scen, z3Model]] === $Failed,
+  "cechObstructionOrders" -> AllTrue[Values[chGHZ["ObstructionOrder"]], # === 2 &] &&
+     AllTrue[Values[chW["ObstructionOrder"]], # === Infinity &] &&
+     AllTrue[Values[chPR["ObstructionOrder"]], # === Infinity &] &&
+     AllTrue[Values[chZ3["ObstructionOrder"]], # === Infinity &] &&
+     AllTrue[Values[chH["ObstructionOrder"]], # === 1 &] &&
+     AllTrue[Values[chC["ObstructionOrder"]], # === 1 &],
+  "z3ControlNoncontextual" -> chZ3c["ObstructedCount"] == 0 && chZ3c["GlobalSupportSize"] == 3 &&
+     GlobalSectionQ[z3Scen, N@Flatten[Table[If[Mod[s[[2]] - s[[1]], 3] == 0, 1/3, 0],
+        {c, 0, 3}, {s, Tuples[Range[0, 2], 2]}]]],
   "fourGenerators" -> Length[gens] == 4,
   "generatorSpan" -> MatrixRank[So3Axis /@ gens, Tolerance -> 10^-8] == 2,
   "dlaCloses" -> DLADimension[gens] == 3
@@ -129,3 +169,14 @@ DedupTest = <|
 |>;
 Print[DedupTest];
 Print["DEDUP PASS: ", And @@ Values[DedupTest]];
+
+(* unification layer (v1.3.0): scenario via cover, mixed CE filter, MaxLoad *)
+UnifyTest = <|
+  "cycleViaCover" -> CycleScenario[5]["Incidence"] === CoverScenario[Range[0, 4], Table[{i, Mod[i + 1, 5]}, {i, 0, 4}]]["Incidence"],
+  "maxLoadKey" -> Simplify[CEFilter[CycleGraph[5], ConstantArray[1/2, 5]]["MaxLoad"] - 5/4] === 0,
+  "mixedMatchesSameGraph" -> CEFilterMixed[{{CycleGraph[5], ConstantArray[1/2, 5]}, {CycleGraph[5], ConstantArray[1/2, 5]}}]["Worst"] === CEFilter[CycleGraph[5], ConstantArray[1/2, 5]]["Worst"],
+  "mixedHeptagonPentagon" -> Module[{r = CEFilterMixed[{{CycleGraph[7], ConstantArray[1/2, 7]}, {CycleGraph[5], ConstantArray[1/Sqrt[5], 5]}}]},
+    r["Passes"] && r["Omega"] == 4 && Simplify[r["MaxLoad"] - 2/Sqrt[5]] === 0]
+|>;
+Print[UnifyTest];
+Print["UNIFY PASS: ", And @@ Values[UnifyTest]];

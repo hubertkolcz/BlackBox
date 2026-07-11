@@ -33,9 +33,11 @@ GlobalSectionQ::usage = "GlobalSectionQ[scen, e] gives True if the empirical mod
 PossibilisticSupport::usage = "PossibilisticSupport[scen, e] gives the possibilistic global support S_e of the empirical model e: association with \"Size\" (number of global assignments consistent with the support of e) and \"Empty\" (True means strong contextuality, AB Sec. 6).";
 CycleCoboundary::usage = "CycleCoboundary[n] gives the cellular-sheaf coboundary \[Delta] (2n x 4n) of the n-cycle cover with marginalization restriction maps (Hansen-Ghrist, arXiv:1808.01513): ker(\[Delta]\[Transpose]\[Delta]) = the no-disturbance models.";
 HarmonicResidual::usage = "HarmonicResidual[delta, e] gives Norm[delta . e]: the no-disturbance (signalling) residual of the model e. It vanishes on every no-disturbance model and is provably blind to contextuality - use it as a projector diagnostic, not a contextuality measure.";
-CoverScenario::usage = "CoverScenario[X, cover] gives the contextuality scenario of an arbitrary measurement cover as an association: measurements X, contexts = the elements of cover (ordered measurement lists), section order per context (Tuples[{0,1}, Length[context]]), the Abramsky-Brandenburger incidence matrix \"Incidence\" relating deterministic global assignments to context sections, and \"Assignments\" (the 2^Length[X] global assignments). CycleScenario[n] is the n-cycle special case.";
+CoverScenario::usage = "CoverScenario[X, cover] gives the contextuality scenario of an arbitrary measurement cover as an association: measurements X, contexts = the elements of cover (ordered measurement lists), section order per context (Tuples of the outcome sets in context order), the Abramsky-Brandenburger incidence matrix \"Incidence\" relating deterministic global assignments to context sections, \"Assignments\" (all global assignments), and \"Outcomes\". CoverScenario[X, cover, outcomes] uses the outcome list outcomes for every measurement (default {0, 1}), or per-measurement outcome lists when outcomes is an association over X. CycleScenario[n] is the binary n-cycle special case.";
 CechCohomology::usage = "CechCohomology[scen, e] gives the absolute \:010cech cohomology of the Z-linearized support presheaf of the empirical model e over the cover of scen: an association with \"H0Rank\" (rank of the module of compatible Z-linear families = global sections), \"H1FreeRank\" and \"H1Torsion\" (elementary divisors > 1 of the degree-0 coboundary, by Smith normal form), \"CochainRanks\" ({C^0, C^1, C^2} over contexts, pairwise and triple overlaps, each the free Z-module on the restriction image of the support), \"CoboundaryRanks\", \"ComplexCloses\" (the verified identity \[Delta]1 . \[Delta]0 = 0), and \"SupportNoSignalling\". H^1 = ker \[Delta]1 / im \[Delta]0 is computed for arbitrary covers (the C^2 term handles nonempty triple overlaps). These are AMBIENT invariants: the per-section obstruction classes \[Gamma](s) of CechObstruction live in the RELATIVE H^1, so a nonzero absolute H^1 is not itself a contextuality certificate (the PR box and the noncontextual uniform model both have H^1 = Z on the CHSH cover).";
-CechObstruction::usage = "CechObstruction[scen, e] gives the \:010cech cohomological obstruction data of the support presheaf of the empirical model e on the scenario scen (Abramsky-Mansfield-Barbosa; Abramsky-Barbosa-Kishida-Lal-Mansfield, arXiv:1502.03097): a support section s over a context is obstructed when its class \[Gamma](s) in the first \:010cech cohomology of the relative Z-linearized support presheaf is nonzero, equivalently (arXiv:1502.03097, Prop. 4.4) when NO compatible family of Z-linear combinations of support sections restricts to s. Returns an association with keys \"Obstructed\"/\"ObstructedCount\"/\"SectionCount\", \"NonextendableSections\" (sections with no global support assignment through them) and \"FalseNegatives\", \"GlobalSupportSize\", \"H0Rank\" (rank of the compatible-family module), \"SupportNoSignalling\", and the witness flags \"CohLogicallyContextual\" (some \[Gamma](s) != 0: certifies logical contextuality) and \"CohStronglyContextual\" (every \[Gamma](s) != 0: certifies strong contextuality). Vanishing of \[Gamma] is not conclusive - the Hardy model is the canonical false negative.";
+AvNArgument::usage = "AvNArgument[scen, e] and AvNArgument[scen, e, d] give the All-vs-Nothing argument of the empirical model e on the scenario scen over Z_d (default d = 2; d must be prime), following Abramsky-Barbosa-Kishida-Lal-Mansfield, arXiv:1502.03097 Sec. 6: the theory of e collects every Z_d-affine equation Sum c_m x_m = a (mod d) satisfied by ALL support sections of a context; the model is AvN when the joint theory is inconsistent, decided by an exact rank test over GF(d). AvN certifies strong contextuality, and every AvN model is cohomologically strongly contextual, so \"AvN\" -> True implies CechObstruction[scen, e][\"CohStronglyContextual\"]. Returns an association with keys \"Modulus\", \"Equations\" (as {context, coefficient tuple, rhs}, coefficients normalized to leading entry 1), \"EquationCount\", \"Consistent\", and \"AvN\". GHZ is the canonical AvN model (the four Mermin parity equations); the Hardy model is not AvN, matching its non-strong contextuality.";
+AvNArgument::outs = "AvN over Z_`1` requires every measurement of the scenario to take outcomes {0, ..., `2`}.";
+CechObstruction::usage = "CechObstruction[scen, e] gives the \:010cech cohomological obstruction data of the support presheaf of the empirical model e on the scenario scen (Abramsky-Mansfield-Barbosa; Abramsky-Barbosa-Kishida-Lal-Mansfield, arXiv:1502.03097): a support section s over a context is obstructed when its class \[Gamma](s) in the first \:010cech cohomology of the relative Z-linearized support presheaf is nonzero, equivalently (arXiv:1502.03097, Prop. 4.4) when NO compatible family of Z-linear combinations of support sections restricts to s. Returns an association with keys \"Obstructed\"/\"ObstructedCount\"/\"SectionCount\", \"ObstructionOrder\" ({context, section} -> least n >= 1 with n \[Gamma](s) = 0, by Smith normal form: 1 means \[Gamma](s) = 0, Infinity means rationally obstructed, finite n > 1 is pure relative torsion - every GHZ class has order exactly 2), \"NonextendableSections\" (sections with no global support assignment through them) and \"FalseNegatives\", \"GlobalSupportSize\", \"H0Rank\" (rank of the compatible-family module), \"SupportNoSignalling\", and the witness flags \"CohLogicallyContextual\" (some \[Gamma](s) != 0: certifies logical contextuality) and \"CohStronglyContextual\" (every \[Gamma](s) != 0: certifies strong contextuality). Vanishing of \[Gamma] is not conclusive - the Hardy model is the canonical false negative.";
 
 (* -- the Lie-Poisson interface of the KCBS cascade -- *)
 CascadeGenerators::usage = "CascadeGenerators[] gives the four so(3) generators (matrix logarithms of the stage-frame transition rotations) of the Lapkiewicz KCBS cascade.";
@@ -45,6 +47,7 @@ DLADimension::usage = "DLADimension[gens] gives the dimension of the dynamical L
 CycleORProduct::usage = "CycleORProduct[{n1, n2, ...}] gives the OR (conormal) product of the cycles C_n1, C_n2, ... on explicit tuple vertices: joint events are exclusive iff exclusive in some factor. The composition primitive for Consistent-Exclusivity tests across independent experiments.";
 QuantumEventProbability::usage = "QuantumEventProbability[n] gives the per-event probability cos(Pi/n)/(1+cos(Pi/n)) of the quantum-maximal n-cycle model (Araujo et al., PRA 88, 022118); for n = 5 it is 1/Sqrt[5].";
 PentagonRing::usage = "PentagonRing[n] gives the ring of n single-edge-glued pentagons (3n vertices, 4n edges). Theorem (proven 10 July 2026): IndependenceNumber[PentagonRing[n]] == Floor[4n/3].";
+CEFilterMixed::usage = "CEFilterMixed[{{g1, p1}, {g2, p2}, ...}] applies the Consistent-Exclusivity filter to the independent composition of DIFFERENT experiments: exclusivity graphs g_i with assignments p_i (vectors in VertexList order); joint events are exclusive iff exclusive in some factor and weights multiply. Same return keys as CEFilter plus \"MaxLoad\" (worst clique load even when passing). Exhaustive clique enumeration - practical for two factors / a few hundred product vertices.";
 Begin["`Private`"];
 
 (* ------------------------------------------------------------------ *)
@@ -158,18 +161,31 @@ CEFilter[g_Graph, p_List, k_Integer: 2] := Module[
   viol = Select[sums, # > 1 + 10^-9 &];
   <|"Passes" -> viol === {}, "ViolatingCliques" -> Length[viol],
     "Worst" -> If[viol === {}, Missing["NotViolated"], Max[viol]],
+    "MaxLoad" -> Max[sums],
+    "CliqueCount" -> Length[cliques], "Omega" -> Max[Length /@ cliques]|>];
+
+CEFilterMixed[factors : {{_Graph, _List} ..}] := Module[
+  {hs, ams, ns, tuples, adjQ, hp, cliques, weight, sums, viol},
+  hs = IndexGraph[#[[1]]] & /@ factors; ams = Normal[AdjacencyMatrix[#]] & /@ hs;
+  ns = VertexCount /@ hs; tuples = Tuples[Range /@ ns];
+  adjQ[u_, v_] := Or @@ Table[ams[[j]][[u[[j]], v[[j]]]] == 1, {j, Length[ns]}];
+  hp = Graph[tuples, UndirectedEdge @@@ Select[Subsets[tuples, {2}], adjQ @@ # &]];
+  cliques = FindClique[hp, Infinity, All];
+  weight[t_] := Product[factors[[j, 2]][[t[[j]]]], {j, Length[ns]}];
+  sums = Total[weight /@ #] & /@ cliques;
+  viol = Select[sums, # > 1 + 10^-9 &];
+  <|"Passes" -> viol === {}, "ViolatingCliques" -> Length[viol],
+    "Worst" -> If[viol === {}, Missing["NotViolated"], Max[viol]],
+    "MaxLoad" -> Max[sums],
     "CliqueCount" -> Length[cliques], "Omega" -> Max[Length /@ cliques]|>];
 
 (* ------------------------------------------------------------------ *)
 (* the n-cycle scenario                                                *)
 (* ------------------------------------------------------------------ *)
 
-CycleScenario[n_Integer /; n >= 3] := Module[{ctxs, glob, secs, M},
-  ctxs = Table[{i, Mod[i + 1, n]}, {i, 0, n - 1}];
-  glob = Tuples[{0, 1}, n];
-  secs = Flatten[Table[{c, s}, {c, ctxs}, {s, Tuples[{0, 1}, 2]}], 1];
-  M = Table[Boole[{t[[sec[[1, 1]] + 1]], t[[sec[[1, 2]] + 1]]} == sec[[2]]], {sec, secs}, {t, glob}];
-  <|"n" -> n, "Contexts" -> ctxs, "Sections" -> secs, "Incidence" -> M, "Assignments" -> glob|>];
+(* the n-cycle scenario is the arbitrary-cover scenario over the edge cover - one construction *)
+CycleScenario[n_Integer /; n >= 3] := Append[
+  CoverScenario[Range[0, n - 1], Table[{i, Mod[i + 1, n]}, {i, 0, n - 1}]], "n" -> n];
 
 CycleModel[n_Integer, p00_, p10_] := Flatten[Table[{p00, p10, p10, 0}, {n}]];
 CycleModel[n_Integer, "Quantum"] := With[{p = Simplify[Cos[Pi/n]/(1 + Cos[Pi/n])]}, CycleModel[n, Simplify[1 - 2 p], p]];
@@ -213,23 +229,29 @@ HarmonicResidual[delta_?MatrixQ, e_List] := Norm[delta . e];
 (* the support presheaf and its Cech obstruction                       *)
 (* ------------------------------------------------------------------ *)
 
-CoverScenario[X_List, cover_List] := Module[{glob = Tuples[{0, 1}, Length[X]], pos, secs, M},
+CoverScenario[X_List, cover_List, outcomes_ : {0, 1}] := Module[{outs, glob, pos, secs, M},
+  outs = If[AssociationQ[outcomes], outcomes, Association[# -> outcomes & /@ X]];
   pos = AssociationThread[X -> Range[Length[X]]];
-  secs = Flatten[Table[{c, s}, {c, cover}, {s, Tuples[{0, 1}, Length[c]]}], 1];
+  glob = Tuples[outs /@ X];
+  secs = Flatten[Table[{c, s}, {c, cover}, {s, Tuples[outs /@ c]}], 1];
   M = Table[Boole[(t[[pos[#]]] & /@ sec[[1]]) === sec[[2]]], {sec, secs}, {t, glob}];
-  <|"X" -> X, "Contexts" -> cover, "Sections" -> secs, "Incidence" -> M, "Assignments" -> glob|>];
+  <|"X" -> X, "Outcomes" -> outs, "Contexts" -> cover, "Sections" -> secs,
+    "Incidence" -> M, "Assignments" -> glob|>];
 
 restrictSection[c_, s_, u_] := s[[Flatten[Position[c, #] & /@ u]]];
 
 (* gamma(s) = 0 iff s extends to a compatible family of Z-linear combinations of
    support sections (arXiv:1502.03097, Prop. 4.4). Decision order per section:
-   a deterministic global witness settles it; else exact rank refutes over Q
-   (hence over Z); else FindInstance decides the residual Z-solvability. *)
+   a deterministic global witness gives order 1; exact rank refutation over Q
+   gives order Infinity; otherwise the exact order of the class - the least n
+   with n*b in the integer column lattice of the pinned system - comes from the
+   Smith normal form: n = LCM_i d_i/gcd(d_i, (u.b)_i). Obstructed = order > 1. *)
 CechObstruction[scen_Association, e_List] := Module[
   {ctxs = scen["Contexts"], secs = scen["Sections"], glob = scen["Assignments"],
-   X, pos, m, ctxIdx, supp, cols, colIdx, pairs, rows, A, e2, Se, SeR,
-   colsOf, gammaZeroQ, obstructed, nonext},
+   X, outs, pos, m, ctxIdx, supp, cols, colIdx, pairs, rows, A, e2, Se, SeR,
+   colsOf, orderOf, orders, obstructed, nonext},
   X = Lookup[scen, "X", Union @@ ctxs];
+  outs = Lookup[scen, "Outcomes", Association[# -> {0, 1} & /@ X]];
   pos = AssociationThread[X -> Range[Length[X]]];
   m = Length[ctxs]; ctxIdx = AssociationThread[ctxs -> Range[m]];
   supp = Table[{}, {m}];
@@ -242,7 +264,7 @@ CechObstruction[scen_Association, e_List] := Module[
       Table[Module[{row = ConstantArray[0, Length[cols]]},
         Do[If[restrictSection[ctxs[[i]], s, U] === u, row[[colIdx[{i, s}]]] += 1], {s, supp[[i]]}];
         Do[If[restrictSection[ctxs[[j]], s, U] === u, row[[colIdx[{j, s}]]] -= 1], {s, supp[[j]]}];
-        row], {u, Tuples[{0, 1}, Length[U]]}]], {pr, pairs}], 1];
+        row], {u, Tuples[outs /@ U]}]], {pr, pairs}], 1];
   A = DeleteDuplicates[DeleteCases[rows, {0 ..}]];
   e2 = AllTrue[pairs, Function[pr, With[{U = Intersection @@ ctxs[[pr]]},
       Sort[DeleteDuplicates[restrictSection[ctxs[[pr[[1]]]], #, U] & /@ supp[[pr[[1]]]]]] ===
@@ -250,14 +272,23 @@ CechObstruction[scen_Association, e_List] := Module[
   Se = Select[glob, Function[g, AllTrue[Range[m], MemberQ[supp[[#]], g[[pos /@ ctxs[[#]]]]] &]]];
   SeR = Table[DeleteDuplicates[Table[g[[pos /@ ctxs[[i]]]], {g, Se}]], {i, m}];
   colsOf = Table[Flatten[Position[cols, {i, _}, {1}, Heads -> False]], {i, m}];
-  gammaZeroQ[i0_, s0_] := Module[{rest, Ai, b, vars},
-    If[MemberQ[SeR[[i0]], s0], Return[True]];
-    rest = Complement[Range[Length[cols]], colsOf[[i0]]];
-    Ai = A[[All, rest]]; b = -A[[All, colIdx[{i0, s0}]]];
-    If[MatrixRank[MapThread[Append, {Ai, b}]] > MatrixRank[Ai], Return[False]];
-    vars = Array[\[FormalX], Length[rest]];
-    FindInstance[Thread[Ai . vars == b], vars, Integers] =!= {}];
-  obstructed = Select[cols, ! gammaZeroQ[#[[1]], #[[2]]] &];
+  Module[{restOf = <||>, AiOf = <||>, rankAi = <||>, smithAi = <||>},
+   orderOf[i0_, s0_] := Module[{b, sm, ub, nc},
+     If[MemberQ[SeR[[i0]], s0], Return[1]];
+     If[A === {}, Return[1]];
+     If[! KeyExistsQ[restOf, i0],
+      restOf[i0] = Complement[Range[Length[cols]], colsOf[[i0]]];
+      AiOf[i0] = A[[All, restOf[i0]]];
+      rankAi[i0] = If[restOf[i0] === {}, 0, MatrixRank[AiOf[i0]]]];
+     b = -A[[All, colIdx[{i0, s0}]]];
+     If[restOf[i0] === {}, Return[If[b === ConstantArray[0, Length[b]], 1, Infinity]]];
+     If[MatrixRank[MapThread[Append, {AiOf[i0], b}]] > rankAi[i0], Return[Infinity]];
+     If[! KeyExistsQ[smithAi, i0], smithAi[i0] = SmithDecomposition[AiOf[i0]]];
+     sm = smithAi[i0]; ub = sm[[1]] . b; nc = Length[restOf[i0]];
+     LCM @@ Prepend[Table[With[{di = If[r <= nc, Abs[sm[[2]][[r, r]]], 0]},
+         If[di == 0, 1, di/GCD[di, ub[[r]]]]], {r, Length[ub]}], 1]]];
+  orders = Association[Table[{ctxs[[cl[[1]]]], cl[[2]]} -> orderOf[cl[[1]], cl[[2]]], {cl, cols}]];
+  obstructed = Select[cols, orders[{ctxs[[#[[1]]]], #[[2]]}] =!= 1 &];
   nonext = Select[cols, ! MemberQ[SeR[[#[[1]]]], #[[2]]] &];
   <|"SectionCount" -> Length[cols],
     "SupportSizes" -> Length /@ supp,
@@ -266,6 +297,7 @@ CechObstruction[scen_Association, e_List] := Module[
     "H0Rank" -> Length[cols] - MatrixRank[A],
     "Obstructed" -> ({ctxs[[#[[1]]]], #[[2]]} & /@ obstructed),
     "ObstructedCount" -> Length[obstructed],
+    "ObstructionOrder" -> orders,
     "NonextendableSections" -> ({ctxs[[#[[1]]]], #[[2]]} & /@ nonext),
     "FalseNegatives" -> ({ctxs[[#[[1]]]], #[[2]]} & /@ Complement[nonext, obstructed]),
     "CohLogicallyContextual" -> Length[obstructed] > 0,
@@ -324,6 +356,32 @@ CechCohomology[scen_Association, e_List] := Module[
   <|"CochainRanks" -> {c0, c1, c2}, "CoboundaryRanks" -> {rk0, rk1},
     "H0Rank" -> c0 - rk0, "H1FreeRank" -> c1 - rk0 - rk1, "H1Torsion" -> torsion,
     "ComplexCloses" -> closes, "SupportNoSignalling" -> e2|>];
+
+AvNArgument[scen_Association, e_List, d : _Integer?PrimeQ : 2] := Module[
+  {ctxs = scen["Contexts"], secs = scen["Sections"], X, outs, m, ctxIdx, supp,
+   xIdx, eqs = {}, A, b, consistent},
+  X = Lookup[scen, "X", Union @@ ctxs];
+  outs = Lookup[scen, "Outcomes", Association[# -> {0, 1} & /@ X]];
+  If[! AllTrue[X, Sort[outs[#]] === Range[0, d - 1] &],
+   Message[AvNArgument::outs, d, d - 1]; Return[$Failed]];
+  m = Length[ctxs]; ctxIdx = AssociationThread[ctxs -> Range[m]];
+  xIdx = AssociationThread[X -> Range[Length[X]]];
+  supp = Table[{}, {m}];
+  Do[If[e[[k]] > 10^-12, AppendTo[supp[[ctxIdx[secs[[k, 1]]]]], secs[[k, 2]]]], {k, Length[secs]}];
+  Do[Module[{C = ctxs[[i]], S = supp[[i]], cvecs},
+    cvecs = Select[Tuples[Range[0, d - 1], Length[C]],
+      # =!= ConstantArray[0, Length[C]] && First[DeleteCases[#, 0]] == 1 &];
+    Do[Module[{vals = DeleteDuplicates[Mod[c . #, d] & /@ S]},
+      If[S =!= {} && Length[vals] == 1, AppendTo[eqs, {i, c, First[vals]}]]], {c, cvecs}]],
+   {i, m}];
+  A = Table[Module[{row = ConstantArray[0, Length[X]]},
+     MapThread[(row[[xIdx[#1]]] = #2) &, {ctxs[[eq[[1]]]], eq[[2]]}]; row], {eq, eqs}];
+  b = eqs[[All, 3]];
+  consistent = eqs === {} ||
+    MatrixRank[A, Modulus -> d] == MatrixRank[MapThread[Append, {A, b}], Modulus -> d];
+  <|"Modulus" -> d, "EquationCount" -> Length[eqs],
+    "Equations" -> ({ctxs[[#[[1]]]], #[[2]], #[[3]]} & /@ eqs),
+    "Consistent" -> consistent, "AvN" -> ! consistent|>];
 
 (* ------------------------------------------------------------------ *)
 (* the Lie-Poisson interface                                           *)

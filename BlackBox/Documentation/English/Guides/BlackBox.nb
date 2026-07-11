@@ -19,6 +19,15 @@ Needs[\"HubertKolcz`BlackBox`\"].\
 \>", "Text",ExpressionUUID->"ccab2f85-2a65-3541-827f-29cbe3448f2c"],
 
 Cell[TextData[{
+ StyleBox["AvNArgument", "InlineCode"],
+ " \[LongDash] ",
+ "AvNArgument[scen, e] and AvNArgument[scen, e, d] give the All-vs-Nothing \
+argument of the empirical model e on the scenario scen over Z_d (default d = \
+2; d must be prime), following Abramsky-Barbosa-Kishida-Lal-Mansfield, \
+arXiv:1502."
+}], "Item",ExpressionUUID->"5c7d3f92-2e48-4b61-8a05-d94e17b26c38"],
+
+Cell[TextData[{
  StyleBox["CascadeGenerators", "InlineCode"],
  " \[LongDash] ",
  "CascadeGenerators[] gives the four so(3) generators (matrix logarithms of \
@@ -57,6 +66,15 @@ factorization rule P(e1,."
 }], "Item",ExpressionUUID->"d2acfc61-322e-704c-a608-edc5c09dbda8"],
 
 Cell[TextData[{
+ StyleBox["CEFilterMixed", "InlineCode"],
+ " \[LongDash] ",
+ "CEFilterMixed[{{g1, p1}, {g2, p2}, ...}] applies the Consistent-Exclusivity \
+filter to the independent composition of DIFFERENT experiments: exclusivity \
+graphs g_i with assignments p_i (vectors in VertexList order); joint events \
+are exclusive iff exclusive in some factor and weights multiply."
+}], "Item",ExpressionUUID->"3a86d17f-92c4-4b5e-8d09-6ef42b71c5a8"],
+
+Cell[TextData[{
  StyleBox["ContextualFraction", "InlineCode"],
  " \[LongDash] ",
  "ContextualFraction[scen, e] gives CF = 1 - NoncontextualFraction[scen, e], \
@@ -68,10 +86,10 @@ Cell[TextData[{
  " \[LongDash] ",
  "CoverScenario[X, cover] gives the contextuality scenario of an arbitrary \
 measurement cover as an association: measurements X, contexts = the elements \
-of cover (ordered measurement lists), section order per context (Tuples[{0,1}, \
-Length[context]]), the Abramsky-Brandenburger incidence matrix \"Incidence\" \
-relating deterministic global assignments to context sections, and \
-\"Assignments\" (the 2^Length[X] global assignments)."
+of cover (ordered measurement lists), section order per context (Tuples of \
+the outcome sets in context order), the Abramsky-Brandenburger incidence \
+matrix \"Incidence\" relating deterministic global assignments to context \
+sections, \"Assignments\" (all global assignments), and \"Outcomes\"."
 }], "Item",ExpressionUUID->"2b8e5d17-6c94-4f0a-b3d2-91a47e08c5f3"],
 
 Cell[TextData[{
@@ -88,6 +106,14 @@ Cell[TextData[{
  "CycleModel[n, p00, p10] gives the symmetric empirical model vector on the \
 n-cycle with edge distribution (p00, p10, p10, 0)."
 }], "Item",ExpressionUUID->"3398f17e-dc23-fa46-a7db-e07cbeab2c21"],
+
+Cell[TextData[{
+ StyleBox["CycleORProduct", "InlineCode"],
+ " \[LongDash] ",
+ "CycleORProduct[{n1, n2, ...}] gives the OR (conormal) product of the \
+cycles C_n1, C_n2, ... on explicit tuple vertices: joint events are exclusive \
+iff exclusive in some factor."
+}], "Item",ExpressionUUID->"6e91b8a3-4f57-4a2c-b7d9-0c83e5f21d46"],
 
 Cell[TextData[{
  StyleBox["CycleScenario", "InlineCode"],
@@ -183,6 +209,13 @@ treatment grows as 2^(5n)."
 }], "Item",ExpressionUUID->"0ac08b76-af91-8e47-a5c3-3f41558ff2ad"],
 
 Cell[TextData[{
+ StyleBox["PentagonRing", "InlineCode"],
+ " \[LongDash] ",
+ "PentagonRing[n] gives the ring of n single-edge-glued pentagons (3n \
+vertices, 4n edges)."
+}], "Item",ExpressionUUID->"84d2f6b1-9a35-4e08-bc47-1f60a72d93e5"],
+
+Cell[TextData[{
  StyleBox["PossibilisticSupport", "InlineCode"],
  " \[LongDash] ",
  "PossibilisticSupport[scen, e] gives the possibilistic global support S_e of \
@@ -190,6 +223,14 @@ the empirical model e: association with \"Size\" (number of global \
 assignments consistent with the support of e) and \"Empty\" (True means \
 strong contextuality, AB Sec."
 }], "Item",ExpressionUUID->"f34aa923-7e01-364f-8ad8-def3ae38ca72"],
+
+Cell[TextData[{
+ StyleBox["QuantumEventProbability", "InlineCode"],
+ " \[LongDash] ",
+ "QuantumEventProbability[n] gives the per-event probability \
+cos(Pi/n)/(1+cos(Pi/n)) of the quantum-maximal n-cycle model (Araujo et al., \
+PRA 88, 022118); for n = 5 it is 1/Sqrt[5]."
+}], "Item",ExpressionUUID->"c58f0e27-6d43-49b2-9a81-e35d708c14b7"],
 
 Cell[TextData[{
  StyleBox["So3Axis", "InlineCode"],

@@ -151,6 +151,41 @@ Results: ideal S = −3.944; realistic (V = 0.977, 1° misalignment) S ≈ −3.
 Caveat: a classical simulator reproduces statistics, not evidential force — the
 sampler knows the context, which is exactly what NCHV models are forbidden.
 
+### BlackBox paclet — the sheaf/Čech certificate layer (added 10 July 2026)
+
+The pipeline is packaged as the paclet `BlackBox/` (context
+`HubertKolcz`BlackBox``, 27 exported symbols, `Tests/BlackBoxTests.wl` →
+ALL PASS: True). On top of the LP/SDP layer (α, ϑ, α\*, contextual fraction,
+`GlobalSectionQ`) it now carries the **possibilistic certificate layer** that
+replaced the cellular-sheaf Laplacian after the Laplacian's own pre-registered
+gate REJECTED it (residuals {0,0,0} on classical/quantum/Wright — blind; see
+pipeline-2026-07-10/sheaf_laplacian.wl):
+
+- `CechObstruction[scen, e]` — the Abramsky–Mansfield–Barbosa obstruction
+  γ(s) per support section (arXiv:1502.03097 Prop. 4.4: γ(s)=0 iff a compatible
+  Z-linear family restricts to s), with the **exact order** of each class by
+  Smith normal form (`"ObstructionOrder"`). Gate, passed: classical C5 0/15
+  obstructed; quantum 0/15 (identical support — probabilistic contextuality is
+  the LP layer's jurisdiction); Wright 10/10 = strong-contextuality certificate.
+  Orders: GHZ classes are **pure 2-torsion** (order exactly 2, rationally
+  invisible — Mermin's mod-2 argument as a homological invariant); odd-cycle
+  boxes infinite order; Hardy order 1 (the documented false negative, integral).
+- `CechCohomology[scen, e]` — absolute H⁰/H¹ of the Z-linearized support
+  presheaf on arbitrary covers (C² term included, δ¹δ⁰=0 verified, torsion by
+  Smith). H⁰ multiplicative on the two-copy product cover (36 = 6²); ambient H¹
+  is NOT a contextuality signal (PR box and noncontextual uniform both give Z).
+- `AvNArgument[scen, e, d]` — All-vs-Nothing parity certificates over GF(d)
+  (arXiv:1502.03097 §6): GHZ (the four Mermin equations), Wright boxes and
+  their products, PR box, and the Z₃ box on the square are AvN; Hardy is not.
+  AvN ⇒ cohomologically strongly contextual, verified across the census.
+- `CoverScenario[X, cover, outcomes]` — arbitrary covers and per-measurement
+  outcome sets (GHZ/Mermin, Z_d boxes, KS-style covers).
+
+Verification essay: `SupportCohomology.wl` + `RunSupportCohomology.wl`
+(`wolframscript -file RunSupportCohomology.wl -print all` → 25 checks,
+OK -> True), including the two-copy product cover of ab_sheaf.wl
+(Wright⊗Wright 100/100 obstructed; quantum⊗quantum clean, |Sₑ| = 11²) and a
+census cross-validated against Cech-Cohomology-of-Ulrey-Models-AB-Sheaf.nb.
 ### kcbs_wigner_flow.wl — Wigner-negativity flow through the cascade (runner: RunWignerFlow.wl)
 Companion note to kcbs_circuit.wl §11/§13. Discrete Wigner function of every prefix
 of [P, T1, T2, T3, T4]: input |0⟩ → 0; all five prefixes → exactly 2/√5 − 2/3
@@ -340,6 +375,9 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
 - Cabello, PRL 110, 060402 (2013) ("fundamental inequality", E-principle, two copies)
 - Delfosse et al., New J. Phys. 19, 123024 (2017) (negativity ⇔ contextuality, n ≥ 2)
 - Budroni, Cabello, Gühne, Kleinmann, Larsson, Rev. Mod. Phys. 94, 045007 (2022)
+- Abramsky, Brandenburger, NJP 13, 113036 (2011); arXiv:1102.0264 (sheaf framework)
+- Abramsky, Barbosa, Kishida, Lal, Mansfield, CSL 2015; arXiv:1502.03097
+  ("Contextuality, Cohomology and Paradox": Čech obstruction, AvN arguments)
 - Gühne et al., PRA 81, 022121 (2010) (compatibility loophole)
 - Markiewicz et al., npj Quantum Inf. 5, 5 (2019); Zhang et al., Sci. Rep. 7, 44467 (2017)
 
@@ -365,6 +403,9 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
 - n-cycle generalizations (C₇, C₉...) and their circuits; run encoding B on real
   gate hardware as a genuine platform test.
 - Sequential-game quantum strategy demo end-to-end (Alice prefix + Bob binary POVM).
+- Čech layer follow-ups: Kochen–Specker covers (18-vector Cabello set) through
+  `CoverScenario`/`CechObstruction`; relative H¹ as a group (γ lives there — only
+  the per-class orders are computed so far); AvN over non-prime rings.
 - Pentagon meshes (§6, cis/trans correction): ~~closed form for the trans-ring
   density constant~~ RESOLVED — τ\* = Root[49x³ − 128x² − 75x + 218, 2], exact KKT
   certificate in §6/CaseStudies §D3. ~~Prove ϑ(cis-ring N) = N + ϑ(C_N) and
@@ -397,6 +438,32 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   ᾱ ≥ 4/3 + 1/(3p) strictly (adjusted max-plus cube of the cis step has
   min-max exactly 13/3 = 3·(4/3) + ⅓), and f_c = 2/3 without ccc forces all
   cis-runs equal to 2 by the run-average argument. Note the naive converse is
-  false: cctt has f_c = 1/2 but ᾱ = 11/8. Open: construct the explicit
-  ε-optimality certificate; trans-CHAIN density closed form (numerically →
-  τ\*?) — unverified.
+  false: cctt has f_c = 1/2 but ᾱ = 11/8. ~~Construct the explicit ε-optimality
+  certificate~~ RESOLVED — CONSTRUCTED (EpsilonCertificate.wl, key
+  D3_epsilonCertificate): a window-7 transfer-SDP sub-action — 128 pairs of
+  exact rational PSD blocks Q (5×5, glue quad + apex) / R (4×4, X-triangle +
+  apex) per de Bruijn-7 node, closure potentials ψ, DP potentials Φ with fixed
+  strategy — proving **gap(w) ≤ Γ = 1541247/20000000 = 0.07706235 for EVERY
+  gluing word**, i.e. ε = 0.0071648 above the cct optimum. Assembly lemma:
+  blocks sum to M = [[I+B, e],[eᵀ, σ]] ⪰ 0 (uniform unit diagonal/border by
+  the edge equalities) ⇒ Schur ⇒ ϑ(ring) ≤ σ = Σd; Φ-telescoping ⇒
+  α(ring) ≥ Σr; ψ-closure summed over the word's closed de Bruijn walk
+  telescopes to gap ≤ Γ. All identities and 256 PSD facts exact rational,
+  re-verified independently in WL. Convergence: Γ(k) = 0.1667 (pinch), 0.1250,
+  0.1020, 0.0953, 0.0824, 0.07706 for k = 2..7 — ε roughly halves per window
+  step; ε → 0 exactly is the τ_cct field obstruction. Bonus: the Q/R clique
+  family solves the per-cycle transfer-SDP EXACTLY (< 10⁻⁶ loss on every
+  tested word) — a position-space word-density solver with no DFT symbol.
+  ~~Trans-CHAIN density~~ RESOLVED (key D3_transChainResolved): open trans
+  chains have the SAME bulk density τ\* (increments 1.3767178 within
+  certificates from m = 50 to 800; boundary constant ≈ 0.995), with
+  α(trans-chain m) = ⌊4(m+1)/3⌋ at every computed point — the gap is
+  EXTENSIVE ≈ (τ\*−4/3)m, so Case D's "rings beat chains" was never about
+  closure: the decaying chains were cis, and orientation is the whole story.
+  Small-m accident: ϑ(trans-chain 5) = α = 8 exactly. Durable tools added to
+  `lovasz_theta_sparse.py`: pentagon_chain_word, alpha_chain_word,
+  word_density_transfer_sdp (exact position-space ϑ-density of any periodic
+  word; no symmetry reduction). All §6 mesh threads are now resolved; what
+  remains genuinely open at research grade: exact (ε → 0) global optimality
+  of (cct)^∞ — blocked by the τ_cct field — and the ergodic-optimization
+  proof that periodic orbits suffice.

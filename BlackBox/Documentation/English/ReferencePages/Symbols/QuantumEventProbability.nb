@@ -1,0 +1,10 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(* Beginning of Notebook Content *)
+Notebook[{Cell["QuantumEventProbability", "ObjectName", ExpressionUUID -> "ddc02ed1-4a43-456d-b696-1c9f8460fbdf"], Cell["QuantumEventProbability[n] gives the per-event probability cos(Pi/n)/(1+cos(Pi/n)) of the quantum-maximal n-cycle model (Araujo et al., PRA 88, 022118); for n = 5 it is 1/Sqrt[5].", "Usage", ExpressionUUID -> "c14c99d1-f52b-429d-939d-39f6f7b68ee0"], Cell["Basic Examples", "Section", ExpressionUUID -> "26fbdd9d-01de-4dbc-b31f-bcd5822ae60a"], Cell[BoxData[RowBox[{"Simplify", "[", RowBox[{"QuantumEventProbability", "[", "5", "]"}], "]"}]], "Input", ExpressionUUID -> "6be42fe6-f040-4bb6-96ce-40e60a075b5c"]}, FrontEndVersion -> "15.0 for Microsoft Windows (64-bit) (May 19, 2026)", StyleDefinitions -> "Default.nb", ExpressionUUID -> "a6a44594-41f5-4b96-ad11-b72a2f25dc3d"]
+(* End of Notebook Content *)
