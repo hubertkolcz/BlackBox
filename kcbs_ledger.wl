@@ -106,7 +106,7 @@ cfExact = 1 - ncfExact;
 {FullSimplify[nuExact], FullSimplify[cfExact]}
 
 (* ::Text:: *)
-(*The triangle of currencies, all exact: the operational negative weight nu = (Sqrt[5] - 2)/2; the contextual fraction CF = 2 Sqrt[5] - 4 = 4 nu; and the bridge to the phase-space ledger \[LongDash] the state-side Wigner negativity of kcbs_wigner_flow.wl is N = 1/3 - nu/(1 + nu), because nu/(1 + nu) is precisely the no-click probability 1 - 2/Sqrt[5] and the fixed cell W(0, 2) = 1/3 converts one into the other. Three measures, three definitions, one algebraic point.*)
+(*The triangle of currencies, all exact: the operational negative weight nu = (Sqrt[5] - 2)/2; the contextual fraction CF = 2 Sqrt[5] - 4 = 4 nu; and the bridge to the phase-space ledger \[LongDash] the state-side Wigner negativity of kcbs_wigner_flow.wl is N = 1/3 - nu/(1 + nu), because nu/(1 + nu) is precisely the no-click probability 1 - 2/Sqrt[5] and the fixed cell W(0, 2) = 1/3 converts one into the other. Three measures, three definitions, one algebraic point. The CF = 4 nu leg is the n = 5 case of the Camillo-Cervantes theorem CF = (n - 1) nu for cyclic systems (Phil. Trans. R. Soc. A 382:20230007 (2024), arXiv:2305.16574; their CNTF = (n-1) CNT3, with CNTF the contextual fraction and CNT3 = nu the minimal-negative-mass measure) \[LongDash] see kcbs_epilogue.wl, which reproduces the general law. The bridge N = 1/3 - nu/(1+nu) to the phase-space negativity is the leg specific to this note.*)
 
 (* ::Input:: *)
 LedgerTriangle = <|
@@ -120,7 +120,7 @@ LedgerTriangle = <|
 (*5. Noise decouples the badges*)
 
 (* ::Text:: *)
-(*Mix the KCBS state with white noise, rho_V = V |psi><psi| + (1 - V) 1/3. Exclusivity is state-independent (the projectors stay orthogonal), so the empirical model keeps p11 = 0 and per-event probability p(V) = V/Sqrt[5] + (1 - V)/3. The state-side Wigner negativity is piecewise linear with threshold V* = (10 + 9 Sqrt[5])/61 ~ 0.4938; contextuality (nu and CF alike) dies at the KCBS threshold V_c = (5 + 3 Sqrt[5])/20 ~ 0.5854. Since V* < V_c, the interval (V*, V_c) is a WINDOW of states that are Wigner-negative yet KCBS-noncontextual \[LongDash] under noise the two badges come apart cleanly, which is the honest completion of the story: the conversion rates of Section 4 are exact identities at the quantum-maximal point (and CF = 4 nu holds along the entire family), but the currencies measure genuinely different things. The maximally mixed state has the flat symbol 1/9, so W_V = V W + (1 - V)/9 by linearity:*)
+(*Mix the KCBS state with white noise, rho_V = V |psi><psi| + (1 - V) 1/3. Exclusivity is state-independent (the projectors stay orthogonal), so the empirical model keeps p11 = 0 and per-event probability p(V) = V/Sqrt[5] + (1 - V)/3. The state-side Wigner negativity is piecewise linear with threshold V* = (10 + 9 Sqrt[5])/61 ~ 0.4938; contextuality (nu and CF alike) dies at the KCBS threshold V_c = (5 + 3 Sqrt[5])/20 ~ 0.5854. Since V* < V_c, the interval (V*, V_c) is a WINDOW of states that are Wigner-negative yet KCBS-noncontextual \[LongDash] under noise the two badges come apart cleanly, which is the honest completion of the story: the conversion rates of Section 4 are exact identities at the quantum-maximal point (and CF = 4 nu holds along the entire family), but the currencies measure genuinely different things. That such a window must EXIST is not new \[LongDash] for a single qutrit Wigner negativity is necessary but not sufficient for contextuality (Delfosse et al., NJP 19, 123024 (2017); Raussendorf et al.), which forces V* < V_c a priori; what the cell below adds is only the explicit KCBS threshold V* = (10 + 9 Sqrt[5])/61 (and note it is convention-dependent on the state's phase-space alignment, not a canonical constant). The maximally mixed state has the flat symbol 1/9, so W_V = V W + (1 - V)/9 by linearity:*)
 
 (* ::Input:: *)
 mixedFlatResidual = Max @ Abs[Total[wig /@ N @ IdentityMatrix[3]]/3 - 1/9];
@@ -264,6 +264,15 @@ Column[{LedgerTriangle, LedgerVerification, "OK" -> And @@ Values[LedgerVerifica
 
 (* ::Item:: *)
 (*S. Abramsky, R. S. Barbosa, S. Mansfield, PRL 119, 050504 (2017) (the contextual fraction).*)
+
+(* ::Item:: *)
+(*V. H. Camillo, A. C. S. Cervantes, Phil. Trans. R. Soc. A 382, 20230007 (2024), arXiv:2305.16574 (THE theorem (n-1) CNT3 = CNTF for cyclic systems - the general form of the Section 4 CF = 4 nu leg, established prior to this note).*)
+
+(* ::Item:: *)
+(*"Resource theory of Absolute Negativity", arXiv:2205.13480; Kulikov et al., PRA 109, 012219 (2024), arXiv:2306.10758 (frame-independent / cut-minimized negativity of state-measurement pairs - the general form of Section 3's two-sided ledger).*)
+
+(* ::Item:: *)
+(*H. F. Hofmann, arXiv:2507.22323 (2026) (negative quasiprobability localized in the Lapkiewicz three-path contextuality setup, via Kirkwood-Dirac - closest prior work on the same physical system).*)
 
 (* ::Item:: *)
 (*H. Pashayan, J. J. Wallman, S. D. Bartlett, PRL 115, 070501 (2015) (negativity as sampling cost).*)
