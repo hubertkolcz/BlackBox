@@ -1,0 +1,1015 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     44155,       1005]
+NotebookOptionsPosition[     34423,        869]
+NotebookOutlinePosition[     34852,        886]
+CellTagsIndexPosition[     34809,        883]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+Certifying Quantumness from Event Statistics: The KCBS Pentagon as a \
+Black-Box Test\
+\>", "Title",ExpressionUUID->"d1fb436b-43cb-a94b-a94c-9ced38113a9a"],
+
+Cell["\<\
+A computational essay on graph, sheaf, and Lie-algebra certificates of \
+contextuality\
+\>", "Subtitle",ExpressionUUID->"9d859ede-5661-e340-90ce-9c492494fe0a"],
+
+Cell["\<\
+Hubert Ko\[LSlash]cz \[LongDash] July 2026. Built on the BlackBox paclet \
+(HubertKolcz`BlackBox`, this repository); every algorithm it exports was \
+kernel-verified twice before packaging. Native Wolfram functionality \
+(SemidefiniteOptimization, LinearOptimization, FindClique, GraphData, \
+MatrixLog) does all heavy lifting; the paclet only names the constructions.\
+\>", "Text",ExpressionUUID->"df466d44-8642-b94b-81b8-5082d8f79bda"],
+
+Cell["\<\
+A device emits one detector click per run. Can its click statistics alone \
+certify that no classical mechanism produced them? For the \
+Klyachko-Can-Binicio\\[GBreve]lu-Shumovsky (KCBS) pentagon the answer is a \
+chain of three sharp numbers \[LongDash] classical 2 < quantum Sqrt[5] < \
+exclusivity-only 5/2 \[LongDash] each computable from the exclusivity graph \
+with no Hilbert space assumed. This essay derives all three, explains the \
+quantum value by composing two copies of the experiment, prices the resource \
+exactly (contextual fraction 2 Sqrt[5] - 4, in exact arithmetic), separates \
+the three behaviours sheaf-theoretically, exhibits the Lie-algebraic step \
+where quantumness enters, and shows why these certificates, unlike state \
+vectors, scale to meshes.\
+\>", "Abstract",ExpressionUUID->"4a0c025f-bed8-1546-a175-22c2b8a3b271"],
+
+Cell[CellGroupData[{
+
+Cell["Summary of Results", "Section",ExpressionUUID->"010fcbf5-cafd-d547-827d-8930f1919a4e"],
+
+Cell["\<\
+Three bounds of the pentagon: \[Alpha] = 2 (classical), \[CurlyTheta] = \
+Sqrt[5] \[TildeTilde] 2.236 (quantum, SDP), \[Alpha]* = 5/2 \
+(exclusivity-only) \[LongDash] reproduced by the library and confirmed \
+exactly by Wolfram's curated GraphData.\
+\>", "Item",ExpressionUUID->"de30847c-4264-494f-a025-580a5d3ab4a5"],
+
+Cell["\<\
+Two copies explain the quantum bound: the quantum assignment saturates all \
+ten 5-cliques of the doubled experiment at exactly 1, while the supra-quantum \
+Wright box violates every one of them at exactly 5/4 \[LongDash] and the \
+heptagon box survives untouched (zero margin, no activation).\
+\>", "Item",ExpressionUUID->"697f3f25-1566-0e42-b674-5a2c5ea48bde"],
+
+Cell["\<\
+The contextual fraction of the quantum-maximal model is exactly 2 Sqrt[5] - 4 \
+\[TildeTilde] 0.472 (linear programming in exact arithmetic); the classical \
+control carries 0, Wright's box the maximum 1.\
+\>", "Item",ExpressionUUID->"cc0c7d3e-32e1-e342-aa35-771fbdf18bbe"],
+
+Cell["\<\
+Sheaf stratification: the classical model extends globally; the quantum model \
+does not, yet keeps |S_e| = 11 = LucasL[5] possibilistic global assignments; \
+Wright's box keeps none \[LongDash] strong contextuality at one copy. The \
+sheaf Laplacian's harmonic residual vanishes on all three: a pre-registered \
+negative result.\
+\>", "Item",ExpressionUUID->"ed8396ce-4e6e-f24b-8c39-4f855a61eaea"],
+
+Cell["\<\
+The KCBS cascade generators span a 2-plane of so(3); one commutator closes \
+the full algebra \[LongDash] the quantum resource sits at commutator depth \
+one.\
+\>", "Item",ExpressionUUID->"059d513e-647a-4b43-b87f-c7af2bd2457e"],
+
+Cell["\<\
+On chains of N glued pentagons the certificate stays a polynomial-size SDP \
+while any state-vector treatment grows as 2^(5N); even-N chains pinch the \
+quantum gap shut, odd-N chains reopen it.\
+\>", "Item",ExpressionUUID->"50555e5a-465d-a440-ba70-750063c437a1"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section",ExpressionUUID->"27e1e707-b1f6-734f-b63c-5fe9107eae1e"],
+
+Cell["\<\
+The KCBS construction (Klyachko, Can, Binicio\\[GBreve]lu, Shumovsky, PRL \
+101, 020403 (2008)) tests a single three-level system with five dichotomic \
+measurements arranged in a cycle: neighbours are compatible and exclusive, so \
+the experiment has five contexts and each observable appears in two of them. \
+Everything a hidden-variable sceptic needs to know is the exclusivity graph \
+of the five events \[LongDash] the pentagon. Cabello, Severini and Winter \
+(arXiv:1010.2163) turned this into a dictionary: the classical, quantum, and \
+exclusivity-only reaches of ANY such experiment are three invariants of its \
+graph. The BlackBox library packages those certificates; this essay runs them.\
+\>", "Text",ExpressionUUID->"840d5057-26fb-454c-b345-b3307adf0c0c"],
+
+Cell["\<\
+Load the library (sits next to this notebook), repair any Global`-shadowing, \
+and list its full interface:\
+\>", "CodeText",ExpressionUUID->"8d935fc7-3f42-5a4e-a78e-ea41f2664c7d"],
+
+Cell[BoxData[""], "Input",ExpressionUUID->"d16b60eb-caa8-e84f-a646-15054bf2e532"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"PacletDirectoryLoad", "[", 
+   RowBox[{"FileNameJoin", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Quiet", "@", 
+       RowBox[{"Check", "[", 
+        RowBox[{
+         RowBox[{"NotebookDirectory", "[", "]"}], ",", " ", 
+         RowBox[{"Directory", "[", "]"}]}], "]"}]}], ",", 
+      " ", "\"\<BlackBox\>\""}], "}"}], "]"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"Needs", "[", "\"\<HubertKolcz`BlackBox`\>\"", "]"}], ";", " ", 
+  RowBox[{"Quiet", "[", 
+   RowBox[{"Remove", " ", "/@", " ", 
+    RowBox[{"Select", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{"\"\<Global`\>\"", " ", "<>", " ", "#"}], " ", "&"}], " ", "/@",
+        " ", 
+       RowBox[{"Names", "[", "\"\<HubertKolcz`BlackBox`*\>\"", "]"}]}], ",", 
+      " ", "NameQ"}], "]"}]}], "]"}], ";"}], "\n", 
+ RowBox[{"Names", "[", "\"\<HubertKolcz`BlackBox`*\>\"", "]"}], "\n"}], "Code",\
+ExpressionUUID->"aa904595-6cbb-bc48-a198-38615cc86213"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["One Graph, Three Theories, Three Numbers", "Section",ExpressionUUID->"d6c95cc1-8b90-3045-9d89-8a35b2f02bef"],
+
+Cell["The exclusivity graph of the KCBS experiment is the 5-cycle:", \
+"CodeText",ExpressionUUID->"682ccd63-30f3-614f-a6e4-1d7a167d04a2"],
+
+Cell[BoxData[""], "Input",ExpressionUUID->"633ff405-d0a5-7e4c-9f73-e86de5d566b1"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"pentagon", " ", "=", " ", 
+   RowBox[{"CycleGraph", "[", 
+    RowBox[{"5", ",", " ", 
+     RowBox[{"VertexLabels", " ", "->", " ", "\"\<Name\>\""}], ",", " ", 
+     RowBox[{"VertexSize", " ", "->", " ", ".15"}], ",", " ", 
+     RowBox[{"ImageSize", " ", "->", " ", "200"}]}], "]"}]}], "\n"}]], "Code",\
+ExpressionUUID->"db6dee56-ae62-2d4c-ad9f-4832db04664b"],
+
+Cell["\<\
+A deterministic hidden-variable theory can make at most an independent set of \
+events true at once; quantum mechanics reaches the Lov\[AAcute]sz number by \
+semidefinite programming; a theory constrained only by exclusivity reaches \
+the fractional packing number. Three theories, three graph invariants:\
+\>", "Text",ExpressionUUID->"818aa2b3-7c5d-4146-bff6-fcb2e01f6fff"],
+
+Cell["\<\
+Classical \[Alpha], quantum \[CurlyTheta] (SDP), exclusivity-only \[Alpha]* \
+\[LongDash] the strict hierarchy 2 < Sqrt[5] < 5/2:\
+\>", "CodeText",ExpressionUUID->"0d83358c-dc1d-8f44-b4c0-e237d106973e"],
+
+Cell[BoxData[""], "Input",ExpressionUUID->"280d97d6-ac04-0c4e-8085-052f0bb6cfcd"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"IndependenceNumber", "[", "pentagon", "]"}], ",", " ", 
+    RowBox[{"LovaszTheta", "[", "pentagon", "]"}], ",", " ", 
+    RowBox[{"FractionalPackingNumber", "[", "pentagon", "]"}]}], "}"}], 
+  "\n"}]], "Code",ExpressionUUID->"30947c47-58e4-6e4d-b303-c176bc379a38"],
+
+Cell["\<\
+Wolfram's curated graph data supplies the same three values exactly \
+\[LongDash] a free oracle for the library:\
+\>", "CodeText",ExpressionUUID->"252b861d-80f5-894f-b0fb-b7cd336167aa"],
+
+Cell[BoxData[""], "Input",ExpressionUUID->"200db51f-533d-c242-bfa3-85481cffcf26"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"GraphData", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"\"\<Cycle\>\"", ",", " ", "5"}], "}"}], ",", " ", "#"}], 
+     "]"}], " ", "&"}], " ", "/@", " ", 
+   RowBox[{"{", 
+    RowBox[{"\"\<IndependenceNumber\>\"", ",", " ", "\"\<LovaszNumber\>\"", ",",
+      " ", "\"\<FractionalChromaticNumber\>\""}], "}"}]}], "\n"}]], "Code",Exp\
+ressionUUID->"a07ad4b6-3d6c-2e41-91e4-ef031c3242ac"],
+
+Cell["\<\
+The quantum value is physical: five exact pentagram directions, cyclically \
+orthogonal, sum to Sqrt[5] on the cone axis:\
+\>", "CodeText",ExpressionUUID->"ea4702b8-743f-4548-8e54-2766543a59cb"],
+
+Cell[BoxData[""], "Input",ExpressionUUID->"22917077-9103-de46-8d01-7bda28688c72"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"dirs", " ", "=", " ", 
+   RowBox[{"KCBSDirections", "[", "]"}]}], ";"}], "\n", 
+ RowBox[{"Simplify", "[", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"dirs", "[", 
+      RowBox[{"[", "1", "]"}], "]"}], " ", ".", " ", 
+     RowBox[{"dirs", "[", 
+      RowBox[{"[", "2", "]"}], "]"}]}], ",", " ", 
+    RowBox[{"Total", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"#", " ", ".", " ", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", " ", "0", ",", " ", "1"}], "}"}]}], ")"}], "^", 
+        "2"}], " ", "&"}], " ", "/@", " ", "dirs"}], "]"}]}], "}"}], 
+  "]"}], "\n"}], "Code",ExpressionUUID->"9b6b3257-7a5b-074f-a8ee-\
+3b34991071b0"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Why Sqrt[5]: Compose Two Copies", "Section",ExpressionUUID->"8ca3d8f3-0ed3-c64b-a10c-9b9131b6271f"],
+
+Cell["\<\
+Where does the quantum number come from, if not from Hilbert space? Cabello's \
+answer (PRL 110, 060402 (2013)): run two independent copies. Events of the \
+doubled experiment are exclusive if they are exclusive in either copy (the OR \
+product of graphs, native to Wolfram as GraphProduct's \"Conormal\"), and \
+probabilities multiply. Consistent Exclusivity demands every clique of the \
+doubled graph carry total probability at most 1. The BlackBox filter checks \
+all of them.\
+\>", "Text",ExpressionUUID->"3ba35aeb-fbe5-f240-a9e3-3d5d28687ffc"],
+
+Cell["\<\
+The quantum assignment (1/Sqrt[5] per event) passes all 535 maximal cliques \
+of two copies \[LongDash] saturating the ten 5-cliques at exactly 1:\
+\>", "CodeText",ExpressionUUID->"d4f190dc-e7f1-c946-a415-a089f50ae4f2"],
+
+Cell[BoxData[""], "Input",ExpressionUUID->"ad0708e8-6268-c049-aff4-a681134afaff"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"CEFilter", "[", 
+   RowBox[{"pentagon", ",", " ", 
+    RowBox[{
+     RowBox[{"ConstantArray", "[", 
+      RowBox[{
+       RowBox[{"1", "/", 
+        RowBox[{"Sqrt", "[", "5", "]"}]}], ",", " ", "5"}], "]"}], " ", "//", 
+     " ", "N"}]}], "]"}], "\n"}]], "Code",ExpressionUUID->"ddbb27fb-65bb-5f48-\
+8966-9351db020e72"],
+
+Cell["\<\
+Wright's exclusivity-extremal box (1/2 per event, the \[Alpha]* point) is \
+expelled: every 5-clique overflows at exactly 5/4:\
+\>", "CodeText",ExpressionUUID->"3c463e64-f58d-0c42-9084-f46202fd2ee5"],
+
+Cell[BoxData[""], "Input",ExpressionUUID->"35277ac8-c120-a747-ac77-91897914d079"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"CEFilter", "[", 
+   RowBox[{"pentagon", ",", " ", 
+    RowBox[{"ConstantArray", "[", 
+     RowBox[{
+      RowBox[{"1", "/", "2"}], ",", " ", "5"}], "]"}]}], "]"}], 
+  "\n"}]], "Code",ExpressionUUID->"33131d87-cc6f-e242-9af0-cc21c479ffa5"],
+
+Cell["\<\
+The mechanism has zero margin: the heptagon box survives two copies exactly \
+at the boundary (\[Omega] = 4, load 1) \[LongDash] no activation, reproducing \
+arXiv:2411.09773:\
+\>", "CodeText",ExpressionUUID->"29edd079-a632-e84c-a957-75c4b8aa107c"],
+
+Cell[BoxData[""], "Input",ExpressionUUID->"8797471f-d0f7-8f4f-ace2-291e8997e0f0"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"CEFilter", "[", 
+   RowBox[{
+    RowBox[{"CycleGraph", "[", "7", "]"}], ",", " ", 
+    RowBox[{"ConstantArray", "[", 
+     RowBox[{
+      RowBox[{"1", "/", "2"}], ",", " ", "7"}], "]"}]}], "]"}], 
+  "\n"}]], "Code",ExpressionUUID->"873f35c3-e978-9149-972a-075858a154a0"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["The Exact Price of Classicality", "Section",ExpressionUUID->"6d6afe94-5a9e-8c48-98b9-324be2cd09b5"],
+
+Cell["\<\
+How much of a behaviour can a noncontextual model carry? The contextual \
+fraction (Abramsky, Barbosa, Mansfield, PRL 119, 050504 (2017)) decomposes an \
+empirical model e = NCF \[CenterDot] e_noncontextual + CF \[CenterDot] e' and \
+maximizes the noncontextual weight by linear programming over the \
+deterministic global assignments. Wolfram's LinearOptimization supports exact \
+arithmetic, so the certificate below is an algebraic identity, not a float.\
+\>", "Text",ExpressionUUID->"26e512a9-0018-514e-afc9-e3df4a40c2ee"],
+
+Cell["\<\
+The 5-cycle scenario; its incidence matrix has rank 1 + 5 + 5 = 11 \
+(Abramsky-Brandenburger Prop. 5.7):\
+\>", "CodeText",ExpressionUUID->"45bf99ca-4ac5-7640-9b7b-44af31465f06"],
+
+Cell[BoxData[""], "Input",ExpressionUUID->"ffb50f45-58e6-504a-9a62-40e417ce23e1"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"scenario", " ", "=", " ", 
+   RowBox[{"CycleScenario", "[", "5", "]"}]}], ";"}], "\n", 
+ RowBox[{"MatrixRank", "[", 
+  RowBox[{"scenario", "[", "\"\<Incidence\>\"", "]"}], "]"}], "\n"}], "Code",E\
+xpressionUUID->"5d178d8e-455b-5a4a-b015-b7c3544f13cc"],
+
+Cell["\<\
+Contextual fractions of the three canonical models, in exact arithmetic \
+\[LongDash] classical 0, quantum exactly 2 Sqrt[5] - 4, Wright maximal:\
+\>", "CodeText",ExpressionUUID->"3e647dea-f540-2c46-babc-f960a02ba772"],
+
+Cell[BoxData[""], "Input",ExpressionUUID->"e01d25f3-69f7-ed41-8eeb-81a84a4688d7"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"FullSimplify", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"ContextualFraction", "[", 
+      RowBox[{"scenario", ",", " ", 
+       RowBox[{"CycleModel", "[", 
+        RowBox[{"5", ",", " ", "#"}], "]"}], ",", " ", 
+       RowBox[{"WorkingPrecision", " ", "->", " ", "Infinity"}]}], "]"}], " ",
+      "&"}], " ", "/@", "\n", "  ", 
+    RowBox[{"{", 
+     RowBox[{"\"\<Classical\>\"", ",", " ", "\"\<Quantum\>\"", ",", 
+      " ", "\"\<Wright\>\""}], "}"}]}], "]"}], "\n"}]], "Code",ExpressionUUID->\
+"9f6d88f2-74e7-6844-a9ad-de2187d75459"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Local Truths, Global Lies: the Sheaf View", "Section",ExpressionUUID->"2ac786b0-a19a-c34a-8f4d-ec2d7354cdba"],
+
+Cell["\<\
+Abramsky and Brandenburger (NJP 13, 113036 (2011)) read contextuality as a \
+local-to-global failure: each context's distribution is a local section of a \
+presheaf, and contextuality is the obstruction to gluing them into one global \
+distribution. The three models stratify cleanly.\
+\>", "Text",ExpressionUUID->"52312a67-9ee2-e240-9ffa-ee69daeaeec6"],
+
+Cell["\<\
+Only the classical model extends to a global probability distribution:\
+\>", "CodeText",ExpressionUUID->"9855beb4-9cf0-1344-95eb-bfae9a286670"],
+
+Cell[BoxData[""], "Input",ExpressionUUID->"0ecb70b7-d293-e94e-9766-f7830b2c3c93"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"GlobalSectionQ", "[", 
+     RowBox[{"scenario", ",", " ", 
+      RowBox[{"N", "@", 
+       RowBox[{"CycleModel", "[", 
+        RowBox[{"5", ",", " ", "#"}], "]"}]}]}], "]"}], " ", "&"}], " ", "/@",
+    " ", 
+   RowBox[{"{", 
+    RowBox[{"\"\<Classical\>\"", ",", " ", "\"\<Quantum\>\"", ",", 
+     " ", "\"\<Wright\>\""}], "}"}]}], "\n"}]], "Code",ExpressionUUID->\
+"c12a0ae4-d526-2e4c-b198-4e44923f8b89"],
+
+Cell["\<\
+Possibilistically the quantum model keeps exactly 11 global assignments \
+\[LongDash] the Lucas number LucasL[5] \[LongDash] while Wright's box keeps \
+none (strong contextuality):\
+\>", "CodeText",ExpressionUUID->"55f7e22c-95a1-a74f-bcee-f51cc3f6fc5d"],
+
+Cell[BoxData[""], "Input",ExpressionUUID->"4b1abf5d-6420-314b-804b-291078a5f46c"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"PossibilisticSupport", "[", 
+     RowBox[{"scenario", ",", " ", 
+      RowBox[{"N", "@", 
+       RowBox[{"CycleModel", "[", 
+        RowBox[{"5", ",", " ", "\"\<Quantum\>\""}], "]"}]}]}], "]"}], ",", 
+    "\n", " ", 
+    RowBox[{"PossibilisticSupport", "[", 
+     RowBox[{"scenario", ",", " ", 
+      RowBox[{"N", "@", 
+       RowBox[{"CycleModel", "[", 
+        RowBox[{"5", ",", " ", "\"\<Wright\>\""}], "]"}]}]}], "]"}], ",", " ", 
+    RowBox[{"LucasL", "[", "5", "]"}]}], "}"}], "\n"}]], "Code",ExpressionUUID\
+->"3594c6bc-13cd-3242-b21c-fb5603af82a8"],
+
+Cell["\<\
+A pre-registered negative result, kept for honesty: the cellular-sheaf \
+Laplacian of the cover (Hansen-Ghrist, arXiv:1808.01513) was a candidate \
+contextuality measure. Its kernel is the 11-dimensional space of \
+no-disturbance models \[LongDash] and all three behaviours already live \
+there, so the harmonic residual is blind to contextuality. It is a \
+no-disturbance projector, nothing more.\
+\>", "Text",ExpressionUUID->"8ffc71af-c3ed-ef46-ac23-4837e852dded"],
+
+Cell["\<\
+The harmonic residual vanishes on classical, quantum, and Wright alike \
+\[LongDash] REJECTED as a contextuality measure:\
+\>", "CodeText",ExpressionUUID->"7fc3f6d0-f951-2e45-84df-9dcd36f77122"],
+
+Cell[BoxData[""], "Input",ExpressionUUID->"bca1de27-5c11-7c44-91fe-6dbf2eed9894"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"delta", " ", "=", " ", 
+   RowBox[{"CycleCoboundary", "[", "5", "]"}]}], ";"}], "\n", 
+ RowBox[{"Chop", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"HarmonicResidual", "[", 
+     RowBox[{"delta", ",", " ", 
+      RowBox[{"N", "@", 
+       RowBox[{"CycleModel", "[", 
+        RowBox[{"5", ",", " ", "#"}], "]"}]}]}], "]"}], " ", "&"}], " ", "/@",
+    " ", 
+   RowBox[{"{", 
+    RowBox[{"\"\<Classical\>\"", ",", " ", "\"\<Quantum\>\"", ",", 
+     " ", "\"\<Wright\>\""}], "}"}]}], "]"}], "\n"}], "Code",ExpressionUUID->\
+"49ad82fd-2281-2a4c-a0fd-11704732e844"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["The Geometry Underneath: One Commutator", "Section",ExpressionUUID->"6689f5ad-d743-554b-a9b9-b75b45005483"],
+
+Cell["\<\
+The canonical realization (Lapkiewicz et al., Nature 474, 490 (2011)) walks a \
+single photon through a cascade of two-mode rotations. Each stage generator \
+is a matrix logarithm in so(3) \[LongDash] and the four of them rotate about \
+only two axes. The full algebra, and with it the quantum resource, appears \
+exactly at the first commutator: locally abelian, globally non-abelian.\
+\>", "Text",ExpressionUUID->"a77046bd-5b6d-754e-b5b9-84f901ba5f10"],
+
+Cell["The four cascade generators span only a 2-plane of so(3):", "CodeText",ExpressionUUID->"8366df4c-fca3-1140-92d1-dc5aa86a746d"],
+
+Cell[BoxData[""], "Input",ExpressionUUID->"148d61af-dd5b-5d48-b3aa-f59a37649fd6"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"gens", " ", "=", " ", 
+   RowBox[{"CascadeGenerators", "[", "]"}]}], ";"}], "\n", 
+ RowBox[{"MatrixRank", "[", 
+  RowBox[{
+   RowBox[{"So3Axis", " ", "/@", " ", "gens"}], ",", " ", 
+   RowBox[{"Tolerance", " ", "->", " ", 
+    RowBox[{"10", "^", 
+     RowBox[{"-", "8"}]}]}]}], "]"}], "\n"}], "Code",ExpressionUUID->\
+"521ef297-5d4e-b641-a4f4-a161ab6ff1a2"],
+
+Cell["\<\
+One commutator step closes the full three-dimensional algebra:\
+\>", "CodeText",ExpressionUUID->"3f22dbcf-87ab-3844-89c3-0c02f14ed275"],
+
+Cell[BoxData[""], "Input",ExpressionUUID->"cf491cbd-8fd1-8d4d-a912-a49bebc78723"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"DLADimension", "[", "gens", "]"}], "\n"}]], "Code",ExpressionUUID->\
+"8c961bd4-addf-4548-9e7d-6efa67ed7fa3"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Why Certificates: They Scale", "Section",ExpressionUUID->"0dbd85a4-9427-1f45-a9e6-8cb29e69457d"],
+
+Cell["\<\
+A mesh of N single-edge-glued pentagons is a toy model of an MBQC resource. \
+Its compiled cluster needs a state vector of dimension 2^(5N); the graph \
+certificate is one SDP on 3N + 2 vertices. The certificate also sees \
+structure the operator route must compute to find: even-N chains pinch the \
+quantum gap shut (\[CurlyTheta] = \[Alpha]), odd-N chains reopen it \
+\[LongDash] mesh parity controls quantumness.\
+\>", "Text",ExpressionUUID->"d0cc1b28-0b1f-9a4d-b5aa-06fb6e62d6f1"],
+
+Cell["\<\
+Chains of N glued pentagons: linear certificate growth against exponential \
+state-vector cost:\
+\>", "CodeText",ExpressionUUID->"a5d4a711-e82f-864b-aced-693d2c635995"],
+
+Cell[BoxData[""], "Input",ExpressionUUID->"ac52f06c-35b7-934d-b906-06f41ebee256"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"chainData", " ", "=", " ", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"g", " ", "=", " ", 
+         RowBox[{"PentagonChain", "[", "n", "]"}]}], "}"}], ",", "\n", "    ", 
+       RowBox[{"{", 
+        RowBox[{"n", ",", " ", 
+         RowBox[{"LovaszTheta", "[", "g", "]"}], ",", " ", 
+         RowBox[{"IndependenceNumber", "[", "g", "]"}], ",", " ", 
+         RowBox[{"2", "^", 
+          RowBox[{"(", 
+           RowBox[{"5", " ", "n"}], ")"}]}]}], "}"}]}], "]"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"n", ",", " ", "1", ",", " ", "5"}], "}"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{"TableForm", "[", 
+  RowBox[{"chainData", ",", " ", 
+   RowBox[{"TableHeadings", " ", "->", " ", 
+    RowBox[{"{", 
+     RowBox[{"None", ",", " ", 
+      RowBox[{"{", 
+       RowBox[{"\"\<N\>\"", ",", " ", "\"\<\[CurlyTheta] (SDP)\>\"", ",", 
+        " ", "\"\<\[Alpha]\>\"", ",", " ", "\"\<state-vector dim\>\""}], 
+       "}"}]}], "}"}]}]}], "]"}], "\n"}], "Code",ExpressionUUID->"c5e29c6f-\
+647d-a245-8a14-81c070f0325b"],
+
+Cell["\<\
+The quantum gap \[CurlyTheta] - \[Alpha] oscillates with chain parity \
+\[LongDash] even chains are classical, odd chains quantum:\
+\>", "CodeText",ExpressionUUID->"392e03cd-a041-9841-a260-ad12f7f240c4"],
+
+Cell[BoxData[""], "Input",ExpressionUUID->"a4f0efdc-3891-4c41-b5ee-3c0d0c3ae4ac"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ListLinePlot", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"#", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+        RowBox[{
+         RowBox[{"#", "[", 
+          RowBox[{"[", "2", "]"}], "]"}], " ", "-", " ", 
+         RowBox[{"#", "[", 
+          RowBox[{"[", "3", "]"}], "]"}]}]}], "}"}], " ", "&"}], " ", "/@", 
+     " ", "chainData"}], ",", " ", 
+    RowBox[{"PlotMarkers", " ", "->", " ", "Automatic"}], ",", "\n", "  ", 
+    RowBox[{"AxesLabel", " ", "->", " ", 
+     RowBox[{"{", 
+      RowBox[{"\"\<N (pentagon blocks)\>\"", ",", 
+       " ", "\"\<\[CurlyTheta] - \[Alpha]\>\""}], "}"}]}], ",", " ", 
+    RowBox[{"PlotRange", " ", "->", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", ".02"}], ",", " ", ".28"}], "}"}]}], ",", "\n", "  ", 
+    RowBox[{
+    "PlotLabel", " ", "->", " ", "\"\<quantum gap of pentagon chains\>\""}], ",",
+     " ", 
+    RowBox[{"ImageSize", " ", "->", " ", "380"}]}], "]"}], "\n"}]], "Code",Exp\
+ressionUUID->"83b97992-4ee4-d747-9e8a-3326d27c56d6"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Verification", "Section",ExpressionUUID->"5d8359c8-07a0-ba40-b62d-e07f687cb37b"],
+
+Cell["\<\
+House discipline: every claim above, machine-checked in one association. This \
+cell must print OK -> True.\
+\>", "Text",ExpressionUUID->"bfed75c0-5367-6349-85e2-45e621a38b37"],
+
+Cell[BoxData[""], "Input",ExpressionUUID->"93f679e5-1e8a-734d-9983-06601e04def7"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"EssayVerification", " ", "=", " ", 
+   RowBox[{"<|", "\n", "  ", 
+    RowBox[{
+     RowBox[{"\"\<hierarchy\>\"", " ", "->", " ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"IndependenceNumber", "[", "pentagon", "]"}], " ", "==", " ", 
+        "2"}], " ", "&&", " ", 
+       RowBox[{
+        RowBox[{"FractionalPackingNumber", "[", "pentagon", "]"}], " ", "==", 
+        " ", 
+        RowBox[{"5", "/", "2"}]}], " ", "&&", "\n", "     ", 
+       RowBox[{
+        RowBox[{"Abs", "[", 
+         RowBox[{
+          RowBox[{"LovaszTheta", "[", "pentagon", "]"}], " ", "-", " ", 
+          RowBox[{"Sqrt", "[", "5.", "]"}]}], "]"}], " ", "<", " ", 
+        RowBox[{"10", "^", 
+         RowBox[{"-", "6"}]}]}]}]}], ",", "\n", "  ", 
+     RowBox[{"\"\<oracle\>\"", " ", "->", " ", 
+      RowBox[{
+       RowBox[{"GraphData", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"\"\<Cycle\>\"", ",", " ", "5"}], "}"}], ",", 
+         " ", "\"\<LovaszNumber\>\""}], "]"}], " ", "===", " ", 
+       RowBox[{"Sqrt", "[", "5", "]"}]}]}], ",", "\n", "  ", 
+     RowBox[{"\"\<geometry\>\"", " ", "->", " ", 
+      RowBox[{
+       RowBox[{"Simplify", "[", 
+        RowBox[{
+         RowBox[{"Total", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"#", " ", ".", " ", 
+               RowBox[{"{", 
+                RowBox[{"0", ",", " ", "0", ",", " ", "1"}], "}"}]}], ")"}], "^",
+              "2"}], " ", "&"}], " ", "/@", " ", 
+           RowBox[{"KCBSDirections", "[", "]"}]}], "]"}], " ", "-", " ", 
+         RowBox[{"Sqrt", "[", "5", "]"}]}], "]"}], " ", "===", " ", "0"}]}], ",",
+      "\n", "  ", 
+     RowBox[{"\"\<twoCopies\>\"", " ", "->", " ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"CEFilter", "[", 
+         RowBox[{"pentagon", ",", " ", 
+          RowBox[{"ConstantArray", "[", 
+           RowBox[{
+            RowBox[{"N", "[", 
+             RowBox[{"1", "/", 
+              RowBox[{"Sqrt", "[", "5", "]"}]}], "]"}], ",", " ", "5"}], 
+           "]"}]}], "]"}], "[", "\"\<Passes\>\"", "]"}], " ", "&&", "\n", 
+       "     ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"CEFilter", "[", 
+          RowBox[{"pentagon", ",", " ", 
+           RowBox[{"ConstantArray", "[", 
+            RowBox[{
+             RowBox[{"1", "/", "2"}], ",", " ", "5"}], "]"}]}], "]"}], 
+         "[", "\"\<Worst\>\"", "]"}], " ", "==", " ", 
+        RowBox[{"5", "/", "4"}]}], " ", "&&", "\n", "     ", 
+       RowBox[{
+        RowBox[{"CEFilter", "[", 
+         RowBox[{
+          RowBox[{"CycleGraph", "[", "7", "]"}], ",", " ", 
+          RowBox[{"ConstantArray", "[", 
+           RowBox[{
+            RowBox[{"1", "/", "2"}], ",", " ", "7"}], "]"}]}], "]"}], 
+        "[", "\"\<Passes\>\"", "]"}]}]}], ",", "\n", "  ", 
+     RowBox[{"\"\<exactCF\>\"", " ", "->", " ", 
+      RowBox[{
+       RowBox[{"FullSimplify", "[", 
+        RowBox[{
+         RowBox[{"ContextualFraction", "[", 
+          RowBox[{"scenario", ",", " ", 
+           RowBox[{"CycleModel", "[", 
+            RowBox[{"5", ",", " ", "\"\<Quantum\>\""}], "]"}], ",", "\n", 
+           "       ", 
+           RowBox[{"WorkingPrecision", " ", "->", " ", "Infinity"}]}], "]"}], 
+         " ", "-", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"2", " ", 
+            RowBox[{"Sqrt", "[", "5", "]"}]}], " ", "-", " ", "4"}], ")"}]}], 
+        "]"}], " ", "===", " ", "0"}]}], ",", "\n", "  ", 
+     RowBox[{"\"\<sheafStrata\>\"", " ", "->", " ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"GlobalSectionQ", "[", 
+            RowBox[{"scenario", ",", " ", 
+             RowBox[{"N", "@", 
+              RowBox[{"CycleModel", "[", 
+               RowBox[{"5", ",", " ", "#"}], "]"}]}]}], "]"}], " ", "&"}], 
+          " ", "/@", " ", 
+          RowBox[{"{", 
+           
+           RowBox[{"\"\<Classical\>\"", ",", " ", "\"\<Quantum\>\"", ",", 
+            " ", "\"\<Wright\>\""}], "}"}]}], ")"}], " ", "===", "\n", 
+        "     ", 
+        RowBox[{"{", 
+         RowBox[{"True", ",", " ", "False", ",", " ", "False"}], "}"}]}], " ",
+        "&&", " ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"PossibilisticSupport", "[", 
+          RowBox[{"scenario", ",", " ", 
+           RowBox[{"N", "@", 
+            RowBox[{"CycleModel", "[", 
+             RowBox[{"5", ",", " ", "\"\<Quantum\>\""}], "]"}]}]}], "]"}], 
+         "[", "\"\<Size\>\"", "]"}], " ", "==", " ", 
+        RowBox[{"LucasL", "[", "5", "]"}]}]}]}], ",", "\n", "  ", 
+     RowBox[{"\"\<laplacianRejected\>\"", " ", "->", " ", 
+      RowBox[{"AllTrue", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"HarmonicResidual", "[", 
+           RowBox[{"delta", ",", " ", 
+            RowBox[{"N", "@", 
+             RowBox[{"CycleModel", "[", 
+              RowBox[{"5", ",", " ", "#"}], "]"}]}]}], "]"}], " ", "&"}], " ",
+          "/@", "\n", "     ", 
+         RowBox[{"{", 
+          
+          RowBox[{"\"\<Classical\>\"", ",", " ", "\"\<Quantum\>\"", ",", 
+           " ", "\"\<Wright\>\""}], "}"}]}], ",", " ", 
+        RowBox[{
+         RowBox[{"#", " ", "<", " ", 
+          RowBox[{"10", "^", 
+           RowBox[{"-", "10"}]}]}], " ", "&"}]}], "]"}]}], ",", "\n", "  ", 
+     RowBox[{"\"\<dla\>\"", " ", "->", " ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"MatrixRank", "[", 
+         RowBox[{
+          RowBox[{"So3Axis", " ", "/@", " ", "gens"}], ",", " ", 
+          RowBox[{"Tolerance", " ", "->", " ", 
+           RowBox[{"10", "^", 
+            RowBox[{"-", "8"}]}]}]}], "]"}], " ", "==", " ", "2"}], " ", "&&",
+        " ", 
+       RowBox[{
+        RowBox[{"DLADimension", "[", "gens", "]"}], " ", "==", " ", "3"}]}]}],
+      ",", "\n", "  ", 
+     RowBox[{"\"\<chains\>\"", " ", "->", " ", 
+      RowBox[{"And", " ", "@@", " ", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Abs", "[", 
+           RowBox[{
+            RowBox[{"chainData", "[", 
+             RowBox[{"[", 
+              RowBox[{"n", ",", " ", "2"}], "]"}], "]"}], " ", "-", " ", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+              "2.2360680", ",", " ", "4.", ",", " ", "5.1366009", ",", " ", 
+               "7.", ",", " ", "8.1014704"}], "}"}], "[", 
+             RowBox[{"[", "n", "]"}], "]"}]}], "]"}], " ", "<", " ", 
+          RowBox[{"10", "^", 
+           RowBox[{"-", "3"}]}]}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"n", ",", " ", "5"}], "}"}]}], "]"}]}]}]}], "\n", "|>"}]}], 
+  ";"}], "\n", 
+ RowBox[{"Column", "[", 
+  RowBox[{"{", 
+   RowBox[{"EssayVerification", ",", " ", 
+    RowBox[{"\"\<OK\>\"", " ", "->", " ", 
+     RowBox[{"And", " ", "@@", " ", 
+      RowBox[{"Values", "[", "EssayVerification", "]"}]}]}]}], "}"}], 
+  "]"}], "\n"}], "Code",ExpressionUUID->"6b9e28fc-8b50-9243-9a51-\
+964a53c6f3a9"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Concluding Remarks", "Section",ExpressionUUID->"9e951474-deac-a844-974b-a73c18bae8e5"],
+
+Cell["\<\
+One graph carried the whole argument. The pentagon's three invariants delimit \
+three theories; two copies of the experiment force the quantum value; a \
+linear program prices the resource exactly; the sheaf view says precisely \
+which local consistencies fail to globalize; and one commutator marks where \
+the classical description ends. Limitations, stated plainly: the SDP values \
+are machine-precision (only the LP certificates here are exact); a classical \
+computer reproducing these statistics has no evidential force \[LongDash] the \
+sampler knows the context, which is exactly what hidden-variable models are \
+forbidden; the sheaf Laplacian was rejected by its pre-registered gate test \
+and is kept only as a no-disturbance projector; and the two-copy filter \
+provably cannot activate n-cycles with n \[GreaterEqual] 7, so these \
+certificates bound from above without singling out the quantum set in general \
+\[LongDash] that is Cabello's open D1 problem, not a solved one.\
+\>", "Text",ExpressionUUID->"97b04c85-a9df-2e4a-be74-cf7faab38738"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Future Work", "Section",ExpressionUUID->"a20b43fa-a53d-dc44-a581-aacc433966f6"],
+
+Cell["\<\
+Run the k = 3 activation probe on the heptagon (343-vertex OR cube; probe \
+pre-registered in the pipeline, currently disabled) and chart the open cells \
+of arXiv:2411.09773.\
+\>", "Item",ExpressionUUID->"8fa8c8b5-b7da-974a-bb05-2051a0813caa"],
+
+Cell["\<\
+Replace the rejected Laplacian with \[CapitalCCedilla]ech cohomology of the \
+support presheaf (Abramsky-Mansfield-Barbosa, arXiv:1502.03097) as the \
+sheaf-level measure, on the same CycleScenario datatype.\
+\>", "Item",ExpressionUUID->"d7ab8a6c-487e-7e4b-b6fc-7c90228f4eee"],
+
+Cell["\<\
+Correlate DLA growth with contextual fraction under composition on pentagon \
+meshes \[LongDash] the FEM study design (H1-H5) built on PentagonChain.\
+\>", "Item",ExpressionUUID->"5cef5383-d7f0-334f-bf9d-0563942da109"],
+
+Cell["\<\
+Run the two-qubit biphoton encoding of the cascade on gate hardware as a \
+genuine platform test, using the Wolfram/QuantumFramework paclet for the \
+circuit layer.\
+\>", "Item",ExpressionUUID->"2e485c8a-64ce-bf43-b072-c96e048e7fee"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["References", "Section",ExpressionUUID->"ae2ffab7-8087-2f49-b1c3-97004318edb0"],
+
+Cell["\<\
+Klyachko, Can, Binicio\\[GBreve]lu, Shumovsky, PRL 101, 020403 (2008); \
+arXiv:0706.0126.\
+\>", "Item",ExpressionUUID->"26beb166-f54f-2a48-b71c-4c959aa85f9f"],
+
+Cell["\<\
+Cabello, Severini, Winter, arXiv:1010.2163; Cabello, PRL 110, 060402 (2013).\
+\>", "Item",ExpressionUUID->"9b63a5dc-edee-8a49-9af2-4f067acee2b3"],
+
+Cell["\<\
+Abramsky, Brandenburger, NJP 13, 113036 (2011); Abramsky, Barbosa, Mansfield, \
+PRL 119, 050504 (2017).\
+\>", "Item",ExpressionUUID->"4aa44935-7df0-0340-8d7e-ff5dfcc0a9e2"],
+
+Cell["\<\
+Lapkiewicz et al., Nature 474, 490 (2011); Kujala, Dzhafarov, Larsson, PRL \
+115, 150401 (2015).\
+\>", "Item",ExpressionUUID->"65a75558-b0e1-4c45-a394-2f40b506f337"],
+
+Cell["\<\
+Hansen, Ghrist, J. Appl. Comput. Topol. 3 (2019); arXiv:1808.01513.\
+\>", "Item",ExpressionUUID->"3b2aff59-4b94-7749-bdfa-0c050d6b5461"],
+
+Cell["\<\
+Choudhary, Barbosa, arXiv:2411.09773; Fritz et al., Nat. Commun. 4, 2263 \
+(2013).\
+\>", "Item",ExpressionUUID->"b073c074-a50c-5949-94f1-59c21b20acdb"],
+
+Cell["\<\
+Wolfram: SemidefiniteOptimization, LinearOptimization (exact LP), GraphData \
+curated invariants, GraphProduct \"Conormal\"; the BlackBox paclet (this \
+repository).\
+\>", "Item",ExpressionUUID->"f1213111-ce81-4e40-bc97-9b751daad7ca"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{583.5, 508.79999999999995`},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+Visible->False,
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"322bb50e-7aef-bc44-8a19-8aa7bc90d8eb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 165, 3, 70, "Title",ExpressionUUID->"d1fb436b-43cb-a94b-a94c-9ced38113a9a"],
+Cell[744, 27, 169, 3, 70, "Subtitle",ExpressionUUID->"9d859ede-5661-e340-90ce-9c492494fe0a"],
+Cell[916, 32, 447, 6, 70, "Text",ExpressionUUID->"df466d44-8642-b94b-81b8-5082d8f79bda"],
+Cell[1366, 40, 859, 12, 70, "Abstract",ExpressionUUID->"4a0c025f-bed8-1546-a175-22c2b8a3b271"],
+Cell[CellGroupData[{
+Cell[2250, 56, 92, 0, 70, "Section",ExpressionUUID->"010fcbf5-cafd-d547-827d-8930f1919a4e"],
+Cell[2345, 58, 327, 5, 70, "Item",ExpressionUUID->"de30847c-4264-494f-a025-580a5d3ab4a5"],
+Cell[2675, 65, 372, 5, 70, "Item",ExpressionUUID->"697f3f25-1566-0e42-b674-5a2c5ea48bde"],
+Cell[3050, 72, 283, 4, 70, "Item",ExpressionUUID->"cc0c7d3e-32e1-e342-aa35-771fbdf18bbe"],
+Cell[3336, 78, 408, 6, 70, "Item",ExpressionUUID->"ed8396ce-4e6e-f24b-8c39-4f855a61eaea"],
+Cell[3747, 86, 237, 4, 70, "Item",ExpressionUUID->"059d513e-647a-4b43-b87f-c7af2bd2457e"],
+Cell[3987, 92, 273, 4, 70, "Item",ExpressionUUID->"50555e5a-465d-a440-ba70-750063c437a1"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4297, 101, 86, 0, 70, "Section",ExpressionUUID->"27e1e707-b1f6-734f-b63c-5fe9107eae1e"],
+Cell[4386, 103, 780, 10, 70, "Text",ExpressionUUID->"840d5057-26fb-454c-b345-b3307adf0c0c"],
+Cell[5169, 115, 190, 3, 70, "CodeText",ExpressionUUID->"8d935fc7-3f42-5a4e-a78e-ea41f2664c7d"],
+Cell[5362, 120, 81, 0, 70, "Input",ExpressionUUID->"d16b60eb-caa8-e84f-a646-15054bf2e532"],
+Cell[5446, 122, 975, 25, 70, "Code",ExpressionUUID->"aa904595-6cbb-bc48-a198-38615cc86213"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6458, 152, 114, 0, 70, "Section",ExpressionUUID->"d6c95cc1-8b90-3045-9d89-8a35b2f02bef"],
+Cell[6575, 154, 137, 1, 70, "CodeText",ExpressionUUID->"682ccd63-30f3-614f-a6e4-1d7a167d04a2"],
+Cell[6715, 157, 81, 0, 70, "Input",ExpressionUUID->"633ff405-d0a5-7e4c-9f73-e86de5d566b1"],
+Cell[6799, 159, 393, 8, 70, "Code",ExpressionUUID->"db6dee56-ae62-2d4c-ad9f-4832db04664b"],
+Cell[7195, 169, 384, 5, 70, "Text",ExpressionUUID->"818aa2b3-7c5d-4146-bff6-fcb2e01f6fff"],
+Cell[7582, 176, 212, 3, 70, "CodeText",ExpressionUUID->"0d83358c-dc1d-8f44-b4c0-e237d106973e"],
+Cell[7797, 181, 81, 0, 70, "Input",ExpressionUUID->"280d97d6-ac04-0c4e-8085-052f0bb6cfcd"],
+Cell[7881, 183, 329, 7, 70, "Code",ExpressionUUID->"30947c47-58e4-6e4d-b303-c176bc379a38"],
+Cell[8213, 192, 195, 3, 70, "CodeText",ExpressionUUID->"252b861d-80f5-894f-b0fb-b7cd336167aa"],
+Cell[8411, 197, 81, 0, 70, "Input",ExpressionUUID->"200db51f-533d-c242-bfa3-85481cffcf26"],
+Cell[8495, 199, 457, 12, 70, "Code",ExpressionUUID->"a07ad4b6-3d6c-2e41-91e4-ef031c3242ac"],
+Cell[8955, 213, 204, 3, 70, "CodeText",ExpressionUUID->"ea4702b8-743f-4548-8e54-2766543a59cb"],
+Cell[9162, 218, 81, 0, 70, "Input",ExpressionUUID->"22917077-9103-de46-8d01-7bda28688c72"],
+Cell[9246, 220, 728, 22, 70, "Code",ExpressionUUID->"9b6b3257-7a5b-074f-a8ee-3b34991071b0"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10011, 247, 105, 0, 70, "Section",ExpressionUUID->"8ca3d8f3-0ed3-c64b-a10c-9b9131b6271f"],
+Cell[10119, 249, 559, 8, 70, "Text",ExpressionUUID->"3ba35aeb-fbe5-f240-a9e3-3d5d28687ffc"],
+Cell[10681, 259, 229, 3, 70, "CodeText",ExpressionUUID->"d4f190dc-e7f1-c946-a415-a089f50ae4f2"],
+Cell[10913, 264, 81, 0, 70, "Input",ExpressionUUID->"ad0708e8-6268-c049-aff4-a681134afaff"],
+Cell[10997, 266, 354, 10, 70, "Code",ExpressionUUID->"ddbb27fb-65bb-5f48-8966-9351db020e72"],
+Cell[11354, 278, 209, 3, 70, "CodeText",ExpressionUUID->"3c463e64-f58d-0c42-9084-f46202fd2ee5"],
+Cell[11566, 283, 81, 0, 70, "Input",ExpressionUUID->"35277ac8-c120-a747-ac77-91897914d079"],
+Cell[11650, 285, 273, 7, 70, "Code",ExpressionUUID->"33131d87-cc6f-e242-9af0-cc21c479ffa5"],
+Cell[11926, 294, 258, 4, 70, "CodeText",ExpressionUUID->"29edd079-a632-e84c-a957-75c4b8aa107c"],
+Cell[12187, 300, 81, 0, 70, "Input",ExpressionUUID->"8797471f-d0f7-8f4f-ace2-291e8997e0f0"],
+Cell[12271, 302, 305, 8, 70, "Code",ExpressionUUID->"873f35c3-e978-9149-972a-075858a154a0"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12613, 315, 105, 0, 70, "Section",ExpressionUUID->"6d6afe94-5a9e-8c48-98b9-324be2cd09b5"],
+Cell[12721, 317, 536, 7, 70, "Text",ExpressionUUID->"26e512a9-0018-514e-afc9-e3df4a40c2ee"],
+Cell[13260, 326, 187, 3, 70, "CodeText",ExpressionUUID->"45bf99ca-4ac5-7640-9b7b-44af31465f06"],
+Cell[13450, 331, 81, 0, 70, "Input",ExpressionUUID->"ffb50f45-58e6-504a-9a62-40e417ce23e1"],
+Cell[13534, 333, 287, 6, 70, "Code",ExpressionUUID->"5d178d8e-455b-5a4a-b015-b7c3544f13cc"],
+Cell[13824, 341, 228, 3, 70, "CodeText",ExpressionUUID->"3e647dea-f540-2c46-babc-f960a02ba772"],
+Cell[14055, 346, 81, 0, 70, "Input",ExpressionUUID->"e01d25f3-69f7-ed41-8eeb-81a84a4688d7"],
+Cell[14139, 348, 573, 14, 70, "Code",ExpressionUUID->"9f6d88f2-74e7-6844-a9ad-de2187d75459"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14749, 367, 115, 0, 70, "Section",ExpressionUUID->"2ac786b0-a19a-c34a-8f4d-ec2d7354cdba"],
+Cell[14867, 369, 363, 5, 70, "Text",ExpressionUUID->"52312a67-9ee2-e240-9ffa-ee69daeaeec6"],
+Cell[15233, 376, 153, 2, 70, "CodeText",ExpressionUUID->"9855beb4-9cf0-1344-95eb-bfae9a286670"],
+Cell[15389, 380, 81, 0, 70, "Input",ExpressionUUID->"0ecb70b7-d293-e94e-9766-f7830b2c3c93"],
+Cell[15473, 382, 465, 13, 70, "Code",ExpressionUUID->"c12a0ae4-d526-2e4c-b198-4e44923f8b89"],
+Cell[15941, 397, 263, 4, 70, "CodeText",ExpressionUUID->"55f7e22c-95a1-a74f-bcee-f51cc3f6fc5d"],
+Cell[16207, 403, 81, 0, 70, "Input",ExpressionUUID->"4b1abf5d-6420-314b-804b-291078a5f46c"],
+Cell[16291, 405, 621, 16, 70, "Code",ExpressionUUID->"3594c6bc-13cd-3242-b21c-fb5603af82a8"],
+Cell[16915, 423, 476, 7, 70, "Text",ExpressionUUID->"8ffc71af-c3ed-ef46-ac23-4837e852dded"],
+Cell[17394, 432, 204, 3, 70, "CodeText",ExpressionUUID->"7fc3f6d0-f951-2e45-84df-9dcd36f77122"],
+Cell[17601, 437, 81, 0, 70, "Input",ExpressionUUID->"bca1de27-5c11-7c44-91fe-6dbf2eed9894"],
+Cell[17685, 439, 592, 16, 70, "Code",ExpressionUUID->"49ad82fd-2281-2a4c-a0fd-11704732e844"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18314, 460, 113, 0, 70, "Section",ExpressionUUID->"6689f5ad-d743-554b-a9b9-b75b45005483"],
+Cell[18430, 462, 464, 6, 70, "Text",ExpressionUUID->"a77046bd-5b6d-754e-b5b9-84f901ba5f10"],
+Cell[18897, 470, 132, 0, 70, "CodeText",ExpressionUUID->"8366df4c-fca3-1140-92d1-dc5aa86a746d"],
+Cell[19032, 472, 81, 0, 70, "Input",ExpressionUUID->"148d61af-dd5b-5d48-b3aa-f59a37649fd6"],
+Cell[19116, 474, 393, 10, 70, "Code",ExpressionUUID->"521ef297-5d4e-b641-a4f4-a161ab6ff1a2"],
+Cell[19512, 486, 145, 2, 70, "CodeText",ExpressionUUID->"3f22dbcf-87ab-3844-89c3-0c02f14ed275"],
+Cell[19660, 490, 81, 0, 70, "Input",ExpressionUUID->"cf491cbd-8fd1-8d4d-a912-a49bebc78723"],
+Cell[19744, 492, 143, 3, 70, "Code",ExpressionUUID->"8c961bd4-addf-4548-9e7d-6efa67ed7fa3"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19924, 500, 102, 0, 70, "Section",ExpressionUUID->"0dbd85a4-9427-1f45-a9e6-8cb29e69457d"],
+Cell[20029, 502, 495, 7, 70, "Text",ExpressionUUID->"d0cc1b28-0b1f-9a4d-b5aa-06fb6e62d6f1"],
+Cell[20527, 511, 178, 3, 70, "CodeText",ExpressionUUID->"a5d4a711-e82f-864b-aced-693d2c635995"],
+Cell[20708, 516, 81, 0, 70, "Input",ExpressionUUID->"ac52f06c-35b7-934d-b906-06f41ebee256"],
+Cell[20792, 518, 1125, 28, 70, "Code",ExpressionUUID->"c5e29c6f-647d-a245-8a14-81c070f0325b"],
+Cell[21920, 548, 213, 3, 70, "CodeText",ExpressionUUID->"392e03cd-a041-9841-a260-ad12f7f240c4"],
+Cell[22136, 553, 81, 0, 70, "Input",ExpressionUUID->"a4f0efdc-3891-4c41-b5ee-3c0d0c3ae4ac"],
+Cell[22220, 555, 1101, 29, 70, "Code",ExpressionUUID->"83b97992-4ee4-d747-9e8a-3326d27c56d6"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[23358, 589, 86, 0, 70, "Section",ExpressionUUID->"5d8359c8-07a0-ba40-b62d-e07f687cb37b"],
+Cell[23447, 591, 186, 3, 70, "Text",ExpressionUUID->"bfed75c0-5367-6349-85e2-45e621a38b37"],
+Cell[23636, 596, 81, 0, 70, "Input",ExpressionUUID->"93f679e5-1e8a-734d-9983-06601e04def7"],
+Cell[23720, 598, 6956, 179, 70, "Code",ExpressionUUID->"6b9e28fc-8b50-9243-9a51-964a53c6f3a9"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[30713, 782, 92, 0, 70, "Section",ExpressionUUID->"9e951474-deac-a844-974b-a73c18bae8e5"],
+Cell[30808, 784, 1069, 14, 70, "Text",ExpressionUUID->"97b04c85-a9df-2e4a-be74-cf7faab38738"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[31914, 803, 85, 0, 70, "Section",ExpressionUUID->"a20b43fa-a53d-dc44-a581-aacc433966f6"],
+Cell[32002, 805, 254, 4, 70, "Item",ExpressionUUID->"8fa8c8b5-b7da-974a-bb05-2051a0813caa"],
+Cell[32259, 811, 286, 4, 70, "Item",ExpressionUUID->"d7ab8a6c-487e-7e4b-b6fc-7c90228f4eee"],
+Cell[32548, 817, 228, 3, 70, "Item",ExpressionUUID->"5cef5383-d7f0-334f-bf9d-0563942da109"],
+Cell[32779, 822, 243, 4, 70, "Item",ExpressionUUID->"2e485c8a-64ce-bf43-b072-c96e048e7fee"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[33059, 831, 84, 0, 70, "Section",ExpressionUUID->"ae2ffab7-8087-2f49-b1c3-97004318edb0"],
+Cell[33146, 833, 168, 3, 70, "Item",ExpressionUUID->"26beb166-f54f-2a48-b71c-4c959aa85f9f"],
+Cell[33317, 838, 155, 2, 70, "Item",ExpressionUUID->"9b63a5dc-edee-8a49-9af2-4f067acee2b3"],
+Cell[33475, 842, 182, 3, 70, "Item",ExpressionUUID->"4aa44935-7df0-0340-8d7e-ff5dfcc0a9e2"],
+Cell[33660, 847, 175, 3, 70, "Item",ExpressionUUID->"65a75558-b0e1-4c45-a394-2f40b506f337"],
+Cell[33838, 852, 146, 2, 70, "Item",ExpressionUUID->"3b2aff59-4b94-7749-bdfa-0c050d6b5461"],
+Cell[33987, 856, 161, 3, 70, "Item",ExpressionUUID->"b073c074-a50c-5949-94f1-59c21b20acdb"],
+Cell[34151, 861, 244, 4, 70, "Item",ExpressionUUID->"f1213111-ce81-4e40-bc97-9b751daad7ca"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

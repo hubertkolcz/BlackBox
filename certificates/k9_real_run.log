@@ -1,0 +1,12 @@
+de Bruijn-9: 512 nodes, 1024 edges
+Stage 1: strategy iteration (decoupled canonical-Phi fix), cap 20 rounds per seed...
+  seed A (sig=s):
+    round 1: Gamma = 0.5000039977285256
+    round 2: Gamma = 0.07202650081358976
+    converged at round 2
+  seed B (first valid):
+    round 1: Gamma = 0.5000039974749115
+    round 2: Gamma = 0.3767227190732853
+    round 3: Gamma = 0.07202650081358976
+    converged at round 3
+  seed random-1:
