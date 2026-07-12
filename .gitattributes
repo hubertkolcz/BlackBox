@@ -1,0 +1,19 @@
+# Normalize line endings to LF for everything git considers text, on both
+# commit and checkout, regardless of the committer's OS or editor settings.
+# This repo is worked on from both a Linux sandbox and a Windows desktop;
+# without this file, text files silently drift to CRLF on the Windows side
+# and every git status/diff on that machine fills with line-ending-only
+# noise (see KNOWN_ISSUES.md ISSUE-018 for the incident this fixes).
+* text=auto eol=lf
+
+# Defensive: never let line-ending normalization touch actual binaries,
+# even though none are currently tracked in this repo.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.zip binary
+*.gz binary
+*.wlnet binary
+*.mx binary
