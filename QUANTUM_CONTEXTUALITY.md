@@ -630,6 +630,49 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   tighter than 3/2 there. The τ_cct height result bears only on single finite
   exact rational certificates.
 
+  **12 July 2026 research push — still open, but the attack strategy changed.**
+  A dedicated literature/engineering push concluded that "compute Γ_9, Γ_10, …
+  and watch the bracket shrink" is **not a path to a proof at all**: the Γ_k
+  hierarchy is the same species of object as path-complete Lyapunov-function
+  hierarchies for the joint spectral radius (Ahmadi–Jungers–Parrilo–Roozbehani),
+  and that literature has **no known convergence-rate theorem** — an
+  arbitrarily long shrinking Γ_k sequence is evidence, never a proof, of
+  lim Γ_k = gap(cct). The one place in the sibling literature where an
+  ε-bracket *does* convert to an exact, finite, zero-slack proof is the
+  Guglielmi–Protasov invariant-polytope algorithm for JSR: seed a candidate
+  certificate from the already-known exact optimum, then check in ONE finite
+  exact linear-algebra pass whether it holds with equality on the candidate
+  and non-negative slack everywhere else. The concrete next step this project
+  should actually take is therefore: attempt a **zero-slack** (not ε-slack)
+  recalibration of the EXISTING k=7/k=8 windowed transfer-SDP certificate,
+  seeded from cct's own exact KKT solution, checking whether it holds with
+  exact equality on the cct cycle and ≥0 slack on every other de Bruijn-k
+  edge — NOT extending to k=9 first. A from-scratch reconstruction of a k=9
+  generator pipeline was written (`GenerateEpsilonCertificate9.wl`) since no
+  generator script for the existing k=7/k=8 certificates exists anywhere in
+  this repo or its history (both were committed whole, already-solved, with
+  no construction code) — but its strategy-iteration solver does not yet
+  converge correctly even at k=4 (reproduces ≈0.5, not the known Γ_4≈0.1020),
+  so it is a validated-but-unfinished skeleton, not a working Γ_9. Two genuine
+  new results came out of the push regardless: (i) a small NEW theorem
+  (α-side, exact, direct corollary of the existing Lemma B / trans-chain
+  proof technique): diluting any defect block D into a pure-cct background
+  gives ᾱ(D+(cct)^k) = (4k+c_D)/(3k+|D|) exactly, → 4/3 as Θ(1/k); (ii) an
+  extensive NEW negative computational sweep — ~6000+ words never tested
+  before (structurally-targeted defect-dilution words to period ~900, and
+  genuine Christoffel/Sturmian words at slopes within 0.08%–1.5% of 2/3 to
+  period ~2000, the literal finite-period proxy for a Bousch–Mairesse-style
+  aperiodic challenger) — found **zero beaters of cct anywhere**, with the
+  gap approaching gap(cct) linearly and asymmetrically from both sides of
+  slope 2/3 (a "kink," not a smooth turning point) — consistent with, but not
+  proof of, cct being an isolated true global maximum. Net: the bracket width
+  (0.0054) has NOT moved; all three questions (global optimality of cct,
+  lim Γ_k = gap(cct), periodic-orbit sufficiency for the true θ̄−ᾱ functional,
+  as opposed to the already-proven certified surrogate) remain open. Do not
+  read the widened empirical sweep as near-closure — Bousch–Mairesse (JAMS
+  2002) is a real, executed counterexample in this exact problem genus where
+  a periodic-orbit-looks-optimal picture was provably wrong.
+
 ## 10. Positioning: the atomic-GE program — reach and boundaries
 
 The organizing premise of this repository is reductive: treat the **pentagon C₅ as
