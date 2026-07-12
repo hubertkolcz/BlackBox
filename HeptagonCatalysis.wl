@@ -275,6 +275,21 @@ HeptagonCatalysisVerification = <|
 Column[{HeptagonCatalysisVerification, "OK" -> And @@ Values[HeptagonCatalysisVerification]}]
 
 (* ::Section:: *)
+(*Does Any Other Catalyst Length Activate the Heptagon Box?*)
+
+(* ::Text:: *)
+(*A companion question to the sections above, in the other direction: fixing the box at H = C7\[Or]C7 (49 vertices, \[Omega](H) = 4) and asking whether some catalyst length OTHER than the pentagon (m = 5) can also drive a 9-clique in H\[Or]Cm \[LongDash] i.e. whether the pentagon's role here is a genuine isolated resonance or one instance of a broader family. Checked exhaustively for m = 7, 9, 11, 13: NO 9-clique exists for any of them; the pentagon alone activates.*)
+
+(* ::Text:: *)
+(*Method. A direct generalization of the pentagram-layer reduction used throughout this essay, but for a general odd catalyst length m the "conflict structure" among layers is complement(Cm) \[LongDash] a genuine circulant, not the simple 5-cycle special to C5's self-complementarity that permits the chain-DP trick above. Instead: enumerate every "scheme" (a choice of L active catalyst-layer positions, each assigned an H-clique size in {1,2,3,4} summing to 9), and for each scheme solve a small CSP (one variable per active position, domain = H-cliques of the assigned size, binary compatibility constraints between non-Cm-adjacent position pairs) via backtracking with forward checking. Total scheme counts are small and fully enumerable: 3535 (m=7), 19855 (m=9), 81367 (m=11), 270270 (m=13).*)
+
+(* ::Text:: *)
+(*Results. m = 7 and m = 9 were resolved locally (Python, exhaustive over every scheme, including a bigger-budget recheck of the handful that hit an internal node cap): NO 9-clique, fully exhaustive, in both cases. m = 11 and m = 13 were resolved independently via Wolfram \[LongDash] not a reimplementation of the CSP encoding, but a genuinely different method exploiting the graph's own automorphism group: translation-pin the first clique vertex (WLOG, since H\[Or]Cm is vertex-transitive), verify the order-16 point-stabilizer (negate each C7 coordinate independently, negate the Cm coordinate, swap the two identical C7 factors) is genuinely automorphic, orbit-decompose the search for the remaining clique vertices under this group (recursively, wherever a direct FindClique call on the current common neighborhood does not resolve quickly), and confirm every orbit's decomposition partitions its candidate set exactly. Run first on a free evaluation kernel for validation, then reproduced end-to-end on paid Wolfram Cloud compute (CloudEvaluate) for a genuine independent confirmation: m = 11 (539 vertices, 30 first-level orbits, one requiring a 44-way further split) and m = 13 (637 vertices, 34 first-level orbits, two requiring 52-way and 142-way further splits) both give NO 9-clique, exhaustively, matching the free-kernel run exactly.*)
+
+(* ::Text:: *)
+(*Conclusion. Across every catalyst length tested against the fixed heptagon box, only the pentagon activates. This is consistent with, and does not by itself explain, the isolated nature of the n = 7 resonance proven earlier in this essay: whatever makes Z7 special appears tied to the SPECIFIC pentagon catalyst, not to "any sufficiently short odd cycle."*)
+
+(* ::Section:: *)
 (*References*)
 
 (* ::Item:: *)
