@@ -240,7 +240,7 @@ SignalingTaxonomyVerification = <|
   "axis3SFClassicalZero" -> classicalGlobal,
   "axis3SFQuantumFloatLP" -> True (* pythonMirror: 0.4721359550, |diff| = 2.2e-16 *),
   "axis3SFTsirelsonFloatLP" -> Abs[(1 - NoncontextualFraction[scen4, N@Flatten[Table[
-        {(1 + c)/4, (1 - c)/4, (1 - c)/4, (1 + c)/4}, {c, {1, 1, 1, -1}/Sqrt[2.]}]]) - (Sqrt[2.] - 1)] < 10^-6,
+        {(1 + c)/4, (1 - c)/4, (1 - c)/4, (1 + c)/4}, {c, {1, 1, 1, -1}/Sqrt[2.]}]]]) - (Sqrt[2.] - 1)] < 10^-6,
   "axis3StrategiesSpanEverything" -> Sort[Flatten[Table[Module[{col = ConstantArray[0, 20]},
         Do[col[[4 c + secIdx[{x[[c + 1]], y[[Mod[c + 1, 5] + 1]]}]]] = 1, {c, 0, 4}]; col],
        {x, Tuples[{0, 1}, 5]}, {y, Tuples[{0, 1}, 5]}], 1]] ===

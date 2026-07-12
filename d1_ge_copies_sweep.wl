@@ -19,7 +19,27 @@ Needs["HubertKolcz`BlackBox`"]; Quiet[Remove /@ Select["Global`" <> # & /@ Names
 (* ::Input:: *)
 kneserGraph[n_Integer, k_Integer] := Module[{verts = Subsets[Range[n], {k}]},
    Graph[verts, UndirectedEdge @@@ Select[Subsets[verts, {2}], Intersection[#[[1]], #[[2]]] === {} &]]];
-mobiusKantorGraph[] := GraphData["MoebiusKantorGraph"];  (* generalized Petersen GP(8,3), bipartite *)
+(* OFFLINE builders replacing GraphData[...] (a Wolfram-Knowledgebase lookup that can hang or
+   be slow with no local network access) -- explicit, elementary, standard constructions:*)
+mobiusKantorGraph[] := Module[{outer, inner, edges},
+   (* generalized Petersen graph GP(8,3): outer 8-cycle u0..u7, inner v0..v7 joined with
+      step 3 (an 8-pointed "octagram"), spokes u_i-v_i. 16 vertices, 3-regular, bipartite. *)
+   outer = Table[Subscript[u, i], {i, 0, 7}]; inner = Table[Subscript[v, i], {i, 0, 7}];
+   edges = Join[
+     Table[UndirectedEdge[outer[[i + 1]], outer[[Mod[i + 1, 8] + 1]]], {i, 0, 7}],
+     Table[UndirectedEdge[inner[[i + 1]], inner[[Mod[i + 3, 8] + 1]]], {i, 0, 7}],
+     Table[UndirectedEdge[outer[[i + 1]], inner[[i + 1]]], {i, 0, 7}]];
+   Graph[Join[outer, inner], DeleteDuplicates[edges]]];
+paleyGraph[n_Integer /; Mod[n, 4] == 1 && PrimeQ[n]] := Module[{qr},
+   (* Paley graph on Z_n: i~j iff (i-j) mod n is a nonzero quadratic residue; n prime,
+      n=1 mod 4 makes the residue set symmetric under negation, giving an undirected graph. *)
+   qr = DeleteDuplicates[Mod[Range[1, n - 1]^2, n]];
+   Graph[Range[0, n - 1], UndirectedEdge @@@
+     Select[Subsets[Range[0, n - 1], {2}], MemberQ[qr, Mod[#[[1]] - #[[2]], n]] &]]];
+vertexTransitiveQ[g_Graph] := VertexTransitiveGraphQ[g];  (* built-in, offline, no knowledgebase call;
+   AutomorphismGroup/GroupOrbits was tried first but AutomorphismGroup does not evaluate on Graph
+   objects in this environment ("is not a valid group") -- VertexTransitiveGraphQ is the correct,
+   working, self-contained primitive for exactly this question. *)
 
 (* general k-fold OR (conormal) power for ANY graph, not just cycles -- this is exactly
    CEFilter's own internal construction (BlackBox`CEFilter, private context), exposed here
@@ -36,14 +56,12 @@ gek[g_Graph, k_Integer] := CEFilter[g, ConstantArray[1, VertexCount[g]], k];
 (* ::Input:: *)
 sweepGraphs = <|
   "C7" -> CycleGraph[7], "C9" -> CycleGraph[9],
-  "Petersen" -> GraphData["PetersenGraph"], "MobiusKantor" -> mobiusKantorGraph[],
-  "Paley13" -> GraphData[{"Paley", 13}], "Kneser(6,2)" -> kneserGraph[6, 2]|>;
+  "Petersen" -> kneserGraph[5, 2], "MobiusKantor" -> mobiusKantorGraph[],
+  "Paley13" -> paleyGraph[13], "Kneser(6,2)" -> kneserGraph[6, 2]|>;
 
-vertexTransitiveCheck = Association@KeyValueMap[
-   #1 -> Quiet[Check[GraphData[#1 /. {"C7" -> {"CycleGraph", 7}, "C9" -> {"CycleGraph", 9},
-        "Petersen" -> "PetersenGraph", "MobiusKantor" -> "MoebiusKantorGraph",
-        "Paley13" -> {"Paley", 13}, "Kneser(6,2)" -> "n/a"}, "VertexTransitive"], "n/a"]] &,
-   sweepGraphs];
+(* offline, self-contained: computed directly from each graph's automorphism group rather
+   than a GraphData knowledgebase lookup (removes the network dependency entirely) *)
+vertexTransitiveCheck = Association@KeyValueMap[#1 -> vertexTransitiveQ[#2] &, sweepGraphs];
 
 (* ::Section:: *)
 (*Per-graph invariants: alpha, theta (two independent routes), alpha*, omega*)
@@ -74,23 +92,39 @@ invariants = Association@KeyValueMap[Function[{name, g}, Module[
        "alphaStar" -> alphaStar|>]], sweepGraphs];
 
 (* ::Section:: *)
-(*The GE-with-copies bound at k = 1 (= alpha*), 2, and 3*)
+(*The GE-with-copies bound at k = 1 (the fractional packing number), 2, and 3*)
 
 (* ::Text:: *)
 (*S_k = n * omega(G^(OR k))^(-1/k) is the per-vertex CE bound at k identical copies under the vertex-transitive-optimal UNIFORM assignment (ATC Result 3's own symmetrization argument: the extremal distribution for a vertex-transitive graph is constant). k=1 recovers alpha* exactly (CEFilter/gek at k=1 finds the single-clique bound, which for uniform p coincides with the LP fractional-packing value on vertex-transitive graphs). Brute-force omega(G^(OR2)) is exact for all six (largest: 256 vertices, Mobius-Kantor). omega(G^(OR3)) brute force is NOT attempted here for graphs beyond C7 (up to 343-729 vertices with 60-90% edge density -- exceeded this project's compute budget when tried, see d1_k3_activation.wl and the note Sec. 3); instead the CEILING bound omega(G^(OR3)) <= theta(Gbar)^3 (Lovasz multiplicativity over strong products: complement(G^(ORk)) = complement(G)^(STRONGk), CSW/HeptagonCatalysis's own method) brackets it against the trivial exact lower bound omega(G)^3, and PINS the value exactly whenever the two meet.*)
 
+(* ::Text:: *)
+(*SAFETY (added after this cell was found to exhaust available memory when run unconstrained
+against the sandboxed tool's realized limits): brute-force omega(G^(OR2)) is only attempted
+when the cheap analytic bracket (trivial lower bound omega(G)^2 vs. the theta ceiling) does
+NOT already pin the value, and even then under a TimeConstrained cap, mirroring the SAME
+bracket-with-fallback pattern already used for k3 below -- no unconditional full-scale
+FindClique/CEFilter search runs on any of the six graphs unguarded.*)
+
 (* ::Input:: *)
-k2omega = Association@KeyValueMap[#1 -> gek[#2, 2]["Omega"] &, sweepGraphs];
+k2omega = Association@KeyValueMap[Function[{name, g}, Module[
+     {lb = invariants[name]["omega"]^2, ceil = invariants[name]["thetaComplementSDP"]^2, exact},
+    If[ceil < lb + 1,
+      name -> <|"lowerBound" -> lb, "ceiling" -> ceil, "pinned" -> True, "value" -> lb, "method" -> "ceiling"|>,
+      exact = TimeConstrained[Quiet[gek[g, 2]["Omega"]], 180, Missing["TimedOut"]];
+      name -> <|"lowerBound" -> lb, "ceiling" -> ceil, "pinned" -> IntegerQ[exact],
+         "value" -> If[IntegerQ[exact], exact, Missing["BracketOnly", {lb, Ceiling[ceil] - 1}]],
+         "method" -> If[IntegerQ[exact], "bruteforce", "unresolved"]|>]]],
+   sweepGraphs];
 k3bracket = Association@KeyValueMap[Function[{name, g}, Module[{lb = invariants[name]["omega"]^3,
       ceil = invariants[name]["thetaComplementSDP"]^3},
      name -> <|"lowerBound" -> lb, "ceiling" -> ceil, "pinned" -> ceil < lb + 1,
         "value" -> If[ceil < lb + 1, lb, Missing["BracketOnly", {lb, Ceiling[ceil] - 1}]]|>]], sweepGraphs];
 
-sweepTable = Association@KeyValueMap[Function[{name, inv}, Module[{n = inv["n"], om2 = k2omega[name],
+sweepTable = Association@KeyValueMap[Function[{name, inv}, Module[{n = inv["n"], k2 = k2omega[name],
       k3 = k3bracket[name]},
      name -> <|"n" -> n, "alpha" -> inv["alpha"], "theta" -> inv["thetaSDP"], "alphaStar(S1)" -> inv["alphaStar"],
-        "omega2" -> om2, "S2" -> N[n om2^(-1/2), 8],
-        "S2reachesTheta" -> Abs[N[n om2^(-1/2)] - inv["thetaSDP"]] < 10^-5,
+        "omega2" -> k2, "S2orBracket" -> If[k2["pinned"], N[n k2["value"]^(-1/2), 8], "bracket only, see k2"],
+        "S2reachesTheta" -> k2["pinned"] && Abs[N[n k2["value"]^(-1/2)] - inv["thetaSDP"]] < 10^-5,
         "k3" -> k3, "S3orBracket" -> If[k3["pinned"], N[n k3["value"]^(-1/3), 8], "bracket only, see k3"]|>]],
    invariants];
 
@@ -130,7 +164,7 @@ item2Result = <|"theta(C7)theta(C7bar)=7exactly" -> productIdentity, "diagonalFo
 Print["=== D1 sweep: six vertex-transitive graphs beyond the KCBS-cycle family ==="];
 Print[TableForm[
    Table[{name, sweepTable[name]["n"], sweepTable[name]["alpha"], N[sweepTable[name]["theta"], 6],
-      sweepTable[name]["alphaStar(S1)"], sweepTable[name]["omega2"], N[sweepTable[name]["S2"], 6],
+      sweepTable[name]["alphaStar(S1)"], sweepTable[name]["omega2"]["value"], sweepTable[name]["S2orBracket"],
       sweepTable[name]["S2reachesTheta"], sweepTable[name]["k3"]["pinned"]}, {name, Keys[sweepTable]}],
    TableHeadings -> {None, {"graph", "n", "alpha", "theta", "S1=alpha*", "omega2", "S2", "S2=theta?", "k3 pinned?"}}]];
 Print[];
@@ -146,9 +180,9 @@ D1SweepVerification = <|
   "sixGraphsVertexTransitive" -> AllTrue[Values[vertexTransitiveCheck], # === True || # === "n/a" &],
   "thetaCrossCheckAllSix" -> AllTrue[Keys[sweepGraphs], invariants[#]["thetaAgreesToTol"] &],
   "vertexTransitiveIdentityAllSix" -> AllTrue[Keys[sweepGraphs], invariants[#]["vertexTransitiveTimesIdentityCheck"] &],
-  "C7_C9_stalled_at_k2" -> sweepTable["C7"]["omega2"] == 4 && sweepTable["C9"]["omega2"] == 4 &&
-     Simplify[sweepTable["C7"]["S2"] - 7/2] == 0. && Simplify[sweepTable["C9"]["S2"] - 9/2] == 0.,
-  "Petersen_partial_k2" -> sweepTable["Petersen"]["omega2"] == 5 && sweepTable["Petersen"]["S2"] < 5,
+  "C7_C9_stalled_at_k2" -> sweepTable["C7"]["omega2"]["value"] == 4 && sweepTable["C9"]["omega2"]["value"] == 4 &&
+     Simplify[sweepTable["C7"]["S2orBracket"] - 7/2] == 0. && Simplify[sweepTable["C9"]["S2orBracket"] - 9/2] == 0.,
+  "Petersen_partial_k2" -> sweepTable["Petersen"]["omega2"]["value"] == 5 && sweepTable["Petersen"]["S2orBracket"] < 5,
   "Paley13_converges_k2" -> sweepTable["Paley13"]["S2reachesTheta"],
   "MobiusKantor_and_Kneser_trivial" -> sweepTable["MobiusKantor"]["S2reachesTheta"] &&
      sweepTable["Kneser(6,2)"]["S2reachesTheta"],
