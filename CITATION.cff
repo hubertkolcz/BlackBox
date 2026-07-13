@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite it as below. A WSRI computational-essay publication is in preparation; update preferred-citation when it acquires an identifier."
+type: software
+title: "black-box: Evaluating black-box physics through optical emulation — machine-verified quantum contextuality"
+authors:
+  - family-names: "Kolcz"
+    given-names: "Hubert"
+    email: "kolcz.h@gmail.com"
+license: MIT
+repository-code: "https://github.com/hubertkolcz/black-box"
+abstract: >-
+  Machine-verified computational essays certifying black-box quantumness against
+  classical optical emulation: KCBS-pentagon graph invariants and Global-Exclusivity
+  correlation certificates, contextual fraction and signed negativity, pentagon-mesh
+  composition theorems with epsilon-certificates, a pre-registered black-box
+  certification protocol, Abramsky-Brandenburger sheaf/Cech-cohomology certificates,
+  a signaling-taxonomy extension, and a structural result on the classical
+  emulatability of analogue-Hawking-radiation witnesses. Includes the Wolfram paclet
+  HubertKolcz/BlackBox.
+keywords:
+  - quantum contextuality
+  - KCBS
+  - Lovasz theta
+  - exclusivity principle
+  - contextual fraction
+  - sheaf cohomology
+  - MBQC
+  - dynamical Lie algebra
+  - black-box certification
+  - analogue Hawking radiation

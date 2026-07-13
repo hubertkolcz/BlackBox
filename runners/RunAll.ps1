@@ -20,4 +20,4 @@ foreach ($f in @("RunBlackboxProtocol.wl", "RunEssay.wl", "RunCaseStudies.wl", "
   $out = & $ws -file $f -print all 2>&1 | Out-String
   Pop-Location
   $ok = $out -match "OK -> True"
-  if (-n
+  if (-not $ok) { $all = $false }

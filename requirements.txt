@@ -1,0 +1,9 @@
+# Python side of the black-box repository (Python 3.10+).
+# Every Python result has a Wolfram Language counterpart or anchor;
+# these packages are needed only for the .py tools.
+numpy
+scipy
+sympy
+python-igraph
+cvxpy
+clarabel

@@ -1,3 +1,9 @@
 ﻿.claude/
 __pycache__/
 *.pyc
+
+# generated graph binaries (regenerable from d1_k3_graphs.py / erg003_build_G_bin.py)
+02-D1-theory-frontier/bin/
+*.bin
+# resumable search scratch state
+06-D3-sheaf-cohomology/p2_state/
