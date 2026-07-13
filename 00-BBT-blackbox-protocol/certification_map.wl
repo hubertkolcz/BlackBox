@@ -55,13 +55,16 @@ lensNote = Grid[{
       Background -> hdrBG, Alignment -> Left, ImageMargins -> 5]},
    {Item[TextCell[
       "The staircase above is the CORRELATION lens. Independently, the geometric / "<>
-      "dynamical-Lie-algebra lens (gate G7) distinguishes a leaf-confined emulator "<>
-      "(DLA < 3) from the genuine KCBS cascade (DLA = 3) by auditing the claimed mode "<>
-      "compilation \[LongDash] a route that needs NO access upgrade but carries a "<>
-      "white-box trust assumption (the compilation is auditable). Prop 2 / BBT-003: no "<>
-      "table functional can lower-bound the DLA, so this lens is NOT derivable from the "<>
-      "correlation lens. That irreducibility \[LongDash] two lenses, neither reducible to "<>
-      "the other \[LongDash] is the shape of the answer to O3."],
+      "dynamical-Lie-algebra lens distinguishes emulators by auditing claimed dynamics: "<>
+      "G7 (discrete: leaf-confined DLA < 3 vs the genuine KCBS cascade DLA = 3) and "<>
+      "\[LongDash] NEW 2026-07-13 \[LongDash] G7-CV for Gaussian/CV devices (passive u(n), dim n^2, "<>
+      "linear-optics-emulable, vs active sp(2n,R), dim n(2n+1); exact-validated: u(2)=4 "<>
+      "confined, +two-mode squeezer sp(4,R)=10 active; final_o3_cv_dla.py). Both audits "<>
+      "need NO access upgrade but carry a white-box trust assumption. Prop 2 / BBT-003: "<>
+      "no table functional can lower-bound the DLA \[LongDash] the two lenses are irreducible. "<>
+      "UPGRADE (Prop O3-C, conditional theorem, 2026-07-13): within the intensity-emulator "<>
+      "class A_IE the full gate set {C1-C5, G7, G7-CV, G8} is COMPLETE \[LongDash] the map's "<>
+      "outer boundary is now class-relative completeness, not necessity alone."],
       Background -> RGBColor[0.97, 0.95, 0.90], Alignment -> Left, ImageMargins -> 8]}
    }, ItemSize -> {{50}, Automatic}, Frame -> GrayLevel[0.75]];
 
@@ -70,12 +73,13 @@ openGrid = Grid[{
    {Item[Style["OPEN CELLS \[LongDash] where the map is not yet drawn", Bold, 11, openFG],
       Background -> openBG, Alignment -> Left, ImageMargins -> 5]},
    {Item[TextCell[
-      "\[Bullet]  COMPLETENESS (SQ1): is there an adversary that survives attenuation + "<>
-      "event-semantics AND the DLA audit? Not ruled out \[LongDash] the map's outer boundary "<>
-      "is a two-lens NECESSITY result, not yet a completeness theorem.\n"<>
-      "\[Bullet]  CONTINUOUS-VARIABLE column: the DLA audit does not transplant to Gaussian / "<>
-      "CV devices (needs an Sp(2n,R) re-derivation, not done \[LongDash] NOTES-hawking). That "<>
-      "device class is unbuilt.\n"<>
+      "\[Bullet]  ADVERSARY-CLASS MAXIMALITY (H4'): Prop O3-C (2026-07-13) proves the gate "<>
+      "set {C1-C5, G7, G7-CV, G8} COMPLETE within the intensity-emulator class A_IE "<>
+      "(KBS detector premise + white-box trust); devices OUTSIDE A_IE (photon-number "<>
+      "resolution, heralded sources, non-fair-sampling) are the remaining frontier.\n"<>
+      "\[Bullet]  CONTINUOUS-VARIABLE column: FILLED 2026-07-13 by G7-CV, the Sp(2n,R) "<>
+      "leaf-confinement audit (passive u(n) vs active sp(2n,R); exact-validated); same "<>
+      "trust assumption as G7.\n"<>
       "\[Bullet]  SAMPLING-HARDNESS caveat: poly-DLA \[DoubleLongRightArrow] efficient emulation "<>
       "only for algebra-supported observables; it does NOT preclude sampling hardness "<>
       "(Aaronson-Arkhipov). A distinct axis the map does not yet resolve.\n"<>

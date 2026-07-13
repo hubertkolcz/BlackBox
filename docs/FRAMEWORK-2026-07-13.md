@@ -224,7 +224,65 @@ selection) rather than inside it.
 statement from Layer 2 must carry its hypothesis tag ("under H1", …). The
 framework is *complete under H1–H5*; each hypothesis is precisely the kind of
 sharply-posed open problem the project set out to distill, and each has a
-stated, finite proof target. A workflow attacking H1 (frontier), H2 (gauge
-invariance), H3 (elimination), H4a/b (completeness + CV build), and H5
-(Delsarte) is running as of this document's date; outcomes will move items
-between layers and this file will be amended with dated deltas.
+stated, finite proof target.
+
+---
+
+## Delta 2026-07-13 (final-push workflow; both reviews sound, 0 fatals)
+
+The five-lane push moved the following items. Full evidence:
+`docs/COMPLETE-THEORY-2026-07-13.md` and the committed `final_*` lane files.
+
+**H4a → PROVEN as a conditional theorem (moves to Layer 0 as F10).**
+**F10 [T, conditional].** Prop O3-C: within the intensity-emulator adversary
+class 𝒜_IE (classical light + intensity redistribution up to α\*=5/2 + one
+unmodified on-off detector, fair-sampled, fresh-per-trial), the gate set
+{C1–C5, G7, G7-CV, G8} is **complete** — every device is distinguished or
+certified NCHV-bounded. Load-bearing premises (stated, not hidden): the KBS
+single-detector coherent-forgeability theorem + white-box trust on G7/G7-CV.
+The residual open problem is **H4′ (𝒜_IE-maximality)**: is 𝒜_IE the right
+adversary ceiling (PNR/heralded/non-fair-sampling devices are outside it)?
+
+**H4b → BUILT (moves to Layer 0 as F11).**
+**F11 [T/C].** G7-CV, the Sp(2n,ℝ) leaf-confinement audit, implemented and
+exact-validated (u(2) dim 4 = passive-confined; +two-mode squeezer → sp(4,ℝ)
+dim 10 = active). The certification map's CV/Gaussian column is **filled**
+(`00-BBT-blackbox-protocol/final_o3_cv_dla.py`; map regenerated).
+
+**H2 → REFUTED AS POSED (moves to Layer 0 negatives as F9vii).**
+**F9vii [R].** δ(y\* mod ℤ) is not an H¹ detector: (1) undefined exactly in
+the fractional/stuck case (the canonical C₇,k=2 dual has 20,776 bad overlaps —
+not a 0-cocycle); (2) not gauge-invariant (the optimal face is
+positive-dimensional; an independent optimum gives a different count); (3)
+forced to zero wherever defined (connected nerve). The degree-0 result (F6)
+stands untouched. The H¹ question remains open but this cover/coefficient
+choice is closed; a detector must be sought in finer structures.
+
+**H1: the Legendre-frontier route → provably dead (added as F9viii).**
+**F9viii [R, theorem].** Any certified Legendre frequency-frontier equals the
+*concave hull* of θ̄ over f_c, which is pinned flat at 3/2 on [1/2, 1] (ct and
+ccct achieve exact θ̄ = 3/2); cct sits 0.0968 strictly below the hull,
+unexposed by any supporting hyperplane — the route certifies ≥ 1/6 at f_c=2/3,
+*worse* than flat Γ₉. Enumeration-independent. Consequence: both affine (F9i)
+and Legendre families are now closed; H1 needs a **nonlinear-in-frequency**
+certificate or a selection theorem. H1 status: open, window [0.0699, 0.0720].
+
+**H5: the Delsarte-LP route → provably dead (added as F9ix).**
+**F9ix [R, theorem].** Schrijver ϑ′ / Delsarte LP on the ℤ₁₃^k translation
+scheme equals exactly 13^{k/2} — identical to the Lovász ceiling (verified
+k=1,2,3; ϑ′(k=3)=46.87). The LP route can neither close (<40) nor tighten
+(<46) the bracket. H5 status: open, [39, 46]; next tools are level-2 Lasserre,
+non-abelian symmetrization, or search.
+
+**H3: bound-elimination → inert (added as F9x).** 0 of 26 families are
+bound-eliminable (inertness lemma: ω(cn(Q_m)) ≥ 8−s_m meets the generator
+constraint). H3 status: open; S=17 is search-bound (2/26 NO, 24 PARTIAL,
+~69M nodes, no witness).
+
+**Net position after the delta.** Proven layer grows by F10, F11 (+F9vii–x);
+the hypothesis set is now {H1, H1′, H3, H5, H4′(maximality), and the reopened
+H2′ (a genuine quantitative-cohomology detector beyond this cover)}. Four of
+five lanes returned rigorous negatives, none inflated — each surviving open
+problem now carries a *sharper* cheapest-path in the Layer-3 ledger (H1:
+nonlinear certificate; H3: elim2 scale-up; H5: Lasserre-2/search; H4′:
+adversary-class analysis).

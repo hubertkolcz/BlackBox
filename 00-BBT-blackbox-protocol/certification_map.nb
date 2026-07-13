@@ -10,21 +10,21 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       154,          7]
-NotebookDataLength[     27277,        691]
-NotebookOptionsPosition[     25706,        664]
-NotebookOutlinePosition[     26096,        680]
-CellTagsIndexPosition[     26053,        677]
+NotebookDataLength[     28025,        701]
+NotebookOptionsPosition[     26454,        674]
+NotebookOutlinePosition[     26844,        690]
+CellTagsIndexPosition[     26801,        687]
 WindowTitle->Black-Box Certification Map
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
-Cell["The Black-Box Certification Map", "Title",ExpressionUUID->"12ab2f14-bd01-6d49-9637-41e65df10a6d"],
+Cell["The Black-Box Certification Map", "Title",ExpressionUUID->"70a5896a-2f7d-804a-bb9f-d60d5145d627"],
 
 Cell["\<\
 Objective O3 \[LongDash] the indistinguishability boundary, from existing \
 findings\
-\>", "Subtitle",ExpressionUUID->"02b09d15-d7da-434d-8e00-d5826b94ec4a"],
+\>", "Subtitle",ExpressionUUID->"3f59e219-2c0d-6942-b193-8cf20bbea6f8"],
 
 Cell["\<\
 The central question (O3): given only black-box access, under what conditions \
@@ -32,18 +32,18 @@ is it mathematically impossible to distinguish a genuine quantum device from \
 a classical optical emulation at the input-output level? This notebook \
 assembles the answer, so far, as a map. Every cell is grounded in a project \
 finding (ledger key shown); open cells are marked open.\
-\>", "Text",ExpressionUUID->"a4bf13b3-2020-574e-92c6-2338f9eb2d43"],
+\>", "Text",ExpressionUUID->"aac0d1a1-340c-e744-b8ae-ea7258ded648"],
 
 Cell["\<\
 1.  The correlation-lens staircase (access model \[Times] adversary strength)\
 \
-\>", "Section",ExpressionUUID->"5fc2a336-7fc5-e141-a10d-714ff5467196"],
+\>", "Section",ExpressionUUID->"2a81876f-2693-c54a-b4c6-9c06968f4d33"],
 
 Cell["\<\
 Rows = how much access the tester has. Columns = how strong the classical \
 emulator is. A cell says whether genuine quantum can be told apart from that \
 emulator under that access.\
-\>", "Text",ExpressionUUID->"a986fd6d-0a2c-7341-bca1-682f10981c71"],
+\>", "Text",ExpressionUUID->"bccdc247-f590-204f-bbdc-3911660e9be0"],
 
 Cell[BoxData[
  TagBox[GridBox[{
@@ -515,7 +515,7 @@ re-tunes)\"\>",
    
    GridBoxItemSize->{"Columns" -> {11, 13, 13, 13}, "Rows" -> {{Automatic}}},
    GridBoxSpacings->{"Columns" -> {{1.2}}, "Rows" -> {{1.2}}}],
-  "Grid"]], "Output",ExpressionUUID->"a063c06b-2313-8944-a90a-36545ca0c4f4"],
+  "Grid"]], "Output",ExpressionUUID->"e2ac8906-30a0-b94e-9ae0-a501bf6d4c81"],
 
 Cell["\<\
 Reading: the blind spot (INDISTINGUISHABLE) is top-left and shrinks as access \
@@ -526,9 +526,9 @@ fit < 1e-9). Only attenuation / event-semantics (OQ2 gate G8; Corollary 1 \
 collapses the emulator to the NCHV bound \[Alpha]=2) defeats the strongest \
 adversary. That staircase IS the operational content of O3 for the \
 correlation lens.\
-\>", "Text",ExpressionUUID->"c1601f31-fb1f-5c44-b601-28641ff98e0c"],
+\>", "Text",ExpressionUUID->"8c124de6-2ca2-ac4e-8a47-67e705d8f4a2"],
 
-Cell["2.  The orthogonal second (geometric) lens", "Section",ExpressionUUID->"c3169d0a-3f0a-e645-b080-f96979574ae0"],
+Cell["2.  The orthogonal second (geometric) lens", "Section",ExpressionUUID->"1b6849ff-4ef1-8b46-b8c1-43ff85610a51"],
 
 Cell[BoxData[
  TagBox[GridBox[{
@@ -552,25 +552,33 @@ Cell[BoxData[
      ItemBox[
       InterpretationBox[Cell["\<\
 The staircase above is the CORRELATION lens. Independently, the geometric / \
-dynamical-Lie-algebra lens (gate G7) distinguishes a leaf-confined emulator \
-(DLA < 3) from the genuine KCBS cascade (DLA = 3) by auditing the claimed \
-mode compilation \[LongDash] a route that needs NO access upgrade but carries \
-a white-box trust assumption (the compilation is auditable). Prop 2 / \
-BBT-003: no table functional can lower-bound the DLA, so this lens is NOT \
-derivable from the correlation lens. That irreducibility \[LongDash] two \
-lenses, neither reducible to the other \[LongDash] is the shape of the answer \
-to O3.\
-\>",ExpressionUUID->"54d395f4-fdcb-e046-bba1-b6c6dbafc0eb"],
+dynamical-Lie-algebra lens distinguishes emulators by auditing claimed \
+dynamics: G7 (discrete: leaf-confined DLA < 3 vs the genuine KCBS cascade DLA \
+= 3) and \[LongDash] NEW 2026-07-13 \[LongDash] G7-CV for Gaussian/CV devices \
+(passive u(n), dim n^2, linear-optics-emulable, vs active sp(2n,R), dim \
+n(2n+1); exact-validated: u(2)=4 confined, +two-mode squeezer sp(4,R)=10 \
+active; final_o3_cv_dla.py). Both audits need NO access upgrade but carry a \
+white-box trust assumption. Prop 2 / BBT-003: no table functional can \
+lower-bound the DLA \[LongDash] the two lenses are irreducible. UPGRADE (Prop \
+O3-C, conditional theorem, 2026-07-13): within the intensity-emulator class \
+A_IE the full gate set {C1-C5, G7, G7-CV, G8} is COMPLETE \[LongDash] the \
+map's outer boundary is now class-relative completeness, not necessity alone.\
+\
+\>",ExpressionUUID->"2d89fc21-5141-854d-8cd0-3349162d28fd"],
        TextCell[
        "The staircase above is the CORRELATION lens. Independently, the \
-geometric / dynamical-Lie-algebra lens (gate G7) distinguishes a \
-leaf-confined emulator (DLA < 3) from the genuine KCBS cascade (DLA = 3) by \
-auditing the claimed mode compilation \[LongDash] a route that needs NO \
-access upgrade but carries a white-box trust assumption (the compilation is \
-auditable). Prop 2 / BBT-003: no table functional can lower-bound the DLA, so \
-this lens is NOT derivable from the correlation lens. That irreducibility \
-\[LongDash] two lenses, neither reducible to the other \[LongDash] is the \
-shape of the answer to O3."]],
+geometric / dynamical-Lie-algebra lens distinguishes emulators by auditing \
+claimed dynamics: G7 (discrete: leaf-confined DLA < 3 vs the genuine KCBS \
+cascade DLA = 3) and \[LongDash] NEW 2026-07-13 \[LongDash] G7-CV for \
+Gaussian/CV devices (passive u(n), dim n^2, linear-optics-emulable, vs active \
+sp(2n,R), dim n(2n+1); exact-validated: u(2)=4 confined, +two-mode squeezer \
+sp(4,R)=10 active; final_o3_cv_dla.py). Both audits need NO access upgrade \
+but carry a white-box trust assumption. Prop 2 / BBT-003: no table functional \
+can lower-bound the DLA \[LongDash] the two lenses are irreducible. UPGRADE \
+(Prop O3-C, conditional theorem, 2026-07-13): within the intensity-emulator \
+class A_IE the full gate set {C1-C5, G7, G7-CV, G8} is COMPLETE \[LongDash] \
+the map's outer boundary is now class-relative completeness, not necessity \
+alone."]],
       ImageMargins -> 8,
       Alignment->Left,
       Background->RGBColor[0.97, 0.95, 0.9],
@@ -579,9 +587,9 @@ shape of the answer to O3."]],
    AutoDelete->False,
    GridBoxFrame->{"ColumnsIndexed" -> {{{1, -1}, {1, -1}} -> GrayLevel[0.75]}},
    GridBoxItemSize->{"Columns" -> {50}, "Rows" -> {{Automatic}}}],
-  "Grid"]], "Output",ExpressionUUID->"7982b97c-0f9a-284c-9abd-61e5b43349e1"],
+  "Grid"]], "Output",ExpressionUUID->"0c78d19e-45cb-e248-a960-36ef625a1e68"],
 
-Cell["3.  Open cells \[LongDash] where the map is not yet drawn", "Section",ExpressionUUID->"92a6ee57-e8d1-e940-9fa7-344e14bf220f"],
+Cell["3.  Open cells \[LongDash] where the map is not yet drawn", "Section",ExpressionUUID->"edfbe2a7-6936-5441-a9a0-8bf59c9e0900"],
 
 Cell[BoxData[
  TagBox[GridBox[{
@@ -603,28 +611,30 @@ Cell[BoxData[
     {
      ItemBox[
       InterpretationBox[Cell["\<\
-\[Bullet]  COMPLETENESS (SQ1): is there an adversary that survives \
-attenuation + event-semantics AND the DLA audit? Not ruled out \[LongDash] \
-the map's outer boundary is a two-lens NECESSITY result, not yet a \
-completeness theorem.
-\[Bullet]  CONTINUOUS-VARIABLE column: the DLA audit does not transplant to \
-Gaussian / CV devices (needs an Sp(2n,R) re-derivation, not done \[LongDash] \
-NOTES-hawking). That device class is unbuilt.
+\[Bullet]  ADVERSARY-CLASS MAXIMALITY (H4'): Prop O3-C (2026-07-13) proves \
+the gate set {C1-C5, G7, G7-CV, G8} COMPLETE within the intensity-emulator \
+class A_IE (KBS detector premise + white-box trust); devices OUTSIDE A_IE \
+(photon-number resolution, heralded sources, non-fair-sampling) are the \
+remaining frontier.
+\[Bullet]  CONTINUOUS-VARIABLE column: FILLED 2026-07-13 by G7-CV, the \
+Sp(2n,R) leaf-confinement audit (passive u(n) vs active sp(2n,R); \
+exact-validated); same trust assumption as G7.
 \[Bullet]  SAMPLING-HARDNESS caveat: poly-DLA \[DoubleLongRightArrow] \
 efficient emulation only for algebra-supported observables; it does NOT \
 preclude sampling hardness (Aaronson-Arkhipov). A distinct axis the map does \
 not yet resolve.
 \[Bullet]  cct-optimality sits INSIDE the mesh testbed for the resource axis \
 \[LongDash] it is off this map (a cell-interior detail, not a boundary).\
-\>",ExpressionUUID->"50cb1e55-65d3-2d45-9f6e-88211d29963f"],
+\>",ExpressionUUID->"bf158912-ba58-c149-932f-2c8b44205b95"],
        TextCell[
-       "\[Bullet]  COMPLETENESS (SQ1): is there an adversary that survives \
-attenuation + event-semantics AND the DLA audit? Not ruled out \[LongDash] \
-the map's outer boundary is a two-lens NECESSITY result, not yet a \
-completeness theorem.\n\[Bullet]  CONTINUOUS-VARIABLE column: the DLA audit \
-does not transplant to Gaussian / CV devices (needs an Sp(2n,R) \
-re-derivation, not done \[LongDash] NOTES-hawking). That device class is \
-unbuilt.\n\[Bullet]  SAMPLING-HARDNESS caveat: poly-DLA \
+       "\[Bullet]  ADVERSARY-CLASS MAXIMALITY (H4'): Prop O3-C (2026-07-13) \
+proves the gate set {C1-C5, G7, G7-CV, G8} COMPLETE within the \
+intensity-emulator class A_IE (KBS detector premise + white-box trust); \
+devices OUTSIDE A_IE (photon-number resolution, heralded sources, \
+non-fair-sampling) are the remaining frontier.\n\[Bullet]  \
+CONTINUOUS-VARIABLE column: FILLED 2026-07-13 by G7-CV, the Sp(2n,R) \
+leaf-confinement audit (passive u(n) vs active sp(2n,R); exact-validated); \
+same trust assumption as G7.\n\[Bullet]  SAMPLING-HARDNESS caveat: poly-DLA \
 \[DoubleLongRightArrow] efficient emulation only for algebra-supported \
 observables; it does NOT preclude sampling hardness (Aaronson-Arkhipov). A \
 distinct axis the map does not yet resolve.\n\[Bullet]  cct-optimality sits \
@@ -639,9 +649,9 @@ INSIDE the mesh testbed for the resource axis \[LongDash] it is off this map \
    GridBoxFrame->{"ColumnsIndexed" -> {{{1, -1}, {1, -1}} -> GrayLevel[0.8]}},
    
    GridBoxItemSize->{"Columns" -> {50}, "Rows" -> {{Automatic}}}],
-  "Grid"]], "Output",ExpressionUUID->"9842318e-140e-bd49-87b4-9fb13ae138c6"],
+  "Grid"]], "Output",ExpressionUUID->"58794707-36cf-0a42-9e61-fee80b702778"],
 
-Cell["4.  Per-cell provenance", "Section",ExpressionUUID->"d441525c-a108-134e-9389-6511750eaf0b"],
+Cell["4.  Per-cell provenance", "Section",ExpressionUUID->"6acd4e12-e7e7-f540-8570-117ed14d8b01"],
 
 Cell["\<\
 A1\[Times]NCHV: BBT-001 gates C1-C5 (contextual fraction / GE separate \
@@ -654,19 +664,19 @@ fitter reproduces the quantum orbit to < 1e-9). A3\[Times]tuned: OQ2 \
 Corollary 1. Second lens: G7 DLA audit; Proposition 2 / BBT-003 (no table \
 functional lower-bounds the DLA). See \
 00-BBT-blackbox-protocol/PROPOSITION-O3.md and the claims ledger.\
-\>", "Text",ExpressionUUID->"6203e8f9-2227-8847-b930-f70c1a181313"],
+\>", "Text",ExpressionUUID->"3551a16f-b1f5-2f43-80ac-af931cfbea82"],
 
 Cell["\<\
 Provenance: generated 2026-07-13 from PROPOSITION-O3.md (Prop 1/2, Cor 1/2, \
 OQ1/OQ2), the claims ledger (BBT-001/002/003, LP-002), and this session's \
 OQ1/OQ2 probe results. Regenerate: wolframscript -file certification_map.wl.\
-\>", "Text",ExpressionUUID->"c375e6f6-19dc-a34b-bd76-416e9bc3d654"]
+\>", "Text",ExpressionUUID->"ad6b4309-338e-984b-b1e3-6e4686acafb5"]
 },
 WindowSize->{900, 760},
 WindowTitle->"Black-Box Certification Map",
 FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
 StyleDefinitions->"Default.nb",
-ExpressionUUID->"33aff937-0b3c-7241-8566-dd4c603ff640"
+ExpressionUUID->"7704c2aa-37e9-b34d-9c12-4f05089f1a1d"
 ]
 (* End of Notebook Content *)
 
@@ -679,20 +689,20 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[595, 21, 103, 0, 70, "Title",ExpressionUUID->"12ab2f14-bd01-6d49-9637-41e65df10a6d"],
-Cell[701, 23, 170, 3, 70, "Subtitle",ExpressionUUID->"02b09d15-d7da-434d-8e00-d5826b94ec4a"],
-Cell[871, 28, 450, 6, 70, "Text",ExpressionUUID->"a4bf13b3-2020-574e-92c6-2338f9eb2d43"],
-Cell[1318, 36, 164, 3, 70, "Section",ExpressionUUID->"5fc2a336-7fc5-e141-a10d-714ff5467196"],
-Cell[1482, 41, 265, 4, 70, "Text",ExpressionUUID->"a986fd6d-0a2c-7341-bca1-682f10981c71"],
-Cell[1746, 47, 17320, 470, 70, "Output",ExpressionUUID->"a063c06b-2313-8944-a90a-36545ca0c4f4"],
-Cell[18599, 519, 635, 9, 70, "Text",ExpressionUUID->"c1601f31-fb1f-5c44-b601-28641ff98e0c"],
-Cell[19228, 530, 116, 0, 70, "Section",ExpressionUUID->"c3169d0a-3f0a-e645-b080-f96979574ae0"],
-Cell[19347, 532, 2319, 49, 70, "Output",ExpressionUUID->"7982b97c-0f9a-284c-9abd-61e5b43349e1"],
-Cell[21620, 583, 131, 0, 70, "Section",ExpressionUUID->"92a6ee57-e8d1-e940-9fa7-344e14bf220f"],
-Cell[21754, 585, 2807, 56, 70, "Output",ExpressionUUID->"9842318e-140e-bd49-87b4-9fb13ae138c6"],
-Cell[24508, 643, 97, 0, 70, "Section",ExpressionUUID->"d441525c-a108-134e-9389-6511750eaf0b"],
-Cell[24608, 645, 793, 11, 70, "Text",ExpressionUUID->"6203e8f9-2227-8847-b930-f70c1a181313"],
-Cell[25393, 658, 313, 4, 70, "Text",ExpressionUUID->"c375e6f6-19dc-a34b-bd76-416e9bc3d654"]
+Cell[595, 21, 103, 0, 70, "Title",ExpressionUUID->"70a5896a-2f7d-804a-bb9f-d60d5145d627"],
+Cell[701, 23, 170, 3, 70, "Subtitle",ExpressionUUID->"3f59e219-2c0d-6942-b193-8cf20bbea6f8"],
+Cell[871, 28, 450, 6, 70, "Text",ExpressionUUID->"aac0d1a1-340c-e744-b8ae-ea7258ded648"],
+Cell[1318, 36, 164, 3, 70, "Section",ExpressionUUID->"2a81876f-2693-c54a-b4c6-9c06968f4d33"],
+Cell[1482, 41, 265, 4, 70, "Text",ExpressionUUID->"bccdc247-f590-204f-bbdc-3911660e9be0"],
+Cell[1746, 47, 17320, 470, 70, "Output",ExpressionUUID->"e2ac8906-30a0-b94e-9ae0-a501bf6d4c81"],
+Cell[18599, 519, 635, 9, 70, "Text",ExpressionUUID->"8c124de6-2ca2-ac4e-8a47-67e705d8f4a2"],
+Cell[19228, 530, 116, 0, 70, "Section",ExpressionUUID->"1b6849ff-4ef1-8b46-b8c1-43ff85610a51"],
+Cell[19347, 532, 2931, 57, 70, "Output",ExpressionUUID->"0c78d19e-45cb-e248-a960-36ef625a1e68"],
+Cell[22224, 591, 131, 0, 70, "Section",ExpressionUUID->"edfbe2a7-6936-5441-a9a0-8bf59c9e0900"],
+Cell[22358, 593, 2953, 58, 70, "Output",ExpressionUUID->"58794707-36cf-0a42-9e61-fee80b702778"],
+Cell[25256, 653, 97, 0, 70, "Section",ExpressionUUID->"6acd4e12-e7e7-f540-8570-117ed14d8b01"],
+Cell[25356, 655, 793, 11, 70, "Text",ExpressionUUID->"3551a16f-b1f5-2f43-80ac-af931cfbea82"],
+Cell[26141, 668, 313, 4, 70, "Text",ExpressionUUID->"ad6b4309-338e-984b-b1e3-6e4686acafb5"]
 }
 ]
 *)

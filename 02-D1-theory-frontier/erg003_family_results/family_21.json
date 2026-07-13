@@ -7,10 +7,21 @@
   3
  ],
  "S": 17,
+ "method": "elim2",
  "status": "PARTIAL",
- "witness": null,
- "nodes": 2424832,
+ "nodes": 6193152,
  "anchors_done": 0,
- "anchors_total": -1,
- "wall_seconds": 45.24
+ "plan": [
+  3,
+  2,
+  0,
+  4,
+  1
+ ],
+ "wall_seconds": 1501.9,
+ "chain_partial": {
+  "nodes": 2424832,
+  "anchors_done": 0,
+  "wall_seconds": 45.24
+ }
 }
