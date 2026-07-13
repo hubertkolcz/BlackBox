@@ -1,0 +1,40 @@
+{
+  "lane": "ESSAY-005 LANE 2: H^1 via Q/Z fractional-part cocycle",
+  "date": "2026-07-13",
+  "verdict": "REFUTED (rigorous obstruction). delta(y* mod Z) is neither well-defined nor gauge-invariant, and where defined is forced to 0 -- it can never be the nonzero detector the conjecture needed.",
+  "construction_tested": "Cover U = maximal cliques of conormal power G^{vk}; nerve 1-simplex = clique pair sharing >=1 vertex; optimal LP-dual 0-cochain y* (clique weights); ybar = y* mod Z; candidate class delta(ybar) via connecting map of 0->Z->Q->Q/Z, delta: H^0(U;Q/Z)->H^1(U;Z).",
+  "cover_data_confirmed": {
+    "C5^v2": {"vertices": 25, "maxCliques": 535, "pentads_5cliques": 10, "nerve_connected": true},
+    "C7^v2": {"vertices": 49, "maxCliques": 1715, "edge_squares_4cliques": 49, "nerve_connected": true}
+  },
+  "structured_duals_verified_optimal_exact": {
+    "C5_k2_pentad_partition_y1": {"value": "5", "coverage_min_max": "[1,1]"},
+    "C7_k2_edgesquares_y_1over4": {"value": "49/4", "coverage_min_max": "[1,1]"}
+  },
+  "obstruction_1_cocycle_prerequisite": {
+    "statement": "delta is defined only on 0-cocycles: need y*(K)==y*(K') mod Z on every overlapping clique pair.",
+    "C7_k2_canonical_dual": {"is_cocycle": false, "bad_overlaps": 20776, "reason": "a 1/4-valued edge-square meets a 0-valued clique; 1/4 not in Z"},
+    "consequence": "delta(y* mod Z) is UNDEFINED at C7 -- exactly the fractional/stuck case where C-A1 predicted a NONZERO class."
+  },
+  "obstruction_2_gauge_noninvariance": {
+    "statement": "optimal dual face is positive-dimensional; different optima give different (even ill-defined) objects -> not a coboundary/gauge invariant -> not a cohomology class.",
+    "C5_k2": {
+      "pentad_partitions": 2,
+      "D_int_y1": {"optimal": true, "value": "5", "is_cocycle": true, "delta": 0},
+      "D_half_y_1over2_on_both_partitions": {"optimal": true, "value": "5", "is_cocycle": false, "bad_overlaps": 3000},
+      "consequence": "same optimal face: one optimum is a defined cocycle (delta=0), another is not even a cocycle. The class depends on which optimal dual is chosen."
+    }
+  },
+  "obstruction_3_forced_zero": {
+    "statement": "nerve connected => H^0(U;Q/Z)=Q/Z (global mod-Z constants only). ybar is a cocycle iff y* is globally constant mod Z. delta of a global constant = [d(constant lift)] = [0] = 0 in H^1(U;Z).",
+    "consequence": "whenever delta(y* mod Z) IS defined it is identically 0; it can NEVER output the nonzero class C-A1 wanted for C7. The detector has no nonzero value available."
+  },
+  "trivial_repair_also_dead": "Taking the ordinary Cech coboundary d(ybar) in C^1(U;Q/Z) instead of the connecting map yields a class that is a coboundary by construction, hence 0 in H^1(U;Q/Z) for every graph -- detects nothing (0 at both C5 and C7).",
+  "out_of_sample_C9_k2": "not computed: construction refuted at the prerequisite level, so there is no well-defined class to predict. Obstruction is structural, not size-dependent: any properly fractional dual (denominator>1) on a strict subset of cliques meets a 0-valued clique (non-cocycle), and packing-LP optimal dual faces are generically positive-dimensional (gauge-dependent).",
+  "relation_to_prior": "Sharpens formalA Category-Error Guard #1 (altitude error) with the precise mechanism: y* lives in C^0(Q), its mod-Z reduction is a cochain not a cocycle, the connecting map is inapplicable in the fractional cases, and the dual is non-unique. Confirms S_k is degree-0-only; no natural H^1 of this cover refines the integrality gap.",
+  "files": [
+    "final_h1_cocycle_probe.py",
+    "final_h1_structured_duals.py",
+    "final_h1_cocycle_results.json"
+  ]
+}
