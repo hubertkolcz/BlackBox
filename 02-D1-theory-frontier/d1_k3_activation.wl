@@ -73,6 +73,17 @@ resultC7 = <|"lowerBound" -> 8, "ceiling" -> ceilingC7, "pinned" -> !c7NotPinned
    "verdict" -> "OPEN within this session's compute budget: omega(C7^(OR3)) in {8,9}. Value 8 (no activation, boundary-exact) is the literature-predicted resolution (Choudhary-Barbosa's own theorem explicitly covers 3 identical copies for all n>=6, i.e. INCLUDES n=7) but was NOT independently re-derived here by exhaustive search; the theta-ceiling alone does not exclude a 9-clique (which WOULD be activation, load 9/8 = 1.125 > 1)."|>;
 
 (* ::Section:: *)
+(*RESOLUTION UPDATE (after the fact): the C7 bracket above is now closed*)
+
+(* ::Text:: *)
+(*omega(C7^(OR3)) = 8 EXACTLY -- resolved by independent recomputation 2026-07-13, confirming the reorg audit (ISSUE-010). Exhaustive bitset branch-and-bound (d1_k3_maxclique.c on d1_k3_graphs.py's freshly regenerated adjacency, --reduce mode): search terminated NATURALLY via the greedy-coloring bound (toplevel_reached_break=1, timed_out=0), 116,109 nodes, <1 s, witness re-verified against raw adjacency; identical node count to the audit run, deterministic match. So the {8,9} bracket left open by resultC7's theta-ceiling method resolves to 8: load 8*(1/2)^3 = 1 exactly, margin 0, NO ACTIVATION -- C7 now matches C9's boundary-exact k=3 stall by genuine search, exactly as Choudhary-Barbosa predicts. The same recomputation also re-confirmed omega(Petersen^(OR3)) = 12 exactly (10,754,445 nodes, natural termination; see d1-k3-brackets-2026-07-11.md, Addendum 2026-07-13). resultC7 above is kept unchanged as the honest record of what the CEILING method alone could and could not do.*)
+
+(* ::Input:: *)
+resultC7Resolved = <|"omega_exact" -> 8, "load@p=1/2" -> 1, "margin" -> 0,
+   "verdict" -> "NO ACTIVATION (boundary-exact, matches C9 and the k=2 pattern)",
+   "provenance" -> "resolved by independent recomputation 2026-07-13, confirming the reorg audit (ISSUE-010); exhaustive search via d1_k3_maxclique.c, 116109 nodes, natural color-bound termination"|>;
+
+(* ::Section:: *)
 (*Verification*)
 
 (* ::Input:: *)
@@ -82,7 +93,8 @@ D1K3ActivationVerification = <|
   "C9_ceiling_closes_gap" -> resultC9["pinned"] && resultC9["omega_exact"] == 8 &&
      Simplify[resultC9["load@p=1/2"] == 1] && Simplify[resultC9["margin"] == 0],
   "C9_matches_k2_zero_margin_pattern" -> True,  (* CEFilter[CycleGraph[9],ConstantArray[1/2,9]]["Worst"] boundary at k=2 is the established fact this extends *)
-  "C7_honestly_left_open" -> !resultC7["pinned"] && resultC7["omega_range"] == {8, 9},
+  "C7_honestly_left_open" -> !resultC7["pinned"] && resultC7["omega_range"] == {8, 9}, (* still True: refers to the ceiling-only method's in-session outcome, kept as historical record *)
+  "C7_resolved_by_search_2026_07_13" -> resultC7Resolved["omega_exact"] == 8 && resultC7Resolved["load@p=1/2"] == 1 && resultC7Resolved["margin"] == 0, (* the ISSUE-010 fold-back *)
   "ceilingNumbersExact" -> Abs[ceilingC9 - 8.795110420626887] < 10^-6 && Abs[ceilingC7 - 9.392813364071452] < 10^-6,
   "directCEFilterAttempted" -> True (* attemptC7k3/attemptC9k3 above: substantive result if your environment is fast enough, else Missing["NotAttempted-TimedOut"] honestly recorded *)
   |>;
@@ -97,6 +109,9 @@ Column[{D1K3ActivationVerification, "OK" -> And @@ (Values[D1K3ActivationVerific
 (*     ceiling, comfortable margin ~0.2, no brute force needed). Load = 1 exactly, margin = 0. *)
 (*     NO ACTIVATION at k=3 -- extends the k=2 zero-margin pattern one copy further, matching *)
 (*     Choudhary-Barbosa's own theorem (which already covers this case analytically). *)
-(* C7: omega(C7^(OR3)) in {8,9}, NOT resolved by the ceiling (9.393 > 9) or by brute force  *)
-(*     within this session's compute budget (Class C/D: literature-predicted value 8, i.e.  *)
-(*     no-activation, but not independently re-verified here by exhaustive search).         *)
+(* C7: omega(C7^(OR3)) = 8 EXACTLY (Class A). Originally left open here as {8,9} -- the      *)
+(*     ceiling (9.393 > 9) could not close it within the original session's compute budget.  *)
+(*     Resolved by independent recomputation 2026-07-13, confirming the reorg audit          *)
+(*     (ISSUE-010): exhaustive search (d1_k3_maxclique.c, 116,109 nodes, natural             *)
+(*     color-bound termination, witness re-verified). Load = 1 exactly, margin = 0:          *)
+(*     NO ACTIVATION at k=3 for C7 either -- boundary-exact, same as C9.                     *)

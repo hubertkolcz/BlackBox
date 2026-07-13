@@ -157,5 +157,604 @@
    6,
    7
   ]
- ]
+ ],
+ "h1": {
+  "theta_density": {
+   "trans": [
+    {
+     "N": 100,
+     "theta": 137.66679931821992,
+     "density": 1.3766679931821992,
+     "certgap": 2.1877144540383142e-08,
+     "time": 0.05680470005609095
+    },
+    {
+     "N": 1000,
+     "theta": 1376.7168710893707,
+     "density": 1.3767168710893707,
+     "certgap": 2.6423840893130546e-07,
+     "time": 0.12787760002538562
+    },
+    {
+     "N": 10000,
+     "theta": 13767.177609284026,
+     "density": 1.3767177609284027,
+     "certgap": -3.8195022700193704e-05,
+     "time": 0.2234900000039488
+    },
+    {
+     "N": 100000,
+     "theta": 137671.77513355578,
+     "density": 1.3767177513355577,
+     "certgap": -6.898441817781986e-05,
+     "time": 0.9665896999649704
+    }
+   ],
+   "cis": [
+    {
+     "N": 100,
+     "theta": 149.99999991428538,
+     "density": 1.4999999991428539,
+     "certgap": 9.877643147859771e-08,
+     "time": 0.02485219994559884
+    },
+    {
+     "N": 1000,
+     "theta": 1499.9999998057297,
+     "density": 1.4999999998057296,
+     "certgap": 7.111300437401269e-07,
+     "time": 0.029622299945913255
+    },
+    {
+     "N": 10000,
+     "theta": 15000.000015415977,
+     "density": 1.5000000015415977,
+     "certgap": -9.442380211055479e-07,
+     "time": 0.03841789998114109
+    },
+    {
+     "N": 100000,
+     "theta": 150000.00015972598,
+     "density": 1.5000000015972599,
+     "certgap": -2.024864720340247e-05,
+     "time": 0.09615770005621016
+    }
+   ],
+   "cct": [
+    {
+     "N": 99,
+     "theta": 138.91545029068251,
+     "density": 1.4031863665725506,
+     "certgap": 7.542582011410559e-06,
+     "time": 0.3157431000145152
+    },
+    {
+     "N": 300,
+     "theta": 420.96883032692864,
+     "density": 1.4032294344230956,
+     "certgap": 0.00011530861416986227,
+     "time": 1.2198705000337213
+    },
+    {
+     "N": 999,
+     "theta": 1401.8279365452615,
+     "density": 1.4032311677129745,
+     "certgap": 0.001659328163441387,
+     "time": 5.63297140004579
+    }
+   ]
+  },
+  "cf": [
+   {
+    "mesh": "chain",
+    "blocks": 1,
+    "vertices": 5,
+    "isets": 11,
+    "ncf": 0.5278640450004207,
+    "cf": 0.4721359549995793,
+    "lognc_density": 0.6389165189617599
+   },
+   {
+    "mesh": "chain",
+    "blocks": 2,
+    "vertices": 8,
+    "isets": 43,
+    "ncf": 0.5278640450004207,
+    "cf": 0.4721359549995793,
+    "lognc_density": 0.31945825948087997
+   },
+   {
+    "mesh": "chain",
+    "blocks": 3,
+    "vertices": 11,
+    "isets": 167,
+    "ncf": 0.5278640450004207,
+    "cf": 0.4721359549995793,
+    "lognc_density": 0.21297217298725332
+   },
+   {
+    "mesh": "chain",
+    "blocks": 4,
+    "vertices": 14,
+    "isets": 651,
+    "ncf": 0.5278640450004207,
+    "cf": 0.4721359549995793,
+    "lognc_density": 0.15972912974043998
+   },
+   {
+    "mesh": "chain",
+    "blocks": 5,
+    "vertices": 17,
+    "isets": 2535,
+    "ncf": 0.5278640450004207,
+    "cf": 0.4721359549995793,
+    "lognc_density": 0.12778330379235198
+   },
+   {
+    "mesh": "trans-ring",
+    "blocks": 3,
+    "vertices": 9,
+    "isets": 58,
+    "ncf": 0.5278640450004207,
+    "cf": 0.4721359549995793,
+    "lognc_density": 0.21297217298725332
+   },
+   {
+    "mesh": "trans-ring",
+    "blocks": 4,
+    "vertices": 12,
+    "isets": 226,
+    "ncf": 0.5278640450004207,
+    "cf": 0.4721359549995793,
+    "lognc_density": 0.15972912974043998
+   },
+   {
+    "mesh": "trans-ring",
+    "blocks": 5,
+    "vertices": 15,
+    "isets": 874,
+    "ncf": 0.5278640450004207,
+    "cf": 0.4721359549995793,
+    "lognc_density": 0.12778330379235198
+   },
+   {
+    "mesh": "cis-ring",
+    "blocks": 3,
+    "vertices": 9,
+    "isets": 57,
+    "ncf": 0.31671842700025243,
+    "cf": 0.6832815729997476,
+    "lognc_density": 0.3832473809092502
+   },
+   {
+    "mesh": "cis-ring",
+    "blocks": 4,
+    "vertices": 12,
+    "isets": 233,
+    "ncf": 0.5278640450004207,
+    "cf": 0.4721359549995793,
+    "lognc_density": 0.15972912974043998
+   },
+   {
+    "mesh": "cis-ring",
+    "blocks": 5,
+    "vertices": 15,
+    "isets": 893,
+    "ncf": 0.5278640450004207,
+    "cf": 0.4721359549995793,
+    "lognc_density": 0.12778330379235198
+   },
+   {
+    "mesh": "cct-ring",
+    "blocks": 3,
+    "vertices": 9,
+    "isets": 59,
+    "ncf": 0.4222912360003366,
+    "cf": 0.5777087639996634,
+    "lognc_density": 0.28735335675865653
+   },
+   {
+    "mesh": "cct-ring",
+    "blocks": 6,
+    "vertices": 18,
+    "isets": 3461,
+    "ncf": 0.5278640450004207,
+    "cf": 0.4721359549995793,
+    "lognc_density": 0.10648608649362666
+   },
+   {
+    "mesh": "quad",
+    "blocks": 4,
+    "vertices": 8,
+    "isets": 39,
+    "ncf": 0.4222912360003366,
+    "cf": 0.5777087639996634,
+    "lognc_density": 0.2155150175689924
+   }
+  ],
+  "limits": {
+   "trans": 1.376717745915859,
+   "cis": 1.5,
+   "cct": 1.4032308692389974
+  },
+  "limit_deviations": {
+   "trans": 5.419698689834718e-09,
+   "cis": 1.5972598799152138e-09,
+   "cct": 2.984739770894862e-07
+  }
+ },
+ "h2": {
+  "cis_pinch": [
+   {
+    "N": 3,
+    "n": 9,
+    "alpha": 4,
+    "theta": 4.00000000479045,
+    "alphaStar": null,
+    "gap": 4.790449814606745e-09,
+    "pinches": true
+   },
+   {
+    "N": 4,
+    "n": 12,
+    "alpha": 6,
+    "theta": 5.999999996699989,
+    "alphaStar": 6.0,
+    "gap": -3.3000109311842607e-09,
+    "pinches": true
+   },
+   {
+    "N": 5,
+    "n": 15,
+    "alpha": 7,
+    "theta": 7.236067985669071,
+    "alphaStar": 7.5,
+    "gap": 0.23606798566907106,
+    "pinches": false
+   },
+   {
+    "N": 6,
+    "n": 18,
+    "alpha": 9,
+    "theta": 8.99999998116736,
+    "alphaStar": 9.0,
+    "gap": -1.8832640336086115e-08,
+    "pinches": true
+   },
+   {
+    "N": 7,
+    "n": 21,
+    "alpha": 10,
+    "theta": 10.317667208317099,
+    "alphaStar": 10.5,
+    "gap": 0.3176672083170988,
+    "pinches": false
+   },
+   {
+    "N": 8,
+    "n": 24,
+    "alpha": 12,
+    "theta": 11.999999992156132,
+    "alphaStar": 12.0,
+    "gap": -7.843867777523883e-09,
+    "pinches": true
+   },
+   {
+    "N": 9,
+    "n": 27,
+    "alpha": 13,
+    "theta": 13.360089589126941,
+    "alphaStar": 13.5,
+    "gap": 0.36008958912694133,
+    "pinches": false
+   },
+   {
+    "N": 10,
+    "n": 30,
+    "alpha": 15,
+    "theta": 14.999999975456946,
+    "alphaStar": 15.0,
+    "gap": -2.4543053811498794e-08,
+    "pinches": true
+   }
+  ],
+  "cis_pinch_rule": "pinches at N=3 and all even N>=4; carries a small, slowly-growing gap at every odd N>=5 -- a refinement of the design doc's 'even N' wording, found empirically here, not previously documented in QUANTUM_CONTEXTUALITY.md.",
+  "trans_contrast": [
+   {
+    "N": 4,
+    "n": 12,
+    "alpha": 5,
+    "theta": 5.501381144632681,
+    "gap": 0.5013811446326812
+   },
+   {
+    "N": 6,
+    "n": 18,
+    "alpha": 8,
+    "theta": 8.097889146292347,
+    "gap": 0.09788914629234746
+   },
+   {
+    "N": 8,
+    "n": 24,
+    "alpha": 10,
+    "theta": 11.002762295290527,
+    "gap": 1.0027622952905269
+   }
+  ],
+  "quad_gap": 0.4678437309442911,
+  "conclusion": "H2 CONFIRMED, with two refinements the original design doc did not anticipate. (i) Gap density is controlled by the gluing ORIENTATION (cis vs. trans), not simply by 'two-fold covers vs. single-edge chains'. (ii) Even that cis/trans split needs a finer statement than 'even N pinches': the data above shows exact pinch (alpha=theta=alpha* to <1e-4) at N=3 and every even N>=4, but a small, slowly-growing residual gap at every odd N>=5 (0.236, 0.318, 0.360, 0.386 for N=5,7,9,11) -- N=3 is a genuine small-ring exception, not an instance of the 'even N' rule. Trans rings carry the real extensive gap (density tau*=1.3767177459, a proven closed form, cf. Root[49x^3-128x^2-75x+218]); Quad-C5's two-fold cover concentrates the gap on 8 vertices, matching the published benchmark arXiv:2605.12828. The fully optimal periodic motif is neither pure family: the binary word (cct)^inf beats pure-trans by 61% (gap 0.0698975/block), proven optimal among periods <=12 with a universal epsilon-optimality certificate gap(w) <= 0.07706235 for EVERY gluing word. That result is already established independently in this project's black-box repo (CaseStudies.wl Sec. D3, EpsilonCertificate.wl, kcbs_epilogue.wl) via a 320-digit KKT computation + LLL integer-relation exclusion -- not re-derived here, only cross-checked against the cheaper claims (pinch rule, trans contrast, Quad-C5 gap) above. The odd-N residual is a new observation of this session, not previously in QUANTUM_CONTEXTUALITY.md; flagged as a small open loose end, not chased further here.",
+  "all_ok": true
+ },
+ "h3": {
+  "timing": [
+   {
+    "N": 10,
+    "n_vertices": 30,
+    "theta": 13.67915076233341,
+    "time_s": 0.015445100027136505
+   },
+   {
+    "N": 30,
+    "n_vertices": 90,
+    "theta": 41.29677543948918,
+    "time_s": 0.04953910002950579
+   },
+   {
+    "N": 100,
+    "n_vertices": 300,
+    "theta": 137.666806989681,
+    "time_s": 0.24296900001354516
+   },
+   {
+    "N": 300,
+    "n_vertices": 900,
+    "theta": 413.01339199564563,
+    "time_s": 1.0938057999592274
+   },
+   {
+    "N": 1000,
+    "n_vertices": 3000,
+    "theta": 1376.7171907296085,
+    "time_s": 4.323469900060445
+   },
+   {
+    "N": 3000,
+    "n_vertices": 9000,
+    "theta": 4130.156956919337,
+    "time_s": 16.66205339995213
+   }
+  ],
+  "empirical_exponent": 1.241565584331523,
+  "h3_rejected": false,
+  "conclusion_qualitative": "Stabilizer simulation is polynomial but certificate-blind; chordal-SDP is certificate-bearing; state-vector treatment is already infeasible past a handful of blocks. H3's falsification criterion (wall-clock <= O(N^2)) is NOT rejected by the data above."
+ },
+ "h4": {
+  "vcrit": [
+   {
+    "family": "chain",
+    "N": 1,
+    "n_vertices": 5,
+    "V_crit": 0.5854101966249684
+   },
+   {
+    "family": "chain",
+    "N": 2,
+    "n_vertices": 8,
+    "V_crit": 0.5854101966249684
+   },
+   {
+    "family": "chain",
+    "N": 3,
+    "n_vertices": 11,
+    "V_crit": 0.5854101966249684
+   },
+   {
+    "family": "chain",
+    "N": 4,
+    "n_vertices": 14,
+    "V_crit": 0.5854101966249684
+   },
+   {
+    "family": "chain",
+    "N": 5,
+    "n_vertices": 17,
+    "V_crit": 0.5854101966249684
+   },
+   {
+    "family": "trans-ring",
+    "N": 3,
+    "n_vertices": 9,
+    "V_crit": 0.5854101966249684
+   },
+   {
+    "family": "trans-ring",
+    "N": 4,
+    "n_vertices": 12,
+    "V_crit": 0.5854101966249684
+   },
+   {
+    "family": "trans-ring",
+    "N": 5,
+    "n_vertices": 15,
+    "V_crit": 0.5854101966249684
+   },
+   {
+    "family": "cis-ring",
+    "N": 3,
+    "n_vertices": 9,
+    "V_crit": -0.0
+   },
+   {
+    "family": "cis-ring",
+    "N": 4,
+    "n_vertices": 12,
+    "V_crit": 0.5854101966249685
+   },
+   {
+    "family": "cis-ring",
+    "N": 5,
+    "n_vertices": 15,
+    "V_crit": 0.5854101966249684
+   }
+  ],
+  "single_block_anchor": 0.5854101966249685,
+  "conclusion": "H4 CONFIRMED for chain/trans-ring (V_crit invariant under composition, matching the single-block anchor to machine precision); cis-ring's V_crit tracks H2's pinch/no-pinch pattern exactly (zero exactly when alpha=theta, positive exactly when there is a residual gap), which is a consistency check between H2 and H4 rather than an independent new result for the pinching cases."
+ },
+ "h5": {
+  "dla_curves": {
+   "chain_N3": [
+    9,
+    6,
+    3
+   ],
+   "chain_N4": [
+    12,
+    9,
+    6,
+    3
+   ],
+   "chain_N5": [
+    15,
+    12,
+    9,
+    6,
+    3
+   ],
+   "trans-ring_N3": [
+    9,
+    6,
+    3,
+    3
+   ],
+   "trans-ring_N4": [
+    12,
+    9,
+    6,
+    3,
+    3
+   ],
+   "trans-ring_N5": [
+    15,
+    12,
+    9,
+    6,
+    3,
+    3
+   ],
+   "cis-ring_N3": [
+    9,
+    6,
+    3,
+    3
+   ],
+   "cis-ring_N4": [
+    12,
+    9,
+    6,
+    3,
+    3
+   ],
+   "cis-ring_N5": [
+    15,
+    12,
+    9,
+    6,
+    3,
+    3
+   ]
+  },
+  "structural_test_A_cis_trans_identical": {
+   "3": true,
+   "4": true,
+   "5": true
+  },
+  "structural_test_B_saturation_fraction": {
+   "3": {
+    "chain_frac": 1.0,
+    "ring_frac": 0.6666666666666666,
+    "ring_lt_chain": true
+   },
+   "4": {
+    "chain_frac": 1.0,
+    "ring_frac": 0.75,
+    "ring_lt_chain": true
+   },
+   "5": {
+    "chain_frac": 1.0,
+    "ring_frac": 0.8,
+    "ring_lt_chain": true
+   }
+  },
+  "cf_density": {
+   "chain_N3": 0.21297217298725332,
+   "chain_N4": 0.15972912974043998,
+   "chain_N5": 0.12778330379235198,
+   "trans-ring_N3": 0.21297217298725332,
+   "trans-ring_N4": 0.15972912974043998,
+   "trans-ring_N5": 0.12778330379235198,
+   "cis-ring_N3": 0.3832473809092502,
+   "cis-ring_N4": 0.15972912974043998,
+   "cis-ring_N5": 0.12778330379235198
+  },
+  "correlation": {
+   "pearson_satfrac": -0.4294334492568947,
+   "spearman_satfrac": -0.3666666666666667,
+   "pearson_auc": 0.26620995425303157,
+   "spearman_auc": 0.4666666666666666,
+   "n_points": 9
+  },
+  "leaf_confined_check": [
+   {
+    "word": "",
+    "nblocks": 1,
+    "span": 2,
+    "dla": 3
+   },
+   {
+    "word": "c",
+    "nblocks": 1,
+    "span": 2,
+    "dla": 3
+   },
+   {
+    "word": "t",
+    "nblocks": 1,
+    "span": 2,
+    "dla": 3
+   },
+   {
+    "word": "cc",
+    "nblocks": 2,
+    "span": 2,
+    "dla": 3
+   },
+   {
+    "word": "ct",
+    "nblocks": 2,
+    "span": 2,
+    "dla": 3
+   },
+   {
+    "word": "tt",
+    "nblocks": 2,
+    "span": 2,
+    "dla": 3
+   },
+   {
+    "word": "ccc",
+    "nblocks": 3,
+    "span": 2,
+    "dla": 3
+   },
+   {
+    "word": "ctc",
+    "nblocks": 3,
+    "span": 2,
+    "dla": 3
+   }
+  ],
+  "conclusion": "H5 (the hardest hypothesis, the only new theory in this study) is answered, and the honest answer is nuanced, not a flat yes/no (35/35 gate/structural checks passed). Compilation-gauge model: a continuous graph-Laplacian eigenmode spectral cutoff was tried FIRST and REJECTED after failing numerically -- any nonzero coupling among >=2 generic eigenmodes regenerates the full so(3)^N algebra via commutators (documented above, not hidden), collapsing to a trivial two-point jump. The adopted model -- sequential block-fusion, read physically as 'how many of the mesh's own gluing-point couplers have been installed, in the mesh's own assembly order' -- gives a genuine graded family: DLA(k) steps monotonically from 3N (k=0, exactly dla_blockdiag, verified exactly) down to 3 (k=|E|, exactly dla_common's own dimension on N copies of the same block, verified exactly), for chain/trans-ring/cis-ring at N=3,4,5. Correlation test: at fixed block-adjacency topology, cis-ring and trans-ring give IDENTICAL DLA(theta_c) curves (this model sees only which blocks are physically adjacent, not gluing angle) while their CF density differs sharply at N=3 (0.383 vs 0.213) -- a direct, mechanistic demonstration that DLA growth under a natural compilation model and CF density answer DIFFERENT questions (coupling topology vs. gluing geometry), not a coincidental non-result. Conversely, chain and trans-ring have PROVABLY DIFFERENT DLA(theta_c) curves (ring saturates at a strictly smaller edge-fraction than chain at every N tested, (N-1)/N vs 1.0, because a ring carries one redundant cycle-closing edge a tree does not) YET IDENTICAL CF density at every matched N (a pre-existing, unmodified fact already visible in H1's own output, not new here). The naive 9-point cross-family Pearson correlation between a scalar DLA-curve summary and CF density is UNSTABLE under an arguably-arbitrary choice of summary statistic: negative (r=-0.43) using the saturation-fraction summary, positive (r=+0.27) using the normalized-AUC summary of the IDENTICAL underlying curves -- exactly the sign-flip that should disqualify a claimed correlation. THE HONEST FINDING: there is no direct, reliable correlation between DLA growth and CF density under this composition family, and there should not be one -- DLA dimension (under any compilation gauge respecting block-adjacency topology) is a fact about the COUPLING GRAPH a compiler chooses to realize; CF is a fixed fact about the quantum table's exclusivity structure, set before any compilation choice is made. The meaningful comparison is not a scatter plot across motifs; it is the pair of sharp structural tests above (topology-blindness to gluing angle; chain/ring edge-redundancy ordering), which correctly separate what a compilation gauge CAN and CANNOT influence. This matches lie_poisson_interface.wl's own framing exactly ('the DLA dimension is the dynamical quantity to correlate with CF... an empirical question for the FEM study, not an identity') -- the empirical answer is that it is not one. Third, more modestly: dla_common's own span/closure on actually-glued multi-block meshes stays at span=2 (leaf-confined, pre-closure) / dla=3 (post-closure) regardless of N or gluing word -- a fixed-size resource budget that does not grow with the mesh, giving mechanistic (not fully quantitative) support for H5's 'leaf-confined compilations must show CF-certificate loss' clause. DESIGN-DOC GAP (reported plainly): Sec. 5's falsification criteria list does not name a criterion for H5 specifically (only H1/H2/H3 appear there); the falsifiable predictions checked above were pre-registered by this session, standalone, before the sweep ran, in the absence of a design-doc-specified H5 criterion -- flagged honestly rather than silently inventing an attribution. OPEN: the sequential-fusion edge order (mesh assembly order) is a modeling choice, not derived from first-principles coupled-mode coupling constants; a genuinely first-principles photonic derivation is future work, not resolved here.",
+  "all_ok": true
+ }
 }

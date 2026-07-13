@@ -570,4 +570,4 @@ CaseStudiesVerification = <|
   "D3_globalOptimalityEvidence" -> globalOptimalityEvidence,
   "D3_inequalityReduction" -> inequalityReduction
 |>;
-Column[{CaseStudiesVerification, "OK" -> And @@ Va
+Column[{CaseStudiesVerification, "OK" -> And @@ Values[CaseStudiesVerification]}]
