@@ -1,4 +1,4 @@
-<!-- SNAPSHOT 2026-07-13 (post-amendment) of the canonical file in the Quantum Contextuality project's 01-claims-ledger/. Reflects the user-authorized 2026-07-13 ledger amendment (GE-002 retype, MESH-006 closure, BBT-002 annotation, BBT-003 addition). Do not edit here; regenerate from ledger.json and re-copy. -->
+<!-- SNAPSHOT 2026-07-13b of the canonical file in the Quantum Contextuality project's 01-claims-ledger/. Reflects the 2026-07-13b session-results sync: ADDED BBT-004, LP-004, MESH-010, HK-006, HK-007, SH-009, SH-010, CERT-003, CERT-004, ERG-004, EMU-001 + the EMU track; UPDATED CERT-001, CERT-002, GE-003, ERG-003. Do not edit here; regenerate from ledger.json (render_ledger.py) and re-copy. -->
 
 # KNOWN_ISSUES.md -- Data-Integrity Discrepancies Found During the Reorg Audit
 
