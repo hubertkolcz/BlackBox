@@ -3,4 +3,4 @@
    Run:  wolframscript -file RunSupportCohomology.wl -print all
    The printed value is the final verification; it must show OK -> True. *)
 SetDirectory[DirectoryName[$InputFileName]];
-Get["../sheaf-cohomology/SupportCohomology.wl"]
+Get["../06-D3-sheaf-cohomology/SupportCohomology.wl"]

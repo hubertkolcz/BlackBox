@@ -29,7 +29,7 @@ thisDir = Module[{nb},
 ];
 
 (* ---- load the qutrit toolkit unmodified (silence its self-test demo) ---- *)
-qutritFile = FileNameJoin[{thisDir, "..", "mesh-composition", "qutrit.wl"}];
+qutritFile = FileNameJoin[{thisDir, "qutrit.wl"}];
 If[! FileExistsQ[qutritFile] && FileExistsQ[ExpandFileName["qutrit.wl"]],
   qutritFile = ExpandFileName["qutrit.wl"]];       (* fall back to working dir *)
 If[! FileExistsQ[qutritFile],

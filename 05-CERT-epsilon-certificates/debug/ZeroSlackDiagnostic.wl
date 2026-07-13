@@ -13,8 +13,8 @@
    verbatim in construction. *)
 
 SetDirectory[DirectoryName[$InputFileName]];
-Get["../certificates/EpsilonCertificate.wl"];
-Get["../certificates/EpsilonCertificate8.wl"];
+Get["../EpsilonCertificate.wl"];
+Get["../EpsilonCertificate8.wl"];
 
 dpStates = {{0, 0}, {1, 0}, {0, 1}};
 dpTransfer[letter_] := Module[{T = ConstantArray[-Infinity, {3, 3}], out, j},

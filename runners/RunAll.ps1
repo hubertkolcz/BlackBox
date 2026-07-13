@@ -12,7 +12,7 @@ Pop-Location
 $ok = ($out -match "ALL PASS: True") -and ($out -match "DEDUP PASS: True") -and ($out -match "UNIFY PASS: True")
 if (-not $ok) { $all = $false }
 Write-Output ("{0,-34} {1}" -f "BlackBox\Tests\BlackBoxTests.wl", $(if ($ok) { "OK" } else { "FAILED" }))
-foreach ($f in @("RunEssay.wl", "RunCaseStudies.wl", "RunHeptagonCatalysis.wl",
+foreach ($f in @("RunBlackboxProtocol.wl", "RunEssay.wl", "RunCaseStudies.wl", "RunHeptagonCatalysis.wl",
     "RunBiphotonSimulator.wl", "RunWignerFlow.wl", "RunLedger.wl", "RunEpilogue.wl",
     "RunSupportCohomology.wl", "RunSignedNegativity.wl", "RunD1GECopiesSweep.wl",
     "RunD1K3Activation.wl", "RunSignalingTaxonomy.wl")) {
@@ -20,4 +20,4 @@ foreach ($f in @("RunEssay.wl", "RunCaseStudies.wl", "RunHeptagonCatalysis.wl",
   $out = & $ws -file $f -print all 2>&1 | Out-String
   Pop-Location
   $ok = $out -match "OK -> True"
-  if (-not $ok) { $all = $false }
+  if (-n

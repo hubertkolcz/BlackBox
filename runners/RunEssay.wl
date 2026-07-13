@@ -6,4 +6,4 @@
        wolframscript -file RunEssay.wl -print all
    The value printed is the essay's final verification; it must show OK -> True. *)
 SetDirectory[DirectoryName[$InputFileName]];
-Get["../core/CertifyingQuantumness.wl"]
+Get["../01-D2-core-computation/CertifyingQuantumness.wl"]

@@ -2,4 +2,4 @@
    Run:  wolframscript -file RunBiphotonSimulator.wl -print all
    The printed value must show OK -> True. *)
 SetDirectory[DirectoryName[$InputFileName]];
-Get["../black-box-test/BiphotonSimulator.wl"]
+Get["../01-D2-core-computation/BiphotonSimulator.wl"]

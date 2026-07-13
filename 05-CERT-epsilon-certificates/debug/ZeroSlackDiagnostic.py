@@ -272,8 +272,8 @@ def full_report(CE, name, bottleneck_word):
 
 if __name__ == "__main__":
     here = os.path.dirname(os.path.abspath(__file__))
-    CE7 = load_certificate(os.path.join(here, "..", "certificates", "EpsilonCertificate.wl"))
-    CE8 = load_certificate(os.path.join(here, "..", "certificates", "EpsilonCertificate8.wl"))
+    CE7 = load_certificate(os.path.join(here, "..", "EpsilonCertificate.wl"))
+    CE8 = load_certificate(os.path.join(here, "..", "EpsilonCertificate8.wl"))
 
     r7 = full_report(CE7, "EpsilonCertificate (k=7)", "cttt")
     r8 = full_report(CE8, "EpsilonCertificate8 (k=8)", "ctt")

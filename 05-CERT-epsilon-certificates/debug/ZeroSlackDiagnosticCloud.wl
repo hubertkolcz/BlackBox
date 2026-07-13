@@ -6,8 +6,8 @@
    sigma/cycle-mean arithmetic genuinely executes on the cloud kernel. *)
 
 SetDirectory[DirectoryName[$InputFileName]];
-Get["../certificates/EpsilonCertificate.wl"];
-Get["../certificates/EpsilonCertificate8.wl"];
+Get["../EpsilonCertificate.wl"];
+Get["../EpsilonCertificate8.wl"];
 
 t0 = AbsoluteTime[];
 result = CloudEvaluate[Module[

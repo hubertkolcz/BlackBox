@@ -13,52 +13,41 @@ open threads — is [QUANTUM_CONTEXTUALITY.md](QUANTUM_CONTEXTUALITY.md).
 
 ## Layout
 
-- **`BlackBox/`** — Wolfram paclet `HubertKolcz/BlackBox` (v1.1.0, 22 exported
-  symbols): Lovász ϑ by SDP (dense and sparse/chordal), independence and
-  fractional packing numbers, exclusivity (CE) filters under OR-product
-  composition, n-cycle scenarios, contextual fraction, Abramsky–Brandenburger
-  local–global analysis, the Čech obstruction of the support presheaf, and the
-  so(3) interface of the KCBS cascade. Includes `Tests/BlackBoxTests.wl` and
-  Documentation pages. Submission notes: `BlackBox/CONTRIBUTING.md`.
-- **Essays and notes** (`*.wl` at the root) — package-format computational
-  essays; evaluate cell by cell in a notebook, or run headlessly (below).
-- **Python tools** — `lovasz_theta_sparse.py` (sparse ϑ at 10⁴–10⁶ vertices,
-  Clarabel), `beyond7_clique_search.py` / `beyond7_theorem_sweep.py` (exact
-  clique decisions for catalysed n-cycle boxes), `kcbs_simulation.py`
-  (Monte Carlo of the 2011 experiment).
+The repository is organized by **goal**, not just topic, so the module answering
+the project's central question stays distinct from the modules that merely
+contribute to it. Folders are numbered `00`-`08`; the number is a reading order,
+not an importance ranking beyond `00` itself, which is the primary module.
 
-## Headless verification
+- **`00-BBT-blackbox-protocol/`** — **the primary module.** The black-box
+  certification protocol itself (`mbqc_blackbox_test.py`, `mbqc_c5.wl`) — this
+  directly operationalizes the project's central question. Read this folder's
+  own README first.
+- **`01-D2-core-computation/`** — shared KCBS-pentagon computational bedrock
+  (graph invariants, circuits, GE, contextual fraction) that the primary module
+  and several other tracks import from.
+- **`BlackBox/`** — Wolfram paclet `HubertKolcz/BlackBox` (v1.1.0, 29 exported
+  symbols as of this reorg): Lovász ϑ by SDP (dense and sparse/chordal),
+  independence and fractional packing numbers, exclusivity (CE) filters under
+  OR-product composition, n-cycle scenarios, contextual fraction,
+  Abramsky–Brandenburger local–global analysis, the Čech obstruction of the
+  support presheaf, and the so(3)/DLA interface of the KCBS cascade. Includes
+  `Tests/BlackBoxTests.wl` and Documentation pages. Submission notes:
+  `BlackBox/CONTRIBUTING.md`.
+- **`02-D1-theory-frontier/`**, **`03-MESH-pentagon-composition/`**,
+  **`05-CERT-epsilon-certificates/`**, **`06-D3-sheaf-cohomology/`**,
+  **`07-SIG-signaling/`**, **`08-HK-hawking/`** — independent contributing
+  tracks (theory-frontier numerics, pentagon-gluing composition, epsilon
+  certificates, sheaf cohomology, signaling extension, and the Hawking-radiation
+  application respectively). Each has its own README stating what it contains
+  and its relationship to the primary module. None of these is imported by
+  `00-BBT-blackbox-protocol/` directly — they inform the project's broader
+  arguments without entering the certification protocol's own dependency chain.
+- **`04-cluster-state-mbqc/`** — emerging module building a literal MBQC
+  cluster-state realization of the pentagon-mesh gluing result; feeds the
+  primary module's long-term goal but is not yet wired into it. See its README
+  for the honest scaling boundary between its stabilizer, AvN-witness, and DLA
+  checks.
+- **`runners/`** — headless `Run<Name>.wl` entry points (below) plus
+  `RunAll.ps1`, the one-command verification sweep.
 
-Each major module has a `Run<Name>.wl` runner:
-
-```
-wolframscript -file RunEssay.wl -print all        # CertifyingQuantumness.wl
-wolframscript -file RunCaseStudies.wl -print all
-wolframscript -file RunHeptagonCatalysis.wl -print all
-wolframscript -file RunBiphotonSimulator.wl -print all
-wolframscript -file RunSupportCohomology.wl -print all
-wolframscript -file RunWignerFlow.wl -print all   # kcbs_wigner_flow.wl
-wolframscript -file RunLedger.wl -print all       # kcbs_ledger.wl
-wolframscript -file BlackBox/Tests/BlackBoxTests.wl
-```
-
-Every run must end `OK -> True` (the test battery prints `ALL PASS`). The
-runners exist because `wolframscript -file` on an essay parses the whole file
-before evaluating, which shadows the quantum-framework symbols in `` Global` ``
-(documented in `kcbs_circuit.wl`, Section 1); `Get[]` inside a runner evaluates
-expression by expression and avoids this.
-
-`kcbs_circuit.wl` (the 13-section KCBS circuit essay) and `kcbs_simulation.wl`
-are notebook-first: evaluate cell by cell from a fresh kernel.
-
-## Requirements
-
-- Wolfram Language 13.0+ with `wolframscript`; the essays install the
-  [Wolfram/QuantumFramework](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/QuantumFramework/)
-  paclet on first run.
-- Python 3.10+ with `numpy`, `python-igraph`, `clarabel`, `scipy` for the
-  Python tools (optional; every Python result has a WL counterpart or anchor).
-
-## License
-
-MIT — see [LICENSE](LICENSE).
+Fu

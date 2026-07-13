@@ -4,4 +4,4 @@
    The printed value is the final verification; it must show OK -> True.
    The randomized/float-LP layer is executed by signaling_taxonomy.py (exit 0 required). *)
 SetDirectory[DirectoryName[$InputFileName]];
-Get["../signaling/signaling_taxonomy.wl"]
+Get["../07-SIG-signaling/signaling_taxonomy.wl"]

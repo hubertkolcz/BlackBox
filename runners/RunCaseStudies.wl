@@ -3,4 +3,4 @@
    Run:  wolframscript -file RunCaseStudies.wl -print all
    The printed value is the final verification; it must show OK -> True. *)
 SetDirectory[DirectoryName[$InputFileName]];
-Get["../mesh-composition/CaseStudies.wl"]
+Get["../03-MESH-pentagon-composition/CaseStudies.wl"]
