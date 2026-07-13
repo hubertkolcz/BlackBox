@@ -1,0 +1,63 @@
+{
+	"module":"ESSAY-005 Formalizer A: weighted-presheaf invariant",
+	"date":"2026-07-13",
+	"presheaf":"F(K)={w:K->[0,1], sum<=1} over R=Q>=0 (effect module); H^0(F) = packing polytope (glues trivially, sections are point-functions).",
+	"primaryInvariant":"Lambda_k = sup_{p in H^0(F)} mu(p) = L_k; S_k = Lambda_k^(1\/k).",
+	"gateVerdict":"PASS",
+	"gates":{
+		"S1(C5): Lambda_1(C5) == 5\/2":true,
+		"S2(C5): Lambda_2(C5) == 5, per-copy Sqrt[5] (exact)":true,
+		"S2(C7): Lambda_2(C7) == 49\/4, per-copy 7\/2":true,
+		"S2(C7) =!= theta(C7)^2 (Trap-1 control, must NOT sag to ~11.008)":true,
+		"S3(C7): Lambda_3(C7) == 343\/8, per-copy 7\/2 (control holds at k=3)":true,
+		"capacity == dual cover value at (C5,k=1)":true,
+		"capacity == dual cover value at (C5,k=2)":true,
+		"capacity == dual cover value at (C7,k=2)":true,
+		"census C5^v2 == 535 = {4:525,5:10}":true,
+		"census C7^v2 == 1715 = {4:1715}":true,
+		"k=3(C7) dual 0-cochain feasible (343 edge-cubes, y=1\/8)":true,
+		"C-A1: H^1-proxy(C5,k=2) == 0 (five pentads = exact partition of unity)":true,
+		"C-A1: H^1-proxy(C7,k=2) =!= 0 (49\/4 fractional, 4 does not divide 49)":true,
+		"C-A1: H^1-proxy(C7,k=3) =!= 0 (343\/8 fractional, 8 does not divide 343)":true,
+		"C-A1: H^1-proxy(C5,k=1) =!= 0 and H^1-proxy(C7,k=1) =!= 0 (5\/2, 7\/2 fractional)":true
+	},
+	"anchors":{
+		"S1(C5)":{
+			"Lambda":"5\/2",
+			"perCopy":"5\/2",
+			"target":"5\/2"
+		},
+		"S2(C5)":{
+			"Lambda":"5",
+			"perCopy":"Sqrt[5]",
+			"target":"Sqrt[5]"
+		},
+		"S2(C7)":{
+			"Lambda":"49\/4",
+			"perCopy":"7\/2",
+			"target":"7\/2",
+			"notThetaSq":"11.006915699018135"
+		},
+		"S3(C7)":{
+			"Lambda":"343\/8",
+			"perCopy":"7\/2",
+			"target":"7\/2",
+			"omegaProvenance":"omega(C7^v3)=8 established in essay005_p3_gluing_lp.wl \/ p3_certificates.json (2026-07-13, orbit-reduced 9-clique decision); cited, not recomputed here."
+		}
+	},
+	"CA1_H1_partitionDefect":{
+		"conjecture":"semimodule\/tropical H^1 vanishes iff LP optimum is an exact partition of unity (FLAGGED CONJECTURE; computed proxy below).",
+		"C5_k1":"<|\"nonzero\" -> True, \"value\" -> 5\/2, \"reason\" -> \"Lambda = 5\/2 is not an integer: no weight-1 clique partition can sum to it (denominator 2)\"|>",
+		"C5_k2":"0",
+		"C7_k1":"<|\"nonzero\" -> True, \"value\" -> 7\/2, \"reason\" -> \"Lambda = 7\/2 is not an integer: no weight-1 clique partition can sum to it (denominator 2)\"|>",
+		"C7_k2":"<|\"nonzero\" -> True, \"value\" -> 49\/4, \"reason\" -> \"Lambda = 49\/4 is not an integer: no weight-1 clique partition can sum to it (denominator 4)\"|>",
+		"C7_k3":"<|\"nonzero\" -> True, \"value\" -> 343\/8, \"reason\" -> \"Lambda = 343\/8 is not an integer: no weight-1 clique partition can sum to it (denominator 8)\"|>",
+		"reading":"H^1-proxy = 0 ONLY at (C5,k=2) among anchors (five pentads, exact partition); nonzero elsewhere (5\/2, 7\/2, 49\/4, 343\/8 are properly fractional covers). Refines the integrality gap without moving Lambda_k."
+	},
+	"honesty":{
+		"established":"Lambda_k = L_k reproduces all four anchors exactly (this run + p3_certificates.json).",
+		"newClaim":"Lambda_k is the degree-0 capacity (total-mass hom on H^0(F)); S_k = Lambda_k^(1\/k). Degree-0, NOT an H^1\/torsion class.",
+		"conjecture":"C-A1 (H^1 iff exact partition): the computed object is a partition-DEFECT PROXY, not a proven semimodule-cohomology H^1.",
+		"citedFact":"omega(C7^v3)=8 established in essay005_p3_gluing_lp.wl \/ p3_certificates.json (2026-07-13, orbit-reduced 9-clique decision); cited, not recomputed here."
+	}
+}
