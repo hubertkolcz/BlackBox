@@ -1,0 +1,700 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     27277,        691]
+NotebookOptionsPosition[     25706,        664]
+NotebookOutlinePosition[     26096,        680]
+CellTagsIndexPosition[     26053,        677]
+WindowTitle->Black-Box Certification Map
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["The Black-Box Certification Map", "Title",ExpressionUUID->"12ab2f14-bd01-6d49-9637-41e65df10a6d"],
+
+Cell["\<\
+Objective O3 \[LongDash] the indistinguishability boundary, from existing \
+findings\
+\>", "Subtitle",ExpressionUUID->"02b09d15-d7da-434d-8e00-d5826b94ec4a"],
+
+Cell["\<\
+The central question (O3): given only black-box access, under what conditions \
+is it mathematically impossible to distinguish a genuine quantum device from \
+a classical optical emulation at the input-output level? This notebook \
+assembles the answer, so far, as a map. Every cell is grounded in a project \
+finding (ledger key shown); open cells are marked open.\
+\>", "Text",ExpressionUUID->"a4bf13b3-2020-574e-92c6-2338f9eb2d43"],
+
+Cell["\<\
+1.  The correlation-lens staircase (access model \[Times] adversary strength)\
+\
+\>", "Section",ExpressionUUID->"5fc2a336-7fc5-e141-a10d-714ff5467196"],
+
+Cell["\<\
+Rows = how much access the tester has. Columns = how strong the classical \
+emulator is. A cell says whether genuine quantum can be told apart from that \
+emulator under that access.\
+\>", "Text",ExpressionUUID->"a986fd6d-0a2c-7341-bca1-682f10981c71"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     ItemBox["\<\"\"\>",
+      Background->GrayLevel[1],
+      StripOnInput->False], 
+     ItemBox[
+      StyleBox["\<\"adversary: NCHV\\n(untuned classical)\"\>",
+       StripOnInput->False,
+       LineColor->GrayLevel[1],
+       FrontFaceColor->GrayLevel[1],
+       BackFaceColor->GrayLevel[1],
+       GraphicsColor->GrayLevel[1],
+       FontSize->11,
+       FontWeight->Bold,
+       FontColor->GrayLevel[1]],
+      ImageMargins -> 5,
+      Alignment->Center,
+      Background->RGBColor[0.2, 0.26, 0.38],
+      StripOnInput->False], 
+     ItemBox[
+      StyleBox["\<\"adversary: tuned emulator\\n(\[Theta]-blind, matches \
+table)\"\>",
+       StripOnInput->False,
+       LineColor->GrayLevel[1],
+       FrontFaceColor->GrayLevel[1],
+       BackFaceColor->GrayLevel[1],
+       GraphicsColor->GrayLevel[1],
+       FontSize->11,
+       FontWeight->Bold,
+       FontColor->GrayLevel[1]],
+      ImageMargins -> 5,
+      Alignment->Center,
+      Background->RGBColor[0.2, 0.26, 0.38],
+      StripOnInput->False], 
+     ItemBox[
+      StyleBox["\<\"adversary: tuned emulator\\n(\[Theta]-aware, \
+re-tunes)\"\>",
+       StripOnInput->False,
+       LineColor->GrayLevel[1],
+       FrontFaceColor->GrayLevel[1],
+       BackFaceColor->GrayLevel[1],
+       GraphicsColor->GrayLevel[1],
+       FontSize->11,
+       FontWeight->Bold,
+       FontColor->GrayLevel[1]],
+      ImageMargins -> 5,
+      Alignment->Center,
+      Background->RGBColor[0.2, 0.26, 0.38],
+      StripOnInput->False]},
+    {
+     ItemBox[
+      TagBox[GridBox[{
+         {
+          StyleBox["\<\"A1  static table\"\>",
+           StripOnInput->False,
+           LineColor->GrayLevel[1],
+           FrontFaceColor->GrayLevel[1],
+           BackFaceColor->GrayLevel[1],
+           GraphicsColor->GrayLevel[1],
+           FontSize->11,
+           FontWeight->Bold,
+           FontColor->GrayLevel[1]]},
+         {
+          StyleBox["\<\"per-context click stats\"\>",
+           StripOnInput->False,
+           LineColor->GrayLevel[0.85],
+           FrontFaceColor->GrayLevel[0.85],
+           BackFaceColor->GrayLevel[0.85],
+           GraphicsColor->GrayLevel[0.85],
+           FontSize->8,
+           FontColor->GrayLevel[0.85]]}
+        },
+        DefaultBaseStyle->"Column",
+        GridBoxAlignment->{"Columns" -> {{Left}}},
+        GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+        GridBoxSpacings->{"Columns" -> {{Automatic}}, "Rows" -> {{0.3}}}],
+       "Column"],
+      ImageMargins -> 5,
+      Alignment->{Left, Center},
+      Background->RGBColor[0.2, 0.26, 0.38],
+      StripOnInput->False], 
+     ItemBox[
+      FrameBox[
+       TagBox[GridBox[{
+          {
+           StyleBox["\<\"distinguishable\"\>",
+            StripOnInput->False,
+            LineColor->RGBColor[0.13, 0.42, 0.2],
+            FrontFaceColor->RGBColor[0.13, 0.42, 0.2],
+            BackFaceColor->RGBColor[0.13, 0.42, 0.2],
+            GraphicsColor->RGBColor[0.13, 0.42, 0.2],
+            FontSize->12,
+            FontWeight->Bold,
+            FontColor->RGBColor[0.13, 0.42, 0.2]]},
+          {
+           StyleBox["\<\"BBT-001 \[Bullet] C1-C5\"\>",
+            StripOnInput->False,
+            LineColor->GrayLevel[0.4],
+            FrontFaceColor->GrayLevel[0.4],
+            BackFaceColor->GrayLevel[0.4],
+            GraphicsColor->GrayLevel[0.4],
+            FontSize->8,
+            FontColor->GrayLevel[0.4]]}
+         },
+         DefaultBaseStyle->"Column",
+         GridBoxAlignment->{"Columns" -> {{Center}}},
+         GridBoxItemSize->{
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+         GridBoxSpacings->{"Columns" -> {{Automatic}}, "Rows" -> {{0.4}}}],
+        "Column"],
+       FrameStyle->None,
+       ImageMargins->6,
+       StripOnInput->False],
+      Alignment->{Center, Center},
+      Background->RGBColor[0.82, 0.9, 0.8],
+      StripOnInput->False], 
+     ItemBox[
+      FrameBox[
+       TagBox[GridBox[{
+          {
+           StyleBox["\<\"INDISTINGUISHABLE\"\>",
+            StripOnInput->False,
+            LineColor->RGBColor[0.62, 0.16, 0.16],
+            FrontFaceColor->RGBColor[0.62, 0.16, 0.16],
+            BackFaceColor->RGBColor[0.62, 0.16, 0.16],
+            GraphicsColor->RGBColor[0.62, 0.16, 0.16],
+            FontSize->12,
+            FontWeight->Bold,
+            FontColor->RGBColor[0.62, 0.16, 0.16]]},
+          {
+           StyleBox["\<\"Prop 1 \[Bullet] BBT-002\"\>",
+            StripOnInput->False,
+            LineColor->GrayLevel[0.4],
+            FrontFaceColor->GrayLevel[0.4],
+            BackFaceColor->GrayLevel[0.4],
+            GraphicsColor->GrayLevel[0.4],
+            FontSize->8,
+            FontColor->GrayLevel[0.4]]}
+         },
+         DefaultBaseStyle->"Column",
+         GridBoxAlignment->{"Columns" -> {{Center}}},
+         GridBoxItemSize->{
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+         GridBoxSpacings->{"Columns" -> {{Automatic}}, "Rows" -> {{0.4}}}],
+        "Column"],
+       FrameStyle->None,
+       ImageMargins->6,
+       StripOnInput->False],
+      Alignment->{Center, Center},
+      Background->RGBColor[0.96, 0.82, 0.8],
+      StripOnInput->False], 
+     ItemBox[
+      FrameBox[
+       TagBox[GridBox[{
+          {
+           StyleBox["\<\"INDISTINGUISHABLE\"\>",
+            StripOnInput->False,
+            LineColor->RGBColor[0.62, 0.16, 0.16],
+            FrontFaceColor->RGBColor[0.62, 0.16, 0.16],
+            BackFaceColor->RGBColor[0.62, 0.16, 0.16],
+            GraphicsColor->RGBColor[0.62, 0.16, 0.16],
+            FontSize->12,
+            FontWeight->Bold,
+            FontColor->RGBColor[0.62, 0.16, 0.16]]},
+          {
+           StyleBox["\<\"Prop 1 (A1-A4)\"\>",
+            StripOnInput->False,
+            LineColor->GrayLevel[0.4],
+            FrontFaceColor->GrayLevel[0.4],
+            BackFaceColor->GrayLevel[0.4],
+            GraphicsColor->GrayLevel[0.4],
+            FontSize->8,
+            FontColor->GrayLevel[0.4]]}
+         },
+         DefaultBaseStyle->"Column",
+         GridBoxAlignment->{"Columns" -> {{Center}}},
+         GridBoxItemSize->{
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+         GridBoxSpacings->{"Columns" -> {{Automatic}}, "Rows" -> {{0.4}}}],
+        "Column"],
+       FrameStyle->None,
+       ImageMargins->6,
+       StripOnInput->False],
+      Alignment->{Center, Center},
+      Background->RGBColor[0.96, 0.82, 0.8],
+      StripOnInput->False]},
+    {
+     ItemBox[
+      TagBox[GridBox[{
+         {
+          StyleBox["\<\"A2  interventional\"\>",
+           StripOnInput->False,
+           LineColor->GrayLevel[1],
+           FrontFaceColor->GrayLevel[1],
+           BackFaceColor->GrayLevel[1],
+           GraphicsColor->GrayLevel[1],
+           FontSize->11,
+           FontWeight->Bold,
+           FontColor->GrayLevel[1]]},
+         {
+          StyleBox["\<\"inject known SO(3) transforms\"\>",
+           StripOnInput->False,
+           LineColor->GrayLevel[0.85],
+           FrontFaceColor->GrayLevel[0.85],
+           BackFaceColor->GrayLevel[0.85],
+           GraphicsColor->GrayLevel[0.85],
+           FontSize->8,
+           FontColor->GrayLevel[0.85]]}
+        },
+        DefaultBaseStyle->"Column",
+        GridBoxAlignment->{"Columns" -> {{Left}}},
+        GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+        GridBoxSpacings->{"Columns" -> {{Automatic}}, "Rows" -> {{0.3}}}],
+       "Column"],
+      ImageMargins -> 5,
+      Alignment->{Left, Center},
+      Background->RGBColor[0.2, 0.26, 0.38],
+      StripOnInput->False], 
+     ItemBox[
+      FrameBox[
+       TagBox[GridBox[{
+          {
+           StyleBox["\<\"distinguishable\"\>",
+            StripOnInput->False,
+            LineColor->RGBColor[0.13, 0.42, 0.2],
+            FrontFaceColor->RGBColor[0.13, 0.42, 0.2],
+            BackFaceColor->RGBColor[0.13, 0.42, 0.2],
+            GraphicsColor->RGBColor[0.13, 0.42, 0.2],
+            FontSize->12,
+            FontWeight->Bold,
+            FontColor->RGBColor[0.13, 0.42, 0.2]]},
+          {
+           StyleBox["\<\"trivial\"\>",
+            StripOnInput->False,
+            LineColor->GrayLevel[0.4],
+            FrontFaceColor->GrayLevel[0.4],
+            BackFaceColor->GrayLevel[0.4],
+            GraphicsColor->GrayLevel[0.4],
+            FontSize->8,
+            FontColor->GrayLevel[0.4]]}
+         },
+         DefaultBaseStyle->"Column",
+         GridBoxAlignment->{"Columns" -> {{Center}}},
+         GridBoxItemSize->{
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+         GridBoxSpacings->{"Columns" -> {{Automatic}}, "Rows" -> {{0.4}}}],
+        "Column"],
+       FrameStyle->None,
+       ImageMargins->6,
+       StripOnInput->False],
+      Alignment->{Center, Center},
+      Background->RGBColor[0.82, 0.9, 0.8],
+      StripOnInput->False], 
+     ItemBox[
+      FrameBox[
+       TagBox[GridBox[{
+          {
+           StyleBox["\<\"distinguishable\"\>",
+            StripOnInput->False,
+            LineColor->RGBColor[0.13, 0.42, 0.2],
+            FrontFaceColor->RGBColor[0.13, 0.42, 0.2],
+            BackFaceColor->RGBColor[0.13, 0.42, 0.2],
+            GraphicsColor->RGBColor[0.13, 0.42, 0.2],
+            FontSize->12,
+            FontWeight->Bold,
+            FontColor->RGBColor[0.13, 0.42, 0.2]]},
+          {
+           StyleBox["\<\"OQ1-A \[Bullet] rank 0 < 2\"\>",
+            StripOnInput->False,
+            LineColor->GrayLevel[0.4],
+            FrontFaceColor->GrayLevel[0.4],
+            BackFaceColor->GrayLevel[0.4],
+            GraphicsColor->GrayLevel[0.4],
+            FontSize->8,
+            FontColor->GrayLevel[0.4]]}
+         },
+         DefaultBaseStyle->"Column",
+         GridBoxAlignment->{"Columns" -> {{Center}}},
+         GridBoxItemSize->{
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+         GridBoxSpacings->{"Columns" -> {{Automatic}}, "Rows" -> {{0.4}}}],
+        "Column"],
+       FrameStyle->None,
+       ImageMargins->6,
+       StripOnInput->False],
+      Alignment->{Center, Center},
+      Background->RGBColor[0.82, 0.9, 0.8],
+      StripOnInput->False], 
+     ItemBox[
+      FrameBox[
+       TagBox[GridBox[{
+          {
+           StyleBox["\<\"INDISTINGUISHABLE\"\>",
+            StripOnInput->False,
+            LineColor->RGBColor[0.62, 0.16, 0.16],
+            FrontFaceColor->RGBColor[0.62, 0.16, 0.16],
+            BackFaceColor->RGBColor[0.62, 0.16, 0.16],
+            GraphicsColor->RGBColor[0.62, 0.16, 0.16],
+            FontSize->12,
+            FontWeight->Bold,
+            FontColor->RGBColor[0.62, 0.16, 0.16]]},
+          {
+           StyleBox["\<\"OQ1-B \[Bullet] fit < 1e-9\"\>",
+            StripOnInput->False,
+            LineColor->GrayLevel[0.4],
+            FrontFaceColor->GrayLevel[0.4],
+            BackFaceColor->GrayLevel[0.4],
+            GraphicsColor->GrayLevel[0.4],
+            FontSize->8,
+            FontColor->GrayLevel[0.4]]}
+         },
+         DefaultBaseStyle->"Column",
+         GridBoxAlignment->{"Columns" -> {{Center}}},
+         GridBoxItemSize->{
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+         GridBoxSpacings->{"Columns" -> {{Automatic}}, "Rows" -> {{0.4}}}],
+        "Column"],
+       FrameStyle->None,
+       ImageMargins->6,
+       StripOnInput->False],
+      Alignment->{Center, Center},
+      Background->RGBColor[0.96, 0.82, 0.8],
+      StripOnInput->False]},
+    {
+     ItemBox[
+      TagBox[GridBox[{
+         {
+          StyleBox["\<\"A3  attenuation /\\n     event-semantics\"\>",
+           StripOnInput->False,
+           LineColor->GrayLevel[1],
+           FrontFaceColor->GrayLevel[1],
+           BackFaceColor->GrayLevel[1],
+           GraphicsColor->GrayLevel[1],
+           FontSize->11,
+           FontWeight->Bold,
+           FontColor->GrayLevel[1]]},
+         {
+          StyleBox["\<\"photon-number scaling\"\>",
+           StripOnInput->False,
+           LineColor->GrayLevel[0.85],
+           FrontFaceColor->GrayLevel[0.85],
+           BackFaceColor->GrayLevel[0.85],
+           GraphicsColor->GrayLevel[0.85],
+           FontSize->8,
+           FontColor->GrayLevel[0.85]]}
+        },
+        DefaultBaseStyle->"Column",
+        GridBoxAlignment->{"Columns" -> {{Left}}},
+        GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+        GridBoxSpacings->{"Columns" -> {{Automatic}}, "Rows" -> {{0.3}}}],
+       "Column"],
+      ImageMargins -> 5,
+      Alignment->{Left, Center},
+      Background->RGBColor[0.2, 0.26, 0.38],
+      StripOnInput->False], 
+     ItemBox[
+      FrameBox[
+       TagBox[GridBox[{
+          {
+           StyleBox["\<\"distinguishable\"\>",
+            StripOnInput->False,
+            LineColor->RGBColor[0.13, 0.42, 0.2],
+            FrontFaceColor->RGBColor[0.13, 0.42, 0.2],
+            BackFaceColor->RGBColor[0.13, 0.42, 0.2],
+            GraphicsColor->RGBColor[0.13, 0.42, 0.2],
+            FontSize->12,
+            FontWeight->Bold,
+            FontColor->RGBColor[0.13, 0.42, 0.2]]},
+          {
+           StyleBox["\<\"trivial\"\>",
+            StripOnInput->False,
+            LineColor->GrayLevel[0.4],
+            FrontFaceColor->GrayLevel[0.4],
+            BackFaceColor->GrayLevel[0.4],
+            GraphicsColor->GrayLevel[0.4],
+            FontSize->8,
+            FontColor->GrayLevel[0.4]]}
+         },
+         DefaultBaseStyle->"Column",
+         GridBoxAlignment->{"Columns" -> {{Center}}},
+         GridBoxItemSize->{
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+         GridBoxSpacings->{"Columns" -> {{Automatic}}, "Rows" -> {{0.4}}}],
+        "Column"],
+       FrameStyle->None,
+       ImageMargins->6,
+       StripOnInput->False],
+      Alignment->{Center, Center},
+      Background->RGBColor[0.82, 0.9, 0.8],
+      StripOnInput->False], 
+     ItemBox[
+      FrameBox[
+       TagBox[GridBox[{
+          {
+           StyleBox["\<\"distinguishable\"\>",
+            StripOnInput->False,
+            LineColor->RGBColor[0.13, 0.42, 0.2],
+            FrontFaceColor->RGBColor[0.13, 0.42, 0.2],
+            BackFaceColor->RGBColor[0.13, 0.42, 0.2],
+            GraphicsColor->RGBColor[0.13, 0.42, 0.2],
+            FontSize->12,
+            FontWeight->Bold,
+            FontColor->RGBColor[0.13, 0.42, 0.2]]},
+          {
+           StyleBox["\<\"OQ2 \[Bullet] G8\"\>",
+            StripOnInput->False,
+            LineColor->GrayLevel[0.4],
+            FrontFaceColor->GrayLevel[0.4],
+            BackFaceColor->GrayLevel[0.4],
+            GraphicsColor->GrayLevel[0.4],
+            FontSize->8,
+            FontColor->GrayLevel[0.4]]}
+         },
+         DefaultBaseStyle->"Column",
+         GridBoxAlignment->{"Columns" -> {{Center}}},
+         GridBoxItemSize->{
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+         GridBoxSpacings->{"Columns" -> {{Automatic}}, "Rows" -> {{0.4}}}],
+        "Column"],
+       FrameStyle->None,
+       ImageMargins->6,
+       StripOnInput->False],
+      Alignment->{Center, Center},
+      Background->RGBColor[0.82, 0.9, 0.8],
+      StripOnInput->False], 
+     ItemBox[
+      FrameBox[
+       TagBox[GridBox[{
+          {
+           StyleBox["\<\"distinguishable\"\>",
+            StripOnInput->False,
+            LineColor->RGBColor[0.13, 0.42, 0.2],
+            FrontFaceColor->RGBColor[0.13, 0.42, 0.2],
+            BackFaceColor->RGBColor[0.13, 0.42, 0.2],
+            GraphicsColor->RGBColor[0.13, 0.42, 0.2],
+            FontSize->12,
+            FontWeight->Bold,
+            FontColor->RGBColor[0.13, 0.42, 0.2]]},
+          {
+           StyleBox["\<\"OQ2 / Cor 1 \[Bullet] \[Alpha]=2\"\>",
+            StripOnInput->False,
+            LineColor->GrayLevel[0.4],
+            FrontFaceColor->GrayLevel[0.4],
+            BackFaceColor->GrayLevel[0.4],
+            GraphicsColor->GrayLevel[0.4],
+            FontSize->8,
+            FontColor->GrayLevel[0.4]]}
+         },
+         DefaultBaseStyle->"Column",
+         GridBoxAlignment->{"Columns" -> {{Center}}},
+         GridBoxItemSize->{
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+         GridBoxSpacings->{"Columns" -> {{Automatic}}, "Rows" -> {{0.4}}}],
+        "Column"],
+       FrameStyle->None,
+       ImageMargins->6,
+       StripOnInput->False],
+      Alignment->{Center, Center},
+      Background->RGBColor[0.82, 0.9, 0.8],
+      StripOnInput->False]}
+   },
+   AutoDelete->False,
+   GridBoxDividers->{"Columns" -> {False, True, {
+        GrayLevel[0.85]}, False}, "Rows" -> {False, True, {
+        GrayLevel[0.85]}, False}},
+   GridBoxFrame->{"ColumnsIndexed" -> {{{1, -1}, {1, -1}} -> GrayLevel[0.7]}},
+   
+   GridBoxItemSize->{"Columns" -> {11, 13, 13, 13}, "Rows" -> {{Automatic}}},
+   GridBoxSpacings->{"Columns" -> {{1.2}}, "Rows" -> {{1.2}}}],
+  "Grid"]], "Output",ExpressionUUID->"a063c06b-2313-8944-a90a-36545ca0c4f4"],
+
+Cell["\<\
+Reading: the blind spot (INDISTINGUISHABLE) is top-left and shrinks as access \
+grows. Static tables cannot separate either tuned emulator (Prop 1). \
+Interventions defeat the \[Theta]-blind emulator (OQ1-A: intervention-orbit \
+rank 0 vs quantum rank 2) but NOT a \[Theta]-aware one that re-tunes (OQ1-B: \
+fit < 1e-9). Only attenuation / event-semantics (OQ2 gate G8; Corollary 1 \
+collapses the emulator to the NCHV bound \[Alpha]=2) defeats the strongest \
+adversary. That staircase IS the operational content of O3 for the \
+correlation lens.\
+\>", "Text",ExpressionUUID->"c1601f31-fb1f-5c44-b601-28641ff98e0c"],
+
+Cell["2.  The orthogonal second (geometric) lens", "Section",ExpressionUUID->"c3169d0a-3f0a-e645-b080-f96979574ae0"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     ItemBox[
+      StyleBox["\<\"SECOND (geometric) LENS \[LongDash] orthogonal route\"\>",
+       
+       StripOnInput->False,
+       LineColor->GrayLevel[1],
+       FrontFaceColor->GrayLevel[1],
+       BackFaceColor->GrayLevel[1],
+       GraphicsColor->GrayLevel[1],
+       FontSize->11,
+       FontWeight->Bold,
+       FontColor->GrayLevel[1]],
+      ImageMargins -> 5,
+      Alignment->Left,
+      Background->RGBColor[0.2, 0.26, 0.38],
+      StripOnInput->False]},
+    {
+     ItemBox[
+      InterpretationBox[Cell["\<\
+The staircase above is the CORRELATION lens. Independently, the geometric / \
+dynamical-Lie-algebra lens (gate G7) distinguishes a leaf-confined emulator \
+(DLA < 3) from the genuine KCBS cascade (DLA = 3) by auditing the claimed \
+mode compilation \[LongDash] a route that needs NO access upgrade but carries \
+a white-box trust assumption (the compilation is auditable). Prop 2 / \
+BBT-003: no table functional can lower-bound the DLA, so this lens is NOT \
+derivable from the correlation lens. That irreducibility \[LongDash] two \
+lenses, neither reducible to the other \[LongDash] is the shape of the answer \
+to O3.\
+\>",ExpressionUUID->"54d395f4-fdcb-e046-bba1-b6c6dbafc0eb"],
+       TextCell[
+       "The staircase above is the CORRELATION lens. Independently, the \
+geometric / dynamical-Lie-algebra lens (gate G7) distinguishes a \
+leaf-confined emulator (DLA < 3) from the genuine KCBS cascade (DLA = 3) by \
+auditing the claimed mode compilation \[LongDash] a route that needs NO \
+access upgrade but carries a white-box trust assumption (the compilation is \
+auditable). Prop 2 / BBT-003: no table functional can lower-bound the DLA, so \
+this lens is NOT derivable from the correlation lens. That irreducibility \
+\[LongDash] two lenses, neither reducible to the other \[LongDash] is the \
+shape of the answer to O3."]],
+      ImageMargins -> 8,
+      Alignment->Left,
+      Background->RGBColor[0.97, 0.95, 0.9],
+      StripOnInput->False]}
+   },
+   AutoDelete->False,
+   GridBoxFrame->{"ColumnsIndexed" -> {{{1, -1}, {1, -1}} -> GrayLevel[0.75]}},
+   GridBoxItemSize->{"Columns" -> {50}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",ExpressionUUID->"7982b97c-0f9a-284c-9abd-61e5b43349e1"],
+
+Cell["3.  Open cells \[LongDash] where the map is not yet drawn", "Section",ExpressionUUID->"92a6ee57-e8d1-e940-9fa7-344e14bf220f"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     ItemBox[
+      StyleBox["\<\"OPEN CELLS \[LongDash] where the map is not yet drawn\"\>",
+       StripOnInput->False,
+       LineColor->RGBColor[0.42, 0.42, 0.5],
+       FrontFaceColor->RGBColor[0.42, 0.42, 0.5],
+       BackFaceColor->RGBColor[0.42, 0.42, 0.5],
+       GraphicsColor->RGBColor[0.42, 0.42, 0.5],
+       FontSize->11,
+       FontWeight->Bold,
+       FontColor->RGBColor[0.42, 0.42, 0.5]],
+      ImageMargins -> 5,
+      Alignment->Left,
+      Background->RGBColor[0.9, 0.9, 0.92],
+      StripOnInput->False]},
+    {
+     ItemBox[
+      InterpretationBox[Cell["\<\
+\[Bullet]  COMPLETENESS (SQ1): is there an adversary that survives \
+attenuation + event-semantics AND the DLA audit? Not ruled out \[LongDash] \
+the map's outer boundary is a two-lens NECESSITY result, not yet a \
+completeness theorem.
+\[Bullet]  CONTINUOUS-VARIABLE column: the DLA audit does not transplant to \
+Gaussian / CV devices (needs an Sp(2n,R) re-derivation, not done \[LongDash] \
+NOTES-hawking). That device class is unbuilt.
+\[Bullet]  SAMPLING-HARDNESS caveat: poly-DLA \[DoubleLongRightArrow] \
+efficient emulation only for algebra-supported observables; it does NOT \
+preclude sampling hardness (Aaronson-Arkhipov). A distinct axis the map does \
+not yet resolve.
+\[Bullet]  cct-optimality sits INSIDE the mesh testbed for the resource axis \
+\[LongDash] it is off this map (a cell-interior detail, not a boundary).\
+\>",ExpressionUUID->"50cb1e55-65d3-2d45-9f6e-88211d29963f"],
+       TextCell[
+       "\[Bullet]  COMPLETENESS (SQ1): is there an adversary that survives \
+attenuation + event-semantics AND the DLA audit? Not ruled out \[LongDash] \
+the map's outer boundary is a two-lens NECESSITY result, not yet a \
+completeness theorem.\n\[Bullet]  CONTINUOUS-VARIABLE column: the DLA audit \
+does not transplant to Gaussian / CV devices (needs an Sp(2n,R) \
+re-derivation, not done \[LongDash] NOTES-hawking). That device class is \
+unbuilt.\n\[Bullet]  SAMPLING-HARDNESS caveat: poly-DLA \
+\[DoubleLongRightArrow] efficient emulation only for algebra-supported \
+observables; it does NOT preclude sampling hardness (Aaronson-Arkhipov). A \
+distinct axis the map does not yet resolve.\n\[Bullet]  cct-optimality sits \
+INSIDE the mesh testbed for the resource axis \[LongDash] it is off this map \
+(a cell-interior detail, not a boundary)."]],
+      ImageMargins -> 8,
+      Alignment->Left,
+      Background->GrayLevel[0.96],
+      StripOnInput->False]}
+   },
+   AutoDelete->False,
+   GridBoxFrame->{"ColumnsIndexed" -> {{{1, -1}, {1, -1}} -> GrayLevel[0.8]}},
+   
+   GridBoxItemSize->{"Columns" -> {50}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",ExpressionUUID->"9842318e-140e-bd49-87b4-9fb13ae138c6"],
+
+Cell["4.  Per-cell provenance", "Section",ExpressionUUID->"d441525c-a108-134e-9389-6511750eaf0b"],
+
+Cell["\<\
+A1\[Times]NCHV: BBT-001 gates C1-C5 (contextual fraction / GE separate \
+\[Alpha]=2 from \[Theta]=\[Sqrt]5). A1\[Times]tuned: Proposition 1 / BBT-002 \
+(an emulator tuned to the quantum table is table-identical). A2\[Times]\
+\[Theta]-blind: OQ1-A (oq1_interventional_dla.py; orbit rank 0 < 2 at 60/60 \
+points). A2\[Times]\[Theta]-aware: OQ1-B (the \[Theta]-aware ND-polytope \
+fitter reproduces the quantum orbit to < 1e-9). A3\[Times]tuned: OQ2 \
+(oq2_attenuation_gate.py; gate G8 flags the coherent forger 25/25) and \
+Corollary 1. Second lens: G7 DLA audit; Proposition 2 / BBT-003 (no table \
+functional lower-bounds the DLA). See \
+00-BBT-blackbox-protocol/PROPOSITION-O3.md and the claims ledger.\
+\>", "Text",ExpressionUUID->"6203e8f9-2227-8847-b930-f70c1a181313"],
+
+Cell["\<\
+Provenance: generated 2026-07-13 from PROPOSITION-O3.md (Prop 1/2, Cor 1/2, \
+OQ1/OQ2), the claims ledger (BBT-001/002/003, LP-002), and this session's \
+OQ1/OQ2 probe results. Regenerate: wolframscript -file certification_map.wl.\
+\>", "Text",ExpressionUUID->"c375e6f6-19dc-a34b-bd76-416e9bc3d654"]
+},
+WindowSize->{900, 760},
+WindowTitle->"Black-Box Certification Map",
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"33aff937-0b3c-7241-8566-dd4c603ff640"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[595, 21, 103, 0, 70, "Title",ExpressionUUID->"12ab2f14-bd01-6d49-9637-41e65df10a6d"],
+Cell[701, 23, 170, 3, 70, "Subtitle",ExpressionUUID->"02b09d15-d7da-434d-8e00-d5826b94ec4a"],
+Cell[871, 28, 450, 6, 70, "Text",ExpressionUUID->"a4bf13b3-2020-574e-92c6-2338f9eb2d43"],
+Cell[1318, 36, 164, 3, 70, "Section",ExpressionUUID->"5fc2a336-7fc5-e141-a10d-714ff5467196"],
+Cell[1482, 41, 265, 4, 70, "Text",ExpressionUUID->"a986fd6d-0a2c-7341-bca1-682f10981c71"],
+Cell[1746, 47, 17320, 470, 70, "Output",ExpressionUUID->"a063c06b-2313-8944-a90a-36545ca0c4f4"],
+Cell[18599, 519, 635, 9, 70, "Text",ExpressionUUID->"c1601f31-fb1f-5c44-b601-28641ff98e0c"],
+Cell[19228, 530, 116, 0, 70, "Section",ExpressionUUID->"c3169d0a-3f0a-e645-b080-f96979574ae0"],
+Cell[19347, 532, 2319, 49, 70, "Output",ExpressionUUID->"7982b97c-0f9a-284c-9abd-61e5b43349e1"],
+Cell[21620, 583, 131, 0, 70, "Section",ExpressionUUID->"92a6ee57-e8d1-e940-9fa7-344e14bf220f"],
+Cell[21754, 585, 2807, 56, 70, "Output",ExpressionUUID->"9842318e-140e-bd49-87b4-9fb13ae138c6"],
+Cell[24508, 643, 97, 0, 70, "Section",ExpressionUUID->"d441525c-a108-134e-9389-6511750eaf0b"],
+Cell[24608, 645, 793, 11, 70, "Text",ExpressionUUID->"6203e8f9-2227-8847-b930-f70c1a181313"],
+Cell[25393, 658, 313, 4, 70, "Text",ExpressionUUID->"c375e6f6-19dc-a34b-bd76-416e9bc3d654"]
+}
+]
+*)
+
+(* End of internal cache information *)
