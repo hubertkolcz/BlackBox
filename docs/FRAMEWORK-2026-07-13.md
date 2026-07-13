@@ -276,8 +276,10 @@ non-abelian symmetrization, or search.
 
 **H3: bound-elimination → inert (added as F9x).** 0 of 26 families are
 bound-eliminable (inertness lemma: ω(cn(Q_m)) ≥ 8−s_m meets the generator
-constraint). H3 status: open; S=17 is search-bound (2/26 NO, 24 PARTIAL,
-~69M nodes, no witness).
+constraint). H3 status: open; S=17 is search-bound (2/26 NO, 24 PARTIAL;
+cumulative exact search >200M nodes including a 10-worker parallel pass at
+25 min/family, zero 17-cliques anywhere — evidence for ω=16 strengthens,
+certificate still requires elim2 scale-up at hours-per-family budgets).
 
 **Net position after the delta.** Proven layer grows by F10, F11 (+F9vii–x);
 the hypothesis set is now {H1, H1′, H3, H5, H4′(maximality), and the reopened
