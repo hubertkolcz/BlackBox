@@ -1,0 +1,18 @@
+{
+ "family": [
+  1,
+  1,
+  1,
+  7,
+  7
+ ],
+ "S": 17,
+ "method": "elimination",
+ "pin": "q1=0 (translation)",
+ "orbits": 35,
+ "nodes": 2663409,
+ "wall_seconds": 43.5,
+ "good_vertex_count": 27,
+ "witness": null,
+ "status": "NO"
+}

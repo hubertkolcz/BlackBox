@@ -1,0 +1,30 @@
+{
+ "date": "2026-07-13",
+ "claim_tested": "Established fact (method-council route-iii premise): omega(C9^v3)=8 and every maximum 8-clique of H = C9 v C9 v C9 is an edge-product e1 x e2 x e3 (9^3 = 729 of them); hence 25/26 S=17 families force a pentagram-pair union to be a rigid product clique.",
+ "verdict": "FALSE (product part); omega(H)=8 itself is TRUE and now has an analytic proof.",
+ "counterexample": {
+  "description": "staircase prism: (non-product 4-clique of C9^v2) x (edge of C9). Verified all 28 pairs adjacent in C9^v3.",
+  "vertices": [[0,0,0],[0,0,1],[0,1,0],[0,1,1],[1,1,0],[1,1,1],[1,2,0],[1,2,1]],
+  "why_not_product": "coordinate-1 projection {0,1,2} is not a C9 edge",
+  "verified_by": "erg003_rigor_lemmas.py session run 2026-07-13 + inline pairwise check"
+ },
+ "two_box_counts": {
+  "C7^v2": {"max_4cliques": 1715, "edge_products": 49},
+  "C9^v2": {"max_4cliques": 3807, "edge_products": 81},
+  "note": "brute-force enumeration, erg003_rigor_lemmas.py"
+ },
+ "three_box_scale": {
+  "8cliques_through_vertex_0": ">= 25,920,000 (enumeration killed at 136s, still ~190k cliques/s; erg003_enum8.py partial log)",
+  "total_8cliques_lower_bound": ">= 2.4e9 (= count0 * 729/8)",
+  "consequence": "any method anchoring on enumeration of maximum-clique or size-7-layer domains hits an output-size wall; confirms the chain searcher's measured root cause"
+ },
+ "omega_H_proof": {
+  "statement": "omega(C9^v3) = 8",
+  "lower": "edge-products give 8-cliques",
+  "upper": "Lovasz theta of the complement is multiplicative under the conormal (OR) product; theta(C9-bar) = 1 + 1/cos(pi/9) = 2.06418, cube = 8.7957 < 9. Hence omega <= floor(8.7957) = 8. Also gives omega(G) <= 8.7957 * sqrt(5) = 19.667, i.e. omega(G) <= 19, consistent with the established 16..19 window.",
+  "reference": "Lovasz 1979 (theta multiplicativity for OR products; odd-cycle closed form)"
+ },
+ "consequence_for_route_iii": "the rigid-pair anchoring plan is unsound as designed; replaced by exact two-layer CSP variable elimination (erg003_elim2.py) which needs no structural claim about maximum cliques",
+ "prior_art_in_repo": "erg003-pentagram-design-2026-07-13.md sections claim-2/6 already recorded the falsification (erg003_structure_check.py, mcq.exe found a non-product max clique; >=4374 distinct). This session RE-DERIVED it independently (SAT-free constructive prism + brute-force 2-box counts) and adds the analytic omega(H)=8 proof and the measured >=2.6e7 through-vertex clique count.",
+ "arxiv_2411_09773_note": "Choudhary-Barbosa Thms 10/12 cover n>=6 IDENTICAL cycle boxes; nothing here contradicts them -- the mixed-cell C9^3+C5 case remains open exactly because the product-clique rigidity their identical-box argument suggests fails for conormal powers (this file is the concrete witness)."
+}

@@ -1,0 +1,27 @@
+{
+ "family": [
+  1,
+  1,
+  2,
+  7,
+  6
+ ],
+ "S": 17,
+ "method": "elim2",
+ "status": "NO",
+ "nodes": 1823309,
+ "anchors_done": 1,
+ "plan": [
+  4,
+  3,
+  1,
+  0,
+  2
+ ],
+ "wall_seconds": 75.7,
+ "chain_partial": {
+  "nodes": 2801664,
+  "anchors_done": 0,
+  "wall_seconds": 45.19
+ }
+}

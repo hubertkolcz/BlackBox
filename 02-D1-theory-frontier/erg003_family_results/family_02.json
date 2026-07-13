@@ -1,0 +1,16 @@
+{
+ "family": [
+  1,
+  1,
+  3,
+  7,
+  5
+ ],
+ "S": 17,
+ "status": "PARTIAL",
+ "witness": null,
+ "nodes": 2260992,
+ "anchors_done": 0,
+ "anchors_total": -1,
+ "wall_seconds": 45.14
+}
