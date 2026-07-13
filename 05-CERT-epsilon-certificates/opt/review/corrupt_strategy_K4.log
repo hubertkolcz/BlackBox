@@ -1,0 +1,29 @@
+de Bruijn-4: 16 nodes, 32 edges
+[LEVER3] exact substitution-identity gate passed (all 208 equalities reduce to 0 == 0)
+[WARM] lifted seed from k = 3 certificate (suffix map): 96 decisions; missing keys = 0, invalid-sig fallbacks = 16
+Stage 1 (optimized): strategy iteration, cap 20 rounds/seed; seed set = {warm(k=3), A}
+  seed warm (suffix lift):
+    round 1: Gamma (reduced readout) = 0.5000039989222052  [0.3 s]
+    converged at round 2
+    final joint solve (full): Gamma = 0.10196854495111962  [0.37 s]
+  seed A (sig=s):
+    round 1: Gamma (reduced readout) = 0.5000040000880047  [0.22 s]
+    converged at round 2
+    final joint solve (full): Gamma = 0.10196854495111962  [0.36 s]
+Stage 1 result: best seed = warm (suffix lift), Gamma_4 (numeric) = 0.10196854495111962 after 2 strategy-iteration round(s), converged = True.
+  All seeds' results: {{warm (suffix lift), 0.10196854495111962, converged->True}, {A (sig=s), 0.10196854495111962, converged->True}}
+  Cross-seed agreement check (warm (suffix lift) vs A (sig=s)): 0.10196854495111962 vs 0.10196854495111962, agree = True
+Stage 2: 400 Q/R variables, 208 linear equalities; naive-rounded residual norm = 2.808871419668902454701258874682`6.*^-8 (expect small before projection, exactly 0 after).
+Stage 2: exact projection residual (should be exactly 0): {0}
+Stage 2: exact-rational conversion done (Rationalize tol 1/1000000000), every nodeCons/edgeCons equality satisfied EXACTLY by construction.
+Stage 3: nodeEqOK = True, edgeEqOK = True, psdOK = True
+Stage 3: exact Gamma_4 (pointwise max over all edges) = 61112276337301955875404451/599324742116893215678312960 = 0.10196855234350148670136195928177219403`10.
+Stage 3: pointwise sigma(e) <= Gamma for all edges: True (checked against targetGamma = 979/9601 = 0.10196854494323507967920008332465368191`10. + drift tolerance 1/10000, Stage 1's OWN independently-reported SDP Gamma).
+Stage 3: GammaExact vs Stage-1 targetGamma drift = 7.40026640702216187595711851213`10.*^-9, within tolerance (1/10000): True
+Stage 3: exact monotonicity Gamma_4 <= Gamma_3: True
+Wrote EpsilonCertificate_opt_K4.wl -- Gamma_4 = 61112276337301955875404451/599324742116893215678312960 = 0.10196855234350148670136195928177219403`10.
+[GT] Gamma byte-identical (exact rational ===): True
+[GT] FULL certificate (Gamma/Q/R/Psi/Phi/Strategy) identical: True
+[SUMMARY] K=4 gammaByteIdentical=True fullCertIdentical=True
+[TIMING] K=4 stage1=1.52s stage2=0.07s stage3=0.03s total=1.81s kernelMaxMemoryUsedMB=74.10000000000001
+[GATES] allExactGates=True seedAgreement=True finalSolveMode=full

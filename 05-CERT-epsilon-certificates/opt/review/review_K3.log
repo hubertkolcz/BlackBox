@@ -1,0 +1,39 @@
+de Bruijn-3: 8 nodes, 16 edges
+[LEVER3] exact substitution-identity gate passed (all 104 equalities reduce to 0 == 0)
+Stage 1 (optimized): strategy iteration, cap 20 rounds/seed; seed set = ORIGINAL {A, B, random-1, random-2} (K <= 3 byte-identity gate)
+  seed A (sig=s):
+    round 1: Gamma (reduced readout) = 0.5000040006758723  [0.13 s]
+    converged at round 2
+    final joint solve (full): Gamma = 0.12500398464831836  [0.09 s]
+  seed B (first valid):
+    round 1: Gamma (reduced readout) = 0.5000040003676856  [0.06 s]
+    round 2: Gamma (reduced readout) = 0.37672273151333197  [0.05 s]
+    converged at round 3
+    final joint solve (full): Gamma = 0.12500398464831836  [0.18 s]
+  seed random-1:
+    round 1: Gamma (reduced readout) = 0.7644554173489401  [0.08 s]
+    round 2: Gamma (reduced readout) = 0.393697060540811  [0.06 s]
+    converged at round 3
+    final joint solve (full): Gamma = 0.500003983803156  [0.09 s]
+  seed random-2:
+    round 1: Gamma (reduced readout) = 1.0000039979149022  [0.07 s]
+    round 2: Gamma (reduced readout) = 0.37672272263629497  [0.08 s]
+    round 3: Gamma (reduced readout) = 0.12500397779800407  [0.06 s]
+    converged at round 4
+    final joint solve (full): Gamma = 0.12500397790450163  [0.09 s]
+Stage 1 result: best seed = random-2, Gamma_3 (numeric) = 0.12500397790450163 after 4 strategy-iteration round(s), converged = True.
+  All seeds' results: {{A (sig=s), 0.12500398464831836, converged->True}, {B (first valid), 0.12500398464831836, converged->True}, {random-1, 0.500003983803156, converged->True}, {random-2, 0.12500397790450163, converged->True}}
+  Cross-seed agreement check (A (sig=s) vs B (first valid)): 0.12500398464831836 vs 0.12500398464831836, agree = True
+Stage 2: 200 Q/R variables, 104 linear equalities; naive-rounded residual norm = 9.48410159496928280222531683777`6.*^-9 (expect small before projection, exactly 0 after).
+Stage 2: exact projection residual (should be exactly 0): {0}
+Stage 2: exact-rational conversion done (Rationalize tol 1/1000000000), every nodeCons/edgeCons equality satisfied EXACTLY by construction.
+Stage 3: nodeEqOK = True, edgeEqOK = True, psdOK = True
+Stage 3: exact Gamma_3 (pointwise max over all edges) = 288990155259674847195881621/2311847532130571638874561670 = 0.12500398544593678332172720484102272102`10.
+Stage 3: pointwise sigma(e) <= Gamma for all edges: True (checked against targetGamma = 3928/31423 = 0.12500397797791426661999172580593832543`10. + drift tolerance 1/10000, Stage 1's OWN independently-reported SDP Gamma).
+Stage 3: GammaExact vs Stage-1 targetGamma drift = 7.46802251670173547903508439559`10.*^-9, within tolerance (1/10000): True
+Wrote EpsilonCertificate_opt_K3.wl -- Gamma_3 = 288990155259674847195881621/2311847532130571638874561670 = 0.12500398544593678332172720484102272102`10.
+[GT] Gamma byte-identical (exact rational ===): True
+[GT] FULL certificate (Gamma/Q/R/Psi/Phi/Strategy) identical: True
+[SUMMARY] K=3 gammaByteIdentical=True fullCertIdentical=True
+[TIMING] K=3 stage1=1.27s stage2=0.02s stage3=0.01s total=1.49s kernelMaxMemoryUsedMB=74.10000000000001
+[GATES] allExactGates=True seedAgreement=True finalSolveMode=full

@@ -1,0 +1,28 @@
+de Bruijn-6: 64 nodes, 128 edges
+[LEVER3] exact substitution-identity gate passed (all 832 equalities reduce to 0 == 0)
+[WARM] lifted seed from k = 5 certificate (suffix map): 384 decisions; missing keys = 0, invalid-sig fallbacks = 0
+Stage 1 (optimized): strategy iteration, cap 20 rounds/seed; seed set = {warm(k=5), A}
+  seed warm (suffix lift):
+    converged at round 1
+    final joint solve (full): Gamma = 0.08235129318271431  [6.99 s]
+  seed A (sig=s):
+    round 1: Gamma (reduced readout) = 0.5000039998908902  [2.7600000000000002 s]
+    converged at round 2
+    final joint solve (full): Gamma = 0.08235129318271431  [5.5600000000000005 s]
+Stage 1 result: best seed = warm (suffix lift), Gamma_6 (numeric) = 0.08235129318271431 after 1 strategy-iteration round(s), converged = True.
+  All seeds' results: {{warm (suffix lift), 0.08235129318271431, converged->True}, {A (sig=s), 0.08235129318271431, converged->True}}
+  Cross-seed agreement check (warm (suffix lift) vs A (sig=s)): 0.08235129318271431 vs 0.08235129318271431, agree = True
+Stage 2: 1600 Q/R variables, 832 linear equalities; naive-rounded residual norm = 2.528939598833486588779258841391`6.*^-8 (expect small before projection, exactly 0 after).
+Stage 2: exact projection residual (should be exactly 0): {0}
+Stage 2: exact-rational conversion done (Rationalize tol 1/1000000000), every nodeCons/edgeCons equality satisfied EXACTLY by construction.
+Stage 3: nodeEqOK = True, edgeEqOK = True, psdOK = True
+Stage 3: exact Gamma_6 (pointwise max over all edges) = 446181384590424869043641695/5418024903596378233016745812 = 0.08235129821833385311140875428335334496`10.
+Stage 3: pointwise sigma(e) <= Gamma for all edges: True (checked against targetGamma = 3529/42853 = 0.08235129395841598021142043730893986418`10. + drift tolerance 1/10000, Stage 1's OWN independently-reported SDP Gamma).
+Stage 3: GammaExact vs Stage-1 targetGamma drift = 4.25991787289998831697441348077`10.*^-9, within tolerance (1/10000): True
+Stage 3: exact monotonicity Gamma_6 <= Gamma_5: True
+Wrote EpsilonCertificate_opt_K6.wl -- Gamma_6 = 446181384590424869043641695/5418024903596378233016745812 = 0.08235129821833385311140875428335334496`10.
+[GT] Gamma byte-identical (exact rational ===): True
+[GT] FULL certificate (Gamma/Q/R/Psi/Phi/Strategy) identical: True
+[SUMMARY] K=6 gammaByteIdentical=True fullCertIdentical=True
+[TIMING] K=6 stage1=19.19s stage2=0.55s stage3=0.1s total=20.19s kernelMaxMemoryUsedMB=157.70000000000002
+[GATES] allExactGates=True seedAgreement=True finalSolveMode=full

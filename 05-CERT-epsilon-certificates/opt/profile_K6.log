@@ -1,0 +1,382 @@
+[PROFILE] Wolfram $Version = 15.0.0 for Microsoft Windows (64-bit) (May 19, 2026)
+[PROFILE] $ScriptCommandLine = {profile_runner.wl, 6}
+[PROFILE] K = 6
+[PROFILE] +NumberForm[0``7.451544993495968, {10, 2}] s  MemoryInUse=59.3173828125`6. MB  MaxMemoryUsed=74.0589447021484375`6. MB  :: STAGE 0 start
+
+Set::wrsym: Symbol Null is Protected.
+[PROFILE] stage0 graph build : NumberForm[0.0141391, {10, 3}] s
+de Bruijn-6: 64 nodes, 128 edges
+
+Set::wrsym: Symbol Null is Protected.
+[PROFILE] stage1 symbolic variable build : NumberForm[0.0075168, {10, 3}] s
+
+Set::wrsym: Symbol Null is Protected.
+
+General::stop: Further output of Set::wrsym will be suppressed during this calculation.
+[PROFILE] stage1 static constraint build (nodeCons+edgeCons+psdCons) : NumberForm[0.0258606, {10, 3}] s
+[PROFILE] FORMULATION: |qrVars|=1600  |potVars|=385  |allVars|=1985  |nodeCons eqs|=320  |edgeCons eqs|=512  |psd blocks|=128 (64x 5x5 Q + 64x 4x4 R)
+[PROFILE] +NumberForm[0.1338927`6.578301892866887, {10, 2}] s  MemoryInUse=60.57543182373046875`6. MB  MaxMemoryUsed=74.0589447021484375`6. MB  :: STAGE 1 setup done
+Stage 1: strategy iteration (decoupled canonical-Phi fix), cap 20 rounds per seed...
+[PROFILE] +NumberForm[0.1579276`6.650003029015568, {10, 2}] s  MemoryInUse=60.764373779296875`6. MB  MaxMemoryUsed=74.0589447021484375`6. MB  :: STAGE 1 iteration start
+  seed A (sig=s):
+[PROFILE]     seed A (sig=s) ROUND 1 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0096119, {10, 3}] s, LinearOptimization NumberForm[2.024628, {10, 3}] s (384 ineqs)
+[PROFILE]     seed A (sig=s) round 1 CanonicalPhi total: NumberForm[2.0347396, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.012429, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[7.0557214, {10, 3}] s   MemoryInUse=63.16790008544921875`6. MB  MaxMemoryUsed=155.4197845458984375`6. MB
+[PROFILE]     seed A (sig=s) round 1 SolveJoint total: NumberForm[7.0689822, {10, 3}] s
+    round 1: Gamma = 0.5000039985111353
+[PROFILE]     seed A (sig=s) round 1 Improve: NumberForm[0.029981, {10, 3}] s
+[PROFILE]     seed A (sig=s) ROUND 2 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0078222, {10, 3}] s, LinearOptimization NumberForm[1.2004946, {10, 3}] s (384 ineqs)
+[PROFILE]     seed A (sig=s) round 2 CanonicalPhi total: NumberForm[1.208806, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0141821, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[7.4262034, {10, 3}] s   MemoryInUse=63.70037841796875`6. MB  MaxMemoryUsed=155.96730804443359375`6. MB
+[PROFILE]     seed A (sig=s) round 2 SolveJoint total: NumberForm[7.4411895, {10, 3}] s
+    round 2: Gamma = 0.08235129318271431
+[PROFILE]     seed A (sig=s) round 2 Improve: NumberForm[0.0321523, {10, 3}] s
+    converged at round 2
+[PROFILE]   SEED A (sig=s) TOTAL: NumberForm[17.821086`8.702479159495162, {10, 3}] s over 2 round(s)
+  seed B (first valid):
+[PROFILE]     seed B (first valid) ROUND 1 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0115224, {10, 3}] s, LinearOptimization NumberForm[2.3475613, {10, 3}] s (384 ineqs)
+[PROFILE]     seed B (first valid) round 1 CanonicalPhi total: NumberForm[2.3596188, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0105698, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[7.8072692, {10, 3}] s   MemoryInUse=63.69622802734375`6. MB  MaxMemoryUsed=155.96730804443359375`6. MB
+[PROFILE]     seed B (first valid) round 1 SolveJoint total: NumberForm[7.8194172, {10, 3}] s
+    round 1: Gamma = 0.5000039981538047
+[PROFILE]     seed B (first valid) round 1 Improve: NumberForm[0.0361314, {10, 3}] s
+[PROFILE]     seed B (first valid) ROUND 2 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0092683, {10, 3}] s, LinearOptimization NumberForm[1.9627491, {10, 3}] s (384 ineqs)
+[PROFILE]     seed B (first valid) round 2 CanonicalPhi total: NumberForm[1.9724508, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0132321, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[8.3511291, {10, 3}] s   MemoryInUse=64.17342376708984375`6. MB  MaxMemoryUsed=156.437835693359375`6. MB
+[PROFILE]     seed B (first valid) round 2 SolveJoint total: NumberForm[8.3655508, {10, 3}] s
+    round 2: Gamma = 0.37672271672436836
+[PROFILE]     seed B (first valid) round 2 Improve: NumberForm[0.0366466, {10, 3}] s
+[PROFILE]     seed B (first valid) ROUND 3 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0089611, {10, 3}] s, LinearOptimization NumberForm[1.3725626, {10, 3}] s (384 ineqs)
+[PROFILE]     seed B (first valid) round 3 CanonicalPhi total: NumberForm[1.3822856, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0133697, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[9.1083883, {10, 3}] s   MemoryInUse=64.1766357421875`6. MB  MaxMemoryUsed=156.443572998046875`6. MB
+[PROFILE]     seed B (first valid) round 3 SolveJoint total: NumberForm[9.1227586, {10, 3}] s
+    round 3: Gamma = 0.08235129318271431
+[PROFILE]     seed B (first valid) round 3 Improve: NumberForm[0.0331275, {10, 3}] s
+    converged at round 3
+[PROFILE]   SEED B (first valid) TOTAL: NumberForm[31.1379342`8.944834790061385, {10, 3}] s over 3 round(s)
+  seed random-1:
+[PROFILE]     seed random-1 ROUND 1 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0088605, {10, 3}] s, LinearOptimization NumberForm[3.3426416, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-1 round 1 CanonicalPhi total: NumberForm[3.3520063, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.012466, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[8.7142241, {10, 3}] s   MemoryInUse=64.23744964599609375`6. MB  MaxMemoryUsed=156.499908447265625`6. MB
+[PROFILE]     seed random-1 round 1 SolveJoint total: NumberForm[8.7275922, {10, 3}] s
+    round 1: Gamma = 0.7500041823197157
+[PROFILE]     seed random-1 round 1 Improve: NumberForm[0.0346089, {10, 3}] s
+[PROFILE]     seed random-1 ROUND 2 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0090773, {10, 3}] s, LinearOptimization NumberForm[1.9908002, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-1 round 2 CanonicalPhi total: NumberForm[2.0004016, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0131382, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[6.4846379, {10, 3}] s   MemoryInUse=64.83562469482421875`6. MB  MaxMemoryUsed=157.10107421875`6. MB
+[PROFILE]     seed random-1 round 2 SolveJoint total: NumberForm[6.4985395, {10, 3}] s
+    round 2: Gamma = 0.3767227274279365
+[PROFILE]     seed random-1 round 2 Improve: NumberForm[0.0318601, {10, 3}] s
+[PROFILE]     seed random-1 ROUND 3 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0085835, {10, 3}] s, LinearOptimization NumberForm[1.0585236, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-1 round 3 CanonicalPhi total: NumberForm[1.0676178, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0129172, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[6.4102369, {10, 3}] s   MemoryInUse=64.838470458984375`6. MB  MaxMemoryUsed=157.1031494140625`6. MB
+[PROFILE]     seed random-1 round 3 SolveJoint total: NumberForm[6.4240393, {10, 3}] s
+    round 3: Gamma = 0.3333375328638628
+[PROFILE]     seed random-1 round 3 Improve: NumberForm[0.0311024, {10, 3}] s
+[PROFILE]     seed random-1 ROUND 4 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0078134, {10, 3}] s, LinearOptimization NumberForm[1.0012786, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-1 round 4 CanonicalPhi total: NumberForm[1.0095504, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0109427, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[6.1514014, {10, 3}] s   MemoryInUse=64.8382415771484375`6. MB  MaxMemoryUsed=157.103302001953125`6. MB
+[PROFILE]     seed random-1 round 4 SolveJoint total: NumberForm[6.1631838, {10, 3}] s
+    round 4: Gamma = 0.29015364897794366
+[PROFILE]     seed random-1 round 4 Improve: NumberForm[0.0316331, {10, 3}] s
+[PROFILE]     seed random-1 ROUND 5 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0082515, {10, 3}] s, LinearOptimization NumberForm[0.9499858, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-1 round 5 CanonicalPhi total: NumberForm[0.9587628, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0112443, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[6.0069011, {10, 3}] s   MemoryInUse=64.83826446533203125`6. MB  MaxMemoryUsed=157.10332489013671875`6. MB
+[PROFILE]     seed random-1 round 5 SolveJoint total: NumberForm[6.0192901, {10, 3}] s
+    round 5: Gamma = 0.2901536154318483
+[PROFILE]     seed random-1 round 5 Improve: NumberForm[0.025701, {10, 3}] s
+[PROFILE]     seed random-1 ROUND 6 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0075178, {10, 3}] s, LinearOptimization NumberForm[0.7202127, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-1 round 6 CanonicalPhi total: NumberForm[0.7280446, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0075113, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[3.896747, {10, 3}] s   MemoryInUse=64.8382415771484375`6. MB  MaxMemoryUsed=157.10335540771484375`6. MB
+[PROFILE]     seed random-1 round 6 SolveJoint total: NumberForm[3.9048647, {10, 3}] s
+    round 6: Gamma = 0.29015364897794366
+[PROFILE]     seed random-1 round 6 Improve: NumberForm[0.0236803, {10, 3}] s
+[PROFILE]     seed random-1 ROUND 7 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0067999, {10, 3}] s, LinearOptimization NumberForm[0.7394956, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-1 round 7 CanonicalPhi total: NumberForm[0.7466636, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0066476, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[3.51609, {10, 3}] s   MemoryInUse=64.83826446533203125`6. MB  MaxMemoryUsed=157.10340118408203125`6. MB
+[PROFILE]     seed random-1 round 7 SolveJoint total: NumberForm[3.523412, {10, 3}] s
+    round 7: Gamma = 0.2901536154318483
+[PROFILE]     seed random-1 round 7 Improve: NumberForm[0.0184458, {10, 3}] s
+[PROFILE]     seed random-1 ROUND 8 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0049261, {10, 3}] s, LinearOptimization NumberForm[0.7423707, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-1 round 8 CanonicalPhi total: NumberForm[0.7477861, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0102659, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[3.6701579, {10, 3}] s   MemoryInUse=64.8382415771484375`6. MB  MaxMemoryUsed=157.10340118408203125`6. MB
+[PROFILE]     seed random-1 round 8 SolveJoint total: NumberForm[3.6812316, {10, 3}] s
+    round 8: Gamma = 0.29015364897794366
+[PROFILE]     seed random-1 round 8 Improve: NumberForm[0.0210471, {10, 3}] s
+[PROFILE]     seed random-1 ROUND 9 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0053057, {10, 3}] s, LinearOptimization NumberForm[0.6819584, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-1 round 9 CanonicalPhi total: NumberForm[0.6876316, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0072183, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[3.8430652, {10, 3}] s   MemoryInUse=64.83826446533203125`6. MB  MaxMemoryUsed=157.10345458984375`6. MB
+[PROFILE]     seed random-1 round 9 SolveJoint total: NumberForm[3.8508569, {10, 3}] s
+    round 9: Gamma = 0.2901536154318483
+[PROFILE]     seed random-1 round 9 Improve: NumberForm[0.0184193, {10, 3}] s
+[PROFILE]     seed random-1 ROUND 10 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0062393, {10, 3}] s, LinearOptimization NumberForm[0.7275932, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-1 round 10 CanonicalPhi total: NumberForm[0.7342406, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0060218, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[3.6129629, {10, 3}] s   MemoryInUse=64.8382415771484375`6. MB  MaxMemoryUsed=157.10345458984375`6. MB
+[PROFILE]     seed random-1 round 10 SolveJoint total: NumberForm[3.6196947, {10, 3}] s
+    round 10: Gamma = 0.29015364897794366
+[PROFILE]     seed random-1 round 10 Improve: NumberForm[0.0253326, {10, 3}] s
+[PROFILE]     seed random-1 ROUND 11 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0056965, {10, 3}] s, LinearOptimization NumberForm[0.6906743, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-1 round 11 CanonicalPhi total: NumberForm[0.6966747, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0067324, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[3.5110941, {10, 3}] s   MemoryInUse=64.83826446533203125`6. MB  MaxMemoryUsed=157.10345458984375`6. MB
+[PROFILE]     seed random-1 round 11 SolveJoint total: NumberForm[3.5184088, {10, 3}] s
+    round 11: Gamma = 0.2901536154318483
+[PROFILE]     seed random-1 round 11 Improve: NumberForm[0.0224828, {10, 3}] s
+[PROFILE]     seed random-1 ROUND 12 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0059583, {10, 3}] s, LinearOptimization NumberForm[0.6949204, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-1 round 12 CanonicalPhi total: NumberForm[0.7012093, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0060436, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[3.7265377, {10, 3}] s   MemoryInUse=64.8382415771484375`6. MB  MaxMemoryUsed=157.10345458984375`6. MB
+[PROFILE]     seed random-1 round 12 SolveJoint total: NumberForm[3.733284, {10, 3}] s
+    round 12: Gamma = 0.29015364897794366
+[PROFILE]     seed random-1 round 12 Improve: NumberForm[0.0209401, {10, 3}] s
+[PROFILE]     seed random-1 ROUND 13 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0061457, {10, 3}] s, LinearOptimization NumberForm[0.7092408, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-1 round 13 CanonicalPhi total: NumberForm[0.7156611, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0072423, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[3.6940649, {10, 3}] s   MemoryInUse=64.838348388671875`6. MB  MaxMemoryUsed=157.10345458984375`6. MB
+[PROFILE]     seed random-1 round 13 SolveJoint total: NumberForm[3.7019591, {10, 3}] s
+    round 13: Gamma = 0.2901536154318483
+[PROFILE]     seed random-1 round 13 Improve: NumberForm[0.0188245, {10, 3}] s
+[PROFILE]     seed random-1 ROUND 14 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.00521, {10, 3}] s, LinearOptimization NumberForm[0.6972652, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-1 round 14 CanonicalPhi total: NumberForm[0.7027726, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0065839, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[3.5274357, {10, 3}] s   MemoryInUse=64.8382415771484375`6. MB  MaxMemoryUsed=157.10345458984375`6. MB
+[PROFILE]     seed random-1 round 14 SolveJoint total: NumberForm[3.5346869, {10, 3}] s
+    round 14: Gamma = 0.29015364897794366
+[PROFILE]     seed random-1 round 14 Improve: NumberForm[0.0183221, {10, 3}] s
+[PROFILE]     seed random-1 ROUND 15 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0054216, {10, 3}] s, LinearOptimization NumberForm[0.6899652, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-1 round 15 CanonicalPhi total: NumberForm[0.6956794, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0063394, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[3.5746462, {10, 3}] s   MemoryInUse=64.83826446533203125`6. MB  MaxMemoryUsed=157.10345458984375`6. MB
+[PROFILE]     seed random-1 round 15 SolveJoint total: NumberForm[3.5815823, {10, 3}] s
+    round 15: Gamma = 0.2901536154318483
+[PROFILE]     seed random-1 round 15 Improve: NumberForm[0.020185, {10, 3}] s
+[PROFILE]     seed random-1 ROUND 16 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0073846, {10, 3}] s, LinearOptimization NumberForm[0.7246232, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-1 round 16 CanonicalPhi total: NumberForm[0.7324275, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0074055, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[3.699646, {10, 3}] s   MemoryInUse=64.8382415771484375`6. MB  MaxMemoryUsed=157.103485107421875`6. MB
+[PROFILE]     seed random-1 round 16 SolveJoint total: NumberForm[3.7078167, {10, 3}] s
+    round 16: Gamma = 0.29015364897794366
+[PROFILE]     seed random-1 round 16 Improve: NumberForm[0.0254424, {10, 3}] s
+[PROFILE]     seed random-1 ROUND 17 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0060643, {10, 3}] s, LinearOptimization NumberForm[0.6813228, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-1 round 17 CanonicalPhi total: NumberForm[0.687715, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0064505, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[3.6032141, {10, 3}] s   MemoryInUse=64.83826446533203125`6. MB  MaxMemoryUsed=157.103485107421875`6. MB
+[PROFILE]     seed random-1 round 17 SolveJoint total: NumberForm[3.6102938, {10, 3}] s
+    round 17: Gamma = 0.2901536154318483
+[PROFILE]     seed random-1 round 17 Improve: NumberForm[0.0188225, {10, 3}] s
+[PROFILE]     seed random-1 ROUND 18 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0047271, {10, 3}] s, LinearOptimization NumberForm[0.6868435, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-1 round 18 CanonicalPhi total: NumberForm[0.6919017, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0070219, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[3.550511, {10, 3}] s   MemoryInUse=64.8382415771484375`6. MB  MaxMemoryUsed=157.103485107421875`6. MB
+[PROFILE]     seed random-1 round 18 SolveJoint total: NumberForm[3.5580375, {10, 3}] s
+    round 18: Gamma = 0.29015364897794366
+[PROFILE]     seed random-1 round 18 Improve: NumberForm[0.0228767, {10, 3}] s
+[PROFILE]     seed random-1 ROUND 19 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0049119, {10, 3}] s, LinearOptimization NumberForm[0.6641478, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-1 round 19 CanonicalPhi total: NumberForm[0.6694648, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0060602, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[3.5465624, {10, 3}] s   MemoryInUse=64.838348388671875`6. MB  MaxMemoryUsed=157.103485107421875`6. MB
+[PROFILE]     seed random-1 round 19 SolveJoint total: NumberForm[3.5533204, {10, 3}] s
+    round 19: Gamma = 0.2901536154318483
+[PROFILE]     seed random-1 round 19 Improve: NumberForm[0.0218716, {10, 3}] s
+[PROFILE]     seed random-1 ROUND 20 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0054414, {10, 3}] s, LinearOptimization NumberForm[0.7160503, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-1 round 20 CanonicalPhi total: NumberForm[0.7218199, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0079985, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[4.5500437, {10, 3}] s   MemoryInUse=64.8382415771484375`6. MB  MaxMemoryUsed=157.103485107421875`6. MB
+[PROFILE]     seed random-1 round 20 SolveJoint total: NumberForm[4.5588092, {10, 3}] s
+    round 20: Gamma = 0.29015364897794366
+[PROFILE]     seed random-1 round 20 Improve: NumberForm[0.0264968, {10, 3}] s
+    WARNING: MAXPOLICYROUNDS (20) reached without convergence -- returning the last MUTUALLY CONSISTENT (strategy,jointSol,Gamma), NOT the one-step-ahead improved strategy. This Gamma may not be optimal; increase MAXPOLICYROUNDS or investigate possible oscillation before trusting it.
+[PROFILE]   SEED random-1 TOTAL: NumberForm[109.0592146`9.48920735924624, {10, 3}] s over 20 round(s)
+  seed random-2:
+[PROFILE]     seed random-2 ROUND 1 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0056258, {10, 3}] s, LinearOptimization NumberForm[1.9461665, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-2 round 1 CanonicalPhi total: NumberForm[1.9521627, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0084782, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[6.0668901, {10, 3}] s   MemoryInUse=64.83600616455078125`6. MB  MaxMemoryUsed=157.103485107421875`6. MB
+[PROFILE]     seed random-2 round 1 SolveJoint total: NumberForm[6.0761562, {10, 3}] s
+    round 1: Gamma = 1.0000039979690223
+[PROFILE]     seed random-2 round 1 Improve: NumberForm[0.0315759, {10, 3}] s
+[PROFILE]     seed random-2 ROUND 2 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.007946, {10, 3}] s, LinearOptimization NumberForm[1.9243073, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-2 round 2 CanonicalPhi total: NumberForm[1.9327404, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0122507, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[6.8777786, {10, 3}] s   MemoryInUse=65.42679595947265625`6. MB  MaxMemoryUsed=157.68930816650390625`6. MB
+[PROFILE]     seed random-2 round 2 SolveJoint total: NumberForm[6.8913405, {10, 3}] s
+    round 2: Gamma = 0.5746186299874513
+[PROFILE]     seed random-2 round 2 Improve: NumberForm[0.0308127, {10, 3}] s
+[PROFILE]     seed random-2 ROUND 3 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0085105, {10, 3}] s, LinearOptimization NumberForm[1.62874, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-2 round 3 CanonicalPhi total: NumberForm[1.6377581, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0108016, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[7.3121269, {10, 3}] s   MemoryInUse=65.4267578125`6. MB  MaxMemoryUsed=157.68979644775390625`6. MB
+[PROFILE]     seed random-2 round 3 SolveJoint total: NumberForm[7.323689, {10, 3}] s
+    round 3: Gamma = 0.5746186216870622
+[PROFILE]     seed random-2 round 3 Improve: NumberForm[0.0302911, {10, 3}] s
+[PROFILE]     seed random-2 ROUND 4 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0092204, {10, 3}] s, LinearOptimization NumberForm[1.9855737, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-2 round 4 CanonicalPhi total: NumberForm[1.9953435, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0132666, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[7.9210716, {10, 3}] s   MemoryInUse=65.43663787841796875`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB
+[PROFILE]     seed random-2 round 4 SolveJoint total: NumberForm[7.9351768, {10, 3}] s
+    round 4: Gamma = 0.5000039940424496
+[PROFILE]     seed random-2 round 4 Improve: NumberForm[0.0308496, {10, 3}] s
+[PROFILE]     seed random-2 ROUND 5 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0094137, {10, 3}] s, LinearOptimization NumberForm[1.4707377, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-2 round 5 CanonicalPhi total: NumberForm[1.4806375, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0121448, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[5.5830833, {10, 3}] s   MemoryInUse=65.43653106689453125`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB
+[PROFILE]     seed random-2 round 5 SolveJoint total: NumberForm[5.5959484, {10, 3}] s
+    round 5: Gamma = 0.42857569247835026
+[PROFILE]     seed random-2 round 5 Improve: NumberForm[0.0248833, {10, 3}] s
+[PROFILE]     seed random-2 ROUND 6 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0088474, {10, 3}] s, LinearOptimization NumberForm[1.3532273, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-2 round 6 CanonicalPhi total: NumberForm[1.3624768, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0097932, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[4.0662526, {10, 3}] s   MemoryInUse=65.43642425537109375`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB
+[PROFILE]     seed random-2 round 6 SolveJoint total: NumberForm[4.0768467, {10, 3}] s
+    round 6: Gamma = 0.4285756978711127
+[PROFILE]     seed random-2 round 6 Improve: NumberForm[0.0182826, {10, 3}] s
+[PROFILE]     seed random-2 ROUND 7 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0088761, {10, 3}] s, LinearOptimization NumberForm[1.1563965, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-2 round 7 CanonicalPhi total: NumberForm[1.1655944, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.00662, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[4.183644, {10, 3}] s   MemoryInUse=65.43634796142578125`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB
+[PROFILE]     seed random-2 round 7 SolveJoint total: NumberForm[4.1911294, {10, 3}] s
+    round 7: Gamma = 0.4285756972234388
+[PROFILE]     seed random-2 round 7 Improve: NumberForm[0.0185105, {10, 3}] s
+[PROFILE]     seed random-2 ROUND 8 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0068923, {10, 3}] s, LinearOptimization NumberForm[1.2781438, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-2 round 8 CanonicalPhi total: NumberForm[1.2853392, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0082645, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[4.1520848, {10, 3}] s   MemoryInUse=65.43625640869140625`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB
+[PROFILE]     seed random-2 round 8 SolveJoint total: NumberForm[4.1622067, {10, 3}] s
+    round 8: Gamma = 0.5000039779804594
+[PROFILE]     seed random-2 round 8 Improve: NumberForm[0.0229405, {10, 3}] s
+[PROFILE]     seed random-2 ROUND 9 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0090155, {10, 3}] s, LinearOptimization NumberForm[1.2014996, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-2 round 9 CanonicalPhi total: NumberForm[1.2108547, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0064694, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[4.1944188, {10, 3}] s   MemoryInUse=65.43622589111328125`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB
+[PROFILE]     seed random-2 round 9 SolveJoint total: NumberForm[4.2016685, {10, 3}] s
+    round 9: Gamma = 0.5000039875584835
+[PROFILE]     seed random-2 round 9 Improve: NumberForm[0.0240013, {10, 3}] s
+[PROFILE]     seed random-2 ROUND 10 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0050725, {10, 3}] s, LinearOptimization NumberForm[1.081233, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-2 round 10 CanonicalPhi total: NumberForm[1.0866447, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0072187, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[4.0602151, {10, 3}] s   MemoryInUse=65.43619537353515625`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB
+[PROFILE]     seed random-2 round 10 SolveJoint total: NumberForm[4.0682028, {10, 3}] s
+    round 10: Gamma = 0.5000039893621621
+[PROFILE]     seed random-2 round 10 Improve: NumberForm[0.0258843, {10, 3}] s
+[PROFILE]     seed random-2 ROUND 11 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0053986, {10, 3}] s, LinearOptimization NumberForm[1.5231928, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-2 round 11 CanonicalPhi total: NumberForm[1.5291215, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0071761, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[4.1201209, {10, 3}] s   MemoryInUse=65.43616485595703125`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB
+[PROFILE]     seed random-2 round 11 SolveJoint total: NumberForm[4.1280382, {10, 3}] s
+    round 11: Gamma = 0.5000039980202501
+[PROFILE]     seed random-2 round 11 Improve: NumberForm[0.026441, {10, 3}] s
+[PROFILE]     seed random-2 ROUND 12 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0067802, {10, 3}] s, LinearOptimization NumberForm[1.4093847, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-2 round 12 CanonicalPhi total: NumberForm[1.4164925, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0070944, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[4.3796807, {10, 3}] s   MemoryInUse=65.43627166748046875`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB
+[PROFILE]     seed random-2 round 12 SolveJoint total: NumberForm[4.3875118, {10, 3}] s
+    round 12: Gamma = 0.4285756992149958
+[PROFILE]     seed random-2 round 12 Improve: NumberForm[0.0245997, {10, 3}] s
+[PROFILE]     seed random-2 ROUND 13 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0080666, {10, 3}] s, LinearOptimization NumberForm[1.5787832, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-2 round 13 CanonicalPhi total: NumberForm[1.5872977, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.010473, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[7.121872, {10, 3}] s   MemoryInUse=65.43624114990234375`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB
+[PROFILE]     seed random-2 round 13 SolveJoint total: NumberForm[7.1333034, {10, 3}] s
+    round 13: Gamma = 0.4285756991666908
+[PROFILE]     seed random-2 round 13 Improve: NumberForm[0.0300396, {10, 3}] s
+[PROFILE]     seed random-2 ROUND 14 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0079418, {10, 3}] s, LinearOptimization NumberForm[1.5948462, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-2 round 14 CanonicalPhi total: NumberForm[1.6032714, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0120262, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[7.1225384, {10, 3}] s   MemoryInUse=65.43621063232421875`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB
+[PROFILE]     seed random-2 round 14 SolveJoint total: NumberForm[7.1353482, {10, 3}] s
+    round 14: Gamma = 0.42857570001139383
+[PROFILE]     seed random-2 round 14 Improve: NumberForm[0.030304, {10, 3}] s
+[PROFILE]     seed random-2 ROUND 15 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0091684, {10, 3}] s, LinearOptimization NumberForm[1.5426151, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-2 round 15 CanonicalPhi total: NumberForm[1.5524594, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0124864, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[7.6968177, {10, 3}] s   MemoryInUse=65.43613433837890625`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB
+[PROFILE]     seed random-2 round 15 SolveJoint total: NumberForm[7.710448, {10, 3}] s
+    round 15: Gamma = 0.42857569878048746
+[PROFILE]     seed random-2 round 15 Improve: NumberForm[0.0334923, {10, 3}] s
+[PROFILE]     seed random-2 ROUND 16 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.008243, {10, 3}] s, LinearOptimization NumberForm[1.5623906, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-2 round 16 CanonicalPhi total: NumberForm[1.5711394, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0123277, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[8.9936439, {10, 3}] s   MemoryInUse=65.43611907958984375`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB
+[PROFILE]     seed random-2 round 16 SolveJoint total: NumberForm[9.0069489, {10, 3}] s
+    round 16: Gamma = 0.4285757038208966
+[PROFILE]     seed random-2 round 16 Improve: NumberForm[0.0312183, {10, 3}] s
+[PROFILE]     seed random-2 ROUND 17 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0091337, {10, 3}] s, LinearOptimization NumberForm[1.5903529, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-2 round 17 CanonicalPhi total: NumberForm[1.599954, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0163844, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[8.9534048, {10, 3}] s   MemoryInUse=65.43611907958984375`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB
+[PROFILE]     seed random-2 round 17 SolveJoint total: NumberForm[8.9708322, {10, 3}] s
+    round 17: Gamma = 0.4285756871245762
+[PROFILE]     seed random-2 round 17 Improve: NumberForm[0.031744, {10, 3}] s
+[PROFILE]     seed random-2 ROUND 18 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0086978, {10, 3}] s, LinearOptimization NumberForm[1.6509551, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-2 round 18 CanonicalPhi total: NumberForm[1.6601084, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0117123, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[6.8500773, {10, 3}] s   MemoryInUse=65.43611907958984375`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB
+[PROFILE]     seed random-2 round 18 SolveJoint total: NumberForm[6.8627012, {10, 3}] s
+    round 18: Gamma = 0.5000039723794572
+[PROFILE]     seed random-2 round 18 Improve: NumberForm[0.0306067, {10, 3}] s
+[PROFILE]     seed random-2 ROUND 19 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0083958, {10, 3}] s, LinearOptimization NumberForm[1.5892377, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-2 round 19 CanonicalPhi total: NumberForm[1.5982218, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0129978, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[6.7398207, {10, 3}] s   MemoryInUse=65.43608856201171875`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB
+[PROFILE]     seed random-2 round 19 SolveJoint total: NumberForm[6.7536488, {10, 3}] s
+    round 19: Gamma = 0.5000039833753179
+[PROFILE]     seed random-2 round 19 Improve: NumberForm[0.032447, {10, 3}] s
+[PROFILE]     seed random-2 ROUND 20 begin
+[PROFILE]       CanonicalPhi: build NumberForm[0.0087036, {10, 3}] s, LinearOptimization NumberForm[1.6379076, {10, 3}] s (384 ineqs)
+[PROFILE]     seed random-2 round 20 CanonicalPhi total: NumberForm[1.6470248, {10, 3}] s
+[PROFILE]       SolveJoint: potCons build NumberForm[0.0122237, {10, 3}] s (512 ineqs), SemidefiniteOptimization NumberForm[6.6385095, {10, 3}] s   MemoryInUse=65.43604278564453125`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB
+[PROFILE]     seed random-2 round 20 SolveJoint total: NumberForm[6.6515266, {10, 3}] s
+    round 20: Gamma = 0.500003967867671
+[PROFILE]     seed random-2 round 20 Improve: NumberForm[0.031013, {10, 3}] s
+    WARNING: MAXPOLICYROUNDS (20) reached without convergence -- returning the last MUTUALLY CONSISTENT (strategy,jointSol,Gamma), NOT the one-step-ahead improved strategy. This Gamma may not be optimal; increase MAXPOLICYROUNDS or investigate possible oscillation before trusting it.
+[PROFILE]   SEED random-2 TOTAL: NumberForm[154.7692796`9.641229754595933, {10, 3}] s over 20 round(s)
+[PROFILE] STAGE 1 TOTAL (all 4 seeds): NumberForm[312.8123152, {10, 3}] s
+[PROFILE] +NumberForm[312.9707453`9.94704873759653, {10, 2}] s  MemoryInUse=64.9554901123046875`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB  :: STAGE 1 done
+Stage 1 result: best seed = A (sig=s), Gamma_6 (numeric) = 0.08235129318271431 after 2 strategy-iteration round(s), converged = True.
+  All seeds' results: {{A (sig=s), 0.08235129318271431, converged->True}, {B (first valid), 0.08235129318271431, converged->True}, {random-1, 0.29015364897794366, converged->False}, {random-2, 0.500003967867671, converged->False}}
+  Cross-seed agreement check (A vs B): A = 0.08235129318271431, B = 0.08235129318271431, agree = True
+[PROFILE] +NumberForm[312.9717549`9.947050138567732, {10, 2}] s  MemoryInUse=64.959625244140625`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB  :: STAGE 2 start
+[PROFILE] stage2 rationalize x0 : NumberForm[0.1155319, {10, 3}] s
+[PROFILE] stage2 eqLHS assembly : NumberForm[0.0064474, {10, 3}] s
+[PROFILE] stage2 CoefficientArrays : NumberForm[0.0029339, {10, 3}] s;  Amat dims = {832, 1600},  nnz = 1920,  density = 0.0014423076923076923`4.
+[PROFILE] stage2 residual Amat.x0-bvec (exact) : NumberForm[0.0010721, {10, 3}] s
+Stage 2: 1600 Q/R variables, 832 linear equalities; naive-rounded residual norm = 2.528939598833486588779258841391`6.*^-8
+[PROFILE] stage2 Gram Amat.Transpose[Amat] (exact) : NumberForm[0.0001347, {10, 3}] s
+[PROFILE] stage2 LinearSolve[A.A^T, residual] (exact rational) : NumberForm[0.2295665, {10, 3}] s
+[PROFILE] stage2 projection x0 - A^T.lambda (exact) : NumberForm[0.0033421, {10, 3}] s
+[PROFILE] stage2 residual re-check : NumberForm[0.0022752, {10, 3}] s
+Stage 2: exact projection residual (should be exactly 0): {0}
+[PROFILE] stage2 Thread exactRule : NumberForm[0.0018088, {10, 3}] s
+[PROFILE] stage2 substitute exactRule into Q/R blocks : NumberForm[0.2481983, {10, 3}] s
+[PROFILE] +NumberForm[313.6135413`9.94793980001125, {10, 2}] s  MemoryInUse=66.04364776611328125`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB  :: STAGE 2 done
+[PROFILE] +NumberForm[313.6135413`9.94793980001125, {10, 2}] s  MemoryInUse=66.04355621337890625`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB  :: STAGE 3 start
+[PROFILE] stage3 nodeEqOK exact check : NumberForm[0.0007775, {10, 3}] s
+[PROFILE] stage3 edgeEqOK exact check : NumberForm[0.0080315, {10, 3}] s
+[PROFILE] stage3 psdOK exact PositiveSemidefiniteMatrixQ (all 2*2^K blocks) : NumberForm[0.0450045, {10, 3}] s
+Stage 3: nodeEqOK = True, edgeEqOK = True, psdOK = True
+[PROFILE] stage3 Psi/Phi/Strategy exactification : NumberForm[0.0400784, {10, 3}] s
+[PROFILE] stage3 GammaExact = Max[posSigma9 /@ edges] (exact) : NumberForm[0.0119763, {10, 3}] s
+Stage 3: exact Gamma_6 (pointwise max over all edges) = 446181384590424869043641695/5418024903596378233016745812 = 0.08235129821833385311140875428335334496`10.
+[PROFILE] stage3 pointwise sigma(e)<=target check (exact, all edges) : NumberForm[0.0137187, {10, 3}] s
+Stage 3: pointwise sigma(e) <= Gamma for all edges: True
+Stage 3: GammaExact vs Stage-1 targetGamma drift = 4.25991787289998831697441348077`10.*^-9, within tolerance (1/10000): True
+[PROFILE] +NumberForm[313.7379407`9.948112035114633, {10, 2}] s  MemoryInUse=66.18764495849609375`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB  :: STAGE 3 done
+[PROFILE] stage4 Export : NumberForm[0.1993095, {10, 3}] s
+Wrote profile_cert_K6.wl -- Gamma_6 = 446181384590424869043641695/5418024903596378233016745812 = 0.08235129821833385311140875428335334496`10.
+[PROFILE] +NumberForm[313.9378758`9.948388708873035, {10, 2}] s  MemoryInUse=67.30865478515625`6. MB  MaxMemoryUsed=157.7017974853515625`6. MB  :: ALL DONE
+[PROFILE] FINAL MaxMemoryUsed = 157.7017974853515625`6. MB
