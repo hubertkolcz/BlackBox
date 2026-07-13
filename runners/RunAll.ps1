@@ -15,9 +15,22 @@ Write-Output ("{0,-34} {1}" -f "BlackBox\Tests\BlackBoxTests.wl", $(if ($ok) { "
 foreach ($f in @("RunBlackboxProtocol.wl", "RunEssay.wl", "RunCaseStudies.wl", "RunHeptagonCatalysis.wl",
     "RunBiphotonSimulator.wl", "RunWignerFlow.wl", "RunLedger.wl", "RunEpilogue.wl",
     "RunSupportCohomology.wl", "RunSignedNegativity.wl", "RunD1GECopiesSweep.wl",
-    "RunD1K3Activation.wl", "RunSignalingTaxonomy.wl")) {
+    "RunD1K3Activation.wl", "RunSignalingTaxonomy.wl", "RunOpticalCompiler.wl",
+    "RunGaussianHawking.wl", "RunGaussianWitnesses.wl")) {
   Push-Location $root
   $out = & $ws -file $f -print all 2>&1 | Out-String
   Pop-Location
-  $ok = $out -match "OK -> True"
-  if (-not $ok) { $all = $false }
+  if ($f -eq "RunBlackboxProtocol.wl") {
+    # Prints a validation report, not OK -> True; surface its Summary line (mirrors RunAll.sh).
+    $summary = ($out -split "`r?`n" | Where-Object { $_ -match "Summary" } | Select-Object -First 1)
+    $ok = [bool]$summary
+    if (-not $ok) { $all = $false }
+    Write-Output ("{0,-34} {1}" -f $f, $(if ($ok) { $summary } else { "NO SUMMARY LINE (inspect output)" }))
+  } else {
+    $ok = $out -match "OK -> True"
+    if (-not $ok) { $all = $false }
+    Write-Output ("{0,-34} {1}" -f $f, $(if ($ok) { "OK" } else { "FAILED" }))
+  }
+}
+Write-Output ("REPOSITORY OK: {0}" -f $all)
+if (-not $all) { exit 1 }
