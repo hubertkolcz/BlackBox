@@ -1,0 +1,229 @@
+{
+ "probe": "ESSAY-005 P2 - partition-type cover exhaustion",
+ "date": "2026-07-13",
+ "predicate_source": "Abramsky-Brandenburger arXiv:1102.0264 Prop 9.3/9.4 (verbatim quotes in script docstring; re-verified against the paper text by the executing agent on 2026-07-13)",
+ "predicate_source_sha256": "cb42a42717fb43715fa57636745616adbd1ef55bb222477e033f32d932c3b9d0",
+ "n_max": 10,
+ "lemmas": {
+  "L1": "outcome coarse-graining: unused outcomes merge to one dump; NS/quantum values of sum_i P(e_i) preserved both directions; d_x <= used+1",
+  "L1prime": "C5 is triangle-free, so conflicting pi-cells have exactly 2 rho-subcells; conflicting cells are C5-edge pairs or C5-path triples split {i,i+2}|{i+1}; hence d_x <= 3 (asserted over all active types)",
+  "L2": "block monotonicity: deleting a block with redundant/no conflicts keeps a valid C5 5-tuple and does not decrease sum_i P(e_i) (NS marginal box); hence suprema are attained on multisets of conflicting types",
+  "L3": "measurements unused by the 5 events delete freely; n_b = #cells(pi_b)",
+  "L4": "distinctness automatic: for non-adjacent i,j pick edge {i,k} with {j,k} not an edge; the conflicting block separates i from j or (ii) is violated"
+ },
+ "tiers": {
+  "tier0": "induced C5 exclusivity (exact, by construction)",
+  "tier1": "classical value = 2 for every tier-0 class (proof in docstring)",
+  "tier2": "NS LP <= 5/2 a priori; hits = classes attaining 5/2, certified by exact rational primal points",
+  "tier3": "quantum, REPORT-ONLY: NPA 1+AB moment-matrix upper bounds on hit classes; quantum <= NS settles classes with NS < sqrt5"
+ },
+ "enumeration": {
+  "visited": 90973,
+  "valid_configs": 26668,
+  "d5_classes": 2827
+ },
+ "types": {
+  "all_types": 358,
+  "active_types": 45,
+  "active_by_cost": {
+   "2": 15,
+   "3": 25,
+   "4": 5
+  },
+  "active_types_mod_D5": 8
+ },
+ "smoke": {
+  "chsh_true": true,
+  "c5_false": true,
+  "toy_true": true,
+  "missing_transversal_false": true
+ },
+ "lp": {
+  "scored": 2827,
+  "hits": 2,
+  "max": 2.5,
+  "min": 2.0
+ },
+ "exact": {
+  "hits": 2,
+  "primal_certified": 2,
+  "dual_candidates": 2825,
+  "dual_attempted": "running in background (full sweep)",
+  "dual_certified": "pending"
+ },
+ "control": {
+  "SBBC_ineq2": {
+   "class_id": 2811,
+   "types": [
+    74,
+    328
+   ],
+   "ns": 2.5,
+   "hit": true
+  },
+  "SBBC_ineq4": {
+   "class_id": 1353,
+   "types": [
+    14,
+    218
+   ],
+   "ns": 2.5,
+   "hit": true
+  },
+  "note_ineq3": "SBBC inequality (3) uses the marginal event P(_1|_0) (Alice acts trivially); it is not a full-joint-outcome event and lies outside this probe's event class by construction."
+ },
+ "bruteforce_crosscheck": {
+  "n_max": 6,
+  "d": 3,
+  "match": "pending - independent brute-force sweep still running"
+ },
+ "npa": {
+  "hits": 2,
+  "processed": 2,
+  "max_bound": 2.207106748620577,
+  "all_below_sqrt5": "True"
+ },
+ "hits": [
+  {
+   "class_id": 2811,
+   "block_types": [
+    {
+     "pi": [
+      [
+       0,
+       1
+      ],
+      [
+       2,
+       3,
+       4
+      ]
+     ],
+     "rho": [
+      [
+       0
+      ],
+      [
+       1
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       3
+      ]
+     ]
+    },
+    {
+     "pi": [
+      [
+       0,
+       3,
+       4
+      ],
+      [
+       1,
+       2
+      ]
+     ],
+     "rho": [
+      [
+       0,
+       3
+      ],
+      [
+       1
+      ],
+      [
+       2
+      ],
+      [
+       4
+      ]
+     ]
+    }
+   ],
+   "n_measurements": 4,
+   "n_blocks": 2,
+   "tier1_classical": 2,
+   "tier2_ns_value": "5/2",
+   "tier2_exact_primal_denominator": 2,
+   "tier3_npa_1AB_upper": 2.178394514791667,
+   "tier3_seesaw_lower": 2.1783945861626663
+  },
+  {
+   "class_id": 1353,
+   "block_types": [
+    {
+     "pi": [
+      [
+       0
+      ],
+      [
+       1,
+       2
+      ],
+      [
+       3,
+       4
+      ]
+     ],
+     "rho": [
+      [
+       0
+      ],
+      [
+       1
+      ],
+      [
+       2
+      ],
+      [
+       3
+      ],
+      [
+       4
+      ]
+     ]
+    },
+    {
+     "pi": [
+      [
+       0,
+       1,
+       4
+      ],
+      [
+       2,
+       3
+      ]
+     ],
+     "rho": [
+      [
+       0
+      ],
+      [
+       1,
+       4
+      ],
+      [
+       2
+      ],
+      [
+       3
+      ]
+     ]
+    }
+   ],
+   "n_measurements": 5,
+   "n_blocks": 2,
+   "tier1_classical": 2,
+   "tier2_ns_value": "5/2",
+   "tier2_exact_primal_denominator": 2,
+   "tier3_npa_1AB_upper": 2.207106748620577,
+   "tier3_seesaw_lower": 2.207106781186549
+  }
+ ],
+ "claim": "Exhaustive over partition-type covers (AB Prop 9.3) on <= 10 measurements: tier-0 (induced C5) classes exist; classical tier is 2 identically; 2 D5-classes attain the KCBS no-signalling value 5/2 (exact rational certificates); every tier-2-matching class has NPA-1+AB quantum bound < sqrt(5), so no partition-type cover on <= 10 measurements reproduces the full KCBS tier structure - the transfer fails exactly at the quantum tier."
+}

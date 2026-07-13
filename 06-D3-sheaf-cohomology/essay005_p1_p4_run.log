@@ -1,0 +1,126 @@
+essay005_p1_p4.wl start Mon 13 Jul 2026 04:09:49  pilot=$Failed
+sanity: CycleModel[5,"Quantum"] == e[1/Sqrt[5]]  ->  True
+row 1/30  S1 param=1/5 stratum=A1  sections=15 obstructed=0 orders={{1, 15}} ccH0=6 gs=True CF=0  (0.1 s)
+row 2/30  S1 param=3/10 stratum=A1  sections=15 obstructed=0 orders={{1, 15}} ccH0=6 gs=True CF=0  (0. s)
+row 3/30  S1 param=2/5 stratum=A1  sections=15 obstructed=0 orders={{1, 15}} ccH0=6 gs=True CF=0  (0. s)
+row 4/30  S1 param=21/50 stratum=A1  sections=15 obstructed=0 orders={{1, 15}} ccH0=6 gs=False CF=0.199999999996  (0.1 s)
+row 5/30  S1 param=1/Sqrt[5] stratum=A1  sections=15 obstructed=0 orders={{1, 15}} ccH0=6 gs=False CF=0.472135954996  (0. s)
+row 6/30  S1 param=23/50 stratum=A1  sections=15 obstructed=0 orders={{1, 15}} ccH0=6 gs=False CF=0.599999999996  (0. s)
+row 7/30  S1 param=12/25 stratum=A1  sections=15 obstructed=0 orders={{1, 15}} ccH0=6 gs=False CF=0.799999999996  (0. s)
+row 8/30  S1 param=49/100 stratum=A1  sections=15 obstructed=0 orders={{1, 15}} ccH0=6 gs=False CF=0.899999999996  (0. s)
+row 10/30  S1 param=1/2 stratum=W1  sections=10 obstructed=10 orders={{Infinity, 10}} ccH0=1 gs=False CF=0.999999999992  (0. s)
+row 11/30  V1 param=1/2 stratum=F1  sections=20 obstructed=0 orders={{1, 20}} ccH0=11 gs=True CF=0  (0. s)
+row 12/30  V1 param=9/10 stratum=F1  sections=20 obstructed=0 orders={{1, 20}} ccH0=11 gs=False CF=0.2749223595  (0. s)
+row 13/30  V1 param=99/100 stratum=F1  sections=20 obstructed=0 orders={{1, 20}} ccH0=11 gs=False CF=0.45241459545  (0. s)
+row 14/30  V1 param=1 stratum=A1x  sections=15 obstructed=0 orders={{1, 15}} ccH0=6 gs=False CF=0.472135954996  (0. s)
+row 15/30  S2 param=1/5 stratum=A  sections=225 obstructed=0 orders={{1, 225}} ccH0=36 gs=True CF=0  (23.2 s)
+row 16/30  S2 param=3/10 stratum=A  sections=225 obstructed=0 orders={{1, 225}} ccH0=36 gs=True CF=0  (22.8 s)
+row 17/30  S2 param=2/5 stratum=A  sections=225 obstructed=0 orders={{1, 225}} ccH0=36 gs=True CF=0  (24. s)
+row 18/30  S2 param=21/50 stratum=A  sections=225 obstructed=0 orders={{1, 225}} ccH0=36 gs=False CF=0.35999999957  (23.2 s)
+row 19/30  S2 param=1/Sqrt[5] stratum=A  sections=225 obstructed=0 orders={{1, 225}} ccH0=36 gs=False CF=0.721359549616  (23.2 s)
+row 20/30  S2 param=23/50 stratum=A  sections=225 obstructed=0 orders={{1, 225}} ccH0=36 gs=False CF=0.839999999621  (25.1 s)
+row 21/30  S2 param=12/25 stratum=A  sections=225 obstructed=0 orders={{1, 225}} ccH0=36 gs=False CF=0.959999999621  (24.6 s)
+row 22/30  S2 param=49/100 stratum=A  sections=225 obstructed=0 orders={{1, 225}} ccH0=36 gs=False CF=0.98999999974  (25.6 s)
+row 23/30  S2 param=499/1000 stratum=A  sections=225 obstructed=0 orders={{1, 225}} ccH0=36 gs=False CF=0.99989999974  (24.1 s)
+row 24/30  S2 param=1/2 stratum=W  sections=100 obstructed=100 orders={{Infinity, 100}} ccH0=1 gs=False CF=0.999999994287  (18.2 s)
+row 25/30  V2 param=1/2 stratum=F  sections=400 obstructed=0 orders={{1, 400}} ccH0=121 gs=True CF=0  (49. s)
+row 26/30  V2 param=9/10 stratum=F  sections=400 obstructed=0 orders={{1, 400}} ccH0=121 gs=False CF=0.474262415246  (47.5 s)
+row 27/30  V2 param=99/100 stratum=F  sections=400 obstructed=0 orders={{1, 400}} ccH0=121 gs=False CF=0.700150224723  (47.8 s)
+row 28/30  V2 param=1 stratum=Ax  sections=225 obstructed=0 orders={{1, 225}} ccH0=36 gs=False CF=0.721359549616  (25.4 s)
+row 29/30  M2 param="QxW" stratum=M  sections=150 obstructed=150 orders={{Infinity, 150}} ccH0=6 gs=False CF=0.999999999942  (29.1 s)
+row 30/30  M2 param="CxW" stratum=M  sections=150 obstructed=150 orders={{Infinity, 150}} ccH0=6 gs=False CF=0.999999999942  (27.9 s)
+
+================ P1 CENSUS TABLE (support layer vs LP layer) ================
+family | param | SigmaPerCopy | stratum | Sections | SuppTally | |Se| | H0obstr | Obstructed | CSC | ccH0 | ccH1free | ccH1tors | gs | CF
+"S1" | "1/5" | 1. | "A1" | 15 | {{3, 5}} | 11 | 6 | 0 | False | 6 | 1 | {} | True | "0"
+"S1" | "3/10" | 1.5 | "A1" | 15 | {{3, 5}} | 11 | 6 | 0 | False | 6 | 1 | {} | True | "0"
+"S1" | "2/5" | 2. | "A1" | 15 | {{3, 5}} | 11 | 6 | 0 | False | 6 | 1 | {} | True | "0"
+"S1" | "21/50" | 2.1 | "A1" | 15 | {{3, 5}} | 11 | 6 | 0 | False | 6 | 1 | {} | False | "0.199999999996"
+"S1" | "1/Sqrt[5]" | 2.23606797749979 | "A1" | 15 | {{3, 5}} | 11 | 6 | 0 | False | 6 | 1 | {} | False | "0.472135954996"
+"S1" | "23/50" | 2.3 | "A1" | 15 | {{3, 5}} | 11 | 6 | 0 | False | 6 | 1 | {} | False | "0.599999999996"
+"S1" | "12/25" | 2.4 | "A1" | 15 | {{3, 5}} | 11 | 6 | 0 | False | 6 | 1 | {} | False | "0.799999999996"
+"S1" | "49/100" | 2.45 | "A1" | 15 | {{3, 5}} | 11 | 6 | 0 | False | 6 | 1 | {} | False | "0.899999999996"
+"S1" | "499/1000" | 2.495 | "A1" | 15 | {{3, 5}} | 11 | 6 | 0 | False | 6 | 1 | {} | False | "0.989999999996"
+"S1" | "1/2" | 2.5 | "W1" | 10 | {{2, 5}} | 0 | 1 | 10 | True | 1 | 1 | {} | False | "0.999999999992"
+"V1" | "1/2" | 2.368033988749895 | "F1" | 20 | {{4, 5}} | 32 | 11 | 0 | False | 11 | 1 | {} | True | "0"
+"V1" | "9/10" | 2.2624611797498106 | "F1" | 20 | {{4, 5}} | 32 | 11 | 0 | False | 11 | 1 | {} | False | "0.2749223595"
+"V1" | "99/100" | 2.238707297724792 | "F1" | 20 | {{4, 5}} | 32 | 11 | 0 | False | 11 | 1 | {} | False | "0.45241459545"
+"V1" | "1" | 2.23606797749979 | "A1x" | 15 | {{3, 5}} | 11 | 6 | 0 | False | 6 | 1 | {} | False | "0.472135954996"
+"S2" | "1/5" | 1. | "A" | 225 | {{9, 25}} | 121 | 36 | 0 | False | 36 | 0 | {} | True | "0"
+"S2" | "3/10" | 1.5 | "A" | 225 | {{9, 25}} | 121 | 36 | 0 | False | 36 | 0 | {} | True | "0"
+"S2" | "2/5" | 2. | "A" | 225 | {{9, 25}} | 121 | 36 | 0 | False | 36 | 0 | {} | True | "0"
+"S2" | "21/50" | 2.1 | "A" | 225 | {{9, 25}} | 121 | 36 | 0 | False | 36 | 0 | {} | False | "0.35999999957"
+"S2" | "1/Sqrt[5]" | 2.23606797749979 | "A" | 225 | {{9, 25}} | 121 | 36 | 0 | False | 36 | 0 | {} | False | "0.721359549616"
+"S2" | "23/50" | 2.3 | "A" | 225 | {{9, 25}} | 121 | 36 | 0 | False | 36 | 0 | {} | False | "0.839999999621"
+"S2" | "12/25" | 2.4 | "A" | 225 | {{9, 25}} | 121 | 36 | 0 | False | 36 | 0 | {} | False | "0.959999999621"
+"S2" | "49/100" | 2.45 | "A" | 225 | {{9, 25}} | 121 | 36 | 0 | False | 36 | 0 | {} | False | "0.98999999974"
+"S2" | "499/1000" | 2.495 | "A" | 225 | {{9, 25}} | 121 | 36 | 0 | False | 36 | 0 | {} | False | "0.99989999974"
+"S2" | "1/2" | 2.5 | "W" | 100 | {{4, 25}} | 0 | 1 | 100 | True | 1 | 0 | {} | False | "0.999999994287"
+"V2" | "1/2" | 2.368033988749895 | "F" | 400 | {{16, 25}} | 1024 | 121 | 0 | False | 121 | 0 | {} | True | "0"
+"V2" | "9/10" | 2.2624611797498106 | "F" | 400 | {{16, 25}} | 1024 | 121 | 0 | False | 121 | 0 | {} | False | "0.474262415246"
+"V2" | "99/100" | 2.238707297724792 | "F" | 400 | {{16, 25}} | 1024 | 121 | 0 | False | 121 | 0 | {} | False | "0.700150224723"
+"V2" | "1" | 2.23606797749979 | "Ax" | 225 | {{9, 25}} | 121 | 36 | 0 | False | 36 | 0 | {} | False | "0.721359549616"
+"M2" | "\"QxW\"" | {2.23606797749979, 2.5} | "M" | 150 | {{6, 25}} | 0 | 6 | 150 | True | 6 | 0 | {} | False | "0.999999999942"
+"M2" | "\"CxW\"" | {2., 2.5} | "M" | 150 | {{6, 25}} | 0 | 6 | 150 | True | 6 | 0 | {} | False | "0.999999999942"
+
+================ P4 TORSION-vs-SIGMA TABLE (relative layer) ================
+family | param | SigmaPerCopy | stratum | OrderTally | rel1H1free | rel1tors | rel1Gamma | relBH1free | relBtors | relBGamma | cocyclesOK | =ObstrOrder | CF
+"S1" | "1/5" | 1. | "A1" | {{1, 15}} | 0 | {} | {{1, 3}} | 0 | {} | {{1, 3}} | True | True | "0"
+"S1" | "3/10" | 1.5 | "A1" | {{1, 15}} | 0 | {} | {{1, 3}} | 0 | {} | {{1, 3}} | True | True | "0"
+"S1" | "2/5" | 2. | "A1" | {{1, 15}} | 0 | {} | {{1, 3}} | 0 | {} | {{1, 3}} | True | True | "0"
+"S1" | "21/50" | 2.1 | "A1" | {{1, 15}} | 0 | {} | {{1, 3}} | 0 | {} | {{1, 3}} | True | True | "0.199999999996"
+"S1" | "1/Sqrt[5]" | 2.23606797749979 | "A1" | {{1, 15}} | 0 | {} | {{1, 3}} | 0 | {} | {{1, 3}} | True | True | "0.472135954996"
+"S1" | "23/50" | 2.3 | "A1" | {{1, 15}} | 0 | {} | {{1, 3}} | 0 | {} | {{1, 3}} | True | True | "0.599999999996"
+"S1" | "12/25" | 2.4 | "A1" | {{1, 15}} | 0 | {} | {{1, 3}} | 0 | {} | {{1, 3}} | True | True | "0.799999999996"
+"S1" | "49/100" | 2.45 | "A1" | {{1, 15}} | 0 | {} | {{1, 3}} | 0 | {} | {{1, 3}} | True | True | "0.899999999996"
+"S1" | "499/1000" | 2.495 | "A1" | {{1, 15}} | 0 | {} | {{1, 3}} | 0 | {} | {{1, 3}} | True | True | "0.989999999996"
+"S1" | "1/2" | 2.5 | "W1" | {{Infinity, 10}} | 1 | {} | {{Infinity, 2}} | 1 | {} | {{Infinity, 2}} | True | True | "0.999999999992"
+"V1" | "1/2" | 2.368033988749895 | "F1" | {{1, 20}} | 0 | {} | {{1, 4}} | 0 | {} | {{1, 4}} | True | True | "0"
+"V1" | "9/10" | 2.2624611797498106 | "F1" | {{1, 20}} | 0 | {} | {{1, 4}} | 0 | {} | {{1, 4}} | True | True | "0.2749223595"
+"V1" | "99/100" | 2.238707297724792 | "F1" | {{1, 20}} | 0 | {} | {{1, 4}} | 0 | {} | {{1, 4}} | True | True | "0.45241459545"
+"V1" | "1" | 2.23606797749979 | "A1x" | {{1, 15}} | 0 | {} | {{1, 3}} | 0 | {} | {{1, 3}} | True | True | "0.472135954996"
+"S2" | "1/5" | 1. | "A" | {{1, 225}} | 0 | {} | {{1, 9}} | 0 | {} | {{1, 9}} | True | True | "0"
+"S2" | "3/10" | 1.5 | "A" | {{1, 225}} | 0 | {} | {{1, 9}} | 0 | {} | {{1, 9}} | True | True | "0"
+"S2" | "2/5" | 2. | "A" | {{1, 225}} | 0 | {} | {{1, 9}} | 0 | {} | {{1, 9}} | True | True | "0"
+"S2" | "21/50" | 2.1 | "A" | {{1, 225}} | 0 | {} | {{1, 9}} | 0 | {} | {{1, 9}} | True | True | "0.35999999957"
+"S2" | "1/Sqrt[5]" | 2.23606797749979 | "A" | {{1, 225}} | 0 | {} | {{1, 9}} | 0 | {} | {{1, 9}} | True | True | "0.721359549616"
+"S2" | "23/50" | 2.3 | "A" | {{1, 225}} | 0 | {} | {{1, 9}} | 0 | {} | {{1, 9}} | True | True | "0.839999999621"
+"S2" | "12/25" | 2.4 | "A" | {{1, 225}} | 0 | {} | {{1, 9}} | 0 | {} | {{1, 9}} | True | True | "0.959999999621"
+"S2" | "49/100" | 2.45 | "A" | {{1, 225}} | 0 | {} | {{1, 9}} | 0 | {} | {{1, 9}} | True | True | "0.98999999974"
+"S2" | "499/1000" | 2.495 | "A" | {{1, 225}} | 0 | {} | {{1, 9}} | 0 | {} | {{1, 9}} | True | True | "0.99989999974"
+"S2" | "1/2" | 2.5 | "W" | {{Infinity, 100}} | 3 | {} | {{Infinity, 4}} | 3 | {} | {{Infinity, 4}} | True | True | "0.999999994287"
+"V2" | "1/2" | 2.368033988749895 | "F" | {{1, 400}} | 0 | {} | {{1, 16}} | 0 | {} | {{1, 16}} | True | True | "0"
+"V2" | "9/10" | 2.2624611797498106 | "F" | {{1, 400}} | 0 | {} | {{1, 16}} | 0 | {} | {{1, 16}} | True | True | "0.474262415246"
+"V2" | "99/100" | 2.238707297724792 | "F" | {{1, 400}} | 0 | {} | {{1, 16}} | 0 | {} | {{1, 16}} | True | True | "0.700150224723"
+"V2" | "1" | 2.23606797749979 | "Ax" | {{1, 225}} | 0 | {} | {{1, 9}} | 0 | {} | {{1, 9}} | True | True | "0.721359549616"
+"M2" | "\"QxW\"" | {2.23606797749979, 2.5} | "M" | {{Infinity, 150}} | 3 | {} | {{Infinity, 6}} | 3 | {} | {{Infinity, 6}} | True | True | "0.999999999942"
+"M2" | "\"CxW\"" | {2., 2.5} | "M" | {{Infinity, 150}} | 3 | {} | {{Infinity, 6}} | 3 | {} | {{Infinity, 6}} | True | True | "0.999999999942"
+
+================ PRE-REGISTERED VERIFICATION ================
+sanityQuantumPoint -> True
+singleA1identical -> True
+singleA1values -> True
+singleW1wrightJump -> True
+singleF1identical -> True
+singleXcheckV1equalsQuantum -> True
+prodStratumArowCount -> True
+prodStratumAidenticalSupportInvariants -> True
+prodStratumAexpectedValues -> True
+prodStratumAgsIffClassical -> True
+prodStratumACFmovesWhereSupportConstant -> True
+prodStratumACFmonotone -> True
+prodWrightJump -> True
+prodStratumFidentical -> True
+prodXcheckV1equalsQuantumRow -> True
+allComplexesClose -> True
+allGammaCocyclesVerified -> True
+allRelativeOrdersMatchObstruction -> True
+p4orderSpectraFlatWithinStrata -> True
+p4movementAtBoundaries -> True
+mixedRowsRecorded -> "QxW": sections=150 obstructed=150 orders={{Infinity, 150}} CF=0.999999999942 ; "CxW": sections=150 obstructed=150 orders={{Infinity, 150}} CF=0.999999999942
+mixedAllWrightFactorSectionsObstructed -> True
+verdict -> TRAP 2 CONFIRMED: every support-level invariant (obstruction census, obstruction orders, absolute and relative Cech groups, torsion) is constant across classical -> quantum -> alpha* wherever supports coincide; only the LP layer (GlobalSectionQ, CF) moves. The possibilistic route to S_k is CLOSED with this citable table; movement occurs exactly at the support-stratum boundaries (p = 1/2 Wright jump, v < 1 full-support entry).
+OK -> True
+
+OK -> True
+total 466 s, 30 rows; CSVs: p1p4_census.csv, p1p4_torsion.csv

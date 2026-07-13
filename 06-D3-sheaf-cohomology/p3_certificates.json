@@ -1,0 +1,152 @@
+{
+	"probe":"ESSAY-005 P3 (gluing LP, encodings E1\/E2)",
+	"date":"2026-07-13",
+	"gateVerdict":"PASS",
+	"gates":{
+		"L1(C5) == 5\/2":true,
+		"L2(C5) == 5":true,
+		"perCopy2(C5) == Sqrt[5] exactly":true,
+		"A2(C5) == 5 (q=1\/Sqrt[5] exact-radical feasible over all 535)":true,
+		"L1(C7) == 7\/2":true,
+		"L2(C7) == 49\/4 (per-copy 7\/2)":true,
+		"L2(C7) =!= theta(C7)^2 (Trap-1 control)":true,
+		"A2(C7) == 49\/4 (q=1\/2 feasible over all 1715)":true,
+		"census C5^v2 == 535 = {4:525, 5:10}":true,
+		"census C7^v2 == 1715 = {4:1715}":true,
+		"pentad family partitions the 25 events":true,
+		"solver dual (C5,k=2) supported on pentads, exact partition, value 5":true,
+		"solver dual (C7,k=2) value 49\/4 (fractional cover, no partition)":true,
+		"L3(C5) == 25\/2 certified (dual cochain + omega = 10)":true,
+		"L3(C5) per-copy > Sqrt[5] (k=3 discriminator)":true,
+		"L3(C7) == 343\/8 certified (per-copy 7\/2; Trap-1 control at k=3)":true
+	},
+	"censuses":{
+		"C5^v2":{
+			"maxCliques":535,
+			"hist":"{4:525, 5:10}",
+			"omega":5
+		},
+		"C7^v2":{
+			"maxCliques":1715,
+			"hist":"{4:1715}",
+			"omega":4
+		},
+		"C5^v3":{
+			"omega":10,
+			"provenance":"python-igraph clique_number = 10 (P3 cross-check run 2026-07-13; WL: WL search timed out at 5s)",
+			"warning":"census forbidden: ~1.04e8 maximal cliques"
+		},
+		"C7^v3":{
+			"omega":8,
+			"provenance":"python orbit-reduced 9-clique decision = 8 (stabilizer orbit reps of N(v0); all 10 common neighborhoods have clique number 6; P3 cross-check run 2026-07-13; WL: WL search timed out at 5s)"
+		}
+	},
+	"certificates":[
+		{
+			"name":"C1a: L1(C5)=5\/2",
+			"primal":"p = 1\/2 uniform (5 events)",
+			"primalValue":"5\/2",
+			"dual":"y = 1\/2 on the 5 edges, coverage 1",
+			"dualValue":"5\/2",
+			"valuesMatch":true,
+			"verification":{
+				"exactLP":true
+			}
+		},
+		{
+			"name":"C1b: L1(C7)=7\/2",
+			"primal":"p = 1\/2 uniform (7 events)",
+			"primalValue":"7\/2",
+			"dual":"y = 1\/2 on the 7 edges, coverage 1",
+			"dualValue":"7\/2",
+			"valuesMatch":true,
+			"verification":{
+				"exactLP":true
+			}
+		},
+		{
+			"name":"C2: L2(C5)=5",
+			"primal":"p = 1\/5 uniform (25 events; omega = 5 from census)",
+			"primalValue":"5",
+			"dual":"y = 1 on the 5 slope-2 pentads {(i, 2i+j)} --- an EXACT partition of unity",
+			"dualValue":"5",
+			"valuesMatch":true,
+			"verification":{
+				"exactLP":true,
+				"dualCochain":true,
+				"solverDualIsPentadPartition":true
+			}
+		},
+		{
+			"name":"C3: L2(C7)=49\/4",
+			"primal":"p = 1\/4 uniform (49 events; omega = 4 from census)",
+			"primalValue":"49\/4",
+			"dual":"y = 1\/4 on the 49 edge-square 4-cliques --- a FRACTIONAL cover, coverage exactly 1",
+			"dualValue":"49\/4",
+			"valuesMatch":true,
+			"verification":{
+				"exactLP":true,
+				"dualCochain":true
+			}
+		},
+		{
+			"name":"C4: L3(C5)=25\/2",
+			"primal":"p = 1\/10 uniform (125 events; needs omega(C5^v3)=10)",
+			"primalValue":"25\/2",
+			"dual":"y = 1\/2 on the 25 pentad x edge 10-cliques, coverage exactly 1",
+			"dualValue":"25\/2",
+			"valuesMatch":true,
+			"verification":{
+				"dualCochain":true,
+				"omegaProvenance":"python-igraph clique_number = 10 (P3 cross-check run 2026-07-13; WL: WL search timed out at 5s)"
+			}
+		},
+		{
+			"name":"C5: L3(C7)=343\/8",
+			"primal":"p = 1\/8 uniform (343 events; needs omega(C7^v3)=8)",
+			"primalValue":"343\/8",
+			"dual":"y = 1\/8 on the 343 edge-cube 8-cliques, coverage exactly 1",
+			"dualValue":"343\/8",
+			"valuesMatch":true,
+			"verification":{
+				"dualCochain":true,
+				"omegaProvenance":"python orbit-reduced 9-clique decision = 8 (stabilizer orbit reps of N(v0); all 10 common neighborhoods have clique number 6; P3 cross-check run 2026-07-13; WL: WL search timed out at 5s)"
+			}
+		}
+	],
+	"ansatz":{
+		"A2(C5)":{
+			"value":"5",
+			"witness":"q = 1\/Sqrt[5] uniform",
+			"feasibleOverAll535":true,
+			"saturated":"the ten 5-cliques (both pentad families, slopes 2 and 3) sum to exactly 1",
+			"perCopy":"Sqrt[5]"
+		},
+		"A2(C7)":{
+			"value":"49\/4",
+			"witness":"q = 1\/2 uniform",
+			"feasibleOverAll1715":true,
+			"perCopy":"7\/2"
+		},
+		"A3(C5)":{
+			"bracket":"[5^(3\/2), 25\/2] ~ [11.180, 12.5]",
+			"lowerWitness":"q = 1\/Sqrt[5] still feasible (10-clique sum 10\/5^(3\/2) = 2\/Sqrt[5] < 1)",
+			"upper":"A_3 <= L_3 = 25\/2",
+			"status":"OPEN whether A_3 < L_3 strictly"
+		}
+	},
+	"perCopySequences":{
+		"C5":[
+			"5\/2",
+			"Sqrt[5] ~ 2.23607",
+			"(25\/2)^(1\/3) ~ 2.32079"
+		],
+		"C7":[
+			"7\/2",
+			"7\/2",
+			"7\/2"
+		],
+		"note":"C5 per-copy is non-monotone: k=2 attains the Shannon\/Lovasz limit 5\/Sqrt[5] = Sqrt[5] exactly (alpha(C5 strong 2) = 5), k=3 bounces above it (alpha(C5 strong 3) = 10 < 5^(3\/2)); C7 is flat at 7\/2 through k=3."
+	},
+	"reducedQuestion":"GATE PASSED, so per the parent spec P3 acceptance: ESSAY-005's derivation question reduces to --- which invariant of the weighted (Q>=0-semimodule) presheaf of subnormalized weightings on the product cover computes the optimal fractional partition of unity (the dual Cech 0-cochain), and when is that optimum attained by an EXACT partition (a pentad family at k=2 on C5: this run's exact solver dual is supported on the five slope-3 pentads with weight 1 --- the mirror, under the reflection automorphism, of the slope-2 hand cochain verified in C2) rather than a properly fractional cover (the 49 edge-squares, y=1\/4, on C7, where 4 does not divide 49 so no partition exists)? The k=3 discriminator L_3(C5) = 25\/2 (per-copy 2.3208 > Sqrt[5]) shows the gluing LP alone stops tracking the k=2 coincidence at k=3 on C5 while remaining exact on C7 (343\/8, per-copy 7\/2), so any ansatz content beyond gluing lives in the window [5^(3\/2), 25\/2] at (C5, k=3)."
+}

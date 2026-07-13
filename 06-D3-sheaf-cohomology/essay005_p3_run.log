@@ -1,0 +1,10 @@
+essay005_p3_gluing_lp.wl start Mon 13 Jul 2026 12:03:51
+--- k <= 2: censuses and exact LPs ---
+C5^v1: |V|=5  #maxCliques=5  sizes={2 -> 5}  L=5/2
+C5^v2: |V|=25  #maxCliques=535  sizes={4 -> 525, 5 -> 10}  L=5
+C7^v1: |V|=7  #maxCliques=7  sizes={2 -> 7}  L=7/2
+C7^v2: |V|=49  #maxCliques=1715  sizes={4 -> 1715}  L=49/4
+C2 dual (5 pentads, y=1): {allCliques -> True, coverageMin -> 1, coverageMax -> 1, feasible -> True, objective -> 5}
+C3 dual (49 edge-squares, y=1/4): {allCliques -> True, coverageMin -> 1, coverageMax -> 1, feasible -> True, objective -> 49/4}
+--- solver dual at (C5, k=2): identifying the pentad 0-cochain ---
+dual value = 5; support = 5 cliques, weights {1}; all supported cliques are pentads: True; slopes: {3, 3, 3, 3, 3}; support is an exact partition of the 25 events: True
