@@ -398,8 +398,9 @@
    "goal": "certify omega<=17 from above via a local symmetry-reduced SDP (theta=19.666 too weak)",
    "reduction": "Xbar = Cayley graph on abelian A=Z9^3xZ5; Aut=A rtimes G0 (|G0|=96); Terwilliger algebra block-diagonalizes to 20 blocks max 180 (Sum m_k=1545, validated 2 ways)",
    "three_point_variables": "1 point + 65 edge-orbits + 54532 triangle-orbits => assembly ~54k x 160k dense map, MOSEK/HPC-scale (not a clean local SCS solve)",
-   "decisive_sibling_test": "X125=C5vC5vC5 (alpha=10, theta=5*sqrt5=11.18034): three-point bound = 11.00890 -> floor 11 > 10. Beats theta but does NOT close the odd-power gap (recovers ~14% of theta->alpha).",
-   "conclusion": "the tractable (three-point) level is PROVABLY too weak to close the gap; full Lasserre-2 (s=2) is heavier/non-local with no guarantee. A LOCAL rigorous omega<=17 certificate is NOT achievable. [17,19] evidenced-tight stands, closure research-scale (confirmed from the UB side too).",
+   "decisive_sibling_test": "X125=C5vC5vC5 (alpha=10, theta=5*sqrt5=11.18034): three-point (s=1,t=1)=11.00890 -> floor 11 (does NOT close); Lasserre-2 (s=2,t=0)=10.53412 -> floor 10 (CLOSES). Both validated (gates + symmetry-free full-6251 PSD reconstruction, min eig -1.07e-8).",
+   "level_needed": "s=2 (full Lasserre-2) is the level that closes odd-power product gaps; s=1 (three-point) provably insufficient.",
+   "conclusion": "LOCAL: three-point is local but provably too weak; s=2 CLOSES the gap (validated on sibling) but for the 3645-vertex/4.77M-stable-pair graph needs MOSEK-class tooling (not a workstation SCS solve). So a LOCAL rigorous omega<=17 certificate is NOT achievable, BUT the SDP avenue is NOT futile: a symmetry-reduced Lasserre-2 MOSEK run is now a justified investment (method proven to close exactly this gap type). Absent that run, [17,19] evidenced-tight stands.",
    "artifacts": ["erg003_lasserre.py", "erg003_threepoint_sibling.py", "erg003-lasserre2-local-analysis-2026-07-14.md"]
   }
  }

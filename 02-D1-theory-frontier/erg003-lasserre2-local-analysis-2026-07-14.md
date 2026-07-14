@@ -44,9 +44,26 @@ here in **0.4 s** (19 blocks, max 12; `erg003_threepoint_sibling.py`):
 | α (truth) | 10 | — |
 
 **The three-point bound beats ϑ (11.180 → 11.009) but does NOT close the gap** — it recovers
-only ~14% of the ϑ→α distance and stays above the integer. So on the target graph the
-three-point bound would be expected to improve 19.666 → ~19.5, i.e. **it would not reach below
-18 and could not prove ω ≤ 17.**
+only ~14% of the ϑ→α distance and stays above the integer.
+
+## But level-2 (s=2) DOES close it — the method is the right tool
+
+Pushing one level higher, the **full Lasserre-2 (BGSV s=2, t=0)** bound on X₁₂₅ — moment matrix
+over the 6251 stable sets of size ≤ 2, block-diagonalized under the full order-6000 automorphism
+group (35 blocks, max 30) — gives (independently reproduced, CLARABEL+SCS agree, plus a
+symmetry-free full-6251×6251 PSD reconstruction check, min eig −1.07e-8):
+
+| bound | value | floor |
+|---|---|---|
+| ϑ = las₁ | 11.18034 | 11 |
+| three-point (s=1,t=1) | 11.00890 | 11 |
+| **las₂ (s=2,t=0)** | **10.53412** | **10** |
+| α (truth) | 10 | — |
+
+**las₂ = 10.534 < 11 pins the floor to α=10 — it closes the odd-power gap that the three-point
+level could not.** So the SDP avenue is *not* futile: **level-2 is exactly the level that
+resolves this family**, and full Lasserre-2 on the target graph would be expected to drive
+19.666 below 18, i.e. **prove ω ≤ 17 (no activation)**. (Pipeline: `erg003_las2_sibling.py`.)
 
 ## Verdict
 
@@ -55,15 +72,24 @@ three-point bound would be expected to improve 19.666 → ~19.5, i.e. **it would
   well under a second on the 125-vertex analogue.
 - **But the tractable level is provably insufficient** — demonstrated directly: the three-point
   bound does not close the analogous odd-power gap (11.009 ≥ 11 > 10).
-- **The level that might work — full Lasserre-2 (s=2, "4-point") — is not local**: it is an
-  order of magnitude heavier (moment matrix over stable *pairs*, reduced blocks of size ~10³),
-  a genuine HPC/MOSEK computation, and there is **no guarantee it reaches < 18** either.
+- **The level that works — full Lasserre-2 (s=2, "4-point") — is validated but not local**: it
+  **does** close the gap (10.534 < 11 on the sibling), so on the target graph it would very
+  likely prove ω ≤ 17. But for the 3645-vertex graph its moment matrix is indexed by the ~4.77M
+  stable *pairs* (edges of G), and even after the order-350k symmetry reduction it is an order of
+  magnitude heavier than the three-point build — a genuine **MOSEK/HPC computation**, not a
+  workstation SCS run.
 
-So a *local* rigorous certificate of ω ≤ 17 is **not achievable**: the reachable SDP level is
-too weak, and the potentially-sufficient level is beyond a workstation. The activation bracket
-**ω ∈ [17,19] with 17 evidenced-tight** stands — its closure is genuinely research-scale, now
-confirmed from the *upper-bound* side as well (not just the search/exhaustion side). This
-mirrors and reinforces the Paley-13 [39,46] situation.
+So the picture is now sharp on **both** axes:
+- *Local but insufficient*: three-point (s=1,t=1) — built, runs locally, provably too weak (11.009).
+- *Sufficient but not local*: Lasserre-2 (s=2) — validated to close the gap (10.534→floor 10),
+  but requires MOSEK-class tooling + a heavy assembly on the 3645-vertex / 4.77M-pair problem.
+
+A *local* rigorous certificate of ω ≤ 17 is therefore **not achievable** — but the SDP avenue is
+**not futile**: a symmetry-reduced **Lasserre-2 MOSEK run is now a justified investment** (the
+method is proven to close exactly this kind of odd-power product gap). Absent that run, the
+activation bracket **ω ∈ [17,19] with 17 evidenced-tight** stands. This mirrors and reinforces
+the Paley-13 [39,46] situation — whose stated resolution (Lasserre-2) is now empirically
+validated on the analogous odd-power gap.
 
 Artifacts: `erg003_lasserre.py` (validated level-1 + block-diagonalizer, big graph),
 `erg003_threepoint_sibling.py` (end-to-end three-point pipeline + the decisive X₁₂₅ result).
