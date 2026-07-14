@@ -1,4 +1,4 @@
-# ERG-003 S=18 census, HYBRID driver: uses ALL 16 WCS cores instead of 10.
+# ERG-003 S=18 census, HYBRID driver: uses 64 cores (Compute64x128), not 10-16.
 #
 # The 10 S=18 families split by X-layer size (sX, hence anchor count):
 #   CHEAP  = {0,1,2,4,5} sX=2, 386 anchors      -- 1 core each (proven fast enough)
@@ -12,9 +12,16 @@
 # splitting the anchor search at the top-level recursion branch point across
 # multiple worker PROCESSES, each independently exhausting a disjoint contiguous
 # index range and reporting a resumable checkpoint. No redundant work (validated
-# set-equality + real ~4x throughput at 4 workers).
+# exact set-equality across nchunks in {1,2,3,5,7} on the real anchor spaces, plus
+# real ~4x throughput at 4 concurrent workers -- scaling the SAME proven mechanism
+# to more chunks per family is not new logic, just more of it).
 #
-# Total worker allocation: 5 (cheap, 1 each) + 6 (medium, 2 each) + 5 (hard, 3+2) = 16.
+# Machine: Compute64x128 (64 vCPU, official rate 1970 cr/hr = 32.83 cr/min, ~1.95
+# cores per cr/min -- same compute-per-credit as Compute192x384 but a much smaller
+# 492.5cr commitment floor vs 1477.5cr, and closer to the concurrency scale already
+# validated locally (4 workers) than a 192-way jump would be).
+#
+# Total worker allocation: 5 (cheap, 1 each) + 29 (medium, ~10/10/9) + 30 (hard, 15/15) = 64.
 import json, os, time, multiprocessing as mp
 import erg003_elim2 as e2
 import erg003_pentagram_search as ps
@@ -26,8 +33,12 @@ RESULT_DIR_RANGED = os.path.join(HERE, "erg003_family_results_s18_ranged")
 CHEAP = [0, 1, 2, 4, 5]
 MEDIUM = [3, 7, 8]
 HARD = [6, 9]
-WORKERS_PER_FAMILY = {**{i: 1 for i in CHEAP}, **{i: 2 for i in MEDIUM}, 6: 3, 9: 2}
-assert sum(WORKERS_PER_FAMILY.values()) == 16, sum(WORKERS_PER_FAMILY.values())
+# 64-core allocation (Compute64x128): cheap families need only 1 core each (proven
+# sufficient at Memory16x128 scale); the freed-up cores go where they matter --
+# medium families (~10/10/9) and hard families (15/15), a 5-7x jump in per-family
+# parallelism over the prior 16-core hybrid plan (was 2 for medium, 2-3 for hard).
+WORKERS_PER_FAMILY = {**{i: 1 for i in CHEAP}, 3: 10, 7: 10, 8: 9, 6: 15, 9: 15}
+assert sum(WORKERS_PER_FAMILY.values()) == 64, sum(WORKERS_PER_FAMILY.values())
 
 
 def chunk_checkpoint_path(i, c):
@@ -119,7 +130,7 @@ def main(maxsec, migrate=True):
           f"ranged={len(tasks_ranged)} chunk workers (medium+hard) "
           f"= {len(tasks_cheap) + len(tasks_ranged)} total", flush=True)
 
-    with mp.Pool(16) as pool:
+    with mp.Pool(sum(WORKERS_PER_FAMILY.values())) as pool:
         r_cheap_async = pool.map_async(flat_sweep._run_one, tasks_cheap)
         r_ranged_async = pool.map_async(_run_ranged_worker, tasks_ranged)
         r_cheap = r_cheap_async.get()
