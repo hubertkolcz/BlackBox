@@ -1,0 +1,78 @@
+================================================================================
+BLACK-BOX VERIFICATION SWEEP LOG -- 2026-07-13 (closure)
+================================================================================
+Driver: each runner invoked individually (not RunAll.ps1 as one blocking call),
+        hard-capped at 600 s (10 min) wall each; single kernel, sequential.
+
+-- Environment ----------------------------------------------------------------
+WolframVersion : 15.0.0 for Microsoft Windows (64-bit) (May 19, 2026)
+BlackBox paclet: 1.6.0  (from BlackBox/PacletInfo.wl; paclet not registered in
+                 the wolframscript base -- PacletObject[...]["Version"] returns
+                 Missing[NotAvailable]; version read from PacletInfo.wl)
+OS             : Windows 11 Pro 10.0.26200 (MINGW64_NT-10.0-26200)
+Date (UTC)     : 2026-07-13
+Git HEAD       : 61c979d677f4cd93d0c03e81993955c49f7ec2ec  (branch master)
+
+-- Conventions ----------------------------------------------------------------
+BlackBoxTests.wl      : run from BlackBox/Tests/ with plain -file; verdict is
+                        PASS iff "ALL PASS: True" & "DEDUP PASS: True" &
+                        "UNIFY PASS: True".
+Run*.wl               : run from runners/ with -file <name> -print all; verdict
+                        OK iff final line "OK -> True".
+RunBlackboxProtocol.wl: prints a validation report, not "OK -> True"; its
+                        Summary line is recorded instead.
+
+-- Per-runner results (name / verdict / wall seconds) --------------------------
+BlackBoxTests.wl            PASS       49
+RunBiphotonSimulator.wl     OK         24
+RunBlackboxProtocol.wl      SUMMARY     4   (Summary: the pentagon-ring cluster
+                                             state is a valid, entangled MBQC
+                                             resource that performs gates and is
+                                             contextual -- and contextuality is
+                                             precisely the property (Raussendorf
+                                             2013; Howard et al. 2014) that makes
+                                             MBQC non-classical.)
+RunCaseStudies.wl           OK        285
+RunD1GECopiesSweep.wl       FAILED    189   (see failure detail below)
+RunD1K3Activation.wl        OK        133
+RunEpilogue.wl              OK        144
+RunEssay.wl                 OK         24
+RunGaussianHawking.wl       OK         11
+RunGaussianWitnesses.wl     OK          9
+RunHeptagonCatalysis.wl     OK        427
+RunIntensityLayer.wl        OK         47
+RunLedger.wl                OK         28
+RunOpticalCompiler.wl       OK        117
+RunSignalingTaxonomy.wl     OK          5
+RunSignedNegativity.wl      OK        290
+RunSupportCohomology.wl     OK         33
+RunWignerFlow.wl            OK         16
+
+-- Summary counts -------------------------------------------------------------
+Total items        : 18  (1 test battery + 17 Run*.wl runners)
+PASS / OK          : 16
+Protocol Summary   :  1  (RunBlackboxProtocol.wl -- expected report form)
+FAILED             :  1  (RunD1GECopiesSweep.wl)
+TIMEOUT (>600 s)   :  0
+
+-- Failure detail: RunD1GECopiesSweep.wl --------------------------------------
+The module's own verification association evaluates OK -> False. Final line
+verbatim:
+
+Column[{<|calibrationC5 -> True, sixGraphsVertexTransitive -> True,
+thetaCrossCheckAllSix -> True, vertexTransitiveIdentityAllSix -> True,
+C7_C9_stalled_at_k2 -> True, Petersen_partial_k2 -> True,
+Paley13_converges_k2 -> False, MobiusKantor_and_Kneser_trivial -> True,
+C9_k3_pinned_exactly_at_8 -> True, C7_k3_genuinely_open_bracket -> True,
+item2_gap_closed_exactly -> True|>, OK -> False}]
+
+The single False key is Paley13_converges_k2 -> False (Paley-13 GE does not
+converge to theta at k=2); all other keys are True. A numerical warning also
+fired during evaluation:
+  N::meprec: Internal precision limit $MaxExtraPrecision = 50. reached ...
+This is a module-declared verdict (not a kernel crash or timeout); recorded
+here as FAILED per the "OK -> True" convention for Run*.wl runners.
+
+================================================================================
+END OF LOG
+================================================================================
