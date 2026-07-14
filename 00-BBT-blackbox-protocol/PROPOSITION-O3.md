@@ -18,6 +18,42 @@ Grounding: the emulator's fractions are free parameters (classical intensity fra
 
 Under verified single-event semantics (drop A2: heralded single photons, antibunching bound, or an attenuation-series gate in the sense of arXiv:2601.13869), the emulator class collapses to per-trial deterministic assignments — the NCHV polytope with node-sum cap α = 2 — and the quantum table (node sum √5) is certified by the existing statistical gates. The classical bound's jump under event semantics is Markiewicz et al., npj QI 5, 5 (2019).
 
+## Provenance note (2026-07-13): H4′ reduction — gate G9 and the KCBS threshold η\*
+
+The residual open problem left by Prop O3-C is **H4′** (is the intensity-emulator
+class 𝒜_IE the maximal classically-emulable class?). H4′ decomposes into a part
+closed by theorem and a part reduced to one computed boundary; both are now
+built and machine-verified in this directory.
+
+- **G9 antibunching gate [T, theorem-extension]** — `g9_antibunching_gate.py`.
+  Makes the "antibunching bound" invoked in Corollary 1 executable and
+  pre-registered. Glauber's classical bound (any P(α) ≥ 0 ⟹ normally-ordered
+  variance ≥ 0 ⟹ g²(0) = 1 + Var_P(I)/⟨I⟩² ≥ 1) certifies any device with
+  g²(0) < 1 as OUTSIDE the entire classical-optical-emulator family, under **any**
+  detection (on-off, PNR, heralded). This extends the completeness of Prop O3-C
+  from "single unmodified on-off detector, fair-sampled" to "any classical-light
+  source, any detector" — closing the photon-statistics part of H4′ by theorem
+  (Glauber, Phys. Rev. 131, 2766 (1963); the contribution is the gate, not the
+  physics). Anchors: coherent g²=1, thermal g²=2, Fock |1⟩ g²=0.
+
+- **KCBS detection-efficiency threshold η\* [C, exact]** — `efficiency_threshold_kcbs.py`.
+  Fair sampling (assumption A4 / A2) is provably **not** removable by statistics
+  alone — the contextuality analogue of the Bell detection loophole (Larsson,
+  PRA 57, R3145 (1998); Garg–Mermin; Eberhard). Honest endpoint: the computed
+  critical efficiency **η\* = 2/√5 = 2√5/5 = 0.8944271910**, verified two ways
+  (efficiency-degraded quantum value η√5 meets the NCHV bound 2; and an exact LP
+  over the 11 independent sets of C₅ where the maximal fair-sampled
+  detection-loophole value is 2/η, reaching √5 at the same η\*). Above η\*,
+  Prop O3-C's completeness extends to non-fair-sampling adversaries; below it, a
+  detection-loophole noncontextual model matches the quantum KCBS value S = √5.
+  Detection efficiency remains a physical assumption, as in every Bell /
+  contextuality test.
+
+**H4′ status: REDUCED, not closed** — photon-statistics part closed by G9;
+fair-sampling part reduced to the η\* boundary; 𝒜_IE-maximality beyond these two
+is the residual. Full statement and refs: `docs/FRAMEWORK-2026-07-13.md`,
+Delta 2026-07-13 (H4′ EXECUTED).
+
 ## Corollary 2 (dynamics escape — the G7 audit and its trust assumption)
 
 Drop A3: gate G7 (implemented; paclet interface `CascadeGenerators`/`So3Axis`/`DLADimension`) audits a *claimed mode compilation*: the KCBS cascade's stage-transition generators span 2 rotation axes and close to the full so(3), DLA dimension 3, after one commutator step (the "2 → 3 anchor"); an intensity-redistribution rig compiles to leaf-confined generators, DLA < 3, and is flagged intensity-emulable. **Trust assumption, stated plainly: G7's input is a declaration (white-box element), not a black-box observable.** The audit certifies "the claimed dynamics is/isn't classically-optically compilable," not "the device's actual dynamics is."

@@ -51,8 +51,11 @@ SYMBOLIC ANCHORS (proved, printed literally below)
   (ii)  thermal (nbar)    : P(n) Bose-Einstein    -> g2(0) = 2     (bunched)
   (iii) Fock |1>          : P(1) = 1              -> g2(0) = 0     (antibunched)
   (iv)  classical P >= 0  : any mixture of coherent states -> g2(0) >= 1
-        (numeric certificate: 100000 random classical intensity mixtures, all
-         g2 >= 1; the single-photon Fock state is the explicit g2 < 1 witness).
+        (numeric ILLUSTRATION, not independent evidence: g2_from_intensity
+        returns 1 + Var(I)/<I>^2 >= 1 by construction for any real sample, which
+        IS the theorem; the 100000-field sweep just exhibits the bound holding.
+        The single-photon Fock state is the explicit g2 < 1 witness that the
+        classical branch provably cannot produce).
 
 THE GATE (pre-registered decision)
 ----------------------------------
@@ -113,9 +116,14 @@ def g2_from_intensity(I):
 
 
 def eps_g9(n_samples, alpha=ALPHA_G9):
-    """One-sided Hoeffding-style margin on g2 for finite photon-record samples.
-    n_samples counts detection records; conservative unit-scale bound folded
-    into a single band (the gate is a boundary test, not an estimator)."""
+    """One-sided Hoeffding-STYLE margin on g2 for finite photon-record samples.
+    HONESTY NOTE: this is a heuristic decision band, NOT a rigorous confidence
+    bound. g2 is a ratio of sample moments of n(n-1), so a unit-scale Hoeffding
+    inequality does not literally apply; a rigorous gate would need a bound on
+    the moment ratio (e.g. delta-method / empirical-Bernstein on <n(n-1)> and
+    <n>). The exact-input anchors and the gate matrix (n_samples large) do not
+    hinge on the exact band width -- it only sets the INCONCLUSIVE collar around
+    the classical floor g2 = 1. n_samples counts detection records."""
     return float(np.sqrt(np.log(2.0 / alpha) / (2.0 * max(n_samples, 1))))
 
 

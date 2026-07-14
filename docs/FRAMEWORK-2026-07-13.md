@@ -369,12 +369,29 @@ the full sqrt(5)>2 violation; eta->low collapses (loophole S=2/eta diverges);
 eta* in (0,1). Generalizes to the odd n-cycle as eta*_n = ((n-1)/2)/Q_n,
 Q_n = n cos(pi/n)/(1+cos(pi/n)) (n=5 recovers 2/sqrt(5); n=7,9,11 tabulated).
 Above eta*, Prop O3-C's completeness extends to non-fair-sampling adversaries;
-below it, a detection-loophole noncontextual model reproduces the quantum KCBS
-statistics. Refs: Larsson PRA 57 R3145 (1998); Garg-Mermin PRD 35 3831 (1987);
+below it, a detection-loophole noncontextual model matches (indeed can exceed)
+the quantum KCBS value S = sqrt(5) -- the KCBS sum the inequality tests, not the
+full context-by-context statistics. Refs: Larsson PRA 57 R3145 (1998);
+Garg-Mermin PRD 35 3831 (1987);
 Eberhard PRA 47 R747 (1993); KCBS = Klyachko-Can-Binicioglu-Shumovsky PRL 101
 020403 (2008).
 
 **Net position.** H4' = {G9 theorem-extension (photon statistics: CLOSED)} +
 {fair-sampling boundary eta* = 2/sqrt(5) (QUANTIFIED)}. The residual physical
 assumption is exactly detection efficiency, located outside the framework as in
-all such tests.
+all such tests. H4' status: **reduced** -- photon-statistics part closed by G9;
+fair-sampling part = the eta* boundary; A_IE-maximality beyond these two remains
+the residual open problem. A PROVENANCE note pointing at G9 + eta* is added to
+`00-BBT-blackbox-protocol/PROPOSITION-O3.md`.
+
+**Review deltas (2026-07-13, honesty tightening; no blocker/major findings).**
+Both reviews returned only minor findings; addressed for precision: (1) the
+Part-B phrasing "reproduces the quantum KCBS statistics" is corrected everywhere
+to "matches the quantum KCBS value S = sqrt(5)" -- derivation (2)'s LP bounds the
+KCBS sum S, not the full statistics; (2) G9 anchor (iv) is relabelled a numeric
+ILLUSTRATION, not independent evidence (g2_from_intensity = 1 + Var/<I>^2 >= 1 by
+construction IS the theorem); (3) `eps_g9` carries an explicit honesty note that
+its Hoeffding-style band is a heuristic INCONCLUSIVE collar, not a rigorous
+confidence bound for a moment-ratio statistic (a rigorous gate would use
+delta-method / empirical-Bernstein on <n(n-1)> and <n>). None of these change
+any verdict; the exact-input anchors and the LP thresholds are unaffected.

@@ -16,8 +16,11 @@ Garg & Mermin, PRD 35, 3831 (1987); Eberhard, PRA 47, R747 (1993); for the
 KS/contextuality setting, Larsson, PRA 57, R3145 (1998)). The honest endpoint
 is therefore NOT an elimination of the assumption but a COMPUTED critical
 detection efficiency eta*: below eta* a fair-sampling (detection-loophole)
-noncontextual model reproduces the quantum KCBS statistics; above eta* it
-cannot, and Prop O3-C's completeness extends to non-fair-sampling adversaries.
+noncontextual model MATCHES (indeed can exceed) the quantum KCBS value
+S = sqrt(5) -- it is not claimed to reproduce the full context-by-context
+statistics, only the KCBS sum S, which is what the inequality tests; above eta*
+no such model reaches sqrt(5), and Prop O3-C's completeness extends to
+non-fair-sampling adversaries.
 Detection efficiency remains a physical assumption -- exactly as in every Bell
 and contextuality experiment ever performed.
 
@@ -212,8 +215,9 @@ def run():
     print("=" * 78)
     print(f"  eta* = 2/sqrt(5) = 2*sqrt(5)/5 = {ETA_STAR:.10f}")
     print("  Below eta* a fair-sampling (detection-loophole) noncontextual model")
-    print("  reproduces the quantum KCBS statistics; above eta* it cannot, so")
-    print("  Prop O3-C's completeness extends to non-fair-sampling adversaries.")
+    print("  matches the quantum KCBS value S = sqrt(5) (the loophole reaches")
+    print("  S_fair = 2/eta >= sqrt(5)); above eta* it cannot, so Prop O3-C's")
+    print("  completeness extends to non-fair-sampling adversaries.")
     print("  Fair sampling is NOT eliminated -- detection efficiency remains a")
     print("  physical assumption, exactly as in every Bell/contextuality test.")
     print("  H4' is thereby REDUCED: Part A (G9) closes photon statistics by")
