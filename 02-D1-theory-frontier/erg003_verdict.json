@@ -415,7 +415,7 @@
     "bug_found": "erg003_s18_sweep.py's _run_one() calls decide(start_anchor=0) with no checkpoint/resume (unlike erg003_elim2.py:run17()), so reruns silently discard prior paid-for progress. FREE fix, should be done before any further paid exhaustion attempt.",
     "recommendation_ranked": ["1. FREE: fix the checkpoint-resume bug", "2. ~1,000-2,500 cr pilot (Basic4x16): resume family 0, capped probes on one 37K-anchor and one 1.2M-anchor family to test whether within-family symmetry dedup or replanning rescues the two hard families", "3. Only after the pilot: decide on full exhaustion (~50k-70k cr, possibly much more)", "4. Do NOT fund full Lasserre-2 or GLV at big-graph scale -- both confirmed dead ends"],
     "verdict": "Yes, exhaustion is a real WCS-only path (unlike the SDP routes, which are both dead), but it costs far more than previously thought and needs a free bug fix + a small paid pilot before committing real budget. Given current balance (~200 cr), even the pilot exceeds it without a top-up."
-   }
+   },
    "artifacts": ["erg003_lasserre.py", "erg003_threepoint_sibling.py", "erg003-lasserre2-local-analysis-2026-07-14.md"]
   }
  }
