@@ -58,9 +58,13 @@ parseCells[file_, demote_ : <||>] := Module[
 
 masterCells = parseCells[masterFile];
 sectionCells = Join @@ (parseCells[#, demoteMap] & /@ sectionFiles);
-(* Splice the fragments in where the master's Get-section cell sits *)
+(* Splice the fragments in where the master's Get-section cell sits. Match the GET
+   cell specifically (`Get[FileNameJoin[{frameworkRoot, ...`) -- NOT any cell that
+   merely mentions a section filename: the standalone-loader manifest now lists the
+   section paths too, so a bare "essay_sections_1_3" match would hit (and delete) the
+   frameworkRoot loader instead of the Get cell. *)
 getPos = FirstPosition[masterCells,
-    Cell[c_String, "Input"] /; StringContainsQ[c, "essay_sections_1_3"], Missing[]];
+    Cell[c_String, "Input"] /; StringContainsQ[c, "Get[FileNameJoin[{frameworkRoot"], Missing[]];
 assembledCells = If[MissingQ[getPos],
    Join[masterCells, sectionCells],
    Join[Take[masterCells, First[getPos] - 1], sectionCells, Drop[masterCells, First[getPos]]]];

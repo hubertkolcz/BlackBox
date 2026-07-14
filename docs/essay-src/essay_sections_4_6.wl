@@ -200,7 +200,9 @@ orbitSeeds = {3/2, tauStar, 16/11, 19/13, 25/17};
 sfx6["S4_orbitSpectrum"] = (tauStar < 16/11 < 19/13 < 25/17 < 3/2);
    (* the CLAIM is the orbit-density ordering; the figure is decorative and no longer gates OK *)
 orbitSpectrumFigureRef = FileNameJoin[{repoRoot, "05-CERT-epsilon-certificates", "orbit_spectrum.png"}];
-{N[orbitSeeds, 6], "figure" -> orbitSpectrumFigureRef}
+orbitSpectrumFigure = If[FileExistsQ[orbitSpectrumFigureRef], Import[orbitSpectrumFigureRef],
+   Missing["figure unavailable"]];
+Column[{N[orbitSeeds, 6], orbitSpectrumFigure}]
 
 (* ::CodeText:: *)
 (*FIGURE (authored live). The certificate bracket: \[CapitalGamma]_7 > \[CapitalGamma]_8 > \[CapitalGamma]_9 (exact) and \[CapitalGamma]_10 (numeric) descending toward gap(cct), the conjectured supremum. Every plotted ordinate is a live value computed above:*)

@@ -10,20 +10,20 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       154,          7]
-NotebookDataLength[    121714,       2249]
-NotebookOptionsPosition[    101772,       2032]
-NotebookOutlinePosition[    102094,       2046]
-CellTagsIndexPosition[    102051,       2043]
+NotebookDataLength[    125189,       2317]
+NotebookOptionsPosition[    105227,       2100]
+NotebookOutlinePosition[    105549,       2114]
+CellTagsIndexPosition[    105506,       2111]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
-Cell["Evaluating Black-Box Physics through Optical Emulation", "Title",ExpressionUUID->"7557fef4-2439-d243-b251-fb1f0f9ef5bf"],
+Cell["Evaluating Black-Box Physics through Optical Emulation", "Title",ExpressionUUID->"da3e0a1f-0316-444d-a406-5996a2c6fe9b"],
 
 Cell["\<\
 A two-lens certification theory, complete under five named hypotheses -- the \
 master computational essay (assembler over Section Builders A, B, C)\
-\>", "Subtitle",ExpressionUUID->"e138d975-576a-5740-ba93-5a80055cc4cc"],
+\>", "Subtitle",ExpressionUUID->"94f039eb-45fd-d74b-89f7-276a79811f34"],
 
 Cell["\<\
 Hubert Kolcz -- July 2026. This is the master computational essay of the \
@@ -37,7 +37,7 @@ methods) -- into one Get-loadable, headless-verifiable document. Design \
 contract: docs/ESSAY-OUTLINE.md; layer/hypothesis architecture: \
 docs/FRAMEWORK-2026-07-13.md. Run headless via \
 runners/RunBlackBoxFrameworkEssay.wl.\
-\>", "Text",ExpressionUUID->"fb50afc8-6662-234c-afe5-926257e13c33"],
+\>", "Text",ExpressionUUID->"5fbe381c-44d2-694b-981a-31ff4a8c2832"],
 
 Cell["\<\
 Abstract (answers the RESEARCH.md description). Given only black-box access, \
@@ -56,7 +56,7 @@ of the composed exclusivity bound, and illustrates the framework on the \
 classical emulatability of Hawking-radiation dynamics. It states the \
 framework completely: the established layer unconditionally, then the five \
 named open hypotheses (H1, H1', H2', H3, H4', H5) with proof targets.\
-\>", "Text",ExpressionUUID->"62db7e1f-17ba-0d4c-87cb-7dc76fdc3412"],
+\>", "Text",ExpressionUUID->"e3ce1228-d716-f343-8c7c-10cc39e0d496"],
 
 Cell["\<\
 THE PRIME DIRECTIVE (WSRI): every quantitative claim in this essay is \
@@ -69,9 +69,9 @@ mirrors the framework: [T] theorem/machine-verified, [C] certified numeric, \
 essay is a computation that happens to read as prose; it closes on \
 EssayVerification, whose \"OK\" key must evaluate True and which also reports \
 a global count of the live-computed numbers.\
-\>", "Text",ExpressionUUID->"4ae109ff-bf32-dd4e-8dd5-33a40804bac6"],
+\>", "Text",ExpressionUUID->"4582168e-d281-5c47-91c4-1df1d72ddecb"],
 
-Cell["Assembly loader", "Section",ExpressionUUID->"2c7383ba-f8d8-c744-bafe-5b5d036937be"],
+Cell["Assembly loader", "Section",ExpressionUUID->"586fbdf0-fbbe-6645-902d-ad7985fad5d1"],
 
 Cell["\<\
 Standalone loader. This notebook is self-contained: it needs no local \
@@ -91,18 +91,101 @@ newer commit/tag. The WSRI prime directive is preserved: numbers are still \
 computed live at evaluation time; only the results the essay reads \
 (certificates, verdicts, figures) come from the repository. Figures are \
 decorative -- their absence never affects the OK -> True contract.\
-\>", "CodeText",ExpressionUUID->"abaee083-f767-6646-9022-15d1eaf0a627"],
+\>", "CodeText",ExpressionUUID->"beca6d13-9e2d-af4e-b19f-2041758fef48"],
+
+Cell["\<\
+frameworkRoot = Module[
+   {ref, start, localRoot, base, cacheRoot, manifest, dest, res, tries, \
+strm},
+   ref = If[StringQ[$BlackBoxRef] && $BlackBoxRef =!= \"\", $BlackBoxRef, \
+\"master\"];
+   start = With[{f = $InputFileName},
+     If[StringQ[f] && f =!= \"\" && FileExistsQ[f], DirectoryName[f],
+       Quiet@Check[NotebookDirectory[], Directory[]]]];
+   If[! StringQ[start] || start === \"\", start = Directory[]];
+   localRoot = NestWhile[ParentDirectory, start,
+     (# =!= ParentDirectory[#]) &&
+       ! FileExistsQ[FileNameJoin[{#, \"BlackBox\", \"PacletInfo.wl\"}]] &];
+   If[FileExistsQ[FileNameJoin[{localRoot, \"BlackBox\", \
+\"PacletInfo.wl\"}]],
+     localRoot,
+     base = \"https://raw.githubusercontent.com/hubertkolcz/BlackBox/\" <> \
+ref <> \"/\";
+     cacheRoot = FileNameJoin[{$UserBaseDirectory, \"ApplicationData\", \
+\"BlackBoxEssay\", ref}];
+     Quiet@CreateDirectory[cacheRoot, CreateIntermediateDirectories -> True];
+     If[! DirectoryQ[cacheRoot],
+       cacheRoot = FileNameJoin[{$TemporaryDirectory, \"BlackBoxEssay\", ref}];
+       Quiet@CreateDirectory[cacheRoot, CreateIntermediateDirectories -> \
+True]];
+     manifest = {\"BlackBox/PacletInfo.wl\", \"BlackBox/Kernel/BlackBox.wl\",
+       \"docs/essay-src/essay_sections_1_3.wl\", \
+\"docs/essay-src/essay_sections_4_6.wl\",
+       \"docs/essay-src/essay_sections_7_10.wl\",
+       \"09-EMU-optical-compiler/OpticalCompiler.wl\", \
+\"09-EMU-optical-compiler/DispatcherEmitter.wl\",
+       \"09-EMU-optical-compiler/InterferometerLayer.wl\", \
+\"09-EMU-optical-compiler/IntensityLayer.wl\",
+       \"05-CERT-epsilon-certificates/EpsilonCertificate7_regenerated.wl\",
+       \"05-CERT-epsilon-certificates/EpsilonCertificate8_regenerated.wl\",
+       \"05-CERT-epsilon-certificates/EpsilonCertificate9.wl\",
+       \"08-HK-hawking/hawking_gaussian_sector.wl\", \
+\"08-HK-hawking/gaussian_engine.wl\",
+       \"08-HK-hawking/gaussian_hawking_physics.wl\", \
+\"08-HK-hawking/gaussian_witnesses_bridge.wl\",
+       \"06-D3-sheaf-cohomology/final_h1_cocycle_results.json\",
+       \"02-D1-theory-frontier/erg003_verdict.json\", \
+\"docs/FRAMEWORK-2026-07-13.md\",
+       \"09-EMU-optical-compiler/schematics/demo1_kcbs_pentagon_L1.png\",
+       \"09-EMU-optical-compiler/schematics/demo3_cct_mesh_reps2.png\",
+       \"00-BBT-blackbox-protocol/certification_map.png\",
+       \"05-CERT-epsilon-certificates/orbit_spectrum.png\"};
+     Do[dest = FileNameJoin[Prepend[FileNameSplit[rel], cacheRoot]];
+       If[! (FileExistsQ[dest] && FileByteCount[dest] > 0),
+         Quiet@CreateDirectory[DirectoryName[dest], \
+CreateIntermediateDirectories -> True];
+         tries = 0;
+         While[! (FileExistsQ[dest] && FileByteCount[dest] > 0) && tries < 3,
+           tries++;
+           res = Quiet@Check[URLRead[base <> rel, {\"StatusCode\", \
+\"BodyByteArray\"}], $Failed];
+           If[AssociationQ[res] && res[\"StatusCode\"] === 200 &&
+                ByteArrayQ[res[\"BodyByteArray\"]] && \
+Length[res[\"BodyByteArray\"]] > 8 &&
+                ! StringStartsQ[ToUpperCase@Quiet@Check[
+                    FromCharacterCode@Normal@Take[res[\"BodyByteArray\"], \
+UpTo[14]], \"?\"],
+                  \"<!DOCTYPE\" | \"<HTML\"],
+             Quiet[strm = OpenWrite[dest, BinaryFormat -> True];
+               BinaryWrite[strm, res[\"BodyByteArray\"]]; Close[strm]]]]],
+       {rel, manifest}];
+     cacheRoot]];
+PacletDirectoryLoad[FileNameJoin[{frameworkRoot, \"BlackBox\"}]];
+Needs[\"HubertKolcz`BlackBox`\"];
+Quiet[Remove /@ Select[\"Global`\" <> # & /@ \
+Names[\"HubertKolcz`BlackBox`*\"], NameQ]];
+frameworkRoot\
+\>", "Input",ExpressionUUID->"d342bb3d-4ff1-da4d-86eb-b50a6c35ca15"],
+
+Cell["\<\
+Assemble the essay: Get each section fragment in order. Get (not -file) so \
+each fragment's loader cell de-shadows before its paclet symbols are \
+tokenised. Each fragment leaves its own verification association in the \
+Global context (sectionsVerification, SectionsFourToSixVerification, \
+EssaySectionsCVerification) together with every live-computed quantity it \
+defined -- the master reads those directly below.\
+\>", "CodeText",ExpressionUUID->"555fc66c-d91a-9745-ad8f-83a09ee050c9"],
 
 Cell["\<\
 Evaluating Black-Box Physics through Optical Emulation \\[LongDash] Sections \
 1-3\
-\>", "Section",ExpressionUUID->"a64fbd7c-7c4c-304c-8685-64770c81665e"],
+\>", "Section",ExpressionUUID->"529a9ffa-154a-ba48-afb0-137196d9afb2"],
 
 Cell["\<\
 Section builder A: the pentagon atom, the certification protocol and its \
 located blind spot, and the two irreducible lenses \\[LongDash] every number \
 computed live\
-\>", "Text",ExpressionUUID->"c1ee3750-d8bc-264e-a453-7ead91061359"],
+\>", "Text",ExpressionUUID->"64a94e0f-cc30-0c46-a4ce-c0cb869f9b8e"],
 
 Cell["\<\
 Hubert Ko\\[LSlash]cz \\[LongDash] July 2026. This file supplies sections \
@@ -115,20 +198,20 @@ every quantitative claim below is produced by the kernel at evaluation time \
 of the pre-registered probe mathematics \\[LongDash] never hand-restated. \
 Each section closes with a sectionNCheck association; the file ends with a \
 sectionsVerification block printing OK -> True.\
-\>", "Text",ExpressionUUID->"5bf446d7-5dac-3344-998b-96f2f486a08e"],
+\>", "Text",ExpressionUUID->"b40f624b-3bd7-3b47-9658-9006a5ab0646"],
 
 Cell["\<\
 Labeling discipline (mirrors the framework): [T] theorem / machine-verified, \
 [C] certified numeric, [R] refuted route, [H] named hypothesis. Layer-2 \
 statements carry their hypothesis tag inline.\
-\>", "Text",ExpressionUUID->"e117c50b-e7bc-b646-8a89-2ad095208ddc"],
+\>", "Text",ExpressionUUID->"c45420d1-b343-9442-ae32-6c1f4b89baa3"],
 
 Cell["\<\
 Locate the repo root robustly by walking up to the BlackBox paclet marker -- \
 works whether opened as a notebook (NotebookDirectory[]) or Get-loaded \
 headless ($InputFileName) -- then load the library, repair any \
 Global`-shadowing, and record the repo root for the figure/probe artifacts.\
-\>", "CodeText",ExpressionUUID->"a4d23e8b-83e9-ac4c-bbf8-3f224070b79e"],
+\>", "CodeText",ExpressionUUID->"cd81e82b-5661-4147-9c52-bc0aea8e6966"],
 
 Cell["\<\
 repoRoot = Module[
@@ -201,9 +284,9 @@ PacletDirectoryLoad[FileNameJoin[{repoRoot, \"BlackBox\"}]];
 Needs[\"HubertKolcz`BlackBox`\"]; Quiet[Remove /@ Select[\"Global`\" <> # & \
 /@ Names[\"HubertKolcz`BlackBox`*\"], NameQ]];
 Names[\"HubertKolcz`BlackBox`*\"]\
-\>", "Input",ExpressionUUID->"677e3e24-9479-0d44-8268-77513349aff4"],
+\>", "Input",ExpressionUUID->"7f3fec8e-9110-0e4f-9f29-c4c79ba7bc31"],
 
-Cell["S0  Summary of Results (sections 1-3)", "Subsection",ExpressionUUID->"71b150e1-8adf-0641-b703-9231a615ba38"],
+Cell["S0  Summary of Results (sections 1-3)", "Subsection",ExpressionUUID->"2a895276-10d2-4d4c-951f-b6c623722cbb"],
 
 Cell["\<\
 [T] The pentagon atom carries a strict hierarchy of three graph invariants \
@@ -212,7 +295,7 @@ exclusivity-only \\[Alpha]* = 5/2 \\[LongDash] reproduced live by \
 {IndependenceNumber, LovaszTheta, FractionalPackingNumber}[CycleGraph[5]] and \
 cross-checked against Wolfram's curated GraphData; the five exact pentagram \
 axes sum to Sqrt[5] on the cone axis (KCBSDirections).\
-\>", "Item",ExpressionUUID->"39bda4fc-a467-7140-8c08-76dabefe9d8c"],
+\>", "Item",ExpressionUUID->"8ab2cffc-f2aa-e143-a07f-1b8cf4f79e03"],
 
 Cell["\<\
 [T] The located blind spot (Proposition 1, BBT-002, assumptions A1-A4): a \
@@ -221,7 +304,7 @@ the two 20-vectors are identical in exact arithmetic \\[LongDash] so every \
 table functional, including the contextual fraction 2 Sqrt[5] - 4, takes the \
 same value on both. Distinguishing them from table access is mathematically \
 impossible, not merely hard.\
-\>", "Item",ExpressionUUID->"ae015c41-622a-484e-a9c2-c1cf62576314"],
+\>", "Item",ExpressionUUID->"96222c0e-a412-da49-94f4-ddeb2e189564"],
 
 Cell["\<\
 [T] Two lenses, necessarily (Proposition 2, BBT-003): the KCBS cascade \
@@ -229,7 +312,7 @@ generators span a 2-plane of so(3) and close to the full algebra at \
 commutator depth one (DLA dim 3), while a leaf-confined rig has DLA < 3 \
 \\[LongDash] identical tables, different DLA, so no table functional \
 lower-bounds the DLA.\
-\>", "Item",ExpressionUUID->"bfc0ef85-5ab5-ba42-9738-908628b36a8d"],
+\>", "Item",ExpressionUUID->"f0e0d346-48b0-ff41-81c1-bcce7420ea2a"],
 
 Cell["\<\
 [T]/[C] The access staircase: interventional table access separates the DLA-3 \
@@ -238,16 +321,16 @@ recomputed live from the analytic \\[Theta] = 0 anchor); \
 attenuation/event-semantics (gate G8) flags the coherent forger with exact \
 deviation D_max \\[TildeTilde] 56 t_max (recomputed live), the deterministic \
 core of the pre-registered 25/25 sampled result.\
-\>", "Item",ExpressionUUID->"230e26b7-b9dc-5941-b067-b0455d3a6c96"],
+\>", "Item",ExpressionUUID->"3287e3f3-d577-5b47-ae61-a6263c97cceb"],
 
 Cell["\<\
 [T]/[C] The CV column (G7-CV / F11): the symplectic leaf-confinement audit \
 closes exactly \\[LongDash] passive linear optics u(2) dim 4 (confined) vs \
 active sp(4,R) dim 10 and sp(2,R) dim 3 \\[LongDash] via an inline exact Lie \
 closure, filling the Gaussian cell of the certification map.\
-\>", "Item",ExpressionUUID->"5ae320d5-83e7-bd4f-9db8-8d9ff427e6a4"],
+\>", "Item",ExpressionUUID->"29a45173-c7ba-8741-ae73-5f53aa307428"],
 
-Cell["S1  The Question and the Pentagon Atom (F1)", "Subsection",ExpressionUUID->"de4b4253-2b18-b848-b52a-fadf7cb26a31"],
+Cell["S1  The Question and the Pentagon Atom (F1)", "Subsection",ExpressionUUID->"75cb42b1-7446-6a49-b160-74d7389afcf7"],
 
 Cell["\<\
 The central question (RESEARCH.md / Objective O3): given only black-box \
@@ -259,9 +342,9 @@ of measurement statistics) and a geometric lens (the dynamical Lie algebra \
 pricing resource scaling). Everything begins with one graph: the exclusivity \
 graph of the KCBS pentagon (Klyachko-Can-Binicio\\[GBreve]lu-Shumovsky, PRL \
 101, 020403 (2008)) \\[LongDash] the 5-cycle.\
-\>", "Text",ExpressionUUID->"9bc5ac53-4716-8941-b3cd-549574e86cd9"],
+\>", "Text",ExpressionUUID->"ef589959-9014-5348-9c01-627bf09ad015"],
 
-Cell["pentagon = CycleGraph[5];", "Input",ExpressionUUID->"46e3f013-49f3-f040-9ce1-1ac8d76b5ac4"],
+Cell["pentagon = CycleGraph[5];", "Input",ExpressionUUID->"b761b822-b078-f24c-8ba4-1cd23d62859e"],
 
 Cell["\<\
 Three theories, three graph invariants (Cabello-Severini-Winter, \
@@ -270,37 +353,37 @@ independence number \\[Alpha]; quantum mechanics reaches the Lov\\[AAcute]sz \
 number \\[CurlyTheta] by semidefinite programming; an exclusivity-only theory \
 reaches the fractional packing number \\[Alpha]*. The strict hierarchy 2 < \
 Sqrt[5] < 5/2 is the contextuality resource. [T]\
-\>", "CodeText",ExpressionUUID->"51c07045-399c-9a45-bab9-0a4b1a2a332b"],
+\>", "CodeText",ExpressionUUID->"50ad034f-6988-b343-86b0-275d8ee43b4a"],
 
 Cell["\<\
 atomHierarchy = {IndependenceNumber[pentagon], LovaszTheta[pentagon], \
 FractionalPackingNumber[pentagon]}\
-\>", "Input",ExpressionUUID->"fb2fdef9-1227-8542-b6e3-85138e5a256a"],
+\>", "Input",ExpressionUUID->"45967718-774a-3740-93df-29736ebb0563"],
 
 Cell["\<\
 Wolfram's curated graph data supplies the same three values exactly \
 \\[LongDash] a free oracle cross-check for the library:\
-\>", "CodeText",ExpressionUUID->"421c56d5-f4e5-ac45-8ec5-0cf56e5c4543"],
+\>", "CodeText",ExpressionUUID->"90813289-77e4-084d-9baf-deaab82bff48"],
 
 Cell["\<\
 atomOracle = GraphData[{\"Cycle\", 5}, #] & /@ {\"IndependenceNumber\", \
 \"LovaszNumber\", \"FractionalChromaticNumber\"}\
-\>", "Input",ExpressionUUID->"55672aac-fbed-5f4e-9e6d-69794abcef3c"],
+\>", "Input",ExpressionUUID->"e273d461-7d4e-b241-93af-bf333df0d132"],
 
 Cell["\<\
 The quantum value is physical, not a fitting parameter: the five exact \
 pentagram directions are cyclically orthogonal and their squared projections \
 on the cone axis {0,0,1} sum to Sqrt[5] (Simplify, exact):\
-\>", "CodeText",ExpressionUUID->"8e4ef4e0-8a2c-5a40-97d7-812977661af1"],
+\>", "CodeText",ExpressionUUID->"61766a97-c5c8-634b-baef-47941c9a5df4"],
 
 Cell["\<\
 atomAxisSum = Simplify[Total[(#.{0, 0, 1})^2 & /@ KCBSDirections[]]]\
-\>", "Input",ExpressionUUID->"228a0ac2-020f-8c4d-85fa-4f5a17796cdd"],
+\>", "Input",ExpressionUUID->"2a07d49f-1b1f-6e48-962c-064e2037488b"],
 
 Cell["\<\
 Section 1 check: the strict hierarchy, the exact oracle agreement, and the \
 axis-sum identity.\
-\>", "CodeText",ExpressionUUID->"52fb7983-fab4-6544-b64f-8328fb95d025"],
+\>", "CodeText",ExpressionUUID->"669f2c00-3f39-fe44-a4b4-973fded4ea0d"],
 
 Cell["\<\
 section1Check = <|
@@ -313,12 +396,12 @@ FractionalPackingNumber[pentagon] == 5/2 &&
    \"axisSumSqrt5\" -> Simplify[atomAxisSum - Sqrt[5]] === 0
    |>;
 Column[{section1Check, \"S1 OK\" -> And @@ Values[section1Check]}]\
-\>", "Input",ExpressionUUID->"ac60a6dd-be16-8647-ad3f-a14a6064f4bd"],
+\>", "Input",ExpressionUUID->"eb27a69c-bc30-0a49-9afb-344975862bfd"],
 
 Cell["\<\
 S2  The Certification Protocol and its Located Blind Spot (BBT-001/002, \
 Proposition 1)\
-\>", "Subsection",ExpressionUUID->"76d3777c-c682-844c-bdf3-51bbc9ee2f03"],
+\>", "Subsection",ExpressionUUID->"30c357c2-d911-634d-a2ba-1baa4831c371"],
 
 Cell["\<\
 The protocol (00-BBT-blackbox-protocol/mbqc_blackbox_test.py; \
@@ -327,7 +410,7 @@ distributions on the pentagon, sections (00, 01, 10, 11) with the (1,1) event \
 structurally absent (one photon, one click). Gates C1-C5 test no-disturbance, \
 the contextual fraction, consistent exclusivity, possibilistic support, and \
 the node sum. Proposition 1 (BBT-002) locates an exact blind spot.\
-\>", "Text",ExpressionUUID->"771d685c-5978-914c-9309-8a1ccefd2307"],
+\>", "Text",ExpressionUUID->"6a5677bb-fdde-054e-9035-011e4aead7ba"],
 
 Cell["\<\
 Proposition 1 (table-level indistinguishability). Let T be any no-disturbance \
@@ -341,29 +424,29 @@ the empirical table, E(T) and any quantum device realizing T are identically \
 distributed. [T] Assumptions (each an escape route when dropped): (A1) \
 per-context table access only; (A2) event semantics unverified; (A3) no audit \
 of the internal compilation; (A4) fresh preparation per trial.\
-\>", "Text",ExpressionUUID->"d3abbb39-2d4e-684f-a32a-f1131c14d8f7"],
+\>", "Text",ExpressionUUID->"ede44436-648a-d149-8481-a6929db711b8"],
 
 Cell["\<\
 The quantum-optimal table (per-event probability cos(Pi/5)/(1 + cos(Pi/5)) = \
 1/Sqrt[5]) as the paclet's canonical model vector, and the intensity emulator \
 built independently from its classical fractions at t = 1/Sqrt[5], \\[Delta] \
 = 0:\
-\>", "CodeText",ExpressionUUID->"6eef71eb-77b1-b34c-94fc-b5044dc9f668"],
+\>", "CodeText",ExpressionUUID->"7e75c0b4-f2a2-e14d-9b11-1c93cf6eab91"],
 
 Cell["\<\
 quantumTable = CycleModel[5, \"Quantum\"];
 intensityEmulatorTable[t_, delta_: 0] := Flatten[ConstantArray[{1 - 2 t, t - \
 delta, t + delta, 0}, 5]];
 emulatorTable = intensityEmulatorTable[1/Sqrt[5], 0];\
-\>", "Input",ExpressionUUID->"01f0e184-1fd3-d044-81b4-0fe638dc23d2"],
+\>", "Input",ExpressionUUID->"94655b09-1758-d240-86c0-e419295ecc52"],
 
 Cell["\<\
 The blind spot, exactly: the emulator table and the quantum table are the \
 same 20-vector (difference identically zero in exact arithmetic) \\[LongDash] \
 Proposition 1 is a construction, not an approximation:\
-\>", "CodeText",ExpressionUUID->"fabaeb79-2ae4-0849-a885-dbc3b2ecbc61"],
+\>", "CodeText",ExpressionUUID->"b148716e-e38c-2b49-a61f-9d1b850f7d20"],
 
-Cell["blindSpotDelta = Simplify[emulatorTable - quantumTable]", "Input",ExpressionUUID->"ae3e7dc9-52a7-a04a-afed-67a7473d7e81"],
+Cell["blindSpotDelta = Simplify[emulatorTable - quantumTable]", "Input",ExpressionUUID->"1c20ebb2-6a5e-a745-92c6-900943a8e2ba"],
 
 Cell["\<\
 Consequently every table functional agrees on the two devices. The contextual \
@@ -371,12 +454,12 @@ fraction (Abramsky-Barbosa-Mansfield, PRL 119, 050504 (2017)) of the shared \
 table, in exact arithmetic, is 2 Sqrt[5] - 4 \\[TildeTilde] 0.472 \
 \\[LongDash] the same value the protocol reads under verdict \
 QUANTUM-CERTIFIED for the emulator (a false positive by design):\
-\>", "CodeText",ExpressionUUID->"1d00fea1-2ce1-dd46-9955-1a72a7822475"],
+\>", "CodeText",ExpressionUUID->"db329ace-133e-5947-aa1b-df01ce724530"],
 
 Cell["\<\
 sharedCF = FullSimplify[ContextualFraction[CycleScenario[5], quantumTable, \
 WorkingPrecision -> Infinity]]\
-\>", "Input",ExpressionUUID->"c33ce68b-72c7-9543-b705-ca1a67b5cb5b"],
+\>", "Input",ExpressionUUID->"0335e9ec-0b48-4645-b2ba-5ed678b1157f"],
 
 Cell["\<\
 External anchors (cited, not recomputed): classical fields reaching the \
@@ -384,7 +467,7 @@ quantum bounds is experimental fact (Frustaglia et al., PRL 116, 250404 \
 (2016); Zhang et al., Sci. Rep. 7, 44467 (2017)); a single unmodified on-off \
 detector's click record is coherent-state-forgeable \
 (Kovtoniuk-Bohmann-Semenov, arXiv:2601.13869 (2026)).\
-\>", "Text",ExpressionUUID->"bff4390d-8907-324c-a9bc-9ce74a1b620f"],
+\>", "Text",ExpressionUUID->"c94c83d1-fb13-014c-98e1-00ba6014b7f8"],
 
 Cell["\<\
 Section 2 check: the emulator/quantum table identity (the blind spot), the \
@@ -393,7 +476,7 @@ of the five per-event click probabilities (the p10 entry of each context \
 block) reaches the quantum value Sqrt[5], strictly below the exclusivity cap \
 5/2 \\[LongDash] the gap 5/2 - Sqrt[5] is exactly the room that lets the \
 intensity forger sit at the quantum point.\
-\>", "CodeText",ExpressionUUID->"b95b2787-a3b7-ba4d-878c-873faee2a052"],
+\>", "CodeText",ExpressionUUID->"eefe5be7-dfb0-6b4b-8de3-ac403003ae74"],
 
 Cell["\<\
 emulatorNodeSum = Simplify[Total[emulatorTable[[3 ;; ;; 4]]]];
@@ -406,11 +489,11 @@ ConstantArray[0, 20],
 < 5/2
    |>;
 Column[{section2Check, \"S2 OK\" -> And @@ Values[section2Check]}]\
-\>", "Input",ExpressionUUID->"24d0e2ff-c1c1-4340-acd9-58c4ef5ff4c7"],
+\>", "Input",ExpressionUUID->"6989ad3b-d858-944e-bf41-f073a1edf429"],
 
 Cell["\<\
 S3  Two Lenses, Necessarily (Proposition 2/BBT-003; G7, OQ1, OQ2, G7-CV)\
-\>", "Subsection",ExpressionUUID->"a7b2a2a6-0cc9-7c48-b2db-17cc84e40fa7"],
+\>", "Subsection",ExpressionUUID->"cadcf6a8-270a-6647-b39c-43f3020be9cf"],
 
 Cell["\<\
 Proposition 2 (BBT-003). No function of the table can lower-bound the \
@@ -419,7 +502,7 @@ identical tables \\[LongDash] the quantum cascade (DLA = 3) and the tuned \
 intensity rig (DLA < 3) \\[LongDash] so every table functional takes the same \
 value on both. [T] Hence certification is irreducibly two-lens: correlation \
 lens + geometric/dynamics lens, neither derivable from the other.\
-\>", "Text",ExpressionUUID->"bcada4c0-e80e-3b4f-8c58-922a420bceb2"],
+\>", "Text",ExpressionUUID->"36aabb62-de52-5747-9b29-fa7a54f524f5"],
 
 Cell["\<\
 The geometric lens G7 (Corollary 2). The Lapkiewicz cascade (Nature 474, 490 \
@@ -428,7 +511,7 @@ stage generators rotate about only two axes, yet one commutator closes the \
 full three-dimensional algebra \\[LongDash] DLA dimension 3, the \"2 -> 3 \
 anchor\". A leaf-confined intensity rig compiles to co-axial generators with \
 DLA < 3.\
-\>", "CodeText",ExpressionUUID->"a29fb244-2d47-4e48-a21c-3b28b2455b0a"],
+\>", "CodeText",ExpressionUUID->"39887ef0-0879-d441-9786-54d32e13035f"],
 
 Cell["\<\
 cascadeGens = CascadeGenerators[];
@@ -437,7 +520,7 @@ g7CascadeDLA = DLADimension[cascadeGens];
 g7LeafDLA = DLADimension[{cascadeGens[[1]]}];
 {\"axis rank\" -> g7AxisRank, \"cascade DLA\" -> g7CascadeDLA, \
 \"leaf-confined DLA\" -> g7LeafDLA}\
-\>", "Input",ExpressionUUID->"65ff7154-add0-124b-b1d3-eafc6b1d27c0"],
+\>", "Input",ExpressionUUID->"8617c784-780b-8a49-949d-2ae0b272279b"],
 
 Cell["\<\
 The access staircase, OQ1 (interventional DLA bounding; OQ-PROBE-SPEC / \
@@ -450,7 +533,7 @@ analytic \\[Theta] = 0 anchor live (dT/d\\[Theta]_k = 2 (l.z)(l.(e_k \
 vanishing identically. The \\[Theta]-blind rig freezes its fractions, so its \
 table is constant in \\[Theta] \\[LongDash] Jacobian identically zero, rank \
 0. Rank 2 > 0 is the separation (OQ1-A).\
-\>", "CodeText",ExpressionUUID->"92db7921-eea1-d14a-aee9-c74c6aba4f59"],
+\>", "CodeText",ExpressionUUID->"d4b79dea-d72f-de42-8008-0691a543677d"],
 
 Cell["\<\
 oq1c2 = Cos[Pi/5]/(1 + Cos[Pi/5]);
@@ -468,7 +551,7 @@ oq1ZColumn = Max[Abs[oq1Jac[[All, 3]]]];
 oq1RankBlind = MatrixRank[ConstantArray[0., {20, 3}], Tolerance -> 10^-8];
 {\"orbit rank (cascade)\" -> oq1RankQuantum, \"z-rotation column\" -> \
 oq1ZColumn, \"orbit rank (\\[Theta]-blind rig)\" -> oq1RankBlind}\
-\>", "Input",ExpressionUUID->"be51959a-7b74-6a44-8edd-7dc53deba084"],
+\>", "Input",ExpressionUUID->"6a4fd11d-ef70-0948-99bc-b3e83134e7b1"],
 
 Cell["\<\
 The access staircase, OQ2 (attenuation-series gate G8; \
@@ -482,7 +565,7 @@ We recompute the deterministic core live: the physicalized iii-d forger \
 z0) times the quantum row, z0 = 0.10) has exact deviation D_max \
 \\[TildeTilde] 56 t_max \\[LongDash] far above the pre-registered threshold, \
 the reason gate G8 flags it in every one of the 25 sampled repetitions.\
-\>", "CodeText",ExpressionUUID->"3696ab0f-8f1f-5e4f-bdf6-877bdb10f9b2"],
+\>", "CodeText",ExpressionUUID->"b7115973-6da1-b543-97ee-e11c7f8801e2"],
 
 Cell["\<\
 oq2Etas = {1.0, 0.85, 0.70, 0.55, 0.40, 0.25, 0.12, 0.05};
@@ -507,7 +590,7 @@ oq2Dmax = Max@Flatten@Table[
 4}]], {eta, oq2Etas[[2 ;;]]}];
 {\"t_max\" -> oq2tMax, \"forger D_max\" -> oq2Dmax, \"D_max / t_max\" -> \
 oq2Dmax/oq2tMax}\
-\>", "Input",ExpressionUUID->"058ee406-913e-4d4f-bc8b-588b83a3d7a4"],
+\>", "Input",ExpressionUUID->"6d2210cb-da3a-454a-8443-6a442f8091eb"],
 
 Cell["\<\
 The CV column, G7-CV (F11; Sp(2n,R) leaf-confinement, final_o3_cv_dla.py). \
@@ -519,7 +602,7 @@ is the passive linear-optics algebra u(n) (dim n^2, antisymmetric generators \
 (active). The criterion: the claimed generators' matrix Lie closure sits \
 inside u(n) (passive-confined, linear-optics-emulable) or breaks out \
 (active). We recompute the closure inline in exact arithmetic.\
-\>", "CodeText",ExpressionUUID->"110441fe-e627-c743-84ad-6c967e2cea9b"],
+\>", "CodeText",ExpressionUUID->"49904465-31f5-d24d-92b0-6ec139d806e2"],
 
 Cell["\<\
 cvOmega[n_] := Module[{o = ConstantArray[0, {2 n, 2 n}]},
@@ -560,7 +643,7 @@ cvBsIm[2, 1, 2], cvSq2a[2, 1, 2], cvSq2b[2, 1, 2]}];
 cvActive1 = cvLieAudit[{cvPhase[1, 1], cvSq1[1, 1]}];
 {\"passive u(2)\" -> cvPassive2, \"active sp(4,R)\" -> cvActive2, \"active \
 sp(2,R)\" -> cvActive1}\
-\>", "Input",ExpressionUUID->"db379bae-6b1a-6449-9615-e7f723b66187"],
+\>", "Input",ExpressionUUID->"8d10b87a-4335-5a4b-961c-eeee39542609"],
 
 Cell["\<\
 Proposition O3-C (F10, [T] conditional). Within the intensity-emulator class \
@@ -570,28 +653,28 @@ unmodified on-off detector, fair-sampled, fresh-per-trial), the gate set \
 certified NCHV-bounded. Load-bearing premises stated openly: the KBS \
 single-detector coherent-forgeability theorem and white-box trust on \
 G7/G7-CV. The residual open problem is H4' (A_IE-maximality). [H]\
-\>", "Text",ExpressionUUID->"faf59dc0-38c4-034d-81ed-f493560df93f"],
+\>", "Text",ExpressionUUID->"0ad0d2db-15b9-5e4a-89e9-3f06cb754319"],
 
 Cell["\<\
 The certification map (00-BBT-blackbox-protocol/certification_map.png; \
 regenerated by certification_map.wl with the CV column filled) embeds the \
 whole staircase \\[LongDash] access model x adversary strength, plus the \
 orthogonal geometric lens:\
-\>", "CodeText",ExpressionUUID->"81136113-c955-cc4e-8b56-7f96bdfe00cc"],
+\>", "CodeText",ExpressionUUID->"794c3686-208f-ba48-96b9-87a1f7db53ef"],
 
 Cell["\<\
 certMapFile = FileNameJoin[{repoRoot, \"00-BBT-blackbox-protocol\", \
 \"certification_map.png\"}];
 certificationMap = If[FileExistsQ[certMapFile], Import[certMapFile], Missing[\
 \"regenerate via certification_map.wl\"]];\
-\>", "Input",ExpressionUUID->"b979cadb-2cdb-6a4c-9b59-81e3faafbb18"],
+\>", "Input",ExpressionUUID->"ee0c94eb-caa1-9e48-a29e-058564de1c68"],
 
 Cell["\<\
 Section 3 check: the G7 anchor (axis rank 2, cascade DLA 3, leaf DLA < 3); \
 OQ1 separation (orbit rank 2 vs 0, z-column zero); OQ2 forger flagged (D_max \
 far above t_max); the CV column (u(2) = 4 confined, sp(4,R) = 10 and sp(2,R) \
 = 3 active); and the embedded map.\
-\>", "CodeText",ExpressionUUID->"2eef100f-add3-0b44-95ed-e1d22995139d"],
+\>", "CodeText",ExpressionUUID->"b1bde22a-e25f-b444-877d-5971a6402852"],
 
 Cell["\<\
 section3Check = <|
@@ -607,14 +690,14 @@ oq1ZColumn < 10^-10,
    |>;   (* figure is decorative: valid when present, gracefully absent in \
 standalone mode -- never gates OK *)
 Column[{section3Check, \"S3 OK\" -> And @@ Values[section3Check]}]\
-\>", "Input",ExpressionUUID->"03690e57-5a86-4b44-8404-a8e166548784"],
+\>", "Input",ExpressionUUID->"0eaae647-e84b-4f40-87b5-f4d0841ad9a7"],
 
-Cell["Verification (sections 1-3)", "Subsection",ExpressionUUID->"10d9290f-d22f-9444-9c38-4affaa57cfd4"],
+Cell["Verification (sections 1-3)", "Subsection",ExpressionUUID->"8a8ee97c-eafa-ba42-9910-1555fa7b3d9d"],
 
 Cell["\<\
 House discipline: the three section checks folded into one association. This \
 cell must print OK -> True.\
-\>", "Text",ExpressionUUID->"6ebf5964-6b47-c441-8e16-ad82b6ae0538"],
+\>", "Text",ExpressionUUID->"442be699-52bf-b442-b0c5-099128c956c6"],
 
 Cell["\<\
 sectionsVerification = <|
@@ -624,17 +707,17 @@ sectionsVerification = <|
    |>;
 Column[{sectionsVerification, \"OK\" -> And @@ Values[sectionsVerification]}]\
 \
-\>", "Input",ExpressionUUID->"b1235ffe-4aeb-db48-be6c-1d0b54d1f754"],
+\>", "Input",ExpressionUUID->"21613b75-e7c4-964e-8cf3-2aca61cd279a"],
 
 Cell["\<\
 Evaluating Black-Box Physics through Optical Emulation \\[LongDash] Sections \
 4-6\
-\>", "Section",ExpressionUUID->"cd6ecdab-6f5c-d049-be03-65935c2845be"],
+\>", "Section",ExpressionUUID->"c890448c-db8c-4044-a787-0b1111bd392c"],
 
 Cell["\<\
 Composition (mesh laws and the optimal word), the degree-0 sheaf derivation, \
 and the Hawking two-sector illustration\
-\>", "Text",ExpressionUUID->"92e1fa2a-9cd6-fb43-9202-535c4ec5bc0d"],
+\>", "Text",ExpressionUUID->"9f13a85e-7934-d748-b1fa-bd5127f5f62d"],
 
 Cell["\<\
 Hubert Ko\\[LSlash]cz \\[LongDash] July 2026. Section Builder B of the master \
@@ -648,16 +731,16 @@ BlackBox paclet, live recomputation, or a reader over a committed \
 exact-arithmetic certificate \\[LongDash] never hand-restated. This source is \
 Get-loadable and headless-verifiable: it ends in the association \
 SectionsFourToSixVerification with \"OK\" -> True.\
-\>", "Text",ExpressionUUID->"c6ef309e-ca05-7943-9696-1bfb671212ad"],
+\>", "Text",ExpressionUUID->"2b640ffd-b913-4a4c-8664-3891d73c2bb2"],
 
-Cell["Loader", "Subsection",ExpressionUUID->"73d1385c-22a2-6e4b-a2c9-e578ad273d0e"],
+Cell["Loader", "Subsection",ExpressionUUID->"0f0183e4-fafc-e540-9bf6-5e8a9a41fc34"],
 
 Cell["\<\
 Locate the repository root (this file lives at docs/essay-src/), load the \
 BlackBox paclet, and repair any Global`-shadowing of paclet symbols (the \
 shadowing pitfall documented in kcbs_circuit.wl \\[LongDash] Get[] avoids it, \
 but we de-shadow defensively):\
-\>", "CodeText",ExpressionUUID->"eac76a50-ef01-8744-a11d-b86a17226502"],
+\>", "CodeText",ExpressionUUID->"21f42cca-9930-fd45-9f2e-6a9294bb1a90"],
 
 Cell["\<\
 repoRoot = Module[
@@ -730,9 +813,9 @@ PacletDirectoryLoad[FileNameJoin[{repoRoot, \"BlackBox\"}]];
 Needs[\"HubertKolcz`BlackBox`\"]; Quiet[Remove /@ Select[\"Global`\" <> # & \
 /@ Names[\"HubertKolcz`BlackBox`*\"], NameQ]];
 sfx6 = <||>;   (* verification accumulator, filled section by section *)\
-\>", "Input",ExpressionUUID->"7a38695c-322c-7943-a276-3b9b99518be8"],
+\>", "Input",ExpressionUUID->"edb2859d-cab2-3445-b7af-a415aa9a61cb"],
 
-Cell["S4. Composition: Mesh Laws and the Optimal Word", "Subsection",ExpressionUUID->"4e55ecb8-62e2-8645-a5a0-34aea1b49ebe"],
+Cell["S4. Composition: Mesh Laws and the Optimal Word", "Subsection",ExpressionUUID->"9f4dc89b-82d7-684c-9ae9-286a0039b023"],
 
 Cell["\<\
 A mesh of edge-glued pentagons is a binary necklace: one orientation letter \
@@ -744,13 +827,13 @@ controls whether the quantum gap \\[CapitalTheta] - \\[Alpha] survives \
 the tightened certificate ladder \\[CapitalGamma]_7, \\[CapitalGamma]_8, \
 \\[CapitalGamma]_9 from committed exact-arithmetic certificates, and authors \
 the bracket figure from those live values.\
-\>", "Text",ExpressionUUID->"d4522c2a-d938-bf46-bd11-80092c27d3d3"],
+\>", "Text",ExpressionUUID->"d1989138-4575-7c45-8c5c-822696ab0974"],
 
 Cell["\<\
 The general word-ring builder (mirrors \
 03-MESH-pentagon-composition/CaseStudies.wl) and the 3-state interface \
 transfer DP whose max-plus cycle means give exact \\[Alpha]-densities:\
-\>", "CodeText",ExpressionUUID->"0a0c27e6-5964-4043-85e4-12c730fb8181"],
+\>", "CodeText",ExpressionUUID->"e071d61e-d478-5749-8bbb-99f108fb7d9b"],
 
 Cell["\<\
 wordRing[word_String, reps_Integer] := Module[
@@ -771,7 +854,7 @@ dpTransfer[letter_] := Module[{T = ConstantArray[-Infinity, {3, 3}], out, j},
      T[[i, j]] = Max[T[[i, j]], s1 + s2 + s3]],
     {i, 3}, {s1, 0, 1}, {s2, 0, 1}, {s3, 0, 1}];
   T];\
-\>", "Input",ExpressionUUID->"80796afc-c6b2-8f48-9928-90c0fb277128"],
+\>", "Input",ExpressionUUID->"3bb45077-28b6-b143-ae6c-cda1cb518e53"],
 
 Cell["\<\
 Cis/trans dichotomy, live [T]: the dense SDP arbitrates at a size it still \
@@ -779,7 +862,7 @@ reaches \\[LongDash] \\[CurlyTheta](trans-ring 21) < \\[CurlyTheta](cis-chain \
 19), and \\[CurlyTheta] is monotone under induced subgraphs, so no 19-block \
 cis chain embeds in the 21-block trans ring. The two families are genuinely \
 distinct:\
-\>", "CodeText",ExpressionUUID->"f0e210f8-40cc-2845-93e1-2d76a1071d6e"],
+\>", "CodeText",ExpressionUUID->"a34ebcc4-dd82-9641-a0f6-af268506130b"],
 
 Cell["\<\
 cisRing[nb_ /; nb >= 3] := Module[{c1, c2, c3, edges},
@@ -794,14 +877,14 @@ LovaszTheta[PentagonChain[19]]};
 sfx6[\"S4_cisTransDistinct\"] = gluingArbitration[[1]] < \
 gluingArbitration[[2]] - 0.15;
 gluingArbitration\
-\>", "Input",ExpressionUUID->"b53facee-6c09-554c-8931-697070929c82"],
+\>", "Input",ExpressionUUID->"00505815-a88a-ca4f-b2f1-c2411da6273e"],
 
 Cell["\<\
 Cis law [T]: \\[CurlyTheta](cis-ring N) = N + \\[CurlyTheta](C_N) and \
 \\[Alpha] = \\[LeftFloor]3N/2\\[RightFloor] (edge-deletion upper bound + \
 one-extra-dimension representation; proof in CaseStudies.wl). Live on N = \
 4..8:\
-\>", "CodeText",ExpressionUUID->"96b6202b-3927-304d-b02e-a6b69465fa34"],
+\>", "CodeText",ExpressionUUID->"95ccd974-3f2b-6d47-9543-3f1a392747b8"],
 
 Cell["\<\
 cisLawTable = Table[{n, LovaszTheta[cisRing[n]], n + \
@@ -812,13 +895,13 @@ sfx6[\"S4_cisLaw\"] = AllTrue[cisLawTable, Abs[#[[2]] - #[[3]]] < 10^-5 &] &&
 TableForm[cisLawTable, TableHeadings -> {None, {\"N\", \"\\[CurlyTheta](cis \
 ring)\", \"N+\\[CurlyTheta](C_N)\", \"\\[Alpha]\", \
 \"\\[LeftFloor]3N/2\\[RightFloor]\"}}]\
-\>", "Input",ExpressionUUID->"4db3cf9e-7615-a44e-ad18-64de5fd2d852"],
+\>", "Input",ExpressionUUID->"8500a4f1-e401-474b-b2b2-cd217498a600"],
 
 Cell["\<\
 The trans density limit \\[Tau]* [C], the EXACT middle root of a cubic with \
 two-digit coefficients (Groebner elimination of the continuum symbol \
 minimax), recomputed live to 20 digits:\
-\>", "CodeText",ExpressionUUID->"cc4a1e14-31ce-754b-b9f2-5ad699ec7967"],
+\>", "CodeText",ExpressionUUID->"f0f2963b-4cab-6d42-9656-8bfe438e86cc"],
 
 Cell["\<\
 tauStar = Root[49 #^3 - 128 #^2 - 75 #^1 + 218 &, 2];
@@ -826,7 +909,7 @@ sfx6[\"S4_tauStarCubic\"] = (MinimalPolynomial[tauStar, x] === 49 x^3 - 128 \
 x^2 - 75 x + 218) &&
    Abs[N[tauStar, 20] - 1.37671774591585905328] < 10^-15;
 {N[tauStar, 20], \"per-block trans gap \\[Tau]*-4/3\" -> N[tauStar - 4/3, 12]}\
-\>", "Input",ExpressionUUID->"6bc8ad97-65f4-9a44-9ab0-5d4cd0873c71"],
+\>", "Input",ExpressionUUID->"24a28980-729d-3f43-ac4d-bd947a5872ba"],
 
 Cell["\<\
 The \\[Alpha]-cis theorem [T] (key mechanism): for every gluing word \
@@ -834,7 +917,7 @@ The \\[Alpha]-cis theorem [T] (key mechanism): for every gluing word \
 (cct)^k. Certificate C (potentials (0,-1/2,-1)), the walk-free ccc bonus \
 (adjusted max-plus cube = 13/3), and the run-combinatorics closure through \
 period 12 \\[LongDash] all machine-checked live:\
-\>", "CodeText",ExpressionUUID->"dd724081-1df8-d044-b176-24068280b982"],
+\>", "CodeText",ExpressionUUID->"cc23510a-b03a-624f-969c-e472d74007f7"],
 
 Cell["\<\
 alphaCisTheorem = Module[{phiC = {0, -1/2, -1}, phiB = {0, -1/3, -2/3},
@@ -857,7 +940,7 @@ MemberQ[Table[RotateLeft[Characters[StringRepeat[\"cct\", p/3]], r],
     Min[Table[Max[A3[[i]]], {i, 3}]] == 13/3 && comb];
 sfx6[\"S4_alphaCisTheorem\"] = alphaCisTheorem;
 alphaCisTheorem\
-\>", "Input",ExpressionUUID->"7f85d272-0d2d-a547-b2b7-f2914697470d"],
+\>", "Input",ExpressionUUID->"17869d5d-a9e3-904f-97d7-7c2d9ce15b01"],
 
 Cell["\<\
 The optimal word (cct)^\\[Infinity] and its gap density gap(cct) [C]. The \
@@ -868,7 +951,7 @@ per-block gap is cctDensity - 4/3 \\[TildeTilde] 0.0698975, which is \
 numerically-certified (~300-digit KKT) continuum optimum \\[LongDash] no \
 low-degree closed form exists (LLL excludes minimal polynomials of degree <= \
 36):\
-\>", "CodeText",ExpressionUUID->"796ff6dc-189f-054d-99c2-9b9e4ac3053e"],
+\>", "CodeText",ExpressionUUID->"08d695fd-ba76-9041-95d1-4e02b60cb463"],
 
 Cell["\<\
 gluingWordAnchor = {LovaszTheta[wordRing[\"cct\", 2]],
@@ -886,7 +969,7 @@ sfx6[\"S4_optimalWord\"] = Abs[gluingWordAnchor[[1]] - 8.347042185] < 10^-4 \
 \"\\[Alpha](cct\\[Times]2,\\[Times]3)\" -> gluingWordAnchor[[2 ;; 3]],
  \"gap(cct)\" -> N[gapCct, 8], \"gap(cct)/(\\[Tau]*-4/3)\" -> \
 N[gapCct/(tauStar - 4/3), 6]}\
-\>", "Input",ExpressionUUID->"755704f3-1fab-d941-8fde-58d883b37bbd"],
+\>", "Input",ExpressionUUID->"e6d7d2f2-5881-014a-91f3-90cb991a1ce2"],
 
 Cell["\<\
 The certificate ladder \\[CapitalGamma]_k [T]/[C]. Each \\[CapitalGamma]_k is \
@@ -896,7 +979,7 @@ eigenvalue on the de Bruijn-k subshift). The tightened exact rationals \
 committed certificates (regenerated on Wolfram Compute Services, all \
 PSD/pointwise/convergence gates True) and reduced to numbers in-essay \
 \\[LongDash] never re-typed:\
-\>", "CodeText",ExpressionUUID->"5486cac4-d599-b24f-bbb1-2384a4d40e80"],
+\>", "CodeText",ExpressionUUID->"16a940a6-e9c6-3243-a613-91a3a40a8426"],
 
 Cell["\<\
 Get[FileNameJoin[{repoRoot, \"05-CERT-epsilon-certificates\", \
@@ -916,7 +999,7 @@ the target *)
 {\"\\[CapitalGamma]_7\" -> N[gamma7, 10], \"\\[CapitalGamma]_8\" -> N[gamma8, \
 10], \"\\[CapitalGamma]_9\" -> N[gamma9, 10],
  \"exact \\[CapitalGamma]_9\" -> gamma9}\
-\>", "Input",ExpressionUUID->"604f8e87-a1ff-4146-a32e-29958bbc0061"],
+\>", "Input",ExpressionUUID->"ad226d27-2c99-3640-97c4-4dd9efa558c7"],
 
 Cell["\<\
 \\[CapitalGamma]_10 is NUMERIC-ONLY (0.0714575, no committed exact rational \
@@ -924,7 +1007,7 @@ certificate \\[LongDash] the k=10 generator ran but no exact block \
 certificate is in the repository). It is recorded honestly as a numeric \
 bracket point, NOT as a kernel-recomputed exact object, and the certified \
 \\[Epsilon] uses it as documented in CONVERGENCE-ANALYSIS-2026-07-13.md:\
-\>", "CodeText",ExpressionUUID->"3e38ed67-0731-6140-a949-4385306ce3a2"],
+\>", "CodeText",ExpressionUUID->"812bb047-253f-9c45-bb6b-a8b806a63fdc"],
 
 Cell["\<\
 gamma10Numeric = 0.0714575;   (* [C numeric] documented value; NO exact \
@@ -936,7 +1019,7 @@ gamma10Numeric > gapCct &&
 {\"\\[CapitalGamma]_10 (numeric-only)\" -> gamma10Numeric, \"\\[Epsilon] = \
 \\[CapitalGamma]_10 - gap(cct)\" -> N[epsCertified, 4],
  \"status\" -> \"numeric bracket point; no exact certificate committed\"}\
-\>", "Input",ExpressionUUID->"dacfa1f4-611b-af47-a86f-56f7e0d067bc"],
+\>", "Input",ExpressionUUID->"c88408d6-eba1-4f4e-a212-ba4eedab7aed"],
 
 Cell["\<\
 The orbit-spectrum reading (CERT-003). Spurious policy-iteration values are \
@@ -946,7 +1029,7 @@ the finite-orbit readings. The figure orbit_spectrum.png is regenerated by \
 05-CERT-epsilon-certificates/orbit_spectrum_figure.wl (embedded by the master \
 essay); here we verify the seed values are ordered and \\[Tau]* sits among \
 them:\
-\>", "CodeText",ExpressionUUID->"2ab470bb-3356-fc4b-939d-661912c7eb94"],
+\>", "CodeText",ExpressionUUID->"3f4a74cd-43c9-594b-bbe4-6d5dfaa34430"],
 
 Cell["\<\
 orbitSeeds = {3/2, tauStar, 16/11, 19/13, 25/17};
@@ -955,15 +1038,18 @@ sfx6[\"S4_orbitSpectrum\"] = (tauStar < 16/11 < 19/13 < 25/17 < 3/2);
 no longer gates OK *)
 orbitSpectrumFigureRef = FileNameJoin[{repoRoot, \
 \"05-CERT-epsilon-certificates\", \"orbit_spectrum.png\"}];
-{N[orbitSeeds, 6], \"figure\" -> orbitSpectrumFigureRef}\
-\>", "Input",ExpressionUUID->"ec7ff2f0-5d8a-3e4d-a658-a7012799116c"],
+orbitSpectrumFigure = If[FileExistsQ[orbitSpectrumFigureRef], \
+Import[orbitSpectrumFigureRef],
+   Missing[\"figure unavailable\"]];
+Column[{N[orbitSeeds, 6], orbitSpectrumFigure}]\
+\>", "Input",ExpressionUUID->"a06ff16c-0afb-a748-b0d8-bdac7dcba786"],
 
 Cell["\<\
 FIGURE (authored live). The certificate bracket: \\[CapitalGamma]_7 > \
 \\[CapitalGamma]_8 > \\[CapitalGamma]_9 (exact) and \\[CapitalGamma]_10 \
 (numeric) descending toward gap(cct), the conjectured supremum. Every plotted \
 ordinate is a live value computed above:\
-\>", "CodeText",ExpressionUUID->"ea3d80e1-e754-e242-8784-4c0fdc071d47"],
+\>", "CodeText",ExpressionUUID->"4fdad29a-8ef9-be4c-8cac-6ea3580af244"],
 
 Cell["\<\
 gammaBracketFigure = ListLinePlot[
@@ -977,13 +1063,13 @@ gammaBracketFigure = ListLinePlot[
    PlotLabel -> \"Certificate ladder \\[RightArrow] gap(cct)\", ImageSize -> \
 360];
 gammaBracketFigure\
-\>", "Input",ExpressionUUID->"c0d640cf-a31f-5a48-bb23-fb9b15fe7515"],
+\>", "Input",ExpressionUUID->"9483e6d2-41fa-4746-b93d-fd5b0f08959b"],
 
 Cell["\<\
 FIGURE (authored live). Pentagon-chain gap parity: cis chains obey the parity \
 law \\[LongDash] even N pinches the gap \\[CapitalTheta] - \\[Alpha] to zero, \
 odd N reopens it \\[LongDash] computed live via PentagonChain + LovaszTheta:\
-\>", "CodeText",ExpressionUUID->"0084f217-2a8f-774b-9cc1-50c1a3a4c034"],
+\>", "CodeText",ExpressionUUID->"45c7bdd0-d38e-a64e-9e17-24d94b64a24c"],
 
 Cell["\<\
 chainGapParity = Table[{n, Chop[LovaszTheta[PentagonChain[n]] - \
@@ -995,11 +1081,11 @@ chainParityFigure = ListLinePlot[chainGapParity, PlotMarkers -> Automatic,
    AxesLabel -> {\"N\", \"\\[CapitalTheta]-\\[Alpha] (cis chain)\"}, \
 PlotLabel -> \"Chain gap parity (even N pinches)\", ImageSize -> 360];
 chainParityFigure\
-\>", "Input",ExpressionUUID->"89d92cc2-7532-b944-bb2a-2eb3de7a0d89"],
+\>", "Input",ExpressionUUID->"4f51baaa-9d51-8243-a630-7c8471c03d7a"],
 
 Cell["\<\
 S5. The Sheaf Question: Degree-0 Derivation and the Refuted H\\.b9 Obstruction\
-\>", "Subsection",ExpressionUUID->"c705c472-9e2b-6847-9803-a6acd78dedba"],
+\>", "Subsection",ExpressionUUID->"7fd8a7a6-4da0-c044-bd98-62bf2c99bb79"],
 
 Cell["\<\
 The project's priority question (ESSAY-005): can the Abramsky-Brandenburger \
@@ -1010,14 +1096,14 @@ reconstruct the weighted-presheaf capacity \\[CapitalLambda]_k live \
 S_k = \\[CapitalLambda]_k^(1/k). The mechanism is arithmetic: an INTEGER \
 partition of unity exactly when the quantum value is attained (C5 pentads), \
 properly FRACTIONAL otherwise (C7: 4\\[Nmid]49, 8\\[Nmid]343).\
-\>", "Text",ExpressionUUID->"2ae7bee9-023a-ef47-920a-b6c26361f871"],
+\>", "Text",ExpressionUUID->"630e61d9-2ae6-4643-a5d5-8e8c498d6ff8"],
 
 Cell["\<\
 The weighted presheaf F(K) = {w : K -> [0,1], \\[Sum] <= 1} over R = Q>=0 \
 glues trivially, so H\\.b0(F) is the packing polytope and \\[CapitalLambda]_k \
 = sup_{p} \\[Sum] p_v is its total-mass hom (= the exclusivity/packing LP). \
 Machinery verbatim from 06-D3-sheaf-cohomology/bridge_weighted_presheaf.wl:\
-\>", "CodeText",ExpressionUUID->"b1f0ae20-1968-334b-a533-4d6e1a2fe328"],
+\>", "CodeText",ExpressionUUID->"b6f69d89-4c96-a24f-a9b4-c039cfd63a2d"],
 
 Cell["\<\
 conormalVerts[n_, k_] := Tuples[Range[0, n - 1], k];
@@ -1037,14 +1123,14 @@ capacityLP[cliqueIdxLists_, nV_] := Module[{p, vars, cons, sol},
    Total[vars] /. sol];
 cliqueQ[n_][verts_] := AllTrue[Subsets[verts, {2}], adjQ[n][#[[1]], #[[2]]] \
 &];\
-\>", "Input",ExpressionUUID->"7470934a-8ffc-d24e-ba2d-046d39318c88"],
+\>", "Input",ExpressionUUID->"c4dea085-6788-e547-921b-7d4ea1858313"],
 
 Cell["\<\
 Degree-0 capacities by exact census + LP: C5 at k=1,2 and the C7 control at \
 k=2. S_k = \\[CapitalLambda]_k^(1/k), with S2(C5) irrational (Sqrt[5], via \
 RootReduce) but the C7 control staying at 7/2 \\[LongDash] NOT \
 \\[CurlyTheta](C7):\
-\>", "CodeText",ExpressionUUID->"56250fd6-6541-1a40-9665-1edcd875a73b"],
+\>", "CodeText",ExpressionUUID->"586ace5b-288f-1547-b7a7-7653da1aace5"],
 
 Cell["\<\
 {g51, vs51} = conormalGraph[5, 1]; lam1c5 = capacityLP[FindClique[g51, \
@@ -1062,7 +1148,7 @@ sfx6[\"S5_degree0\"] = (lam1c5 === 5/2) &&
    (lam2c7 === 49/4 && RootReduce[lam2c7^(1/2)] === 7/2);
 TableForm[sheafDeg0, TableHeadings -> {None, {\"anchor\", \
 \"\\[CapitalLambda]_k\", \"S_k = \\[CapitalLambda]^(1/k)\", \"target\"}}]\
-\>", "Input",ExpressionUUID->"7b3756f0-4aa7-a74e-b993-5c50f8f67006"],
+\>", "Input",ExpressionUUID->"576301b3-39d2-054f-81b9-9a541d8a4c76"],
 
 Cell["\<\
 The C7 control at k=3, by the certificate SANDWICH (no census): the dual \
@@ -1070,7 +1156,7 @@ The C7 control at k=3, by the certificate SANDWICH (no census): the dual \
 giving \\[CapitalLambda]_3(C7) <= 343/8; the uniform primal p=1/8 is feasible \
 since \\[Omega](C7^\\[Or]3)=8 (established in essay005_p3_gluing_lp.wl), \
 giving >=343/8. Per-copy stays 7/2:\
-\>", "CodeText",ExpressionUUID->"b9ff4338-e97c-7741-af94-5a7571329c7d"],
+\>", "CodeText",ExpressionUUID->"44217302-1340-554d-b792-c59bd400d448"],
 
 Cell["\<\
 edgeCubes = Flatten[Table[Tuples[{{i, Mod[i + 1, 7]}, {j, Mod[j + 1, 7]}, {l, \
@@ -1093,7 +1179,7 @@ sfx6[\"S5_c7k3control\"] = (lam3c7 === 343/8) && Simplify[lam3c7^(1/3)] === \
 {\"\\[CapitalLambda]_3(C7)\" -> lam3c7, \"per-copy\" -> \
 Simplify[lam3c7^(1/3)], \"dual coverage [min,max]\" ->
    {dualCoverC7k3[\"coverageMin\"], dualCoverC7k3[\"coverageMax\"]}}\
-\>", "Input",ExpressionUUID->"8ad11877-87a1-f548-9ed6-39499ff266f1"],
+\>", "Input",ExpressionUUID->"77d30c0f-d18a-7446-acce-89364746655f"],
 
 Cell["\<\
 The mechanism, live [T]: an exact integer partition of unity exists iff \
@@ -1101,7 +1187,7 @@ The mechanism, live [T]: an exact integer partition of unity exists iff \
 events (integer \\[CapitalLambda]=5) \\[LongDash] quantum value attained. C7: \
 4 does not divide 49 and 8 does not divide 343, so \\[CapitalLambda] is \
 properly fractional (49/4, 343/8) and no integer partition exists:\
-\>", "CodeText",ExpressionUUID->"6cb02b09-00e3-8745-a956-b689c7a2f64c"],
+\>", "CodeText",ExpressionUUID->"890d125a-c891-c844-9995-d9f88e63ee04"],
 
 Cell["\<\
 pentad[a_, j_] := Table[{i, Mod[a i + j, 5]}, {i, 0, 4}];
@@ -1118,7 +1204,7 @@ sfx6[\"S5_mechanism\"] = c5k2Partition && IntegerQ[lam2c5] &&
 {\"C5,k=2 pentad partition\" -> c5k2Partition,
  TableForm[divisibility, TableHeadings -> {None, {\"case\", \"|V|\", \
 \"\\[Omega]\", \"|V| mod \\[Omega]\", \"\\[CapitalLambda] integer?\"}}]}\
-\>", "Input",ExpressionUUID->"0304bcb5-a9b4-3f4f-b1c2-dfe726bf9402"],
+\>", "Input",ExpressionUUID->"4cc8e86a-c0d6-cc47-8fea-a35618644c26"],
 
 Cell["\<\
 The naive H\\.b9 route is REFUTED as posed [R] (SH-010, F9vii). The candidate \
@@ -1128,7 +1214,7 @@ connecting class \\[Delta](y* mod Z) is (1) UNDEFINED in the fractional case \
 positive-dimensional; an alternate dual has 3000 bad overlaps), and (3) \
 forced to ZERO where defined (connected nerve). The exact counts are read \
 from the committed lane result, not re-typed:\
-\>", "CodeText",ExpressionUUID->"1c1d3942-df0a-854b-9a4f-58d4e11d27c3"],
+\>", "CodeText",ExpressionUUID->"95feaf74-cb2c-6148-91a5-478a153ece37"],
 
 Cell["\<\
 h1json = Import[FileNameJoin[{repoRoot, \"06-D3-sheaf-cohomology\", \
@@ -1144,7 +1230,7 @@ sfx6[\"S5_h1Refuted\"] = (h1BadC7 == 20776) && (h1BadC5alt == 3000) &&
 {\"C7,k=2 bad overlaps (undefined)\" -> h1BadC7, \"C5,k=2 alt-dual bad \
 overlaps (gauge)\" -> h1BadC5alt,
  \"verdict\" -> \"REFUTED as posed; degree-0 result (S_k) untouched\"}\
-\>", "Input",ExpressionUUID->"7fdaff5b-8bf3-494d-908b-450eba66ca75"],
+\>", "Input",ExpressionUUID->"208f7b7c-96c5-084b-8777-5a2524771bbb"],
 
 Cell["\<\
 Single-copy sheaf stratification as a supporting live exhibit: the \
@@ -1152,7 +1238,7 @@ possibilistic global support |S_e| of the KCBS quantum-maximal model is 11 = \
 LucasL[5] (contextual but not strongly so), while the classical control keeps \
 its full support and Wright's supra-quantum box keeps none (strong \
 contextuality). Computed live with the paclet:\
-\>", "CodeText",ExpressionUUID->"fb376780-9ab2-d249-bc29-de51d5d7759a"],
+\>", "CodeText",ExpressionUUID->"73f96158-def3-c34e-a9aa-1757789c3267"],
 
 Cell["\<\
 scen5 = CycleScenario[5];
@@ -1163,9 +1249,9 @@ sfx6[\"S5_possibilistic\"] = (supQuantum === LucasL[5]) && (supQuantum === \
 11) && (supClassical > 0);
 {\"|S_e| quantum\" -> supQuantum, \"= LucasL[5]\" -> (supQuantum === \
 LucasL[5]), \"|S_e| classical\" -> supClassical}\
-\>", "Input",ExpressionUUID->"c5f1783a-6736-e348-8216-883117f6806f"],
+\>", "Input",ExpressionUUID->"1df2196f-87e6-6240-ab59-43fa552681ea"],
 
-Cell["S6. Hawking Two-Sector Illustration", "Subsection",ExpressionUUID->"bebddb5d-8ab6-e04c-8fbc-8d9365394c7d"],
+Cell["S6. Hawking Two-Sector Illustration", "Subsection",ExpressionUUID->"e04f7b78-13e6-874f-bb63-4530967bcae8"],
 
 Cell["\<\
 The framework's two lenses applied to analogue Hawking radiation, which \
@@ -1178,40 +1264,40 @@ algebra, and bridge to the qubit CF anchors. Honesty header: this is \
 Hawking's 1974 semiclassical KINEMATICS discretized per mode as exact \
 symplectic algebra \\[LongDash] a parameterized background, not a derivation \
 from the Einstein equations.\
-\>", "Text",ExpressionUUID->"90592df8-65a7-b748-aeac-b02d840816f0"],
+\>", "Text",ExpressionUUID->"1a60f265-a8d6-0d46-a484-bbd4fcaaa7ba"],
 
 Cell["\<\
 Load the Gaussian engine + Hawking physics + witnesses/bridge with the \
 module's own scoreboard suppressed (GaussianHawkingLoadOnly guard), exposing \
 HawkingSqueezing, CHSHofR, BuschParentaniDelta, HawkingGenerators, \
 CVDLAAudit, ...:\
-\>", "CodeText",ExpressionUUID->"a0ac9dc1-4e67-6f40-96c3-2ca27972d48c"],
+\>", "CodeText",ExpressionUUID->"62c9d4e4-1e72-4145-ab57-325c7a77f9bc"],
 
 Cell["\<\
 Block[{GaussianHawkingLoadOnly = True},
   Get[FileNameJoin[{repoRoot, \"08-HK-hawking\", \"hawking_gaussian_sector.wl\
 \"}]]];\
-\>", "Input",ExpressionUUID->"99190b02-9921-ad43-969d-982df7050055"],
+\>", "Input",ExpressionUUID->"044a56a6-3cfc-6d4e-a910-d269e88dc8fb"],
 
 Cell["\<\
 A1 Planck [T]. The horizon acts per frequency as a two-mode squeezer with \
 tanh(r_w)\\.b2 = Exp[-w/T_H]; the Hawking-mode occupation Sinh(r_w)\\.b2 is \
 then EXACTLY the Planck/Bose factor. Re-proven live by FullSimplify:\
-\>", "CodeText",ExpressionUUID->"1f6299af-c6e8-a646-916b-8c919ceb3936"],
+\>", "CodeText",ExpressionUUID->"1cc1adb5-0580-5241-a199-895add3c8029"],
 
 Cell["\<\
 a1Planck = FullSimplify[Sinh[HawkingSqueezing[w, TH]]^2 == 1/(Exp[w/TH] - 1), \
 Assumptions -> {w > 0, TH > 0}];
 sfx6[\"S6_A1_Planck\"] = TrueQ[a1Planck];
 a1Planck\
-\>", "Input",ExpressionUUID->"2e443beb-4d12-0243-926c-39f1a0824d1e"],
+\>", "Input",ExpressionUUID->"48e7242c-aec5-0448-9bda-b2e2902ea622"],
 
 Cell["\<\
 A2 entanglement = thermality [T]. The reduced Hawking-mode state's von \
 Neumann entropy equals the thermal entropy of a mode at occupation nbar = \
 Sinh(r)\\.b2 \\[LongDash] the conceptual core of Hawking's result. Re-proven \
 live:\
-\>", "CodeText",ExpressionUUID->"015e20fd-9890-f64b-a89a-15a69e6175f9"],
+\>", "CodeText",ExpressionUUID->"617f9583-5c75-7c41-ae96-c8f47e12a414"],
 
 Cell["\<\
 a2Thermal = Module[{svn, formN},
@@ -1220,13 +1306,13 @@ a2Thermal = Module[{svn, formN},
    TrueQ@FullSimplify[svn == formN, Assumptions -> r > 0]];
 sfx6[\"S6_A2_thermal\"] = a2Thermal;
 a2Thermal\
-\>", "Input",ExpressionUUID->"91c118f0-d3ca-904f-aa19-3e2c8156bac0"],
+\>", "Input",ExpressionUUID->"10d02944-9348-7946-8d7d-7c585998d3bc"],
 
 Cell["\<\
 A3 log-negativity [T]: E_N = 2r/Log[2] for the two-mode squeezed vacuum. A4 \
 Cauchy-Schwarz [T]: the second-moment ratio theta(nbar) = 1 + 1/(2 nbar) > 1 \
 certifies the nonclassical correlation. Both re-proven live:\
-\>", "CodeText",ExpressionUUID->"f775ffb8-a45a-9c45-b3b0-d7cd0e8987f8"],
+\>", "CodeText",ExpressionUUID->"f71d3aff-e049-024e-94cf-fb79da7eafb4"],
 
 Cell["\<\
 a3LogNeg = TrueQ@FullSimplify[Max[0, -Log2[Exp[-2 r]]] == 2 r/Log[2], \
@@ -1239,14 +1325,14 @@ r], VacuumState[2]]] == -Sinh[r]^2, Assumptions -> r > 0];
 sfx6[\"S6_A3_A4_A5\"] = a3LogNeg && a4CS && a5BP;
 {\"A3 E_N=2r/Log2\" -> a3LogNeg, \"A4 \\[Theta]=1+1/(2nbar)\" -> a4CS, \"A5 \
 Busch-Parentani \\[CapitalDelta]=-Sinh[r]\\.b2\" -> a5BP}\
-\>", "Input",ExpressionUUID->"a0881b40-ef6d-8941-a4ba-29c8433a3e29"],
+\>", "Input",ExpressionUUID->"fbb85fa8-1b04-ef4f-959e-e42edc49b0a8"],
 
 Cell["\<\
 A6 CHSH bridge [T]. The GKMR parity-pseudospin CHSH of the two-mode squeezed \
 pair is 2 Sqrt[1 + Tanh[2r]^2], rising to the Tsirelson value 2 Sqrt[2] as r \
 -> Infinity (the EPR limit, where the CV pair becomes a qubit Bell pair). \
 Symbolic form and limit, live:\
-\>", "CodeText",ExpressionUUID->"834b482e-3a43-8246-b0bd-896c4821162b"],
+\>", "CodeText",ExpressionUUID->"01fd2bb0-0853-9b4b-92fa-e564b66620fb"],
 
 Cell["\<\
 chshSym = CHSHofR[r];
@@ -1254,14 +1340,14 @@ chshLimit = Limit[CHSHofR[r], r -> Infinity];
 sfx6[\"S6_A6_CHSH\"] = (chshSym === 2 Sqrt[1 + Tanh[2 r]^2]) && (chshLimit \
 === 2 Sqrt[2]);
 {\"CHSH(r)\" -> chshSym, \"r\\[RightArrow]\\[Infinity] limit\" -> chshLimit}\
-\>", "Input",ExpressionUUID->"96afcd85-b8a6-8f4d-b5ff-fa2327289dbe"],
+\>", "Input",ExpressionUUID->"55c46185-5068-6249-870c-2b364fc32c0f"],
 
 Cell["\<\
 A8 CV-DLA [T/C]. The Hawking channel's symplectic generators close to \
 sp(4,R), dim 10 \\[LongDash] genuine (ACTIVE) squeezing, not passive u(2). So \
 the sector is NOT passive-linear-optics-emulable, though it IS \
 Gaussian-classically-simulable. Exact Lie closure, live:\
-\>", "CodeText",ExpressionUUID->"51676ef4-2fb8-ed42-89d1-632795117a87"],
+\>", "CodeText",ExpressionUUID->"58d84894-7447-6b42-8f80-4bff40f71a00"],
 
 Cell["\<\
 cvAudit = CVDLAAudit[2, HawkingGenerators[]];
@@ -1270,7 +1356,7 @@ sfx6[\"S6_A8_DLAactive\"] = (cvAudit[\"dim\"] == 10) && (cvAudit[\"spn\"] == \
    StringContainsQ[cvAudit[\"verdict\"], \"ACTIVE\"];
 {\"CV-DLA dim\" -> cvAudit[\"dim\"], \"sp(4,R)\" -> cvAudit[\"spn\"], \
 \"verdict\" -> cvAudit[\"verdict\"]}\
-\>", "Input",ExpressionUUID->"7993dc50-3581-bf4d-8c78-faa3f9ce4073"],
+\>", "Input",ExpressionUUID->"955288a6-65c1-cd4d-ab0a-13f02fc4fca9"],
 
 Cell["\<\
 A7ii structural negative [T] (HK-003, CF \\[Congruent] 0). The Cauchy-Schwarz \
@@ -1280,7 +1366,7 @@ hence extends to a global section and has contextual fraction identically \
 zero \\[LongDash] the graph-invariant correlation lens cannot even be posed \
 for this witness class. Verified live on single-context covers of several \
 witness sizes (the K=2,4,... of HK-003), for arbitrary distributions:\
-\>", "CodeText",ExpressionUUID->"d0af864e-e0bc-c94b-9472-c548329f91c9"],
+\>", "CodeText",ExpressionUUID->"d294e9f1-a51d-6844-9a7f-a9cab7bc0875"],
 
 Cell["\<\
 SeedRandom[137];
@@ -1291,7 +1377,7 @@ Normalize[RandomReal[1, 2^K], Total]},
 sfx6[\"S6_A7ii_CFzero\"] = AllTrue[cfSingleContext, #[[2]] == 0 &];
 TableForm[cfSingleContext, TableHeadings -> {None, {\"witness size K\", \"CF \
 (single context)\"}}]\
-\>", "Input",ExpressionUUID->"6d905263-d646-3e49-9aba-e6ae86ff34e6"],
+\>", "Input",ExpressionUUID->"6a53ef63-e5f0-9e49-8b8a-3859f46d1006"],
 
 Cell["\<\
 The qubit information sector [T]. On the isotropic CHSH family CF(S) = \
@@ -1299,7 +1385,7 @@ The qubit information sector [T]. On the isotropic CHSH family CF(S) = \
 CF(2.25)=1/8 \\[LongDash] the same numbers the qubit Page/Hayden-Preskill \
 suite (04-cluster-state-mbqc/cct_mbqc_hawking.wl) certifies. Recomputed live:\
 \
-\>", "CodeText",ExpressionUUID->"d7c9d785-d4db-7446-9340-572a2b675544"],
+\>", "CodeText",ExpressionUUID->"ecbbd209-f8d7-e444-923a-a9d75b3b2137"],
 
 Cell["\<\
 cfOfS[s_] := Max[0, (s - 2)/2];
@@ -1309,7 +1395,7 @@ Sqrt[2] - 1) &&
    (cfOfS[2.25] == 1/8);
 {\"CF(2)\" -> qubitCF[[1]], \"CF(2\\[Sqrt]2)\" -> qubitCF[[2]], \"CF(2.25)\" \
 -> qubitCF[[3]]}\
-\>", "Input",ExpressionUUID->"dde4004a-34c9-4446-bcd3-c009555ad88f"],
+\>", "Input",ExpressionUUID->"85776f73-37ee-6c4a-9fcb-de10b90fada0"],
 
 Cell["\<\
 The EPR bridge [T]. The two sectors join at the r -> Infinity EPR limit. The \
@@ -1317,7 +1403,7 @@ qubit working point B = 2.25 maps to an effective Gaussian squeezing r_eff by \
 solving CHSH(r) = 2.25 live (2 Sqrt[1 + Tanh[2r]^2] = 2.25 \\[RightArrow] \
 r_eff \\[TildeTilde] 0.285020), completing the two-tier emulability verdict: \
 Gaussian sector emulable, qubit sector reproducible, both certified:\
-\>", "CodeText",ExpressionUUID->"e373ce33-92c6-064d-a1de-46c1f54266c9"],
+\>", "CodeText",ExpressionUUID->"84f04713-5784-ad46-9994-8082409d977a"],
 
 Cell["\<\
 rEff225 = r /. FindRoot[CHSHofR[r] == 9/4, {r, 0.3}, WorkingPrecision -> 20];
@@ -1325,31 +1411,31 @@ sfx6[\"S6_EPRbridge\"] = Abs[CHSHofR[rEff225] - 2.25] < 10^-10 && Abs[rEff225 \
 - 0.285020] < 10^-4;
 {\"r_eff at CHSH=2.25\" -> N[rEff225, 8], \"CHSH(r_eff)\" -> \
 N[CHSHofR[rEff225], 6]}\
-\>", "Input",ExpressionUUID->"fc3e3d76-4202-b34a-90cc-111086db2ca2"],
+\>", "Input",ExpressionUUID->"b6649f66-9231-0f41-a01b-9d22431c5f0c"],
 
-Cell["Verification", "Subsection",ExpressionUUID->"830ec051-7366-5041-8edc-34889208ded5"],
+Cell["Verification", "Subsection",ExpressionUUID->"621646bf-52e0-8040-b1b5-dee6c58083b7"],
 
 Cell["\<\
 Every key is a live Boolean recomputed above; the sections pass iff all are \
 True:\
-\>", "CodeText",ExpressionUUID->"3275b787-5880-5742-9376-3513bc4a84f3"],
+\>", "CodeText",ExpressionUUID->"5c59705e-6721-d84d-b357-42dd89821955"],
 
 Cell["\<\
 SectionsFourToSixVerification = Append[sfx6, \"OK\" -> (And @@ \
 Values[sfx6])];
 Column[{TableForm[List @@@ Normal[SectionsFourToSixVerification]],
    \"OK\" -> SectionsFourToSixVerification[\"OK\"]}]\
-\>", "Input",ExpressionUUID->"f8f8830b-b837-3846-96f5-9c9e04ceb0a5"],
+\>", "Input",ExpressionUUID->"cdd261f9-61d1-1c4c-b271-2fd7da2495ee"],
 
 Cell["\<\
 Evaluating Black-Box Physics through Optical Emulation \\[LongDash] Sections \
 7-10\
-\>", "Section",ExpressionUUID->"62f08eb6-7f85-214d-a86a-2c54661ff888"],
+\>", "Section",ExpressionUUID->"ffcb0c75-e6a6-6d4e-b021-0bae8bb31f59"],
 
 Cell["\<\
 Section Builder C: the constructive mirror, the gates that failed, the \
 named-hypothesis frontier, and methods\
-\>", "Text",ExpressionUUID->"5e7d590d-7985-ee47-a436-8186670d2d05"],
+\>", "Text",ExpressionUUID->"dcf95634-6343-034e-8143-adad6dbf7348"],
 
 Cell["\<\
 Hubert Ko\\[LSlash]cz \\[LongDash] July 2026. This is the S7-S10 fragment of \
@@ -1363,7 +1449,7 @@ Labeling discipline mirrors docs/FRAMEWORK-2026-07-13.md: [T] \
 theorem/machine-verified, [C] certified numeric, [R] refuted route (an \
 established negative, first-class), [H] named hypothesis (open). Run headless \
 via runners/RunEssaySectionsC.wl.\
-\>", "Text",ExpressionUUID->"9e034859-0dea-8445-a048-d5f42281ae75"],
+\>", "Text",ExpressionUUID->"68b79765-be52-334c-87fd-7e81fb4adb31"],
 
 Cell["\<\
 Loader. Locate the repository root from this file's own path (Get sets \
@@ -1371,7 +1457,7 @@ $InputFileName), load the BlackBox paclet and the EMU master compiler, and \
 repair the Global`-shadowing pitfall that wolframscript's whole-file \
 tokenisation would otherwise introduce (documented in \
 CertifyingQuantumness.wl / RunEssay.wl):\
-\>", "CodeText",ExpressionUUID->"061e5ebd-d9b0-7d4b-a61f-b74f0db27f6a"],
+\>", "CodeText",ExpressionUUID->"29b41cef-fb62-fa43-a268-9d5470d6ed59"],
 
 Cell["\<\
 $BlackBoxRepoRoot = Module[
@@ -1448,13 +1534,13 @@ Quiet[Remove /@ Select[\"Global`\" <> # & /@ \
 Names[\"HubertKolcz`BlackBox`*\"], NameQ]];
 Quiet[Remove /@ Select[\"Global`\" <> # & /@ \
 Names[\"HubertKolcz`OpticalCompiler`*\"], NameQ]];\
-\>", "Input",ExpressionUUID->"54e98bc3-e430-aa40-80e1-c71bf8e2ccd9"],
+\>", "Input",ExpressionUUID->"d70e4c80-a5c2-8f4c-9652-27483c41c9a8"],
 
 Cell["\<\
 One reader for the committed heavy-compute artifacts (Python search / LP / \
 cohomology verdicts). Their numbers enter the kernel verified from the \
 committed files, never re-typed:\
-\>", "CodeText",ExpressionUUID->"61349def-a9a2-0e41-b303-2bc6717b2299"],
+\>", "CodeText",ExpressionUUID->"dd8e867d-36fd-b446-b5b3-11ed5f2b3bcc"],
 
 Cell["\<\
 readResult[relpath_] := Import[FileNameJoin[Prepend[FileNameSplit[relpath], \
@@ -1462,11 +1548,11 @@ $BlackBoxRepoRoot]], \"RawJSON\"];
 h1Result = \
 readResult[\"06-D3-sheaf-cohomology/final_h1_cocycle_results.json\"];
 erg003 = readResult[\"02-D1-theory-frontier/erg003_verdict.json\"];\
-\>", "Input",ExpressionUUID->"9837832a-25c5-b847-b5c1-1b5e56f681b0"],
+\>", "Input",ExpressionUUID->"518a8014-b43f-154a-91d0-a2ae2aff0104"],
 
 Cell["\<\
 S7 \\[LongDash] The Constructive Mirror: Emulator Blueprints (EMU-001, F8)\
-\>", "Subsection",ExpressionUUID->"a9f146c8-b275-4340-8625-607cabc97049"],
+\>", "Subsection",ExpressionUUID->"95d21063-aa01-a246-9e6e-022e3d26d93e"],
 
 Cell["\<\
 Sections 1-6 read the device: given a table, decide genuine-vs-emulable \
@@ -1479,65 +1565,65 @@ so(3)/Sp(2n,\\[DoubleStruckCapitalR]) interferometer versus block-local \
 leaf-confined intensity emulator. Every blueprint self-certifies (gate A5, \
 VerifyBlueprint) before it is trusted: it re-simulates its own optics and \
 checks the reproduced statistics against the target. [T]\
-\>", "Text",ExpressionUUID->"aaf2c304-d916-dc49-be28-585972f2f028"],
+\>", "Text",ExpressionUUID->"5b0f5077-1f72-724c-89db-8881e348fbbe"],
 
 Cell["\<\
 Demo 1 \\[LongDash] the Lapkiewicz KCBS pentagon reconstruction. The compiler \
 emits a Layer-1 Givens/beamsplitter cascade [P,T1,T2,T1,T2] on three modes:\
-\>", "CodeText",ExpressionUUID->"3dc3ae59-4eb4-4a43-b4b5-710a2049767f"],
+\>", "CodeText",ExpressionUUID->"f75df17d-4316-4249-87ec-7dad8fc8193b"],
 
 Cell["\<\
 bpKCBS = EmitBlueprint[<|\"Scenario\" -> \"KCBS\"|>];
 {bpKCBS[\"Layer\"], bpKCBS[\"ModeCount\"], #[\"Label\"] & /@ \
 bpKCBS[\"Stages\"]}\
-\>", "Input",ExpressionUUID->"42420ca0-cf05-5645-b4dc-a068ab640682"],
+\>", "Input",ExpressionUUID->"4bfaa1df-f835-c241-a3b8-4ca4d1789c2d"],
 
 Cell["\<\
 The beamsplitter mixing angle is the golden identity of the pentagon: \
 cos\\[Theta] = 1/\\[Phi] exactly, in exact arithmetic \\[LongDash] the \
 Lapkiewicz cascade's fingerprint (not a fitted float):\
-\>", "CodeText",ExpressionUUID->"49703b6d-989e-b048-a858-19fff799c013"],
+\>", "CodeText",ExpressionUUID->"d4d246d5-9947-f540-a344-d46f69bac6dd"],
 
 Cell["\<\
 kcbsT1 = SelectFirst[bpKCBS[\"Stages\"], #[\"Label\"] === \"T1\" &];
 kcbsAngle = kcbsT1[\"Parameter\"][\"Exact\"];
 {kcbsAngle, Simplify[Cos[kcbsAngle]], Simplify[Cos[kcbsAngle] - \
 1/GoldenRatio] === 0}\
-\>", "Input",ExpressionUUID->"5ee891ff-9221-ba46-8fee-8128f4d8519e"],
+\>", "Input",ExpressionUUID->"32ec57c1-e03b-e045-baa8-5437fe3f3dc0"],
 
 Cell["\<\
 The blueprint's geometric lens (G7): the cascade's dynamical Lie algebra \
 closes to the full so(3) at commutator depth one \\[LongDash] generator span \
 2, DLA dimension 3 \\[LongDash] so the compiler labels it GENUINE, not \
 leaf-confined:\
-\>", "CodeText",ExpressionUUID->"5a90660a-d2fa-4c47-a678-4ddf6cfaeadf"],
+\>", "CodeText",ExpressionUUID->"b90ee932-6b52-3b4c-a230-a40e1ed92ee6"],
 
-Cell["bpKCBS[\"CertificationVerdict\"]", "Input",ExpressionUUID->"a7def569-bb76-fd4c-8aa4-7e199635b15a"],
+Cell["bpKCBS[\"CertificationVerdict\"]", "Input",ExpressionUUID->"161208fa-1b73-da41-8288-a565267d2748"],
 
 Cell["\<\
 Self-certification (gate A5): the emitted optics is re-simulated and its \
 statistics compared to the KCBS target. The verdict must be OK -> True with \
 round-trip deviation at machine epsilon:\
-\>", "CodeText",ExpressionUUID->"5df4c1d9-e293-e54b-a0ca-64c6b95168a2"],
+\>", "CodeText",ExpressionUUID->"d990d412-72ca-714a-b8ef-39f806c59a55"],
 
 Cell["\<\
 vKCBS = VerifyBlueprint[bpKCBS];
 {vKCBS[\"OK\"], vKCBS[\"StatisticsMatch\"], vKCBS[\"MaxDeviation\"], \
 vKCBS[\"DLAVerdictConsistent\"]}\
-\>", "Input",ExpressionUUID->"58cea754-1fa2-3246-bcb5-7e8c75a19dd3"],
+\>", "Input",ExpressionUUID->"c12ed127-a1e9-ab43-b00e-849f690e3451"],
 
 Cell["\<\
 Demo 2 \\[LongDash] the C7 heptagon cascade (Layer-1, six Givens stages). Its \
 composed exclusivity value obeys the numeric identity S = 7 - 4 \
 \\[CurlyTheta](C7), recomputed live from the Lov\\[AAcute]sz number of the \
 7-cycle; the blueprint self-certifies genuine:\
-\>", "CodeText",ExpressionUUID->"b96aed76-6931-304e-b165-6fcb6e2c7f38"],
+\>", "CodeText",ExpressionUUID->"5035b32a-169a-5640-8d51-f0f03e03e2c8"],
 
 Cell["\<\
 bpC7 = EmitBlueprint[<|\"Scenario\" -> \"Cn\", \"n\" -> 7|>];
 {bpC7[\"Layer\"], VerifyBlueprint[bpC7][\"OK\"], 7 - 4 \
 LovaszTheta[CycleGraph[7]]}\
-\>", "Input",ExpressionUUID->"e9c7ab16-22b7-0b4b-ad40-eb803596db4f"],
+\>", "Input",ExpressionUUID->"d7c9d598-28bf-2648-bf6d-8afebae5d432"],
 
 Cell["\<\
 Demo 3 \\[LongDash] the cct pentagon-mesh chain (reps = 2). This is a \
@@ -1545,31 +1631,31 @@ block-local emulator: single-photon linear optics reproduces each block's \
 table but constructs no globally-entangled cluster (the KLM caveat, honest in \
 every header). Its geometric lens reports LEAF-CONFINED (DLA < 3 per block) \
 \\[LongDash] the constructive shadow of Prop. 2:\
-\>", "CodeText",ExpressionUUID->"3886850e-7845-ea43-b164-e8af3e8edb8c"],
+\>", "CodeText",ExpressionUUID->"45a7b072-84cc-df48-886f-f00dfb347fcd"],
 
 Cell["\<\
 bpMesh = EmitBlueprint[<|\"Word\" -> \"cct\", \"Reps\" -> 2|>];
 {bpMesh[\"Layer\"], VerifyBlueprint[bpMesh][\"OK\"],
  Union[#[\"LeafConfined\"] & /@ Values[bpMesh[\"CertificationVerdict\"]]]}\
-\>", "Input",ExpressionUUID->"ee1f3538-626f-7b4c-b74f-e550cf8fd61c"],
+\>", "Input",ExpressionUUID->"b567fc77-cc81-d847-b311-53a677b5c500"],
 
 Cell["\<\
 The committed schematics (re-emitted by runners/RunOpticalCompiler.wl so they \
 never drift from the numbers above): the KCBS Layer-1 cascade and the cct \
 mesh. Displayed from the compiler's own committed output.\
-\>", "CodeText",ExpressionUUID->"2684463c-bb6a-d541-99b8-f6e690abdfb5"],
+\>", "CodeText",ExpressionUUID->"2343f0ab-96d0-7b4e-8af5-2ed7dc03b1b2"],
 
 Cell["\<\
 With[{f = FileNameJoin[{$BlackBoxRepoRoot, \"09-EMU-optical-compiler\", \
 \"schematics\", \"demo1_kcbs_pentagon_L1.png\"}]},
   If[FileExistsQ[f], Import[f], Missing[\"figure unavailable\"]]]\
-\>", "Input",ExpressionUUID->"ef07ad10-2f18-7844-b9ab-20c40540139d"],
+\>", "Input",ExpressionUUID->"f77e3bf4-d52d-7149-9049-5bd9d5485fd6"],
 
 Cell["\<\
 With[{f = FileNameJoin[{$BlackBoxRepoRoot, \"09-EMU-optical-compiler\", \
 \"schematics\", \"demo3_cct_mesh_reps2.png\"}]},
   If[FileExistsQ[f], Import[f], Missing[\"figure unavailable\"]]]\
-\>", "Input",ExpressionUUID->"6840cf7e-7ded-f54d-99e3-7f35984e4d03"],
+\>", "Input",ExpressionUUID->"6043e682-0721-e148-b203-d3b41edaa81d"],
 
 Cell["\<\
 Reading. The compiler closes the loop opened in S2-S3: the very construction \
@@ -1578,11 +1664,11 @@ intensity emulator, Prop. 1) is here emitted as an explicit optical schedule \
 and stamped LEAF-CONFINED by its own geometric lens \\[LongDash] while the \
 genuine Lapkiewicz cascade is stamped GENUINE with DLA = 3. Synthesis and \
 certification are the same theorem read in two directions.\
-\>", "Text",ExpressionUUID->"cf0e7b1c-9646-cf41-af11-89b4882beded"],
+\>", "Text",ExpressionUUID->"9b83b02c-df3b-ce44-9041-aea8ae62ccee"],
 
 Cell["\<\
 S8 \\[LongDash] Gates That Failed (the credibility signature, F9)\
-\>", "Subsection",ExpressionUUID->"865afdc3-a0b9-1f46-93f6-19bee78e2851"],
+\>", "Subsection",ExpressionUUID->"079ff188-5029-6741-80b4-f9e29e2e76e0"],
 
 Cell["\<\
 Negative results are first-class in this framework: they fix the boundary of \
@@ -1593,27 +1679,27 @@ one-line refutation, and where the proof lives. Numbers that can be cheaply \
 recomputed are recomputed live here; the heavy Python/LP verdicts are read \
 from their committed result files or cited to the framework's refuted-route \
 ledger.\
-\>", "Text",ExpressionUUID->"b8493f87-efb3-9042-adca-49ba3c5b3a11"],
+\>", "Text",ExpressionUUID->"7722a870-7eed-254a-b476-dafb1f8e4b36"],
 
 Cell["\<\
 (i) The sheaf Laplacian [R] (SH-004 / F9iv). Pre-registered as a \
 contextuality measure; its harmonic residual is a no-disturbance projector \
 \\[LongDash] it vanishes on classical, quantum, and Wright behaviours alike, \
 so it is blind to contextuality. Recomputed live:\
-\>", "CodeText",ExpressionUUID->"8697265d-3d0f-3640-932a-f53735af2bbe"],
+\>", "CodeText",ExpressionUUID->"abf8327d-305b-9444-b1ce-ae6c22f12f21"],
 
 Cell["\<\
 deltaC5 = CycleCoboundary[5];
 Chop[HarmonicResidual[deltaC5, N@CycleModel[5, #]] & /@ {\"Classical\", \
 \"Quantum\", \"Wright\"}]\
-\>", "Input",ExpressionUUID->"96f63478-a222-ec44-9b2d-a2e17f933b4d"],
+\>", "Input",ExpressionUUID->"fbf0b094-a126-b540-83ac-86d5ac560e69"],
 
 Cell["\<\
 (ii) The affine \\[Alpha]-credit tilt [R] (F9i). No affine-in-f_c certificate \
 family can have limiting gap equal to gap(cct): the linear correction is \
 inert against the kinked \\[Alpha]-floor. Proof: 05-CERT-epsilon-certificates \
 (CONVERGENCE-ANALYSIS-2026-07-13.md) / FRAMEWORK F9i. [R, theorem]\
-\>", "CodeText",ExpressionUUID->"45c0c808-c930-914b-ab48-355bfd919001"],
+\>", "CodeText",ExpressionUUID->"1142c4b0-c5c4-114f-8f2e-5560b5918d37"],
 
 Cell["\<\
 (iii) The Legendre \\[Theta]-frontier [R, theorem] (F9viii / CERT-004). A \
@@ -1626,12 +1712,12 @@ recomputed live below \\[LongDash] worse than the flat certificate \
 \\[CapitalGamma]\\:2089. File-sourced: hull(2/3) = 3/2, cct \\[Theta]-bar = \
 1.4032309 (0.0967691 below the hull), from \
 03-MESH-pentagon-composition/final_cct_hull.py.\
-\>", "CodeText",ExpressionUUID->"36f5cb39-cf4e-a64f-a5ee-d2843f1402be"],
+\>", "CodeText",ExpressionUUID->"a971cc31-4e7e-3045-a6f8-b959b0406c8b"],
 
 Cell["\<\
 legendreFloor = 3/2 - 4/3;
 {legendreFloor, N[legendreFloor]}\
-\>", "Input",ExpressionUUID->"3f37d0ac-5dca-b449-90a3-cdf0b8a210b2"],
+\>", "Input",ExpressionUUID->"8bfd8a9c-b8e1-d540-a5a7-e4842f41b198"],
 
 Cell["\<\
 (iv) The \\[DoubleStruckCapitalQ]/\\[DoubleStruckCapitalZ] H\\.b9 detector \
@@ -1642,14 +1728,14 @@ UNDEFINED in the fractional/stuck case (the canonical C7,k=2 dual is not a \
 positive-dimensional; an alternate C5 optimum breaks the cocycle condition), \
 and FORCED to zero wherever it is defined (connected nerve). Its two \
 diagnostic bad-overlap counts, read live from the committed cohomology result:\
-\>", "CodeText",ExpressionUUID->"27cdb1ce-dab6-3e41-bfe8-896f8931aa50"],
+\>", "CodeText",ExpressionUUID->"dd8e0113-427e-4647-9a34-7b1a87e5744b"],
 
 Cell["\<\
 {h1Result[\"obstruction_1_cocycle_prerequisite\"][\"C7_k2_canonical_dual\"][\"\
 bad_overlaps\"],
  h1Result[\"obstruction_2_gauge_noninvariance\"][\"C5_k2\"][\"D_half_y_1over2_\
 on_both_partitions\"][\"bad_overlaps\"]}\
-\>", "Input",ExpressionUUID->"e3fbaa21-c50d-5442-a536-98effdedec92"],
+\>", "Input",ExpressionUUID->"f763daed-dd30-de45-b74b-21ae08313d8c"],
 
 Cell["\<\
 (v) The Delsarte / Schrijver \\[Theta]' LP [R, theorem] (F9ix / ERG-004a). On \
@@ -1659,23 +1745,23 @@ Lov\\[AAcute]sz ceiling \\[LongDash] so the LP can neither close (< 40) nor \
 tighten (< 46) the Paley bracket. The ceiling at k = 3 is Floor[13^(3/2)], \
 recomputed live; the 13^(k/2) identity is the file-sourced theorem \
 (02-D1-theory-frontier/final_paley13_lp.py):\
-\>", "CodeText",ExpressionUUID->"fbd348cb-43bb-6445-8e14-d5edbbdf32d0"],
+\>", "CodeText",ExpressionUUID->"ed11f6ba-5fb4-124a-b286-addc1c2f72e0"],
 
-Cell["{13^(3/2) // N, Floor[13^(3/2)]}", "Input",ExpressionUUID->"24b040da-a3a8-d242-8634-dc1c9e09e218"],
+Cell["{13^(3/2) // N, Floor[13^(3/2)]}", "Input",ExpressionUUID->"b61c85e4-6402-034e-8eed-08e116b102e7"],
 
 Cell["\<\
 (vi) The Ramsey obstruction [R] (F9v). The Choudhary-Barbosa Ramsey technique \
 provably cannot certify \\[Omega] <= 17 for the mixed nonagon cell (its bound \
 is too weak for this graph). Proof: FRAMEWORK F9v / ERG-003 analysis. [R, \
 theorem]\
-\>", "CodeText",ExpressionUUID->"89f4ca5b-8b33-1248-a626-8b91f8687064"],
+\>", "CodeText",ExpressionUUID->"d393d4e6-a656-0241-ab8e-c49eff27153c"],
 
 Cell["\<\
 (vii) The ergodic-sheaf category error [R] (F9ii). The proposed \
 static<->dynamic unification is a category error: the cross-side T->0 limit \
 yields packing 5/2, not a certificate value \\[CapitalGamma], and does not \
 select cct. Proof: 06-D3 / FRAMEWORK F9ii. [R]\
-\>", "CodeText",ExpressionUUID->"5f1426b1-56ab-aa42-9fb8-64a93c1ca503"],
+\>", "CodeText",ExpressionUUID->"98cb156c-d771-6440-a726-1005ca5f6a92"],
 
 Cell["\<\
 (viii) Bound-inertness [R] (F9x / ERG-004b). Zero of the 26 pentagram \
@@ -1683,9 +1769,9 @@ families are bound-eliminable (the inertness lemma: \\[Omega](cn(Q_m)) >= 8 - \
 s_m meets the generator constraint), so S = 17 is search-bound, not \
 bound-decidable. The family count is read live from the committed ERG-003 \
 verdict:\
-\>", "CodeText",ExpressionUUID->"5699b506-0d2f-7647-81fb-d9aad9694422"],
+\>", "CodeText",ExpressionUUID->"0c921c8b-d528-bb45-a1bf-4df09f76e2c2"],
 
-Cell["{Length[erg003[\"families\"]], erg003[\"counts\"][\"NO\"]}", "Input",ExpressionUUID->"3605315b-7d29-3240-84c1-b843ae635d92"],
+Cell["{Length[erg003[\"families\"]], erg003[\"counts\"][\"NO\"]}", "Input",ExpressionUUID->"81c10b6c-37a3-0a4b-85b8-03f2cb49c1ec"],
 
 Cell["\<\
 Reading. Four of these eight are theorems of impossibility (affine, Legendre, \
@@ -1695,12 +1781,12 @@ one is a pre-registered measure that failed its own gate (Laplacian); one \
 prices the residual search honestly (bound-inertness). A framework that can \
 only report its successes cannot locate its own boundary \\[LongDash] this \
 section is where the boundary is drawn.\
-\>", "Text",ExpressionUUID->"711c742b-9e03-8c41-bffb-ed1e51b4811d"],
+\>", "Text",ExpressionUUID->"736ef594-a28f-5e45-a99d-9f59c0270115"],
 
 Cell["\<\
 S9 \\[LongDash] The Framework under Named Hypotheses (the honest frontier, \
 Layer 1)\
-\>", "Subsection",ExpressionUUID->"0ea4edb0-2c97-e64f-b217-26c5149e4e9b"],
+\>", "Subsection",ExpressionUUID->"4d0b89f6-234f-3143-a0e9-47378bd4a723"],
 
 Cell["\<\
 The framework is stated COMPLETELY: the established layer (S1-S8, \
@@ -1712,12 +1798,12 @@ moved into Layer 0 (F10, F11), while the H2 \\[Delta]-route was refuted \
 (F9vii) and reopened as the weaker H2'. The proof-obligation ledger below is \
 parsed LIVE from docs/FRAMEWORK-2026-07-13.md so the essay tracks the living \
 document rather than a snapshot. [H]\
-\>", "Text",ExpressionUUID->"fa5ad4b1-e89a-8d4f-a089-4392892ced1c"],
+\>", "Text",ExpressionUUID->"13ab05ac-4aaa-534d-87bb-5ad996e03d38"],
 
 Cell["\<\
 Parse the Layer-3 proof ledger (the \"what official mathematics still owes \
 the framework\" table) directly from the framework file and render it:\
-\>", "CodeText",ExpressionUUID->"6acc2119-b812-7f43-91dc-f1cbd2cead04"],
+\>", "CodeText",ExpressionUUID->"efc391e1-89d8-8341-afaf-b80a29c8955d"],
 
 Cell["\<\
 frameworkText = Import[FileNameJoin[{$BlackBoxRepoRoot, \"docs\", \
@@ -1730,17 +1816,17 @@ problem\" ~~ ___] &]];
 hRows = splitRow /@ Select[frameworkLines, StringMatchQ[#, \"| H\" ~~ ___] \
 &];
 {Length[hRows], hHeader}\
-\>", "Input",ExpressionUUID->"090ea45f-148a-7649-84b2-963f6be13ce1"],
+\>", "Input",ExpressionUUID->"d85ce288-f354-4846-8c69-c9699493bf72"],
 
 Cell["\<\
 Grid[Prepend[hRows, hHeader], Frame -> All, Alignment -> Left,
  Background -> {None, {LightBlue, None}}, ItemStyle -> \"Text\"]\
-\>", "Input",ExpressionUUID->"2af8ed19-2886-a845-a3fd-cf741e907a62"],
+\>", "Input",ExpressionUUID->"a2747f24-dd15-ab4a-bb9b-f186a91f57d1"],
 
 Cell["\<\
 The five (plus H1') live hypotheses, each a sharply-posed problem with a \
 stated proof target:\
-\>", "Text",ExpressionUUID->"60e0a4d2-c1aa-bb4f-ace6-ff410894ea18"],
+\>", "Text",ExpressionUUID->"e37270ef-7c4e-4648-a39e-eab8e57a31cf"],
 
 Cell["\<\
 H1 (cct optimality) [H]: sup over all gluing words of gap(w) equals gap(cct) \
@@ -1751,7 +1837,7 @@ corridor f_c ~ 2/3, \\[Alpha]-bar in [4/3, 1.4301). Target: a \
 NONLINEAR-in-frequency certificate (the affine and Legendre routes are dead, \
 S8-ii/iii) or an ergodic-optimization selection theorem. Plus H1' \
 (\\[CapitalGamma]-limit): lim \\[CapitalGamma]_k = sup gap.\
-\>", "Item",ExpressionUUID->"76c01307-21b8-4d4d-ad87-3c72ef450708"],
+\>", "Item",ExpressionUUID->"edbb1810-1b05-d64b-a045-6155849e101e"],
 
 Cell["\<\
 H2' (cohomological detection, reopened) [H]: a genuine \
@@ -1759,7 +1845,7 @@ quantitative-cohomology detector on a cover OTHER than the maximal-clique \
 cover \\[LongDash] the \\[Delta](y* mod \\[DoubleStruckCapitalZ]) route is \
 closed (F9vii, S8-iv). The degree-0 derivation S_k = \
 \\[CapitalLambda]_k^(1/k) (S5) stands untouched.\
-\>", "Item",ExpressionUUID->"37f937e3-9961-044e-badb-98e184e3215d"],
+\>", "Item",ExpressionUUID->"2e07ee3d-5e55-4441-9017-24c468a1820e"],
 
 Cell["\<\
 H3 (no-activation) [H]: \\[Omega](C9 \\[Vee] C9 \\[Vee] C9 \\[Vee] C5) = 16 \
@@ -1768,13 +1854,13 @@ stays n=7-unique. Live: the activation threshold is \\[Omega] >= 18 and the \
 clique-number ceiling of the mixed cell H is 8, since (1+sec(\\[Pi]/9))^3 < 9 \
 (recomputed below). The search census (2 of 26 families proven NO; total \
 exact nodes) is read live from the committed verdict.\
-\>", "Item",ExpressionUUID->"7d46d321-8069-6348-a377-e558ab55e8d2"],
+\>", "Item",ExpressionUUID->"ad9f926b-55a4-0647-a1bb-8622c7547135"],
 
 Cell["\<\
 {N[(1 + Sec[Pi/9])^3], (1 + Sec[Pi/9])^3 < 9,
  erg003[\"counts\"][\"NO\"], Length[erg003[\"families\"]], \
 erg003[\"totalNodes\"]}\
-\>", "Input",ExpressionUUID->"65950874-2e9d-0a4d-bb2f-ff3ead9912ff"],
+\>", "Input",ExpressionUUID->"2abb7e33-f8df-b44e-b6d3-a6a2736a2803"],
 
 Cell["\<\
 H4' (\\[ScriptCapitalA]_IE-maximality) [H]: is the intensity-emulator class \
@@ -1784,16 +1870,16 @@ class-relative completeness itself is now proven CONDITIONALLY (F10, Prop \
 O3-C, Layer 0), load-bearing on the KBS single-detector coherent-forgeability \
 theorem + white-box trust on G7/G7-CV; only the maximality question remains \
 open.\
-\>", "Item",ExpressionUUID->"e2333f3d-1195-ca48-8037-1e6f0d812247"],
+\>", "Item",ExpressionUUID->"6f2e173a-4949-0c4b-aa25-6606b3d2578c"],
 
 Cell["\<\
 H5 (Paley product) [H]: \\[Omega](Paley13^\\[Vee]3) = 39, the product witness \
 optimal; bracket [39, 46] with ceiling 46 = Floor[13^(3/2)] (recomputed live \
 below). Target: level-2 Lasserre / non-abelian symmetrization / residual \
 search (the Delsarte LP is dead, S8-v).\
-\>", "Item",ExpressionUUID->"d364b06a-49e6-454d-bd71-2b09496ff46f"],
+\>", "Item",ExpressionUUID->"d2db9b57-422d-af4a-a458-f32f6c627668"],
 
-Cell["{Floor[13^(3/2)], 13*3}", "Input",ExpressionUUID->"c893e10b-7cf4-af41-8b99-80ced9602edb"],
+Cell["{Floor[13^(3/2)], 13*3}", "Input",ExpressionUUID->"dd6a3d9b-f96b-3241-a9aa-29094e420397"],
 
 Cell["\<\
 Signaling assessment (O5 / SIG-001..003), a feasibility pointer. The KCBS \
@@ -1801,13 +1887,13 @@ lock's exact cost is the contextual fraction \\[Mu] = 2\\[Sqrt]5 - 4 \
 bits/round, recomputed live in exact arithmetic; the 3-gate signaling \
 taxonomy over 7 exemplars and one refuted candidate identity live in \
 07-SIG-signaling. [T]\
-\>", "CodeText",ExpressionUUID->"7dad529c-28b7-0b46-ab92-30635e6144fc"],
+\>", "CodeText",ExpressionUUID->"c16da2df-86af-3543-a81e-248ff2fc4aee"],
 
 Cell["\<\
 muCost = FullSimplify[ContextualFraction[CycleScenario[5], CycleModel[5, \
 \"Quantum\"], WorkingPrecision -> Infinity]];
 {muCost, Simplify[muCost - (2 Sqrt[5] - 4)] === 0}\
-\>", "Input",ExpressionUUID->"3ce22a8c-6263-9244-8ddf-f95b222bf83b"],
+\>", "Input",ExpressionUUID->"b8ee1c23-3f23-0d4b-b543-10f9edb049ca"],
 
 Cell["\<\
 Jointly, under H1-H5 the framework is complete in the sense the project \
@@ -1817,9 +1903,9 @@ decided activation frontier, and one certified answer to the central question \
 (aperiodic ergodic selection, finer sheaf cohomology, sampling hardness, \
 adversary-class maximality) rather than inside it. Each hypothesis is exactly \
 the kind of sharply-posed open problem the project set out to distill.\
-\>", "Text",ExpressionUUID->"b5252bbe-0fca-bb43-816c-3a9afcad59e7"],
+\>", "Text",ExpressionUUID->"d56d1424-bf1f-dc42-ba6d-f934bfa46aff"],
 
-Cell["S10 \\[LongDash] Methods Appendix (verification culture)", "Subsection",ExpressionUUID->"0c450e0d-f7a1-1d4c-9bf2-1832092edfd4"],
+Cell["S10 \\[LongDash] Methods Appendix (verification culture)", "Subsection",ExpressionUUID->"9f21f046-b842-0144-bd32-c40e5517c7b8"],
 
 Cell["\<\
 The Get-runner pattern. wolframscript -file parses a whole file before \
@@ -1830,7 +1916,7 @@ evaluates expression by expression, so the loader cell that de-shadows \
 in a later cell. This fragment is therefore driven by \
 runners/RunEssaySectionsC.wl, which Get-loads it; a bare -file run of the \
 essay would print unevaluated Global` symbols.\
-\>", "Text",ExpressionUUID->"47ce3777-f03b-194e-a5ef-0da835e54aa8"],
+\>", "Text",ExpressionUUID->"ae8a99d0-5637-034b-9ced-846e7b980d1a"],
 
 Cell["\<\
 The OK -> True discipline. Every module in this repository ends in a \
@@ -1843,7 +1929,7 @@ the LP certificates, exact-rational SDP/LP for the composition bounds \
 \\[LongDash] so those certificates are algebraic identities, not floats. SDP \
 Lov\\[AAcute]sz values are machine-precision and are gated with tolerances, \
 never asserted exact.\
-\>", "Text",ExpressionUUID->"cb1d878d-76a4-444a-9785-e42c032d0966"],
+\>", "Text",ExpressionUUID->"b5d66e2f-a91a-c04b-8f2f-6aa9826a0832"],
 
 Cell["\<\
 Provenance spine. Heavy Python results (search census, Delsarte LP, H\\.b9 \
@@ -1857,11 +1943,11 @@ routes carry [R] and their F9 sub-index. Novelty is scoped exactly as the \
 audits scoped it: the currency law is Camillo-Cervantes, the pentagram bound \
 is Hales (1973), and the mean-payoff / tropical certificate machinery is \
 borrowed, not original to this work.\
-\>", "Text",ExpressionUUID->"930f07a6-e404-4b47-bc5e-e75fdc730cb6"],
+\>", "Text",ExpressionUUID->"faaf4db8-0820-474e-bab1-4ca8d458afa6"],
 
 Cell["\<\
 Environment capture, recorded into the verification log at build time:\
-\>", "CodeText",ExpressionUUID->"b9d61784-fbde-e74f-94bf-8a04ccb8b551"],
+\>", "CodeText",ExpressionUUID->"2aed9034-a412-474d-853b-76638a9ea2d9"],
 
 Cell["\<\
 essayEnvironment = <|
@@ -1871,14 +1957,14 @@ essayEnvironment = <|
 Quiet@Check[PacletObject[\"HubertKolcz`BlackBox`\"][\"Version\"], \
 \"loaded\"],
   \"RepoRoot\" -> $BlackBoxRepoRoot|>\
-\>", "Input",ExpressionUUID->"215f4c1b-4572-1d43-9166-2d8728c4a774"],
+\>", "Input",ExpressionUUID->"a3400028-fbb1-4f4b-9d9f-18dbeee6405f"],
 
-Cell["Verification (this fragment's OK -> True contract)", "Subsection",ExpressionUUID->"b8d57590-536a-7f42-b56d-58b750ec0ad3"],
+Cell["Verification (this fragment's OK -> True contract)", "Subsection",ExpressionUUID->"de6b6489-0345-4a46-91f2-9f68fe431958"],
 
 Cell["\<\
 House discipline: every load-bearing claim of S7-S10, machine-checked in one \
 association. This cell must print OK -> True.\
-\>", "Text",ExpressionUUID->"061d1c42-bb0d-4b43-8f9c-1deb54bfe209"],
+\>", "Text",ExpressionUUID->"bd5fc933-e2a6-3645-b475-6ee64aa5434d"],
 
 Cell["\<\
 EssaySectionsCVerification = <|
@@ -1918,59 +2004,41 @@ bad_overlaps\"] == 20776 &&
 |>;
 Column[{EssaySectionsCVerification, \"OK\" -> And @@ \
 Values[EssaySectionsCVerification]}]\
-\>", "Input",ExpressionUUID->"7d9b1325-d407-aa4f-ba15-93b3608554f3"],
+\>", "Input",ExpressionUUID->"dd4f2b08-0704-1744-ae29-cc0898727e46"],
 
 Cell["\<\
 References (S7-S10 subset; full set in docs/RELATED-WORK.md and S11)\
-\>", "Subsection",ExpressionUUID->"9b052f5a-50e8-7a44-866a-b0daac27598f"],
+\>", "Subsection",ExpressionUUID->"926f173c-8fd2-2f4d-93c3-a335d5b859e9"],
 
 Cell["\<\
 Lapkiewicz et al., Nature 474, 490 (2011); Reck et al., PRL 73, 58 (1994); \
 Clements et al., Optica 3, 1460 (2016) \\[LongDash] the interferometer layer.\
 \
-\>", "Item",ExpressionUUID->"b5ebe6a3-d42c-624b-a183-764784aadfe6"],
+\>", "Item",ExpressionUUID->"fd885701-ec49-bc44-9e5c-37ddb1818663"],
 
 Cell["\<\
 Frustaglia et al., PRL 116, 250404 (2016); Kovtoniuk, Bohmann, Semenov, \
 arXiv:2601.13869 \\[LongDash] the intensity-emulator adversary and \
 single-detector coherent-forgeability.\
-\>", "Item",ExpressionUUID->"d0767c86-a296-bd47-bafa-e6e5a19168a4"],
+\>", "Item",ExpressionUUID->"ac506dc2-c508-af45-8647-ae4b278aa2b1"],
 
 Cell["\<\
 Choudhary, Barbosa, arXiv:2411.09773 \\[LongDash] the Ramsey technique \
 refuted for the mixed nonagon cell (F9v).\
-\>", "Item",ExpressionUUID->"0781a81a-398c-1c47-abe8-462e68258e5d"],
+\>", "Item",ExpressionUUID->"ee2f5c50-8bfd-3d46-abba-17537fa93a23"],
 
 Cell["\<\
 Abramsky, Mansfield, Barbosa, arXiv:1111.3620 \\[LongDash] cohomology of \
 contextuality (the H\\.b9 route, refuted as posed, F9vii).\
-\>", "Item",ExpressionUUID->"f7915e8c-6186-de4a-9125-82e9380ac6f7"],
+\>", "Item",ExpressionUUID->"f5d39cd3-9095-7249-be5f-e13082d193dd"],
 
 Cell["\<\
 docs/FRAMEWORK-2026-07-13.md (the layer/hypothesis architecture, Layer-3 \
 ledger parsed live in S9); docs/COMPLETE-THEORY-2026-07-13.md; \
 05-CERT-epsilon-certificates/CONVERGENCE-ANALYSIS-2026-07-13.md.\
-\>", "Item",ExpressionUUID->"b2227104-20e7-a845-b7ff-a0788dc79636"],
+\>", "Item",ExpressionUUID->"ec286980-df9f-ae45-ac9d-86f97ba394e3"],
 
-Cell["\<\
-Assemble the essay: Get each section fragment in order. Get (not -file) so \
-each fragment's loader cell de-shadows before its paclet symbols are \
-tokenised. Each fragment leaves its own verification association in the \
-Global context (sectionsVerification, SectionsFourToSixVerification, \
-EssaySectionsCVerification) together with every live-computed quantity it \
-defined -- the master reads those directly below.\
-\>", "CodeText",ExpressionUUID->"daa8f9a5-60fb-d849-8396-d6d4e07c5dbc"],
-
-Cell["\<\
-Get[FileNameJoin[{frameworkRoot, \"docs\", \"essay-src\", \
-\"essay_sections_1_3.wl\"}]];
-Get[FileNameJoin[{frameworkRoot, \"docs\", \"essay-src\", \
-\"essay_sections_4_6.wl\"}]];
-Get[FileNameJoin[{frameworkRoot, \"docs\", \"essay-src\", \
-\"essay_sections_7_10.wl\"}]];\
-\>", "Input",ExpressionUUID->"581d49f1-34e9-074d-a048-26a388721594"],
-
-Cell["Global verification (the essay's OK -> True contract)", "Section",ExpressionUUID->"45c27737-3c2a-5b4b-989a-d813469d676d"],
+Cell["Global verification (the essay's OK -> True contract)", "Section",ExpressionUUID->"5c3d7455-d61b-ea40-af48-b9aac694124f"],
 
 Cell["\<\
 The global count of live-computed numbers. Each entry below is a live kernel \
@@ -1978,7 +2046,7 @@ object defined by one of the three section fragments (never re-typed here); \
 Flatten reduces lists/tables to their scalar numeric leaves and Select keeps \
 the genuinely numeric ones. This count is the essay's headline WSRI metric: \
 the number of distinct quantities the document computes rather than asserts.\
-\>", "CodeText",ExpressionUUID->"96071932-b650-0445-9a9f-cf1b07e9751b"],
+\>", "CodeText",ExpressionUUID->"072d94b5-e42e-1742-8687-cad280ec8e2a"],
 
 Cell["\<\
 liveNumberList = Select[Flatten[{
@@ -1997,7 +2065,7 @@ chainGapParity,
     }], NumericQ];
 liveNumberCount = Length[liveNumberList];
 liveNumberCount\
-\>", "Input",ExpressionUUID->"b89521e7-5fb0-364c-aa3c-b2656d142949"],
+\>", "Input",ExpressionUUID->"631c19fa-4f2d-8d44-8a10-92ac30c64f18"],
 
 Cell["\<\
 Merge the three section verification associations (namespaced so no key \
@@ -2006,7 +2074,7 @@ into EssayVerification. The \"OK\" key is an And of every merged section \
 Boolean and the three gates, guarded by the live-number count being positive \
 and every enumerated live number genuinely numeric. This cell must print OK \
 -> True.\
-\>", "CodeText",ExpressionUUID->"4b70d4b9-9f1a-f341-97f6-541d8cc501e5"],
+\>", "CodeText",ExpressionUUID->"8818fc54-2100-2449-b57f-e1d399938e17"],
 
 Cell["\<\
 mergedChecks = Join[
@@ -2028,11 +2096,11 @@ EssayVerification = Join[mergedChecks, <|
 Column[{TableForm[List @@@ Normal[EssayVerification]],
     \"liveNumberCount\" -> liveNumberCount, \"OK\" -> \
 EssayVerification[\"OK\"]}]\
-\>", "Input",ExpressionUUID->"10eefa36-fe74-9448-a8a8-72d76d1bbb41"]
+\>", "Input",ExpressionUUID->"2dd3cdfa-db2d-0045-a3e3-50cfa53581d2"]
 },
 FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
 StyleDefinitions->"Default.nb",
-ExpressionUUID->"f561f8e9-f4d5-f343-9144-d9378e42fe99"
+ExpressionUUID->"7f705466-f03b-b546-8e04-760d74f6edfe"
 ]
 (* End of Notebook Content *)
 
@@ -2045,212 +2113,212 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[554, 20, 126, 0, 70, "Title",ExpressionUUID->"7557fef4-2439-d243-b251-fb1f0f9ef5bf"],
-Cell[683, 22, 233, 3, 70, "Subtitle",ExpressionUUID->"e138d975-576a-5740-ba93-5a80055cc4cc"],
-Cell[916, 27, 843, 12, 70, "Text",ExpressionUUID->"fb50afc8-6662-234c-afe5-926257e13c33"],
-Cell[1750, 41, 1312, 17, 70, "Text",ExpressionUUID->"62db7e1f-17ba-0d4c-87cb-7dc76fdc3412"],
-Cell[3048, 60, 802, 11, 70, "Text",ExpressionUUID->"4ae109ff-bf32-dd4e-8dd5-33a40804bac6"],
-Cell[3842, 73, 89, 0, 70, "Section",ExpressionUUID->"2c7383ba-f8d8-c744-bafe-5b5d036937be"],
-Cell[3934, 75, 1371, 18, 70, "CodeText",ExpressionUUID->"abaee083-f767-6646-9022-15d1eaf0a627"],
-Cell[5290, 95, 167, 3, 70, "Section",ExpressionUUID->"a64fbd7c-7c4c-304c-8685-64770c81665e"],
-Cell[5457, 100, 250, 4, 70, "Text",ExpressionUUID->"c1ee3750-d8bc-264e-a453-7ead91061359"],
-Cell[5706, 106, 812, 11, 70, "Text",ExpressionUUID->"5bf446d7-5dac-3344-998b-96f2f486a08e"],
-Cell[6510, 119, 281, 4, 70, "Text",ExpressionUUID->"e117c50b-e7bc-b646-8a89-2ad095208ddc"],
-Cell[6790, 125, 380, 5, 70, "CodeText",ExpressionUUID->"a4d23e8b-83e9-ac4c-bbf8-3f224070b79e"],
-Cell[7168, 132, 3762, 71, 70, "Input",ExpressionUUID->"677e3e24-9479-0d44-8268-77513349aff4"],
-Cell[10862, 205, 114, 0, 70, "Subsection",ExpressionUUID->"71b150e1-8adf-0641-b703-9231a615ba38"],
-Cell[10979, 207, 519, 7, 70, "Item",ExpressionUUID->"39bda4fc-a467-7140-8c08-76dabefe9d8c"],
-Cell[11494, 216, 501, 7, 70, "Item",ExpressionUUID->"ae015c41-622a-484e-a9c2-c1cf62576314"],
-Cell[11991, 225, 394, 6, 70, "Item",ExpressionUUID->"bfc0ef85-5ab5-ba42-9738-908628b36a8d"],
-Cell[12382, 233, 502, 7, 70, "Item",ExpressionUUID->"230e26b7-b9dc-5941-b067-b0455d3a6c96"],
-Cell[12880, 242, 377, 5, 70, "Item",ExpressionUUID->"5ae320d5-83e7-bd4f-9db8-8d9ff427e6a4"],
-Cell[13255, 249, 120, 0, 70, "Subsection",ExpressionUUID->"de4b4253-2b18-b848-b52a-fadf7cb26a31"],
-Cell[13378, 251, 760, 10, 70, "Text",ExpressionUUID->"9bc5ac53-4716-8941-b3cd-549574e86cd9"],
-Cell[14131, 263, 97, 0, 70, "Input",ExpressionUUID->"46e3f013-49f3-f040-9ce1-1ac8d76b5ac4"],
-Cell[14231, 265, 511, 7, 70, "CodeText",ExpressionUUID->"51c07045-399c-9a45-bab9-0a4b1a2a332b"],
-Cell[14738, 274, 189, 3, 70, "Input",ExpressionUUID->"fb2fdef9-1227-8542-b6e3-85138e5a256a"],
-Cell[14927, 279, 211, 3, 70, "CodeText",ExpressionUUID->"421c56d5-f4e5-ac45-8ec5-0cf56e5c4543"],
-Cell[15138, 284, 205, 3, 70, "Input",ExpressionUUID->"55672aac-fbed-5f4e-9e6d-69794abcef3c"],
-Cell[15343, 289, 297, 4, 70, "CodeText",ExpressionUUID->"8e4ef4e0-8a2c-5a40-97d7-812977661af1"],
-Cell[15639, 295, 150, 2, 70, "Input",ExpressionUUID->"228a0ac2-020f-8c4d-85fa-4f5a17796cdd"],
-Cell[15790, 299, 181, 3, 70, "CodeText",ExpressionUUID->"52fb7983-fab4-6544-b64f-8328fb95d025"],
-Cell[15971, 304, 574, 11, 70, "Input",ExpressionUUID->"ac60a6dd-be16-8647-ad3f-a14a6064f4bd"],
-Cell[16537, 317, 176, 3, 70, "Subsection",ExpressionUUID->"76d3777c-c682-844c-bdf3-51bbc9ee2f03"],
-Cell[16713, 322, 527, 7, 70, "Text",ExpressionUUID->"771d685c-5978-914c-9309-8a1ccefd2307"],
-Cell[17236, 331, 923, 12, 70, "Text",ExpressionUUID->"d3abbb39-2d4e-684f-a32a-f1131c14d8f7"],
-Cell[18150, 345, 330, 5, 70, "CodeText",ExpressionUUID->"6eef71eb-77b1-b34c-94fc-b5044dc9f668"],
-Cell[18478, 352, 287, 5, 70, "Input",ExpressionUUID->"01f0e184-1fd3-d044-81b4-0fe638dc23d2"],
-Cell[18763, 359, 297, 4, 70, "CodeText",ExpressionUUID->"fabaeb79-2ae4-0849-a885-dbc3b2ecbc61"],
-Cell[19059, 365, 127, 0, 70, "Input",ExpressionUUID->"ae3e7dc9-52a7-a04a-afed-67a7473d7e81"],
-Cell[19189, 367, 442, 6, 70, "CodeText",ExpressionUUID->"1d00fea1-2ce1-dd46-9955-1a72a7822475"],
-Cell[19628, 375, 190, 3, 70, "Input",ExpressionUUID->"c33ce68b-72c7-9543-b705-ca1a67b5cb5b"],
-Cell[19818, 380, 419, 6, 70, "Text",ExpressionUUID->"bff4390d-8907-324c-a9bc-9ce74a1b620f"],
-Cell[20234, 388, 517, 7, 70, "CodeText",ExpressionUUID->"b95b2787-a3b7-ba4d-878c-873faee2a052"],
-Cell[20747, 397, 562, 11, 70, "Input",ExpressionUUID->"24d0e2ff-c1c1-4340-acd9-58c4ef5ff4c7"],
-Cell[21301, 410, 159, 2, 70, "Subsection",ExpressionUUID->"a7b2a2a6-0cc9-7c48-b2db-17cc84e40fa7"],
-Cell[21461, 414, 529, 7, 70, "Text",ExpressionUUID->"bcada4c0-e80e-3b4f-8c58-922a420bceb2"],
-Cell[21986, 423, 484, 7, 70, "CodeText",ExpressionUUID->"a29fb244-2d47-4e48-a21c-3b28b2455b0a"],
-Cell[22466, 432, 379, 7, 70, "Input",ExpressionUUID->"65ff7154-add0-124b-b1d3-eafc6b1d27c0"],
-Cell[22841, 441, 824, 11, 70, "CodeText",ExpressionUUID->"92db7921-eea1-d14a-aee9-c74c6aba4f59"],
-Cell[23657, 454, 948, 16, 70, "Input",ExpressionUUID->"be51959a-7b74-6a44-8edd-7dc53deba084"],
-Cell[24592, 472, 893, 12, 70, "CodeText",ExpressionUUID->"3696ab0f-8f1f-5e4f-bdf6-877bdb10f9b2"],
-Cell[25476, 486, 1222, 23, 70, "Input",ExpressionUUID->"058ee406-913e-4d4f-bc8b-588b83a3d7a4"],
-Cell[26678, 511, 764, 10, 70, "CodeText",ExpressionUUID->"110441fe-e627-c743-84ad-6c967e2cea9b"],
-Cell[27435, 523, 2009, 39, 70, "Input",ExpressionUUID->"db379bae-6b1a-6449-9615-e7f723b66187"],
-Cell[29408, 564, 599, 8, 70, "Text",ExpressionUUID->"faf59dc0-38c4-034d-81ed-f493560df93f"],
-Cell[30002, 574, 338, 5, 70, "CodeText",ExpressionUUID->"81136113-c955-cc4e-8b56-7f96bdfe00cc"],
-Cell[30338, 581, 305, 5, 70, "Input",ExpressionUUID->"b979cadb-2cdb-6a4c-9b59-81e3faafbb18"],
-Cell[30641, 588, 357, 5, 70, "CodeText",ExpressionUUID->"2eef100f-add3-0b44-95ed-e1d22995139d"],
-Cell[30996, 595, 814, 14, 70, "Input",ExpressionUUID->"03690e57-5a86-4b44-8404-a8e166548784"],
-Cell[31799, 611, 104, 0, 70, "Subsection",ExpressionUUID->"10d9290f-d22f-9444-9c38-4affaa57cfd4"],
-Cell[31906, 613, 188, 3, 70, "Text",ExpressionUUID->"6ebf5964-6b47-c441-8e16-ad82b6ae0538"],
-Cell[32094, 618, 353, 8, 70, "Input",ExpressionUUID->"b1235ffe-4aeb-db48-be6c-1d0b54d1f754"],
-Cell[32442, 628, 167, 3, 70, "Section",ExpressionUUID->"cd6ecdab-6f5c-d049-be03-65935c2845be"],
-Cell[32609, 633, 200, 3, 70, "Text",ExpressionUUID->"92e1fa2a-9cd6-fb43-9202-535c4ec5bc0d"],
-Cell[32809, 638, 876, 12, 70, "Text",ExpressionUUID->"c6ef309e-ca05-7943-9696-1bfb671212ad"],
-Cell[33676, 652, 83, 0, 70, "Subsection",ExpressionUUID->"73d1385c-22a2-6e4b-a2c9-e578ad273d0e"],
-Cell[33762, 654, 349, 5, 70, "CodeText",ExpressionUUID->"eac76a50-ef01-8744-a11d-b86a17226502"],
-Cell[34109, 661, 3801, 71, 70, "Input",ExpressionUUID->"7a38695c-322c-7943-a276-3b9b99518be8"],
-Cell[37842, 734, 124, 0, 70, "Subsection",ExpressionUUID->"4e55ecb8-62e2-8645-a5a0-34aea1b49ebe"],
-Cell[37969, 736, 745, 10, 70, "Text",ExpressionUUID->"d4522c2a-d938-bf46-bd11-80092c27d3d3"],
-Cell[38707, 748, 271, 4, 70, "CodeText",ExpressionUUID->"0a0c27e6-5964-4043-85e4-12c730fb8181"],
-Cell[38977, 754, 998, 19, 70, "Input",ExpressionUUID->"80796afc-c6b2-8f48-9928-90c0fb277128"],
-Cell[39959, 775, 411, 6, 70, "CodeText",ExpressionUUID->"f0e210f8-40cc-2845-93e1-2d76a1071d6e"],
-Cell[40367, 783, 629, 13, 70, "Input",ExpressionUUID->"b53facee-6c09-554c-8931-697070929c82"],
-Cell[40986, 798, 316, 5, 70, "CodeText",ExpressionUUID->"96b6202b-3927-304d-b02e-a6b69465fa34"],
-Cell[41300, 805, 533, 9, 70, "Input",ExpressionUUID->"4db3cf9e-7615-a44e-ad18-64de5fd2d852"],
-Cell[41827, 816, 275, 4, 70, "CodeText",ExpressionUUID->"cc4a1e14-31ce-754b-b9f2-5ad699ec7967"],
-Cell[42101, 822, 375, 6, 70, "Input",ExpressionUUID->"6bc8ad97-65f4-9a44-9ab0-5d4cd0873c71"],
-Cell[42473, 830, 436, 6, 70, "CodeText",ExpressionUUID->"dd724081-1df8-d044-b176-24068280b982"],
-Cell[42906, 838, 1117, 21, 70, "Input",ExpressionUUID->"7f85d272-0d2d-a547-b2b7-f2914697470d"],
-Cell[44005, 861, 624, 9, 70, "CodeText",ExpressionUUID->"796ff6dc-189f-054d-99c2-9b9e4ac3053e"],
-Cell[44623, 872, 875, 16, 70, "Input",ExpressionUUID->"755704f3-1fab-d941-8fde-58d883b37bbd"],
-Cell[45485, 890, 568, 8, 70, "CodeText",ExpressionUUID->"5486cac4-d599-b24f-bbb1-2384a4d40e80"],
-Cell[46048, 900, 930, 18, 70, "Input",ExpressionUUID->"604f8e87-a1ff-4146-a32e-29958bbc0061"],
-Cell[46963, 920, 458, 6, 70, "CodeText",ExpressionUUID->"3e38ed67-0731-6140-a949-4385306ce3a2"],
-Cell[47418, 928, 585, 10, 70, "Input",ExpressionUUID->"dacfa1f4-611b-af47-a86f-56f7e0d067bc"],
-Cell[47996, 940, 564, 8, 70, "CodeText",ExpressionUUID->"2ab470bb-3356-fc4b-939d-661912c7eb94"],
-Cell[48555, 950, 475, 8, 70, "Input",ExpressionUUID->"ec7ff2f0-5d8a-3e4d-a658-a7012799116c"],
-Cell[49025, 960, 354, 5, 70, "CodeText",ExpressionUUID->"ea3d80e1-e754-e242-8784-4c0fdc071d47"],
-Cell[49377, 967, 612, 12, 70, "Input",ExpressionUUID->"c0d640cf-a31f-5a48-bb23-fb9b15fe7515"],
-Cell[49980, 981, 323, 4, 70, "CodeText",ExpressionUUID->"0084f217-2a8f-774b-9cc1-50c1a3a4c034"],
-Cell[50302, 987, 621, 10, 70, "Input",ExpressionUUID->"89d92cc2-7532-b944-bb2a-2eb3de7a0d89"],
-Cell[50916, 999, 165, 2, 70, "Subsection",ExpressionUUID->"c705c472-9e2b-6847-9803-a6acd78dedba"],
-Cell[51082, 1003, 684, 9, 70, "Text",ExpressionUUID->"2ae7bee9-023a-ef47-920a-b6c26361f871"],
-Cell[51760, 1014, 397, 5, 70, "CodeText",ExpressionUUID->"b1f0ae20-1968-334b-a533-4d6e1a2fe328"],
-Cell[52155, 1021, 888, 18, 70, "Input",ExpressionUUID->"7470934a-8ffc-d24e-ba2d-046d39318c88"],
-Cell[53028, 1041, 327, 5, 70, "CodeText",ExpressionUUID->"56250fd6-6541-1a40-9665-1edcd875a73b"],
-Cell[53353, 1048, 880, 16, 70, "Input",ExpressionUUID->"7b3756f0-4aa7-a74e-b993-5c50f8f67006"],
-Cell[54220, 1066, 434, 6, 70, "CodeText",ExpressionUUID->"b9ff4338-e97c-7741-af94-5a7571329c7d"],
-Cell[54651, 1074, 1073, 21, 70, "Input",ExpressionUUID->"8ad11877-87a1-f548-9ed6-39499ff266f1"],
-Cell[55706, 1097, 458, 6, 70, "CodeText",ExpressionUUID->"6cb02b09-00e3-8745-a956-b689c7a2f64c"],
-Cell[56161, 1105, 878, 15, 70, "Input",ExpressionUUID->"0304bcb5-a9b4-3f4f-b1c2-dfe726bf9402"],
-Cell[57027, 1122, 582, 8, 70, "CodeText",ExpressionUUID->"1c1d3942-df0a-854b-9a4f-58d4e11d27c3"],
-Cell[57604, 1132, 756, 14, 70, "Input",ExpressionUUID->"7fdaff5b-8bf3-494d-908b-450eba66ca75"],
-Cell[58349, 1148, 432, 6, 70, "CodeText",ExpressionUUID->"fb376780-9ab2-d249-bc29-de51d5d7759a"],
-Cell[58778, 1156, 504, 9, 70, "Input",ExpressionUUID->"c5f1783a-6736-e348-8216-883117f6806f"],
-Cell[59276, 1167, 112, 0, 70, "Subsection",ExpressionUUID->"bebddb5d-8ab6-e04c-8fbc-8d9365394c7d"],
-Cell[59391, 1169, 779, 11, 70, "Text",ExpressionUUID->"90592df8-65a7-b748-aeac-b02d840816f0"],
-Cell[60162, 1182, 325, 5, 70, "CodeText",ExpressionUUID->"a0ac9dc1-4e67-6f40-96c3-2ca27972d48c"],
-Cell[60485, 1189, 210, 4, 70, "Input",ExpressionUUID->"99190b02-9921-ad43-969d-982df7050055"],
-Cell[60694, 1195, 309, 4, 70, "CodeText",ExpressionUUID->"1f6299af-c6e8-a646-916b-8c919ceb3936"],
-Cell[61002, 1201, 248, 5, 70, "Input",ExpressionUUID->"2e443beb-4d12-0243-926c-39f1a0824d1e"],
-Cell[61248, 1208, 321, 5, 70, "CodeText",ExpressionUUID->"015e20fd-9890-f64b-a89a-15a69e6175f9"],
-Cell[61567, 1215, 355, 7, 70, "Input",ExpressionUUID->"91c118f0-d3ca-904f-aa19-3e2c8156bac0"],
-Cell[61918, 1224, 304, 4, 70, "CodeText",ExpressionUUID->"f775ffb8-a45a-9c45-b3b0-d7cd0e8987f8"],
-Cell[62221, 1230, 708, 11, 70, "Input",ExpressionUUID->"a0881b40-ef6d-8941-a4ba-29c8433a3e29"],
-Cell[62921, 1243, 352, 5, 70, "CodeText",ExpressionUUID->"834b482e-3a43-8246-b0bd-896c4821162b"],
-Cell[63271, 1250, 323, 6, 70, "Input",ExpressionUUID->"96afcd85-b8a6-8f4d-b5ff-fa2327289dbe"],
-Cell[63591, 1258, 361, 5, 70, "CodeText",ExpressionUUID->"51676ef4-2fb8-ed42-89d1-632795117a87"],
-Cell[63950, 1265, 381, 7, 70, "Input",ExpressionUUID->"7993dc50-3581-bf4d-8c78-faa3f9ce4073"],
-Cell[64327, 1274, 621, 8, 70, "CodeText",ExpressionUUID->"d0af864e-e0bc-c94b-9472-c548329f91c9"],
-Cell[64943, 1284, 470, 9, 70, "Input",ExpressionUUID->"6d905263-d646-3e49-9aba-e6ae86ff34e6"],
-Cell[65407, 1295, 390, 6, 70, "CodeText",ExpressionUUID->"d7c9d785-d4db-7446-9340-572a2b675544"],
-Cell[65794, 1303, 396, 8, 70, "Input",ExpressionUUID->"dde4004a-34c9-4446-bcd3-c009555ad88f"],
-Cell[66185, 1313, 471, 6, 70, "CodeText",ExpressionUUID->"e373ce33-92c6-064d-a1de-46c1f54266c9"],
-Cell[66653, 1321, 351, 6, 70, "Input",ExpressionUUID->"fc3e3d76-4202-b34a-90cc-111086db2ca2"],
-Cell[67001, 1329, 89, 0, 70, "Subsection",ExpressionUUID->"830ec051-7366-5041-8edc-34889208ded5"],
-Cell[67093, 1331, 169, 3, 70, "CodeText",ExpressionUUID->"3275b787-5880-5742-9376-3513bc4a84f3"],
-Cell[67262, 1336, 285, 5, 70, "Input",ExpressionUUID->"f8f8830b-b837-3846-96f5-9c9e04ceb0a5"],
-Cell[67545, 1343, 168, 3, 70, "Section",ExpressionUUID->"62f08eb6-7f85-214d-a86a-2c54661ff888"],
-Cell[67713, 1348, 193, 3, 70, "Text",ExpressionUUID->"5e7d590d-7985-ee47-a436-8186670d2d05"],
-Cell[67906, 1353, 865, 12, 70, "Text",ExpressionUUID->"9e034859-0dea-8445-a048-d5f42281ae75"],
-Cell[68762, 1367, 406, 6, 70, "CodeText",ExpressionUUID->"061e5ebd-d9b0-7d4b-a61f-b74f0db27f6a"],
-Cell[69165, 1375, 3943, 75, 70, "Input",ExpressionUUID->"54e98bc3-e430-aa40-80e1-c71bf8e2ccd9"],
-Cell[73036, 1452, 269, 4, 70, "CodeText",ExpressionUUID->"61349def-a9a2-0e41-b303-2bc6717b2299"],
-Cell[73304, 1458, 349, 6, 70, "Input",ExpressionUUID->"9837832a-25c5-b847-b5c1-1b5e56f681b0"],
-Cell[73650, 1466, 161, 2, 70, "Subsection",ExpressionUUID->"a9f146c8-b275-4340-8625-607cabc97049"],
-Cell[73812, 1470, 825, 11, 70, "Text",ExpressionUUID->"aaf2c304-d916-dc49-be28-585972f2f028"],
-Cell[74629, 1483, 241, 3, 70, "CodeText",ExpressionUUID->"3dc3ae59-4eb4-4a43-b4b5-710a2049767f"],
-Cell[74870, 1488, 220, 4, 70, "Input",ExpressionUUID->"42420ca0-cf05-5645-b4dc-a068ab640682"],
-Cell[75089, 1494, 286, 4, 70, "CodeText",ExpressionUUID->"49703b6d-989e-b048-a858-19fff799c013"],
-Cell[75374, 1500, 287, 5, 70, "Input",ExpressionUUID->"5ee891ff-9221-ba46-8fee-8128f4d8519e"],
-Cell[75659, 1507, 329, 5, 70, "CodeText",ExpressionUUID->"5a90660a-d2fa-4c47-a678-4ddf6cfaeadf"],
-Cell[75986, 1514, 104, 0, 70, "Input",ExpressionUUID->"a7def569-bb76-fd4c-8aa4-7e199635b15a"],
-Cell[76093, 1516, 280, 4, 70, "CodeText",ExpressionUUID->"5df4c1d9-e293-e54b-a0ca-64c6b95168a2"],
-Cell[76372, 1522, 220, 4, 70, "Input",ExpressionUUID->"58cea754-1fa2-3246-bcb5-7e8c75a19dd3"],
-Cell[76591, 1528, 357, 5, 70, "CodeText",ExpressionUUID->"b96aed76-6931-304e-b165-6fcb6e2c7f38"],
-Cell[76946, 1535, 230, 4, 70, "Input",ExpressionUUID->"e9c7ab16-22b7-0b4b-ad40-eb803596db4f"],
-Cell[77175, 1541, 443, 6, 70, "CodeText",ExpressionUUID->"3886850e-7845-ea43-b164-e8af3e8edb8c"],
-Cell[77615, 1549, 275, 4, 70, "Input",ExpressionUUID->"ee1f3538-626f-7b4c-b74f-e550cf8fd61c"],
-Cell[77889, 1555, 300, 4, 70, "CodeText",ExpressionUUID->"2684463c-bb6a-d541-99b8-f6e690abdfb5"],
-Cell[78188, 1561, 274, 4, 70, "Input",ExpressionUUID->"ef07ad10-2f18-7844-b9ab-20c40540139d"],
-Cell[78461, 1567, 272, 4, 70, "Input",ExpressionUUID->"6840cf7e-7ded-f54d-99e3-7f35984e4d03"],
-Cell[78732, 1573, 527, 7, 70, "Text",ExpressionUUID->"cf0e7b1c-9646-cf41-af11-89b4882beded"],
-Cell[79255, 1582, 152, 2, 70, "Subsection",ExpressionUUID->"865afdc3-a0b9-1f46-93f6-19bee78e2851"],
-Cell[79408, 1586, 633, 9, 70, "Text",ExpressionUUID->"b8493f87-efb3-9042-adca-49ba3c5b3a11"],
-Cell[80035, 1597, 360, 5, 70, "CodeText",ExpressionUUID->"8697265d-3d0f-3640-932a-f53735af2bbe"],
-Cell[80393, 1604, 213, 4, 70, "Input",ExpressionUUID->"96f63478-a222-ec44-9b2d-a2e17f933b4d"],
-Cell[80605, 1610, 389, 5, 70, "CodeText",ExpressionUUID->"45c0c808-c930-914b-ab48-355bfd919001"],
-Cell[80992, 1617, 786, 11, 70, "CodeText",ExpressionUUID->"36f5cb39-cf4e-a64f-a5ee-d2843f1402be"],
-Cell[81770, 1630, 143, 3, 70, "Input",ExpressionUUID->"3f37d0ac-5dca-b449-90a3-cdf0b8a210b2"],
-Cell[81913, 1635, 692, 9, 70, "CodeText",ExpressionUUID->"27cdb1ce-dab6-3e41-bfe8-896f8931aa50"],
-Cell[82599, 1646, 302, 5, 70, "Input",ExpressionUUID->"e3fbaa21-c50d-5442-a536-98effdedec92"],
-Cell[82899, 1653, 586, 8, 70, "CodeText",ExpressionUUID->"fbd348cb-43bb-6445-8e14-d5edbbdf32d0"],
-Cell[83480, 1663, 104, 0, 70, "Input",ExpressionUUID->"24b040da-a3a8-d242-8634-dc1c9e09e218"],
-Cell[83587, 1665, 332, 5, 70, "CodeText",ExpressionUUID->"89f4ca5b-8b33-1248-a626-8b91f8687064"],
-Cell[83917, 1672, 355, 5, 70, "CodeText",ExpressionUUID->"5f1426b1-56ab-aa42-9fb8-64a93c1ca503"],
-Cell[84270, 1679, 395, 6, 70, "CodeText",ExpressionUUID->"5699b506-0d2f-7647-81fb-d9aad9694422"],
-Cell[84662, 1687, 130, 0, 70, "Input",ExpressionUUID->"3605315b-7d29-3240-84c1-b843ae635d92"],
-Cell[84795, 1689, 590, 8, 70, "Text",ExpressionUUID->"711c742b-9e03-8c41-bffb-ed1e51b4811d"],
-Cell[85380, 1699, 173, 3, 70, "Subsection",ExpressionUUID->"0ea4edb0-2c97-e64f-b217-26c5149e4e9b"],
-Cell[85553, 1704, 733, 10, 70, "Text",ExpressionUUID->"fa5ad4b1-e89a-8d4f-a089-4392892ced1c"],
-Cell[86279, 1716, 233, 3, 70, "CodeText",ExpressionUUID->"6acc2119-b812-7f43-91dc-f1cbd2cead04"],
-Cell[86512, 1721, 542, 11, 70, "Input",ExpressionUUID->"090ea45f-148a-7649-84b2-963f6be13ce1"],
-Cell[87046, 1734, 210, 3, 70, "Input",ExpressionUUID->"2af8ed19-2886-a845-a3fd-cf741e907a62"],
-Cell[87256, 1739, 177, 3, 70, "Text",ExpressionUUID->"60e0a4d2-c1aa-bb4f-ace6-ff410894ea18"],
-Cell[87433, 1744, 668, 9, 70, "Item",ExpressionUUID->"76c01307-21b8-4d4d-ad87-3c72ef450708"],
-Cell[88095, 1755, 398, 6, 70, "Item",ExpressionUUID->"37f937e3-9961-044e-badb-98e184e3215d"],
-Cell[88490, 1763, 526, 7, 70, "Item",ExpressionUUID->"7d46d321-8069-6348-a377-e558ab55e8d2"],
-Cell[89012, 1772, 214, 4, 70, "Input",ExpressionUUID->"65950874-2e9d-0a4d-bb2f-ff3ead9912ff"],
-Cell[89225, 1778, 550, 8, 70, "Item",ExpressionUUID->"e2333f3d-1195-ca48-8037-1e6f0d812247"],
-Cell[89770, 1788, 357, 5, 70, "Item",ExpressionUUID->"d364b06a-49e6-454d-bd71-2b09496ff46f"],
-Cell[90125, 1795, 95, 0, 70, "Input",ExpressionUUID->"c893e10b-7cf4-af41-8b99-80ced9602edb"],
-Cell[90223, 1797, 400, 6, 70, "CodeText",ExpressionUUID->"7dad529c-28b7-0b46-ab92-30635e6144fc"],
-Cell[90620, 1805, 255, 4, 70, "Input",ExpressionUUID->"3ce22a8c-6263-9244-8ddf-f95b222bf83b"],
-Cell[90874, 1811, 611, 8, 70, "Text",ExpressionUUID->"b5252bbe-0fca-bb43-816c-3a9afcad59e7"],
-Cell[91480, 1821, 133, 0, 70, "Subsection",ExpressionUUID->"0c450e0d-f7a1-1d4c-9bf2-1832092edfd4"],
-Cell[91616, 1823, 642, 9, 70, "Text",ExpressionUUID->"47ce3777-f03b-194e-a5ef-0da835e54aa8"],
-Cell[92252, 1834, 785, 11, 70, "Text",ExpressionUUID->"cb1d878d-76a4-444a-9785-e42c032d0966"],
-Cell[93029, 1847, 903, 12, 70, "Text",ExpressionUUID->"930f07a6-e404-4b47-bc5e-e75fdc730cb6"],
-Cell[93923, 1861, 155, 2, 70, "CodeText",ExpressionUUID->"b9d61784-fbde-e74f-94bf-8a04ccb8b551"],
-Cell[94079, 1865, 360, 8, 70, "Input",ExpressionUUID->"215f4c1b-4572-1d43-9166-2d8728c4a774"],
-Cell[94434, 1875, 127, 0, 70, "Subsection",ExpressionUUID->"b8d57590-536a-7f42-b56d-58b750ec0ad3"],
-Cell[94564, 1877, 206, 3, 70, "Text",ExpressionUUID->"061d1c42-bb0d-4b43-8f9c-1deb54bfe209"],
-Cell[94770, 1882, 1834, 38, 70, "Input",ExpressionUUID->"7d9b1325-d407-aa4f-ba15-93b3608554f3"],
-Cell[96569, 1922, 155, 2, 70, "Subsection",ExpressionUUID->"9b052f5a-50e8-7a44-866a-b0daac27598f"],
-Cell[96725, 1926, 239, 4, 70, "Item",ExpressionUUID->"b5ebe6a3-d42c-624b-a183-764784aadfe6"],
-Cell[96963, 1932, 264, 4, 70, "Item",ExpressionUUID->"d0767c86-a296-bd47-bafa-e6e5a19168a4"],
-Cell[97226, 1938, 196, 3, 70, "Item",ExpressionUUID->"0781a81a-398c-1c47-abe8-462e68258e5d"],
-Cell[97422, 1943, 215, 3, 70, "Item",ExpressionUUID->"f7915e8c-6186-de4a-9125-82e9380ac6f7"],
-Cell[97637, 1948, 287, 4, 70, "Item",ExpressionUUID->"b2227104-20e7-a845-b7ff-a0788dc79636"],
-Cell[97923, 1954, 508, 7, 70, "CodeText",ExpressionUUID->"daa8f9a5-60fb-d849-8396-d6d4e07c5dbc"],
-Cell[98427, 1963, 357, 7, 70, "Input",ExpressionUUID->"581d49f1-34e9-074d-a048-26a388721594"],
-Cell[98780, 1972, 127, 0, 70, "Section",ExpressionUUID->"45c27737-3c2a-5b4b-989a-d813469d676d"],
-Cell[98910, 1974, 479, 6, 70, "CodeText",ExpressionUUID->"96071932-b650-0445-9a9f-cf1b07e9751b"],
-Cell[99386, 1982, 902, 17, 70, "Input",ExpressionUUID->"b89521e7-5fb0-364c-aa3c-b2656d142949"],
-Cell[100274, 2001, 480, 7, 70, "CodeText",ExpressionUUID->"4b70d4b9-9f1a-f341-97f6-541d8cc501e5"],
-Cell[100750, 2010, 1038, 20, 70, "Input",ExpressionUUID->"10eefa36-fe74-9448-a8a8-72d76d1bbb41"]
+Cell[554, 20, 126, 0, 70, "Title",ExpressionUUID->"da3e0a1f-0316-444d-a406-5996a2c6fe9b"],
+Cell[683, 22, 233, 3, 70, "Subtitle",ExpressionUUID->"94f039eb-45fd-d74b-89f7-276a79811f34"],
+Cell[916, 27, 843, 12, 70, "Text",ExpressionUUID->"5fbe381c-44d2-694b-981a-31ff4a8c2832"],
+Cell[1750, 41, 1312, 17, 70, "Text",ExpressionUUID->"e3ce1228-d716-f343-8c7c-10cc39e0d496"],
+Cell[3048, 60, 802, 11, 70, "Text",ExpressionUUID->"4582168e-d281-5c47-91c4-1df1d72ddecb"],
+Cell[3842, 73, 89, 0, 70, "Section",ExpressionUUID->"586fbdf0-fbbe-6645-902d-ad7985fad5d1"],
+Cell[3934, 75, 1371, 18, 70, "CodeText",ExpressionUUID->"beca6d13-9e2d-af4e-b19f-2041758fef48"],
+Cell[5290, 95, 3753, 72, 70, "Input",ExpressionUUID->"d342bb3d-4ff1-da4d-86eb-b50a6c35ca15"],
+Cell[8974, 169, 508, 7, 70, "CodeText",ExpressionUUID->"555fc66c-d91a-9745-ad8f-83a09ee050c9"],
+Cell[9478, 178, 167, 3, 70, "Section",ExpressionUUID->"529a9ffa-154a-ba48-afb0-137196d9afb2"],
+Cell[9645, 183, 250, 4, 70, "Text",ExpressionUUID->"64a94e0f-cc30-0c46-a4ce-c0cb869f9b8e"],
+Cell[9894, 189, 812, 11, 70, "Text",ExpressionUUID->"b40f624b-3bd7-3b47-9658-9006a5ab0646"],
+Cell[10698, 202, 281, 4, 70, "Text",ExpressionUUID->"c45420d1-b343-9442-ae32-6c1f4b89baa3"],
+Cell[10978, 208, 380, 5, 70, "CodeText",ExpressionUUID->"cd81e82b-5661-4147-9c52-bc0aea8e6966"],
+Cell[11356, 215, 3762, 71, 70, "Input",ExpressionUUID->"7f3fec8e-9110-0e4f-9f29-c4c79ba7bc31"],
+Cell[15050, 288, 114, 0, 70, "Subsection",ExpressionUUID->"2a895276-10d2-4d4c-951f-b6c623722cbb"],
+Cell[15167, 290, 519, 7, 70, "Item",ExpressionUUID->"8ab2cffc-f2aa-e143-a07f-1b8cf4f79e03"],
+Cell[15682, 299, 501, 7, 70, "Item",ExpressionUUID->"96222c0e-a412-da49-94f4-ddeb2e189564"],
+Cell[16179, 308, 394, 6, 70, "Item",ExpressionUUID->"f0e0d346-48b0-ff41-81c1-bcce7420ea2a"],
+Cell[16570, 316, 502, 7, 70, "Item",ExpressionUUID->"3287e3f3-d577-5b47-ae61-a6263c97cceb"],
+Cell[17068, 325, 377, 5, 70, "Item",ExpressionUUID->"29a45173-c7ba-8741-ae73-5f53aa307428"],
+Cell[17443, 332, 120, 0, 70, "Subsection",ExpressionUUID->"75cb42b1-7446-6a49-b160-74d7389afcf7"],
+Cell[17566, 334, 760, 10, 70, "Text",ExpressionUUID->"ef589959-9014-5348-9c01-627bf09ad015"],
+Cell[18319, 346, 97, 0, 70, "Input",ExpressionUUID->"b761b822-b078-f24c-8ba4-1cd23d62859e"],
+Cell[18419, 348, 511, 7, 70, "CodeText",ExpressionUUID->"50ad034f-6988-b343-86b0-275d8ee43b4a"],
+Cell[18926, 357, 189, 3, 70, "Input",ExpressionUUID->"45967718-774a-3740-93df-29736ebb0563"],
+Cell[19115, 362, 211, 3, 70, "CodeText",ExpressionUUID->"90813289-77e4-084d-9baf-deaab82bff48"],
+Cell[19326, 367, 205, 3, 70, "Input",ExpressionUUID->"e273d461-7d4e-b241-93af-bf333df0d132"],
+Cell[19531, 372, 297, 4, 70, "CodeText",ExpressionUUID->"61766a97-c5c8-634b-baef-47941c9a5df4"],
+Cell[19827, 378, 150, 2, 70, "Input",ExpressionUUID->"2a07d49f-1b1f-6e48-962c-064e2037488b"],
+Cell[19978, 382, 181, 3, 70, "CodeText",ExpressionUUID->"669f2c00-3f39-fe44-a4b4-973fded4ea0d"],
+Cell[20159, 387, 574, 11, 70, "Input",ExpressionUUID->"eb27a69c-bc30-0a49-9afb-344975862bfd"],
+Cell[20725, 400, 176, 3, 70, "Subsection",ExpressionUUID->"30c357c2-d911-634d-a2ba-1baa4831c371"],
+Cell[20901, 405, 527, 7, 70, "Text",ExpressionUUID->"6a5677bb-fdde-054e-9035-011e4aead7ba"],
+Cell[21424, 414, 923, 12, 70, "Text",ExpressionUUID->"ede44436-648a-d149-8481-a6929db711b8"],
+Cell[22338, 428, 330, 5, 70, "CodeText",ExpressionUUID->"7e75c0b4-f2a2-e14d-9b11-1c93cf6eab91"],
+Cell[22666, 435, 287, 5, 70, "Input",ExpressionUUID->"94655b09-1758-d240-86c0-e419295ecc52"],
+Cell[22951, 442, 297, 4, 70, "CodeText",ExpressionUUID->"b148716e-e38c-2b49-a61f-9d1b850f7d20"],
+Cell[23247, 448, 127, 0, 70, "Input",ExpressionUUID->"1c20ebb2-6a5e-a745-92c6-900943a8e2ba"],
+Cell[23377, 450, 442, 6, 70, "CodeText",ExpressionUUID->"db329ace-133e-5947-aa1b-df01ce724530"],
+Cell[23816, 458, 190, 3, 70, "Input",ExpressionUUID->"0335e9ec-0b48-4645-b2ba-5ed678b1157f"],
+Cell[24006, 463, 419, 6, 70, "Text",ExpressionUUID->"c94c83d1-fb13-014c-98e1-00ba6014b7f8"],
+Cell[24422, 471, 517, 7, 70, "CodeText",ExpressionUUID->"eefe5be7-dfb0-6b4b-8de3-ac403003ae74"],
+Cell[24935, 480, 562, 11, 70, "Input",ExpressionUUID->"6989ad3b-d858-944e-bf41-f073a1edf429"],
+Cell[25489, 493, 159, 2, 70, "Subsection",ExpressionUUID->"cadcf6a8-270a-6647-b39c-43f3020be9cf"],
+Cell[25649, 497, 529, 7, 70, "Text",ExpressionUUID->"36aabb62-de52-5747-9b29-fa7a54f524f5"],
+Cell[26174, 506, 484, 7, 70, "CodeText",ExpressionUUID->"39887ef0-0879-d441-9786-54d32e13035f"],
+Cell[26654, 515, 379, 7, 70, "Input",ExpressionUUID->"8617c784-780b-8a49-949d-2ae0b272279b"],
+Cell[27029, 524, 824, 11, 70, "CodeText",ExpressionUUID->"d4b79dea-d72f-de42-8008-0691a543677d"],
+Cell[27845, 537, 948, 16, 70, "Input",ExpressionUUID->"6a4fd11d-ef70-0948-99bc-b3e83134e7b1"],
+Cell[28780, 555, 893, 12, 70, "CodeText",ExpressionUUID->"b7115973-6da1-b543-97ee-e11c7f8801e2"],
+Cell[29664, 569, 1222, 23, 70, "Input",ExpressionUUID->"6d2210cb-da3a-454a-8443-6a442f8091eb"],
+Cell[30866, 594, 764, 10, 70, "CodeText",ExpressionUUID->"49904465-31f5-d24d-92b0-6ec139d806e2"],
+Cell[31623, 606, 2009, 39, 70, "Input",ExpressionUUID->"8d10b87a-4335-5a4b-961c-eeee39542609"],
+Cell[33596, 647, 599, 8, 70, "Text",ExpressionUUID->"0ad0d2db-15b9-5e4a-89e9-3f06cb754319"],
+Cell[34190, 657, 338, 5, 70, "CodeText",ExpressionUUID->"794c3686-208f-ba48-96b9-87a1f7db53ef"],
+Cell[34526, 664, 305, 5, 70, "Input",ExpressionUUID->"ee0c94eb-caa1-9e48-a29e-058564de1c68"],
+Cell[34829, 671, 357, 5, 70, "CodeText",ExpressionUUID->"b1bde22a-e25f-b444-877d-5971a6402852"],
+Cell[35184, 678, 814, 14, 70, "Input",ExpressionUUID->"0eaae647-e84b-4f40-87b5-f4d0841ad9a7"],
+Cell[35987, 694, 104, 0, 70, "Subsection",ExpressionUUID->"8a8ee97c-eafa-ba42-9910-1555fa7b3d9d"],
+Cell[36094, 696, 188, 3, 70, "Text",ExpressionUUID->"442be699-52bf-b442-b0c5-099128c956c6"],
+Cell[36282, 701, 353, 8, 70, "Input",ExpressionUUID->"21613b75-e7c4-964e-8cf3-2aca61cd279a"],
+Cell[36630, 711, 167, 3, 70, "Section",ExpressionUUID->"c890448c-db8c-4044-a787-0b1111bd392c"],
+Cell[36797, 716, 200, 3, 70, "Text",ExpressionUUID->"9f13a85e-7934-d748-b1fa-bd5127f5f62d"],
+Cell[36997, 721, 876, 12, 70, "Text",ExpressionUUID->"2b640ffd-b913-4a4c-8664-3891d73c2bb2"],
+Cell[37864, 735, 83, 0, 70, "Subsection",ExpressionUUID->"0f0183e4-fafc-e540-9bf6-5e8a9a41fc34"],
+Cell[37950, 737, 349, 5, 70, "CodeText",ExpressionUUID->"21f42cca-9930-fd45-9f2e-6a9294bb1a90"],
+Cell[38297, 744, 3801, 71, 70, "Input",ExpressionUUID->"edb2859d-cab2-3445-b7af-a415aa9a61cb"],
+Cell[42030, 817, 124, 0, 70, "Subsection",ExpressionUUID->"9f4dc89b-82d7-684c-9ae9-286a0039b023"],
+Cell[42157, 819, 745, 10, 70, "Text",ExpressionUUID->"d1989138-4575-7c45-8c5c-822696ab0974"],
+Cell[42895, 831, 271, 4, 70, "CodeText",ExpressionUUID->"e071d61e-d478-5749-8bbb-99f108fb7d9b"],
+Cell[43165, 837, 998, 19, 70, "Input",ExpressionUUID->"3bb45077-28b6-b143-ae6c-cda1cb518e53"],
+Cell[44147, 858, 411, 6, 70, "CodeText",ExpressionUUID->"a34ebcc4-dd82-9641-a0f6-af268506130b"],
+Cell[44555, 866, 629, 13, 70, "Input",ExpressionUUID->"00505815-a88a-ca4f-b2f1-c2411da6273e"],
+Cell[45174, 881, 316, 5, 70, "CodeText",ExpressionUUID->"95ccd974-3f2b-6d47-9543-3f1a392747b8"],
+Cell[45488, 888, 533, 9, 70, "Input",ExpressionUUID->"8500a4f1-e401-474b-b2b2-cd217498a600"],
+Cell[46015, 899, 275, 4, 70, "CodeText",ExpressionUUID->"f0f2963b-4cab-6d42-9656-8bfe438e86cc"],
+Cell[46289, 905, 375, 6, 70, "Input",ExpressionUUID->"24a28980-729d-3f43-ac4d-bd947a5872ba"],
+Cell[46661, 913, 436, 6, 70, "CodeText",ExpressionUUID->"cc23510a-b03a-624f-969c-e472d74007f7"],
+Cell[47094, 921, 1117, 21, 70, "Input",ExpressionUUID->"17869d5d-a9e3-904f-97d7-7c2d9ce15b01"],
+Cell[48193, 944, 624, 9, 70, "CodeText",ExpressionUUID->"08d695fd-ba76-9041-95d1-4e02b60cb463"],
+Cell[48811, 955, 875, 16, 70, "Input",ExpressionUUID->"e6d7d2f2-5881-014a-91f3-90cb991a1ce2"],
+Cell[49673, 973, 568, 8, 70, "CodeText",ExpressionUUID->"16a940a6-e9c6-3243-a613-91a3a40a8426"],
+Cell[50236, 983, 930, 18, 70, "Input",ExpressionUUID->"ad226d27-2c99-3640-97c4-4dd9efa558c7"],
+Cell[51151, 1003, 458, 6, 70, "CodeText",ExpressionUUID->"812bb047-253f-9c45-bb6b-a8b806a63fdc"],
+Cell[51606, 1011, 585, 10, 70, "Input",ExpressionUUID->"c88408d6-eba1-4f4e-a212-ba4eedab7aed"],
+Cell[52184, 1023, 564, 8, 70, "CodeText",ExpressionUUID->"3f4a74cd-43c9-594b-bbe4-6d5dfaa34430"],
+Cell[52743, 1033, 602, 11, 70, "Input",ExpressionUUID->"a06ff16c-0afb-a748-b0d8-bdac7dcba786"],
+Cell[53337, 1046, 354, 5, 70, "CodeText",ExpressionUUID->"4fdad29a-8ef9-be4c-8cac-6ea3580af244"],
+Cell[53689, 1053, 612, 12, 70, "Input",ExpressionUUID->"9483e6d2-41fa-4746-b93d-fd5b0f08959b"],
+Cell[54292, 1067, 323, 4, 70, "CodeText",ExpressionUUID->"45c7bdd0-d38e-a64e-9e17-24d94b64a24c"],
+Cell[54614, 1073, 621, 10, 70, "Input",ExpressionUUID->"4f51baaa-9d51-8243-a630-7c8471c03d7a"],
+Cell[55228, 1085, 165, 2, 70, "Subsection",ExpressionUUID->"7fd8a7a6-4da0-c044-bd98-62bf2c99bb79"],
+Cell[55394, 1089, 684, 9, 70, "Text",ExpressionUUID->"630e61d9-2ae6-4643-a5d5-8e8c498d6ff8"],
+Cell[56072, 1100, 397, 5, 70, "CodeText",ExpressionUUID->"b6f69d89-4c96-a24f-a9b4-c039cfd63a2d"],
+Cell[56467, 1107, 888, 18, 70, "Input",ExpressionUUID->"c4dea085-6788-e547-921b-7d4ea1858313"],
+Cell[57340, 1127, 327, 5, 70, "CodeText",ExpressionUUID->"586ace5b-288f-1547-b7a7-7653da1aace5"],
+Cell[57665, 1134, 880, 16, 70, "Input",ExpressionUUID->"576301b3-39d2-054f-81b9-9a541d8a4c76"],
+Cell[58532, 1152, 434, 6, 70, "CodeText",ExpressionUUID->"44217302-1340-554d-b792-c59bd400d448"],
+Cell[58963, 1160, 1073, 21, 70, "Input",ExpressionUUID->"77d30c0f-d18a-7446-acce-89364746655f"],
+Cell[60018, 1183, 458, 6, 70, "CodeText",ExpressionUUID->"890d125a-c891-c844-9995-d9f88e63ee04"],
+Cell[60473, 1191, 878, 15, 70, "Input",ExpressionUUID->"4cc8e86a-c0d6-cc47-8fea-a35618644c26"],
+Cell[61339, 1208, 582, 8, 70, "CodeText",ExpressionUUID->"95feaf74-cb2c-6148-91a5-478a153ece37"],
+Cell[61916, 1218, 756, 14, 70, "Input",ExpressionUUID->"208f7b7c-96c5-084b-8777-5a2524771bbb"],
+Cell[62661, 1234, 432, 6, 70, "CodeText",ExpressionUUID->"73f96158-def3-c34e-a9aa-1757789c3267"],
+Cell[63090, 1242, 504, 9, 70, "Input",ExpressionUUID->"1df2196f-87e6-6240-ab59-43fa552681ea"],
+Cell[63588, 1253, 112, 0, 70, "Subsection",ExpressionUUID->"e04f7b78-13e6-874f-bb63-4530967bcae8"],
+Cell[63703, 1255, 779, 11, 70, "Text",ExpressionUUID->"1a60f265-a8d6-0d46-a484-bbd4fcaaa7ba"],
+Cell[64474, 1268, 325, 5, 70, "CodeText",ExpressionUUID->"62c9d4e4-1e72-4145-ab57-325c7a77f9bc"],
+Cell[64797, 1275, 210, 4, 70, "Input",ExpressionUUID->"044a56a6-3cfc-6d4e-a910-d269e88dc8fb"],
+Cell[65006, 1281, 309, 4, 70, "CodeText",ExpressionUUID->"1cc1adb5-0580-5241-a199-895add3c8029"],
+Cell[65314, 1287, 248, 5, 70, "Input",ExpressionUUID->"48e7242c-aec5-0448-9bda-b2e2902ea622"],
+Cell[65560, 1294, 321, 5, 70, "CodeText",ExpressionUUID->"617f9583-5c75-7c41-ae96-c8f47e12a414"],
+Cell[65879, 1301, 355, 7, 70, "Input",ExpressionUUID->"10d02944-9348-7946-8d7d-7c585998d3bc"],
+Cell[66230, 1310, 304, 4, 70, "CodeText",ExpressionUUID->"f71d3aff-e049-024e-94cf-fb79da7eafb4"],
+Cell[66533, 1316, 708, 11, 70, "Input",ExpressionUUID->"fbb85fa8-1b04-ef4f-959e-e42edc49b0a8"],
+Cell[67233, 1329, 352, 5, 70, "CodeText",ExpressionUUID->"01fd2bb0-0853-9b4b-92fa-e564b66620fb"],
+Cell[67583, 1336, 323, 6, 70, "Input",ExpressionUUID->"55c46185-5068-6249-870c-2b364fc32c0f"],
+Cell[67903, 1344, 361, 5, 70, "CodeText",ExpressionUUID->"58d84894-7447-6b42-8f80-4bff40f71a00"],
+Cell[68262, 1351, 381, 7, 70, "Input",ExpressionUUID->"955288a6-65c1-cd4d-ab0a-13f02fc4fca9"],
+Cell[68639, 1360, 621, 8, 70, "CodeText",ExpressionUUID->"d294e9f1-a51d-6844-9a7f-a9cab7bc0875"],
+Cell[69255, 1370, 470, 9, 70, "Input",ExpressionUUID->"6a53ef63-e5f0-9e49-8b8a-3859f46d1006"],
+Cell[69719, 1381, 390, 6, 70, "CodeText",ExpressionUUID->"ecbbd209-f8d7-e444-923a-a9d75b3b2137"],
+Cell[70106, 1389, 396, 8, 70, "Input",ExpressionUUID->"85776f73-37ee-6c4a-9fcb-de10b90fada0"],
+Cell[70497, 1399, 471, 6, 70, "CodeText",ExpressionUUID->"84f04713-5784-ad46-9994-8082409d977a"],
+Cell[70965, 1407, 351, 6, 70, "Input",ExpressionUUID->"b6649f66-9231-0f41-a01b-9d22431c5f0c"],
+Cell[71313, 1415, 89, 0, 70, "Subsection",ExpressionUUID->"621646bf-52e0-8040-b1b5-dee6c58083b7"],
+Cell[71405, 1417, 169, 3, 70, "CodeText",ExpressionUUID->"5c59705e-6721-d84d-b357-42dd89821955"],
+Cell[71574, 1422, 285, 5, 70, "Input",ExpressionUUID->"cdd261f9-61d1-1c4c-b271-2fd7da2495ee"],
+Cell[71857, 1429, 168, 3, 70, "Section",ExpressionUUID->"ffcb0c75-e6a6-6d4e-b021-0bae8bb31f59"],
+Cell[72025, 1434, 193, 3, 70, "Text",ExpressionUUID->"dcf95634-6343-034e-8143-adad6dbf7348"],
+Cell[72218, 1439, 865, 12, 70, "Text",ExpressionUUID->"68b79765-be52-334c-87fd-7e81fb4adb31"],
+Cell[73074, 1453, 406, 6, 70, "CodeText",ExpressionUUID->"29b41cef-fb62-fa43-a268-9d5470d6ed59"],
+Cell[73477, 1461, 3943, 75, 70, "Input",ExpressionUUID->"d70e4c80-a5c2-8f4c-9652-27483c41c9a8"],
+Cell[77348, 1538, 269, 4, 70, "CodeText",ExpressionUUID->"dd8e867d-36fd-b446-b5b3-11ed5f2b3bcc"],
+Cell[77616, 1544, 349, 6, 70, "Input",ExpressionUUID->"518a8014-b43f-154a-91d0-a2ae2aff0104"],
+Cell[77962, 1552, 161, 2, 70, "Subsection",ExpressionUUID->"95d21063-aa01-a246-9e6e-022e3d26d93e"],
+Cell[78124, 1556, 825, 11, 70, "Text",ExpressionUUID->"5b0f5077-1f72-724c-89db-8881e348fbbe"],
+Cell[78941, 1569, 241, 3, 70, "CodeText",ExpressionUUID->"f75df17d-4316-4249-87ec-7dad8fc8193b"],
+Cell[79182, 1574, 220, 4, 70, "Input",ExpressionUUID->"4bfaa1df-f835-c241-a3b8-4ca4d1789c2d"],
+Cell[79401, 1580, 286, 4, 70, "CodeText",ExpressionUUID->"d4d246d5-9947-f540-a344-d46f69bac6dd"],
+Cell[79686, 1586, 287, 5, 70, "Input",ExpressionUUID->"32ec57c1-e03b-e045-baa8-5437fe3f3dc0"],
+Cell[79971, 1593, 329, 5, 70, "CodeText",ExpressionUUID->"b90ee932-6b52-3b4c-a230-a40e1ed92ee6"],
+Cell[80298, 1600, 104, 0, 70, "Input",ExpressionUUID->"161208fa-1b73-da41-8288-a565267d2748"],
+Cell[80405, 1602, 280, 4, 70, "CodeText",ExpressionUUID->"d990d412-72ca-714a-b8ef-39f806c59a55"],
+Cell[80684, 1608, 220, 4, 70, "Input",ExpressionUUID->"c12ed127-a1e9-ab43-b00e-849f690e3451"],
+Cell[80903, 1614, 357, 5, 70, "CodeText",ExpressionUUID->"5035b32a-169a-5640-8d51-f0f03e03e2c8"],
+Cell[81258, 1621, 230, 4, 70, "Input",ExpressionUUID->"d7c9d598-28bf-2648-bf6d-8afebae5d432"],
+Cell[81487, 1627, 443, 6, 70, "CodeText",ExpressionUUID->"45a7b072-84cc-df48-886f-f00dfb347fcd"],
+Cell[81927, 1635, 275, 4, 70, "Input",ExpressionUUID->"b567fc77-cc81-d847-b311-53a677b5c500"],
+Cell[82201, 1641, 300, 4, 70, "CodeText",ExpressionUUID->"2343f0ab-96d0-7b4e-8af5-2ed7dc03b1b2"],
+Cell[82500, 1647, 274, 4, 70, "Input",ExpressionUUID->"f77e3bf4-d52d-7149-9049-5bd9d5485fd6"],
+Cell[82773, 1653, 272, 4, 70, "Input",ExpressionUUID->"6043e682-0721-e148-b203-d3b41edaa81d"],
+Cell[83044, 1659, 527, 7, 70, "Text",ExpressionUUID->"9b83b02c-df3b-ce44-9041-aea8ae62ccee"],
+Cell[83567, 1668, 152, 2, 70, "Subsection",ExpressionUUID->"079ff188-5029-6741-80b4-f9e29e2e76e0"],
+Cell[83720, 1672, 633, 9, 70, "Text",ExpressionUUID->"7722a870-7eed-254a-b476-dafb1f8e4b36"],
+Cell[84347, 1683, 360, 5, 70, "CodeText",ExpressionUUID->"abf8327d-305b-9444-b1ce-ae6c22f12f21"],
+Cell[84705, 1690, 213, 4, 70, "Input",ExpressionUUID->"fbf0b094-a126-b540-83ac-86d5ac560e69"],
+Cell[84917, 1696, 389, 5, 70, "CodeText",ExpressionUUID->"1142c4b0-c5c4-114f-8f2e-5560b5918d37"],
+Cell[85304, 1703, 786, 11, 70, "CodeText",ExpressionUUID->"a971cc31-4e7e-3045-a6f8-b959b0406c8b"],
+Cell[86082, 1716, 143, 3, 70, "Input",ExpressionUUID->"8bfd8a9c-b8e1-d540-a5a7-e4842f41b198"],
+Cell[86225, 1721, 692, 9, 70, "CodeText",ExpressionUUID->"dd8e0113-427e-4647-9a34-7b1a87e5744b"],
+Cell[86911, 1732, 302, 5, 70, "Input",ExpressionUUID->"f763daed-dd30-de45-b74b-21ae08313d8c"],
+Cell[87211, 1739, 586, 8, 70, "CodeText",ExpressionUUID->"ed11f6ba-5fb4-124a-b286-addc1c2f72e0"],
+Cell[87792, 1749, 104, 0, 70, "Input",ExpressionUUID->"b61c85e4-6402-034e-8eed-08e116b102e7"],
+Cell[87899, 1751, 332, 5, 70, "CodeText",ExpressionUUID->"d393d4e6-a656-0241-ab8e-c49eff27153c"],
+Cell[88229, 1758, 355, 5, 70, "CodeText",ExpressionUUID->"98cb156c-d771-6440-a726-1005ca5f6a92"],
+Cell[88582, 1765, 395, 6, 70, "CodeText",ExpressionUUID->"0c921c8b-d528-bb45-a1bf-4df09f76e2c2"],
+Cell[88974, 1773, 130, 0, 70, "Input",ExpressionUUID->"81c10b6c-37a3-0a4b-85b8-03f2cb49c1ec"],
+Cell[89107, 1775, 590, 8, 70, "Text",ExpressionUUID->"736ef594-a28f-5e45-a99d-9f59c0270115"],
+Cell[89692, 1785, 173, 3, 70, "Subsection",ExpressionUUID->"4d0b89f6-234f-3143-a0e9-47378bd4a723"],
+Cell[89865, 1790, 733, 10, 70, "Text",ExpressionUUID->"13ab05ac-4aaa-534d-87bb-5ad996e03d38"],
+Cell[90591, 1802, 233, 3, 70, "CodeText",ExpressionUUID->"efc391e1-89d8-8341-afaf-b80a29c8955d"],
+Cell[90824, 1807, 542, 11, 70, "Input",ExpressionUUID->"d85ce288-f354-4846-8c69-c9699493bf72"],
+Cell[91358, 1820, 210, 3, 70, "Input",ExpressionUUID->"a2747f24-dd15-ab4a-bb9b-f186a91f57d1"],
+Cell[91568, 1825, 177, 3, 70, "Text",ExpressionUUID->"e37270ef-7c4e-4648-a39e-eab8e57a31cf"],
+Cell[91745, 1830, 668, 9, 70, "Item",ExpressionUUID->"edbb1810-1b05-d64b-a045-6155849e101e"],
+Cell[92407, 1841, 398, 6, 70, "Item",ExpressionUUID->"2e07ee3d-5e55-4441-9017-24c468a1820e"],
+Cell[92802, 1849, 526, 7, 70, "Item",ExpressionUUID->"ad9f926b-55a4-0647-a1bb-8622c7547135"],
+Cell[93324, 1858, 214, 4, 70, "Input",ExpressionUUID->"2abb7e33-f8df-b44e-b6d3-a6a2736a2803"],
+Cell[93537, 1864, 550, 8, 70, "Item",ExpressionUUID->"6f2e173a-4949-0c4b-aa25-6606b3d2578c"],
+Cell[94082, 1874, 357, 5, 70, "Item",ExpressionUUID->"d2db9b57-422d-af4a-a458-f32f6c627668"],
+Cell[94437, 1881, 95, 0, 70, "Input",ExpressionUUID->"dd6a3d9b-f96b-3241-a9aa-29094e420397"],
+Cell[94535, 1883, 400, 6, 70, "CodeText",ExpressionUUID->"c16da2df-86af-3543-a81e-248ff2fc4aee"],
+Cell[94932, 1891, 255, 4, 70, "Input",ExpressionUUID->"b8ee1c23-3f23-0d4b-b543-10f9edb049ca"],
+Cell[95186, 1897, 611, 8, 70, "Text",ExpressionUUID->"d56d1424-bf1f-dc42-ba6d-f934bfa46aff"],
+Cell[95792, 1907, 133, 0, 70, "Subsection",ExpressionUUID->"9f21f046-b842-0144-bd32-c40e5517c7b8"],
+Cell[95928, 1909, 642, 9, 70, "Text",ExpressionUUID->"ae8a99d0-5637-034b-9ced-846e7b980d1a"],
+Cell[96564, 1920, 785, 11, 70, "Text",ExpressionUUID->"b5d66e2f-a91a-c04b-8f2f-6aa9826a0832"],
+Cell[97341, 1933, 903, 12, 70, "Text",ExpressionUUID->"faaf4db8-0820-474e-bab1-4ca8d458afa6"],
+Cell[98235, 1947, 155, 2, 70, "CodeText",ExpressionUUID->"2aed9034-a412-474d-853b-76638a9ea2d9"],
+Cell[98391, 1951, 360, 8, 70, "Input",ExpressionUUID->"a3400028-fbb1-4f4b-9d9f-18dbeee6405f"],
+Cell[98746, 1961, 127, 0, 70, "Subsection",ExpressionUUID->"de6b6489-0345-4a46-91f2-9f68fe431958"],
+Cell[98876, 1963, 206, 3, 70, "Text",ExpressionUUID->"bd5fc933-e2a6-3645-b475-6ee64aa5434d"],
+Cell[99082, 1968, 1834, 38, 70, "Input",ExpressionUUID->"dd4f2b08-0704-1744-ae29-cc0898727e46"],
+Cell[100881, 2008, 155, 2, 70, "Subsection",ExpressionUUID->"926f173c-8fd2-2f4d-93c3-a335d5b859e9"],
+Cell[101037, 2012, 239, 4, 70, "Item",ExpressionUUID->"fd885701-ec49-bc44-9e5c-37ddb1818663"],
+Cell[101275, 2018, 264, 4, 70, "Item",ExpressionUUID->"ac506dc2-c508-af45-8647-ae4b278aa2b1"],
+Cell[101538, 2024, 196, 3, 70, "Item",ExpressionUUID->"ee2f5c50-8bfd-3d46-abba-17537fa93a23"],
+Cell[101734, 2029, 215, 3, 70, "Item",ExpressionUUID->"f5d39cd3-9095-7249-be5f-e13082d193dd"],
+Cell[101949, 2034, 287, 4, 70, "Item",ExpressionUUID->"ec286980-df9f-ae45-ac9d-86f97ba394e3"],
+Cell[102235, 2040, 127, 0, 70, "Section",ExpressionUUID->"5c3d7455-d61b-ea40-af48-b9aac694124f"],
+Cell[102365, 2042, 479, 6, 70, "CodeText",ExpressionUUID->"072d94b5-e42e-1742-8687-cad280ec8e2a"],
+Cell[102841, 2050, 902, 17, 70, "Input",ExpressionUUID->"631c19fa-4f2d-8d44-8a10-92ac30c64f18"],
+Cell[103729, 2069, 480, 7, 70, "CodeText",ExpressionUUID->"8818fc54-2100-2449-b57f-e1d399938e17"],
+Cell[104205, 2078, 1038, 20, 70, "Input",ExpressionUUID->"2dd3cdfa-db2d-0045-a3e3-50cfa53581d2"]
 }
 ]
 *)
