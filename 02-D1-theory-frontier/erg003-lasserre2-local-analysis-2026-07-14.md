@@ -115,7 +115,37 @@ Wasted-spend risk > 90–95%.
 
 **So the credit question resolves to: spend 0 on a WCS solve — it is a SCALE wall, not a budget
 question.** A certified ω ≤ 17 by this route is a days-to-weeks off-WCS MOSEK/HPC research-software
-project with non-trivial failure risk. **[17,19] evidenced-tight stands.**
+project with non-trivial failure risk.
+
+## Is there ANY WCS-only method left? (2026-07-14, second pass)
+
+Two more angles checked before concluding "no way":
+
+**GLV(s=1,t=2) — a cheaper-looking SDP hierarchy level — confirmed dead too.** This variant
+(Gvozdenović–Laurent–Vallentin, arXiv:0712.3079) uses the *same* moment variables as full
+Lasserre-2 but block-diagonalizes per-pair-orbit instead of monolithically. On the sibling it
+**closes the gap and even beats full Lasserre-2** (10.38886 < 10.53412 < 11 — the tightest of all
+four levels tested: ϑ=11.180 > three-point=11.009 > las₂=10.534 > GLV=10.389 > α=10). But at
+big-graph scale it's **worse**: each pair-orbit only gets its own little stabilizer (median order
+~8 of |Γ|=349,920, vs. full Lasserre-2 exploiting all 349,920 at once), so ≥7 of the 65 pair-orbits
+produce near-**unreduced ~3646×3646 blocks** — 2.8× worse than las₂'s 1309 max block, aggregate
+cone 4–6× larger. Every SDP route is now confirmed dead on WCS.
+
+**Exhaustion (pure DFS, no SDP/MOSEK) is the one live WCS-native path — but costs far more than
+first estimated.** Digging into the solver's actual anchor structure: the S=18 census is not 10
+equally-hard families — 5 need only 386 anchors, 3 need 37,464, and **2 (families 6 and 9) need
+1,202,564 anchors each**, with the first anchor not yet cleared in 2100s of compute. Revised
+estimate: **central ~50,000–70,000 credits**, with real risk of 300,000+ or effectively open-ended
+for those two families. 7 of 10 families haven't cleared even their first anchor — the same
+signature that hid the real S=17 witness before, so "no result yet" must not be read as evidence
+for NO. A concrete bug was also found: `erg003_s18_sweep.py` has no checkpoint/resume, so reruns
+silently discard prior paid-for progress — a free fix needed before spending more.
+
+**Verdict: not "no way" — but the one remaining way is expensive, uncertain for 2 of 10 families,
+and needs a free bug fix plus a small paid pilot (~1,000–2,500 cr) before committing real budget.**
+Ranked recommendation: (1) fix the checkpoint bug — free; (2) run a capped pilot on the two hard
+families to see if within-family symmetry or replanning rescues them; (3) only then decide on full
+exhaustion; (4) do not fund Lasserre-2 or GLV at big-graph scale — both are dead ends.
 
 Artifacts: `erg003_lasserre.py` (validated level-1 + block-diagonalizer, big graph),
 `erg003_threepoint_sibling.py` (end-to-end three-point pipeline + the decisive X₁₂₅ result).
