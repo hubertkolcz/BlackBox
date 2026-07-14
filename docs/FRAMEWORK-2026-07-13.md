@@ -288,3 +288,41 @@ five lanes returned rigorous negatives, none inflated — each surviving open
 problem now carries a *sharper* cheapest-path in the Layer-3 ledger (H1:
 nonlinear certificate; H3: elim2 scale-up; H5: Lasserre-2/search; H4′:
 adversary-class analysis).
+
+---
+
+## Delta 2026-07-13 (evening): H2′ detector candidate + H4′ decomposition
+
+**H2′ → NARROWED to a verified-but-not-yet-discriminating candidate.**
+The gauge-invariance failure that killed F9vii pointed at a *face-level* test.
+Candidate **detector D(G,k)**: the optimal face of the Λ_k clique-cover LP of
+G^∨k contains an integer point ⟺ Λ_k ∈ ℤ AND χ̄(G^∨k)=Λ_k (an exact integer
+partition-of-unity certificate exists). It is **gauge-invariant by construction**
+(a predicate of the whole optimal face) — fixing exactly what broke the ℚ/ℤ
+route (robustness re-confirmed: the F9vii-killing statistic differs across two
+exact optima, 20776 vs 22243, but D returns the same NO for both).
+**Verified 5/5** (`06-D3-sheaf-cohomology/h2prime_lattice_probe.py`,
+`h2prime_results.json`, uncommitted→committed): YES only at (C₅,k=2) — 2 integer
+points, the two ℤ₅-slope pentads, the unique tested case with S_k=θ(G); NO at
+(C₅,k=1), (C₇,k=2), (C₇,k=3), and out-of-sample (C₉,k=2).
+**Honest caveat (why not yet closed).** Every tested NO case has Λ_k=(n/2)^k ∉ ℤ
+(5/2, 49/4, 343/8, 81/4), which empties the integer set *trivially* — so D's
+genuine discriminating power (integer Λ_k but still stuck) is **untested**. The
+decisive stress-test is a graph stuck at *integer* α\*; running now.
+Also settled: the mechanism is **one-sided integrality** (cover side χ̄=5
+integral, packing side α=4 gapped) — **NOT** total-dual-integrality/perfect-graph
+structure (that route refuted). Conjecture the data supports: attainment ⟺
+θ(G)^k = χ̄(G^∨k). Proof would need a rounding theorem (θ=χ̄_f ⟹ integral cover
+on sharply-transitive clique families) + the unproven converse. H2′ status:
+detector candidate identified and gauge-invariant; discrimination pending the
+integer-α\* test; cohomological dress (H¹ of which complex?) still open.
+
+**H4′ → DECOMPOSED into a closable part and an irreducible-but-quantifiable part.**
+(a) Photon-statistics adversaries (PNR/heralded) are killable by a **G9
+antibunching gate** grounded in Glauber's classical bound g²(0) ≥ 1 — a theorem
+extending Prop O3-C's completeness to *any* classical-light source under *any*
+detection. (b) Fair sampling is provably not eliminable by statistics (Garg–
+Mermin threshold), so H4′'s honest endpoint is a **computed critical detection
+efficiency** for the KCBS scenario, above which completeness holds. Build queued
+(G9 gate + efficiency threshold, protocol-style in 00-BBT). H4′ thereby reduces
+from open-ended to {G9 theorem-extension} + {one numerical boundary}.

@@ -1,0 +1,365 @@
+{
+ "module": "H2' decisive probe: integer point in the optimal dual face of the Lambda_k capacity LP",
+ "date": "2026-07-13",
+ "formulation": "LP-D1 of ESSAY-005-BRIDGE-formalA-weighted-presheaf.md: min sum y_K, coverage >= 1, y >= 0 over maximal cliques of the conormal power G^{vk}; optimal face F* = {feasible y : sum y = Lambda_k}; detector D(G,k) = [F* contains an integer point]",
+ "why_Lambda_not_Sk": "S_2(C5) = sqrt5 is irrational: a rational LP face at an irrational objective contains no rational point at all, so the detector must live at the rational capacity Lambda_k = S_k^k (objective 5, not sqrt5, for C5 k=2). The pentad partition is an integer point of THAT face.",
+ "cases": {
+  "C5_k1": {
+   "n": 5,
+   "k": 1,
+   "nV": 5,
+   "Lambda_target": "5/2",
+   "S_k": 2.5,
+   "theta_G": 2.23606797749979,
+   "quantum_value_attained": false,
+   "census": {
+    "n_max_cliques": 5,
+    "size_histogram": {
+     "2": 5
+    }
+   },
+   "structured_dual_cliques_maximal": true,
+   "certificate": {
+    "primal_uniform_value": "5/2",
+    "dual_structured_value": "5/2",
+    "dual_coverage_exactly_one": true,
+    "Lambda_exact": "5/2",
+    "dual_family": "5 edge-products (k=1: the 5 edges), y=1/2"
+   },
+   "scipy_crosscheck": {
+    "scipy_value": 2.5,
+    "matches_target": true
+   },
+   "decision": {
+    "integer_point": "NO",
+    "proof": "Lambda = 5/2 is not an integer; any integer y>=0 has integer objective, so the optimal face (objective == 5/2) contains no integer point. Face-level and unconditional: holds for every optimal dual representative simultaneously.",
+    "n_integer_points": 0
+   },
+   "scaled_integrality": {
+    "t": 2,
+    "statement": "y = 1 on the structured family is an INTEGER 2-fold cover of total weight 5 = t*Lambda; scaled integer points exist at every stuck case, so the detector is discriminating ONLY at t=1 (genuine partition of unity)."
+   },
+   "seconds": 0.0
+  },
+  "C5_k2": {
+   "n": 5,
+   "k": 2,
+   "nV": 25,
+   "Lambda_target": "5",
+   "S_k": 2.23606797749979,
+   "theta_G": 2.23606797749979,
+   "quantum_value_attained": true,
+   "census": {
+    "n_max_cliques": 535,
+    "size_histogram": {
+     "4": 525,
+     "5": 10
+    }
+   },
+   "structured_dual_cliques_maximal": true,
+   "certificate": {
+    "primal_uniform_value": "5",
+    "dual_structured_value": "5",
+    "dual_coverage_exactly_one": true,
+    "Lambda_exact": "5",
+    "dual_family": "10 slope-pentads {(i, a*i+j)}, a in {2,3}; dual y=1 on either disjoint family of 5"
+   },
+   "scipy_crosscheck": {
+    "scipy_value": 5.000000000000105,
+    "matches_target": true
+   },
+   "decision": {
+    "integer_point": "YES",
+    "proof": "Lambda = 5 integer; counting lemma forces integer optima to be partitions of the 25 vertices into 5 maximum cliques (size 5); exhaustive enumeration over the 10 maximum cliques found 2 such partition(s).",
+    "n_integer_points": 2,
+    "integer_points": [
+     [
+      [
+       0,
+       8,
+       11,
+       19,
+       22
+      ],
+      [
+       2,
+       5,
+       13,
+       16,
+       24
+      ],
+      [
+       3,
+       6,
+       14,
+       17,
+       20
+      ],
+      [
+       4,
+       7,
+       10,
+       18,
+       21
+      ],
+      [
+       1,
+       9,
+       12,
+       15,
+       23
+      ]
+     ],
+     [
+      [
+       0,
+       7,
+       14,
+       16,
+       23
+      ],
+      [
+       2,
+       9,
+       11,
+       18,
+       20
+      ],
+      [
+       3,
+       5,
+       12,
+       19,
+       21
+      ],
+      [
+       1,
+       8,
+       10,
+       17,
+       24
+      ],
+      [
+       4,
+       6,
+       13,
+       15,
+       22
+      ]
+     ]
+    ]
+   },
+   "packing_side": {
+    "alpha": 4,
+    "alpha_star": "5",
+    "packing_integrality_gap": true,
+    "note": "covering side integral (chi_bar = 5 = chi_bar_f) while packing side fractional (alpha = 4 < 5): one-sided integrality, NOT perfection/TDI"
+   },
+   "seconds": 0.0
+  },
+  "C7_k2": {
+   "n": 7,
+   "k": 2,
+   "nV": 49,
+   "Lambda_target": "49/4",
+   "S_k": 3.5,
+   "theta_G": 3.317667207394096,
+   "quantum_value_attained": false,
+   "census": {
+    "n_max_cliques": 1715,
+    "size_histogram": {
+     "4": 1715
+    }
+   },
+   "structured_dual_cliques_maximal": true,
+   "certificate": {
+    "primal_uniform_value": "49/4",
+    "dual_structured_value": "49/4",
+    "dual_coverage_exactly_one": true,
+    "Lambda_exact": "49/4",
+    "dual_family": "49 edge-squares (k=1: the 7 edges), y=1/4"
+   },
+   "scipy_crosscheck": {
+    "scipy_value": 12.249999999999998,
+    "matches_target": true
+   },
+   "decision": {
+    "integer_point": "NO",
+    "proof": "Lambda = 49/4 is not an integer; any integer y>=0 has integer objective, so the optimal face (objective == 49/4) contains no integer point. Face-level and unconditional: holds for every optimal dual representative simultaneously.",
+    "n_integer_points": 0
+   },
+   "scaled_integrality": {
+    "t": 4,
+    "statement": "y = 1 on the structured family is an INTEGER 4-fold cover of total weight 49 = t*Lambda; scaled integer points exist at every stuck case, so the detector is discriminating ONLY at t=1 (genuine partition of unity)."
+   },
+   "seconds": 0.1
+  },
+  "C7_k3": {
+   "n": 7,
+   "k": 3,
+   "nV": 343,
+   "Lambda_target": "343/8",
+   "S_k": 3.4999999999999996,
+   "theta_G": 3.317667207394096,
+   "quantum_value_attained": false,
+   "omega_proof": {
+    "edge_cube_is_8clique": true,
+    "no_9clique": true,
+    "omega": 8,
+    "bnb_nodes": 1218945,
+    "bnb_seconds": 24.4,
+    "method": "translation reduction to N((0,0,0)) (218 vts) + coloring-bounded B&B, decision seed 7"
+   },
+   "certificate": {
+    "primal_uniform_value": "343/8",
+    "primal_feasibility": "p=1/8 uniform feasible because omega(C7^v3)=8 (re-proven above)",
+    "dual_structured_value": "343/8",
+    "dual_family": "343 edge-cubes E1xE2xE3, y=1/8, coverage exactly 1 (each vertex on 2 edges/coord -> 2^3=8 cubes)",
+    "dual_coverage_exactly_one": true,
+    "Lambda_exact": "343/8"
+   },
+   "census": {
+    "skipped": "k=3 census not needed: sandwich is a complete optimality proof"
+   },
+   "decision": {
+    "integer_point": "NO",
+    "proof": "Lambda = 343/8 is not an integer; any integer y>=0 has integer objective, so the optimal face (objective == 343/8) contains no integer point. Face-level and unconditional: holds for every optimal dual representative simultaneously.",
+    "n_integer_points": 0
+   },
+   "seconds": 24.5
+  },
+  "C9_k2": {
+   "n": 9,
+   "k": 2,
+   "nV": 81,
+   "Lambda_target": "81/4",
+   "S_k": 4.5,
+   "theta_G": 4.360089581434065,
+   "quantum_value_attained": false,
+   "census": {
+    "n_max_cliques": 3807,
+    "size_histogram": {
+     "4": 3807
+    }
+   },
+   "structured_dual_cliques_maximal": true,
+   "certificate": {
+    "primal_uniform_value": "81/4",
+    "dual_structured_value": "81/4",
+    "dual_coverage_exactly_one": true,
+    "Lambda_exact": "81/4",
+    "dual_family": "81 edge-squares (k=1: the 9 edges), y=1/4"
+   },
+   "scipy_crosscheck": {
+    "scipy_value": 20.250000000000007,
+    "matches_target": true
+   },
+   "decision": {
+    "integer_point": "NO",
+    "proof": "Lambda = 81/4 is not an integer; any integer y>=0 has integer objective, so the optimal face (objective == 81/4) contains no integer point. Face-level and unconditional: holds for every optimal dual representative simultaneously.",
+    "n_integer_points": 0
+   },
+   "scaled_integrality": {
+    "t": 4,
+    "statement": "y = 1 on the structured family is an INTEGER 4-fold cover of total weight 81 = t*Lambda; scaled integer points exist at every stuck case, so the detector is discriminating ONLY at t=1 (genuine partition of unity)."
+   },
+   "seconds": 0.2
+  }
+ },
+ "robustness_C7k2": {
+  "canonical": {
+   "support_size": 49,
+   "value": "49/4",
+   "histogram": {
+    "1/4": 49
+   }
+  },
+  "generic_vertex": {
+   "exact_feasible": true,
+   "exact_value": "49/4",
+   "on_optimal_face": true,
+   "support_size": 49,
+   "value_histogram": {
+    "1963/4244": 1,
+    "159/1061": 1,
+    "1645/4244": 1,
+    "989/2122": 1,
+    "629/4244": 1,
+    "1637/4244": 1,
+    "661/4244": 1,
+    "1605/4244": 1,
+    "481/2122": 1,
+    "376/1061": 1,
+    "563/4244": 1,
+    "55/1061": 1,
+    "167/2122": 1,
+    "71/2122": 1,
+    "102/1061": 1,
+    "1777/4244": 1,
+    "415/2122": 1,
+    "125/4244": 1,
+    "214/1061": 1,
+    "1417/4244": 1,
+    "1971/4244": 1,
+    "1035/4244": 1,
+    "2759/4244": 1,
+    "225/2122": 1,
+    "637/4244": 1,
+    "1523/4244": 1,
+    "1071/4244": 1,
+    "283/2122": 1,
+    "985/2122": 1,
+    "114/1061": 1,
+    "707/4244": 1,
+    "325/4244": 1,
+    "2273/4244": 1,
+    "201/2122": 1,
+    "455/4244": 1,
+    "243/4244": 1,
+    "1237/2122": 1,
+    "1181/4244": 1,
+    "187/4244": 1,
+    "318/1061": 1,
+    "475/4244": 1,
+    "2497/4244": 1,
+    "577/2122": 1,
+    "287/2122": 1,
+    "660/1061": 1,
+    "29/1061": 1,
+    "349/1061": 1,
+    "23/1061": 1,
+    "299/1061": 1
+   }
+  },
+  "supports_identical": false,
+  "representative_level_Qz_statistic": {
+   "n_overlap_pairs": 393176,
+   "bad_overlaps_canonical": 20776,
+   "bad_overlaps_generic": 22243,
+   "reading": "the refuted F9vii construction depended on these representative-level numbers, which differ between optimal duals"
+  },
+  "face_level_answer": {
+   "canonical": "NO",
+   "generic": "NO",
+   "reason": "D quantifies over the WHOLE face: Lambda = 49/4 not an integer kills every integer candidate simultaneously, independent of which optimal dual is exhibited. Gauge-invariance is automatic by construction."
+  }
+ },
+ "verdict": {
+  "pattern_verified": true,
+  "detector_statement": "D(G,k): the optimal face of the Lambda_k clique-cover LP of G^{vk} (coverage >= 1, objective == Lambda_k) contains an integer point  <=>  Lambda_k is an integer AND the integral clique-cover number chi_bar(G^{vk}) equals Lambda_k (an exact integer partition-of-unity certificate exists). Verified on all 5 cases: YES exactly at (C5,k=2) -- the unique tested case with S_k = theta(G); NO at (C5,k=1), (C7,k=2), (C7,k=3) and the out-of-sample (C9,k=2) (predicted NO, confirmed).",
+  "gauge_invariance": "automatic: D is a predicate of the optimal face (a canonical object of the LP), not of any chosen optimal dual; the two duals that broke the Q/Z route give identical face-level answers by construction (demonstrated above).",
+  "honesty": {
+   "no_cases_decided_by": "in all four NO cases the objective Lambda_k = (n/2)^k is a non-integer (2^k does not divide n^k for odd n), which alone empties the face of integer points; the YES case carries the real content (an integer cover exists AND is optimal).",
+   "iff_scope": "the 'iff' is verified on these 5 instances only. A decisive future test needs a graph stuck at an INTEGER fractional-packing value; none is in the tested family (odd cycles stuck at (n/2)^k are automatically non-integer). Until then 'D <=> attainment' is data-supported, not proven.",
+   "scaled_integrality": "integer t-fold covers (t = 2^k) exist at every stuck case, so the detector is only meaningful at t=1; 'integer point at objective t*Lambda' does NOT discriminate."
+  },
+  "tdi_paragraph": "Connection to total dual integrality / perfection (verified vs conjectured): for a PERFECT graph the clique-constraint system is TDI (Lovasz/Fulkerson-Chvatal), the covering LP has integral optima for every objective, and alpha = theta = chi_bar -- the quantum value is attained trivially at k=1 with an integer certificate. The graphs here are imperfect (C5^v2 contains the diagonal odd hole C5), and VERIFIED: at (C5,k=2) integrality is strictly ONE-SIDED -- the covering face is integral (chi_bar = chi_bar_f = 5, two pentad-partition integer points) while the packing side has a gap (alpha = 4 < alpha* = 5) -- so the mechanism is NOT perfection and NOT full TDI, but single-face dual integrality at the all-ones right-hand side, exactly where theta(G)^k = chi_bar_f(G^{vk}). CONJECTURED: attainment  <=>  theta(G)^k = chi_bar(G^{vk}) in general, i.e. whenever theta reaches the fractional cover bound of the power, an integral optimal cover exists. A proof would require (i) attainment => theta(G^{vk}) = chi_bar_f(G^{vk}) (theta is squeezed: theta(G)^k <= theta(G^{vk}) <= chi_bar_f can fail supermultiplicatively -- needs care under the conormal product), and (ii) a rounding theorem producing an integral cover from theta = chi_bar_f -- e.g. via a sharply transitive clique family as with the Z5 slope pentads; no general TDI machinery applies to imperfect graphs, so (ii) is genuinely open.",
+  "proof_requires": "(1) theta-attainment => Lambda_k integer (true for C5: theta^2 = 5; needs 'attainment happens at integer capacity' in general); (2) attainment => existence of an integral optimal cover (rounding/orbit argument); (3) converse: integral optimal cover => S_k = theta (this direction is NOT even heuristically clear -- an imperfect graph could conceivably have chi_bar = alpha* integer without theta reaching it; finding or excluding such a case is the sharpest next experiment)."
+ },
+ "provenance": {
+  "anchors": "ESSAY-005-BRIDGE-formalA-weighted-presheaf.md, p3_certificates.json, bridge_weighted_presheaf.json (all values re-derived exactly here, censuses reproduced: C5^v2 535={4:525,5:10}, C7^v2 1715={4:1715}; new: C9^v2 3807={4:3807}); omega(C7^v3)=8 independently re-proven in this run",
+  "refuted_route": "final_h1_cocycle_results.json (F9vii)",
+  "exactness": "all decision-relevant arithmetic in fractions.Fraction; scipy/HiGHS used only for cross-checks and to sample a generic face vertex, which is then re-verified exactly"
+ },
+ "total_seconds": 28.5
+}
