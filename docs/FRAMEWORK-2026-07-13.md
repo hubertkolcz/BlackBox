@@ -59,11 +59,12 @@ the C₇ negative control (7/2 at k=2,3). Mechanism identified: the optimal dual
 achieved (C₅ pentads), **properly fractional** otherwise (C₇: 4∤49, 8∤343).
 (`06-D3-sheaf-cohomology/ESSAY-005-ERGODIC-BRIDGE-2026-07-13.md`.)
 
-**F7. The ERG-003 reduction [T].** ω(C₉∨C₉∨C₉∨C₅) ∈ {16..19}; activation ⟺
+**F7. The ERG-003 reduction [T].** ω(C₉∨C₉∨C₉∨C₅) ∈ **[17,19]**; activation ⟺
 ω ≥ 18. The 5-layer pentagram decomposition is exactly equivalent to cliques of
-G (both directions, 68k tests); ω(H)=8 proven analytically; the 26-family S=17
-census is complete; families (1,1,1,7,7) and (1,1,2,7,6) proven NO. A finished
-family sweep is a valid proof.
+G (both directions, 68k tests); ω(H)=8 proven analytically; a verified 17-clique
+gives ω ≥ 17. Activation (ω≥18) attacked directly 2026-07-14: **no 18-clique found**
+across a WCS S=18 detection sweep + a free 7-strategy hunt, and ϑ=ϑ′=19.666 is pinned →
+**ω=17 evidenced-tight, no activation on all evidence** (closure research-scale; see H3).
 
 **F8. Constructive realizations [T].** The cct mesh realized as a cluster state
 and verified at 9M qubits; MBQC execution of Bernstein–Vazirani (10⁵ bits),
@@ -137,13 +138,28 @@ stayed 0); the fresh 40-min run reached the clique inside its *first* anchor.
 Bracket [16,19] → **[17,19]**. A textbook case for the project's
 verify-surprising-positives discipline — the deeper search found what the shallower
 one missed, and it survived an independent re-check.
-**What this does and doesn't settle.** Activation still requires ω ≥ 18
-(load = ω/(8√5): **ω=17 → 0.950 < 1, still no activation**; ω=18 → 1.006 = activation).
-So the value 16 is corrected, but the (3,1) cell's *activation* is now the sharper
-**open** question: is ω = 17 (no activation, value corrected) or ω ≥ 18 (a **second
-activation family** beyond n=7 — a genuine discovery)? **Next step: the S=18 census**
-(does an 18-clique exist?). This supersedes the prior F9x / ledger "H3 open, ω=16"
-lines.
+**What this does and doesn't settle.** Activation requires ω ≥ 18
+(load = ω/(8√5): **ω=17 → 0.950 < 1, no activation**; ω=18 → 1.006 = activation).
+The value 16 is corrected; the *activation* question — is ω=17 (safe) or ω≥18 (a **second
+activation family** beyond n=7) — was then attacked directly and comes back **evidenced-tight
+at 17**.
+
+**Activation update (2026-07-14): no 18-clique found; ω ∈ [17,19], 17 evidenced-tight.**
+Three independent regimes fail to find an 18-clique: (1) a seeded local ILS; (2) a **WCS
+Memory16x128 S=18 detection sweep** — all 10 C₅-layer families PARTIAL, 294.8 M nodes, 438 cr,
+no 18-clique; (3) a **free 7-strategy hunt** (swap-BFS over 681 k distinct 17-cliques;
+vertex-fixed B&B whose k-core analysis shows the neighborhood *uniformly dense*; a fixed-k=18
+simulated anneal that floored at energy **E=1** — one edge short — over **405 distinct maximal
+17-cliques, all non-extendable**; DLS, multi-seed ILS, replicator/Motzkin-Straus; and a blind
+random-greedy that cannot even reach 17). The maximal 17-cliques form a genuine ceiling. On the
+UB side the Lovász bound is exact — ϑ(C̄₉)³ϑ(C̄₅)=(1+sec π/9)³√5=19.666 → **19**, and Schrijver
+ϑ′ *provably* cannot improve it (factor SDPs already entrywise nonnegative), so **UB<18 requires
+Lasserre level ≥ 2** on 3645 vertices (research-scale). A brute-force exhaustion to *prove* ω=17
+is a 1.7 k–15 k cr uncertain (heavy-tailed) computation. **Honest status: activation OPEN,
+ω ∈ [17,19], ω=17 evidenced-tight, no activation on all evidence** — a direct analogue of the
+Paley-13 [39,46] bracket (evidenced-tight low end, research-scale closure). Details:
+`02-D1-theory-frontier/erg003-activation-analysis-2026-07-14.md`, `erg003_verdict.json`
+(`activation_S18`). Supersedes the prior F9x / ledger "H3 open, ω=16" lines.
 
 ### H4 — Two-Lens Completeness Hypothesis (SQ1; the O3 capstone)
 **Statement.** Against the physical adversary class 𝒜 = {classical optical
@@ -232,7 +248,7 @@ selection) rather than inside it.
 | H1 | sup gap = gap(cct) | ergodic optimization | finiteness property fails generically (Bousch–Mairesse); affine tilts inert | Legendre-frontier certificate tight at f_c=2/3 |
 | H1′ | lim Γ_k = sup gap | hierarchy convergence | none known — likely provable | SFT window-approximation argument |
 | H2 | δ(c mod ℤ) is THE detector | sheaf cohomology | gauge invariance untested | compute class over optimal face; C₉ control |
-| H3 | ~~ω(nonagon cell)=16~~ **REFUTED: ω ≥ 17** (verified 17-clique) | finite search | value 16 was under-search | S=18 census: is ω=17 (safe) or ≥18 (activation)? |
+| H3 | ~~ω(nonagon cell)=16~~ **REFUTED: ω ≥ 17**; activation (ω≥18) **not found**, ω ∈ [17,19] **17 evidenced-tight** (3 regimes) | finite search + Lovász ϑ | ϑ=ϑ′=19.666 pinned; UB<18 needs Lasserre-2 | research-scale: symmetry-reduced Lasserre-2, or 1.7k–15k cr uncertain exhaustion |
 | H4a | completeness rel. 𝒜 | protocol theory | detector-model assumptions | derive from arXiv:2601.13869 + Cor 1 |
 | H4b | CV column (Sp(2n,ℝ) audit) | Lie theory | none — never attempted | matrix Lie-closure implementation |
 | H4c | unrestricted completeness | complexity theory | sampling hardness (BosonSampling) | out of scope; stated as frontier |
@@ -298,7 +314,11 @@ constraint). **H3 status: REFUTED 2026-07-14 — ω ≥ 17** (verified 17-clique
 family (1,3,5,5,3); see the H3 entry). The earlier "zero 17-cliques, evidence for
 ω=16 strengthens" line was under-search: the deeper WolframBatch run (40 min/family
 on Memory16x128) reached a 17-clique in family 11's first anchor. ω=16 is out;
-bracket [17,19]; activation (ω≥18) is the sharper open question via an S=18 census.
+bracket [17,19]. **Activation (ω≥18) then attacked directly (2026-07-14): no 18-clique
+found in 3 independent regimes (WCS S=18 detection sweep, all 10 families PARTIAL, 438 cr;
++ a free 7-strategy hunt topping out at 17, incl. an SA one edge short over 405 distinct
+non-extendable 17-cliques), and ϑ=ϑ′=19.666 is pinned — so ω ∈ [17,19] with 17
+evidenced-tight → no activation on all evidence; closure is research-scale (Lasserre-2).**
 
 **Net position after the delta.** Proven layer grows by F10, F11 (+F9vii–x);
 the hypothesis set is now {H1, H1′, H3, H5, H4′(maximality), and the reopened

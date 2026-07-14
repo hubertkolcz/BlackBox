@@ -383,5 +383,16 @@
   "family list completeness: cap 8 = omega(H), proven via Lovasz theta multiplicativity (theta(C9-bar)^3 = 8.796 < 9)"
  ],
  "result": "omega(C9^v3 v C5) >= 17 -- 17-clique found (family 11 = (1,3,5,5,3)), WCS Memory16x128 sweep 2026-07-14, independently verified",
- "H3_status": "REFUTED (omega=16 was wrong). Prior no-17-clique was under-search: family 11 never finished (anchors_done always 0) until the 40-min WCS run reached it in its first anchor. Bracket now [17,19]. Activation still needs omega>=18 (17 gives load 17/(8 sqrt5)=0.950 < 1, SAFE); the S=18 census is the sharper open question."
+ "H3_status": "REFUTED (omega=16 was wrong). Prior no-17-clique was under-search: family 11 never finished (anchors_done always 0) until the 40-min WCS run reached it in its first anchor. Bracket now [17,19]. Activation still needs omega>=18 (17 gives load 17/(8 sqrt5)=0.950 < 1, SAFE); the S=18 census is the sharper open question.",
+ "activation_S18": {
+  "question": "omega(C9^v3 v C5) >= 18 ? (activation of the (3,1) cell: load 18/(8 sqrt5)=1.006 >= 1)",
+  "answer": "NOT FOUND by any search; bracket [17,19], omega=17 evidenced-tight => NO activation on all evidence",
+  "bracket": "17 <= omega <= 19",
+  "UB_source": "Lovasz theta multiplicative over strong product: theta(Cbar9)^3 * theta(Cbar5) = (1+sec(pi/9))^3 * sqrt(5) = 19.66646 -> floor 19; Schrijver theta' provably no improvement (factor SDPs already entrywise nonnegative); UB<18 needs Lasserre level>=2 on 3645 vertices (research-scale)",
+  "LB_source": "verified 17-clique (family 11 = (1,3,5,5,3)); strictly exceeds the product bound 2^3*2=16 by 1",
+  "detection_WCS": {"machine": "Memory16x128", "families": 10, "maxsec_per_family": 2100, "result": "all 10 PARTIAL, no 18-clique", "total_nodes": 294768128, "credits": 438.2, "job_uuid": "32af2411-fe76-4ebd-acd8-5ed965f43ec4"},
+  "free_search_7strategy": {"workflow": "wdedfbvkv", "strategies": ["swap-BFS 681006 17-cliques", "vertex-fixed B&B (nbhd uniformly dense, k-core16 removes 0)", "SA k=18 floored at E=1 over 405 distinct non-extendable maximal 17-cliques", "DLS (1,2)-swap 1.16M", "multi-seed ILS", "replicator/Motzkin-Straus", "random-greedy best 16 (blind cannot reach 17)"], "best_size": 17, "found_18": false},
+  "exhaustion_cost_estimate": {"method": "wall-clock band cost=438/f, f=covered fraction", "low_credits": 1752, "central_credits": 4380, "high_credits": 14600, "wall_hours": "2.3-19.4", "caveat": "heavy-tailed trees; scenario band not a measurement; brute force likely wrong tool vs a (research-scale) symmetry-reduced UB SDP"},
+  "verdict": "activation OPEN but omega=17 evidenced-tight across 3 independent regimes; (3,1) cell does NOT activate on all evidence; closure is research-scale (Lasserre-2 or uncertain 1.7k-15k cr exhaustion), mirrors Paley-13 [39,46]"
+ }
 }
