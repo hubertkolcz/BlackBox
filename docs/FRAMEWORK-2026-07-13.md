@@ -329,3 +329,52 @@ Mermin threshold), so H4′'s honest endpoint is a **computed critical detection
 efficiency** for the KCBS scenario, above which completeness holds. Build queued
 (G9 gate + efficiency threshold, protocol-style in 00-BBT). H4′ thereby reduces
 from open-ended to {G9 theorem-extension} + {one numerical boundary}.
+
+---
+
+## Delta 2026-07-13 (H4' EXECUTED): G9 antibunching gate + KCBS eta* boundary
+
+The queued H4' build (parts (a) and (b) above) is now implemented and
+machine-verified in `00-BBT-blackbox-protocol/`. H4' moves from open-ended to a
+closed theorem-extension plus one computed numerical boundary. **H4' is REDUCED,
+not fully closed** -- detection efficiency remains a physical assumption, as in
+every Bell/contextuality test.
+
+**Part A -- G9 antibunching gate [T, theorem-extension]** (`g9_antibunching_gate.py`).
+Folds Glauber's classical bound into the protocol as a pre-registered gate. The
+one-line impossibility proof: for any classical light field, P(alpha) >= 0, the
+normally-ordered variance is a genuine P-averaged variance,
+<:(Delta n)^2:> = INT P(alpha)(|alpha|^2 - <I>)^2 >= 0, hence
+g2(0) = 1 + Var_P(I)/<I>^2 >= 1 under ANY detection. A device with g2(0) < 1 is
+therefore OUTSIDE the entire classical-optical-emulator family -- extending
+Prop O3-C's completeness from "single unmodified on-off detector, fair-sampled"
+to "ANY classical-light source, ANY detector (PNR/heralded included)". Anchors
+proved and printed literally: coherent g2(0)=1 (symbolic, Poissonian boundary),
+thermal g2(0)=2, Fock|1> g2(0)=0, and a 10^5-field numeric certificate that
+every classical P>=0 mixture has g2>=1. Verdicts: CERTIFIED-NONCLASSICAL
+(g2+eps<1) / CLASSICAL-COMPATIBLE (g2-eps>=1) / INCONCLUSIVE (the coherent state
+sits exactly on g2=1 and is honestly INCONCLUSIVE under a finite sample).
+Provenance: the theorem is textbook (Glauber, Phys. Rev. 131, 2766 (1963);
+Mandel-Wolf; Loudon) -- the contribution is the gate, not the physics.
+
+**Part B -- KCBS detection-efficiency threshold [C, exact]** (`efficiency_threshold_kcbs.py`).
+Fair sampling is provably not removable by statistics alone (the contextuality
+analogue of the Bell detection loophole). Honest endpoint: a computed critical
+efficiency eta*. Two independent derivations agree exactly: (1) the
+efficiency-degraded quantum value eta*sqrt(5) meets the NCHV bound 2 at
+eta* = 2/sqrt(5); (2) an exact LP over the 11 independent sets of C_5 shows the
+maximal fair-sampled detection-loophole NCHV value is 2/eta, reaching sqrt(5) at
+the same eta* = **2/sqrt(5) = 2*sqrt(5)/5 = 0.8944271910**. Anchors: eta=1 gives
+the full sqrt(5)>2 violation; eta->low collapses (loophole S=2/eta diverges);
+eta* in (0,1). Generalizes to the odd n-cycle as eta*_n = ((n-1)/2)/Q_n,
+Q_n = n cos(pi/n)/(1+cos(pi/n)) (n=5 recovers 2/sqrt(5); n=7,9,11 tabulated).
+Above eta*, Prop O3-C's completeness extends to non-fair-sampling adversaries;
+below it, a detection-loophole noncontextual model reproduces the quantum KCBS
+statistics. Refs: Larsson PRA 57 R3145 (1998); Garg-Mermin PRD 35 3831 (1987);
+Eberhard PRA 47 R747 (1993); KCBS = Klyachko-Can-Binicioglu-Shumovsky PRL 101
+020403 (2008).
+
+**Net position.** H4' = {G9 theorem-extension (photon statistics: CLOSED)} +
+{fair-sampling boundary eta* = 2/sqrt(5) (QUANTIFIED)}. The residual physical
+assumption is exactly detection efficiency, located outside the framework as in
+all such tests.
