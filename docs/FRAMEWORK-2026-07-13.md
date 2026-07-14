@@ -319,6 +319,13 @@ found in 3 independent regimes (WCS S=18 detection sweep, all 10 families PARTIA
 + a free 7-strategy hunt topping out at 17, incl. an SA one edge short over 405 distinct
 non-extendable 17-cliques), and ϑ=ϑ′=19.666 is pinned — so ω ∈ [17,19] with 17
 evidenced-tight → no activation on all evidence; closure is research-scale (Lasserre-2).**
+The SDP upper-bound route was then built and characterized locally: Ḡ is an abelian Cayley
+graph on ℤ₉³×ℤ₅, the Terwilliger algebra reduces to 20 blocks (max 180), and the tractable
+three-point (s=1,t=1) bound was shown **provably too weak** (on the analog sibling C₅∨C₅∨C₅ it
+gives 11.009, not closing the ϑ=11.18 gap to α=10), whereas **Lasserre-2 (s=2) closes it
+exactly** (10.534 → floor 10). So a symmetry-reduced Lasserre-2 MOSEK run would very likely
+prove ω≤17 — a now-justified (but MOSEK/HPC-scale, non-local) investment. Details:
+`02-D1-theory-frontier/erg003-lasserre2-local-analysis-2026-07-14.md`.
 
 **Net position after the delta.** Proven layer grows by F10, F11 (+F9vii–x);
 the hypothesis set is now {H1, H1′, H3, H5, H4′(maximality), and the reopened
