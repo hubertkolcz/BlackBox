@@ -393,6 +393,14 @@
   "detection_WCS": {"machine": "Memory16x128", "families": 10, "maxsec_per_family": 2100, "result": "all 10 PARTIAL, no 18-clique", "total_nodes": 294768128, "credits": 438.2, "job_uuid": "32af2411-fe76-4ebd-acd8-5ed965f43ec4"},
   "free_search_7strategy": {"workflow": "wdedfbvkv", "strategies": ["swap-BFS 681006 17-cliques", "vertex-fixed B&B (nbhd uniformly dense, k-core16 removes 0)", "SA k=18 floored at E=1 over 405 distinct non-extendable maximal 17-cliques", "DLS (1,2)-swap 1.16M", "multi-seed ILS", "replicator/Motzkin-Straus", "random-greedy best 16 (blind cannot reach 17)"], "best_size": 17, "found_18": false},
   "exhaustion_cost_estimate": {"method": "wall-clock band cost=438/f, f=covered fraction", "low_credits": 1752, "central_credits": 4380, "high_credits": 14600, "wall_hours": "2.3-19.4", "caveat": "heavy-tailed trees; scenario band not a measurement; brute force likely wrong tool vs a (research-scale) symmetry-reduced UB SDP"},
-  "verdict": "activation OPEN but omega=17 evidenced-tight across 3 independent regimes; (3,1) cell does NOT activate on all evidence; closure is research-scale (Lasserre-2 or uncertain 1.7k-15k cr exhaustion), mirrors Paley-13 [39,46]"
+  "verdict": "activation OPEN but omega=17 evidenced-tight across 3 independent regimes; (3,1) cell does NOT activate on all evidence; closure is research-scale (Lasserre-2 or uncertain 1.7k-15k cr exhaustion), mirrors Paley-13 [39,46]",
+  "lasserre2_local_attempt": {
+   "goal": "certify omega<=17 from above via a local symmetry-reduced SDP (theta=19.666 too weak)",
+   "reduction": "Xbar = Cayley graph on abelian A=Z9^3xZ5; Aut=A rtimes G0 (|G0|=96); Terwilliger algebra block-diagonalizes to 20 blocks max 180 (Sum m_k=1545, validated 2 ways)",
+   "three_point_variables": "1 point + 65 edge-orbits + 54532 triangle-orbits => assembly ~54k x 160k dense map, MOSEK/HPC-scale (not a clean local SCS solve)",
+   "decisive_sibling_test": "X125=C5vC5vC5 (alpha=10, theta=5*sqrt5=11.18034): three-point bound = 11.00890 -> floor 11 > 10. Beats theta but does NOT close the odd-power gap (recovers ~14% of theta->alpha).",
+   "conclusion": "the tractable (three-point) level is PROVABLY too weak to close the gap; full Lasserre-2 (s=2) is heavier/non-local with no guarantee. A LOCAL rigorous omega<=17 certificate is NOT achievable. [17,19] evidenced-tight stands, closure research-scale (confirmed from the UB side too).",
+   "artifacts": ["erg003_lasserre.py", "erg003_threepoint_sibling.py", "erg003-lasserre2-local-analysis-2026-07-14.md"]
+  }
  }
 }
