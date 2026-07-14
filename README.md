@@ -27,7 +27,8 @@ The repository is organized by **goal**, not just topic; folder numbers are a re
 | [`05-CERT-epsilon-certificates/`](05-CERT-epsilon-certificates/) | ε-certificates (Γ_k) for the gluing-word gap density; ergodic-optimization family. | `CERT` |
 | [`06-D3-sheaf-cohomology/`](06-D3-sheaf-cohomology/) | Abramsky–Brandenburger backbone: Laplacian rejection, Čech obstruction, torsion census; home of the priority open question (`ESSAY-005`). | `D3` |
 | [`07-SIG-signaling/`](07-SIG-signaling/) | Signaling / communication-cost extension of the taxonomy. | `SIG` |
-| [`08-HK-hawking/`](08-HK-hawking/) | Hawking application — structural negative result (single-context witness ⇒ CF ≡ 0). | `HK` |
+| [`08-HK-hawking/`](08-HK-hawking/) | Hawking application — structural negative result (single-context witness ⇒ CF ≡ 0); Gaussian/Bogoliubov thermal sector filled (analogue-Hawking dynamics as a CV state, A1–A8). | `HK` |
+| [`09-EMU-optical-compiler/`](09-EMU-optical-compiler/) | Constructive mirror of `00-BBT`: runs the two-lens certification mathematics in the *synthesis* direction — from a target it emits a three-layer optical blueprint (Givens/beamsplitter mesh, intensity schedule, stage/routing list), each stamped emulable-vs-genuine. | `EMU` |
 | [`BlackBox/`](BlackBox/) | Wolfram paclet `HubertKolcz/BlackBox` (version and export count: see [`BlackBox/PacletInfo.wl`](BlackBox/PacletInfo.wl), the single authority): Lovász ϑ (dense + sparse/chordal), CE filters, contextual fraction, AB local–global analysis, Čech (co)homology with exact torsion orders, AvN over Z_d, signed negativity, the so(3)/DLA interface. Tests: `BlackBox/Tests/BlackBoxTests.wl`. | — |
 | [`runners/`](runners/) | Headless `Run<Name>.wl` entry points + one-command sweeps (`RunAll.ps1`, `RunAll.sh`). | — |
 
