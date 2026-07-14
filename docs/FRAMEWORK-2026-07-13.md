@@ -293,29 +293,32 @@ adversary-class analysis).
 
 ## Delta 2026-07-13 (evening): H2′ detector candidate + H4′ decomposition
 
-**H2′ → NARROWED to a verified-but-not-yet-discriminating candidate.**
+**H2′ → the lattice-integrality detector is REFUTED (added as F9xi).**
 The gauge-invariance failure that killed F9vii pointed at a *face-level* test.
 Candidate **detector D(G,k)**: the optimal face of the Λ_k clique-cover LP of
-G^∨k contains an integer point ⟺ Λ_k ∈ ℤ AND χ̄(G^∨k)=Λ_k (an exact integer
-partition-of-unity certificate exists). It is **gauge-invariant by construction**
-(a predicate of the whole optimal face) — fixing exactly what broke the ℚ/ℤ
-route (robustness re-confirmed: the F9vii-killing statistic differs across two
-exact optima, 20776 vs 22243, but D returns the same NO for both).
-**Verified 5/5** (`06-D3-sheaf-cohomology/h2prime_lattice_probe.py`,
-`h2prime_results.json`, uncommitted→committed): YES only at (C₅,k=2) — 2 integer
-points, the two ℤ₅-slope pentads, the unique tested case with S_k=θ(G); NO at
-(C₅,k=1), (C₇,k=2), (C₇,k=3), and out-of-sample (C₉,k=2).
-**Honest caveat (why not yet closed).** Every tested NO case has Λ_k=(n/2)^k ∉ ℤ
-(5/2, 49/4, 343/8, 81/4), which empties the integer set *trivially* — so D's
-genuine discriminating power (integer Λ_k but still stuck) is **untested**. The
-decisive stress-test is a graph stuck at *integer* α\*; running now.
-Also settled: the mechanism is **one-sided integrality** (cover side χ̄=5
-integral, packing side α=4 gapped) — **NOT** total-dual-integrality/perfect-graph
-structure (that route refuted). Conjecture the data supports: attainment ⟺
-θ(G)^k = χ̄(G^∨k). Proof would need a rounding theorem (θ=χ̄_f ⟹ integral cover
-on sharply-transitive clique families) + the unproven converse. H2′ status:
-detector candidate identified and gauge-invariant; discrimination pending the
-integer-α\* test; cohomological dress (H¹ of which complex?) still open.
+G^∨k contains an integer point. Gauge-invariant by construction, and it matched
+the pattern 5/5 on the first probe (YES only at (C₅,k=2) — the two pentads; NO
+at (C₅,k=1),(C₇,k=2),(C₇,k=3),(C₉,k=2)) — `06-D3-sheaf-cohomology/h2prime_*`.
+**But that pattern rode entirely on non-integrality of Λ_k=(n/2)^k**, which
+empties the integer set trivially; the discriminating regime (integer Λ_k yet
+stuck) was untested. The stress-test built exactly that regime via the
+lexicographic blow-up G′=Cₙ[K̄₂] (independent-set blow-up: α\*(G′)=n integer,
+θ(G′)=2θ(Cₙ) with a gap, and (Cₙ[K̄₂])^∨2 = (Cₙ^∨2)[K̄₄] ⟹ Λ₂=n²):
+**F9xi [R].** For the STUCK graphs C₇[K̄₂] (Λ₂=49) and C₉[K̄₂] (Λ₂=81), the
+optimal Λ₂ face DOES contain an explicit integer partition of unity (n² unit-
+weight maximal cliques) — so **D = YES on stuck graphs**, the same verdict it
+gives the attained case C₅[K̄₂]. D does not detect quantum-value attainment;
+the blow-up unfolds the base's *fractional* optimum (y=1/4 on C₇^∨2) into a
+bona-fide integer partition across the twin copies, and even "integer partition
+of unity" doesn't save it. The integer-and-stuck regime is neither empty nor
+rare (every stuck vertex-transitive graph has such a blow-up). Also established:
+the mechanism is one-sided integrality, **NOT** TDI/perfect-graph structure.
+**Sharpened residual (the real H2′).** Any genuine detector must be
+**blow-up-invariant / primitive** — quotient out twin-imprimitivity and descend
+to the primitive base (C₇^∨2, where Λ=49/4 is fractional again). That is a
+substantially harder invariant than any tested; H2′ stays open, now with two
+refuted routes (ℚ/ℤ F9vii, lattice-integrality F9xi) fencing it, and the
+degree-0 result (F6) untouched.
 
 **H4′ → DECOMPOSED into a closable part and an irreducible-but-quantifiable part.**
 (a) Photon-statistics adversaries (PNR/heralded) are killable by a **G9

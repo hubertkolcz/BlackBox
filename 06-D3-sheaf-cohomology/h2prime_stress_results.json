@@ -1,0 +1,255 @@
+{
+ "module": "H2' STRESS TEST: integer-Lambda stuck regime for the optimal-dual-face integer-point detector D",
+ "date": "2026-07-13",
+ "detector": "D(G,k) = [optimal face of the Lambda_k clique-cover LP of G^{vk} contains an integer point]",
+ "construction": "G' = C_n[bar K_2] (lexicographic blow-up by an INDEPENDENT 2-set). alpha*(G')=n, theta(G')=2 theta(C_n), Lambda_2(G')=n^2 (integer). n=7,9 STUCK; n=5 attained control.",
+ "coordinator_note_correction": "the blow-up must be by bar K_m (an independent set) not K_m: G[K_m] adds mutually-EXCLUSIVE copies and leaves alpha* = chi_f(complement) unchanged, whereas G[bar K_m] multiplies alpha* by m. Verified numerically.",
+ "cases": {
+  "C7[barK2]": {
+   "graph": "C7[barK2]",
+   "n": 7,
+   "m": 2,
+   "Gp_vertices": 14,
+   "vertex_transitive": {
+    "rotation_is_automorphism": true,
+    "twin_swap_is_automorphism": true,
+    "transitive": true,
+    "orbit_size": 14,
+    "n_vertices": 14
+   },
+   "alpha_star_Gp": {
+    "exact": "7",
+    "scipy": 7.0,
+    "matches": true,
+    "formula": "m * alpha*(C_n) = m * n/2"
+   },
+   "theta_Gp": {
+    "formula": 6.635334414788192,
+    "formula_note": "m * theta(C_n), theta multiplicative under lexicographic product",
+    "sdp": 6.635334390035899,
+    "sdp_solver": "cvxpy/SCS",
+    "sdp_matches_formula": true,
+    "gap_below_alpha_star": true
+   },
+   "base_B": {
+    "graph": "C7^v2",
+    "vertices": 49,
+    "max_cliques": 1715,
+    "omega": 4,
+    "alpha_star_exact": "49/4",
+    "alpha_star_scipy": 12.250000000000002,
+    "matches": true
+   },
+   "Lambda_2": {
+    "exact": "49",
+    "is_integer": true,
+    "equals_alpha_star_Gp_squared": true,
+    "S_2": 7.0,
+    "theta_Gp": 6.635334414788192,
+    "quantum_value_attained": false,
+    "status": "STUCK"
+   },
+   "power_commutes_with_blowup": {
+    "identity": "(C_n[barK_m])^v2 = (C_n^v2)[barK_{m^2}]",
+    "sampled_pairs": 200,
+    "mismatches": 0,
+    "holds": true
+   },
+   "sandwich": {
+    "primal_uniform_weight": "1/4",
+    "primal_value": "49",
+    "primal_feasible_reason": "omega(H)=omega(B)=4 (blow-up by independent sets does not enlarge cliques), so every clique-sum <= 4*1/4=1",
+    "dual_value": "49",
+    "equal": true,
+    "conclusion": "alpha*(H) = Lambda_2 = 49 EXACTLY (weak-duality squeeze); S_2(G') = 7.000000"
+   },
+   "detector_D": {
+    "base_M_cover_size": 49,
+    "base_M_cover_family": "n^2 edge-squares, mult 1",
+    "lifted_partition": {
+     "all_are_cliques": true,
+     "is_exact_partition": true,
+     "covered_count": 196,
+     "total_vertices": 196,
+     "max_multiplicity": 1,
+     "integer_weights": true,
+     "cover_value": 49,
+     "value_equals_Lambda": true
+    },
+    "integer_point_in_optimal_face": "YES",
+    "explanation": "the lifted partition is a set of integer (0/1) maximal-clique weights, dual-feasible (it is a partition, so coverage is exactly 1) with objective == Lambda_2 = 49 (the optimum) -> it is an INTEGER point of the optimal face."
+   },
+   "case_role": "DECISIVE stuck test",
+   "case_verdict": "D=YES while STUCK and Lambda_2 integer => D FAILS to discriminate: REFUTED on this case."
+  },
+  "C9[barK2]": {
+   "graph": "C9[barK2]",
+   "n": 9,
+   "m": 2,
+   "Gp_vertices": 18,
+   "vertex_transitive": {
+    "rotation_is_automorphism": true,
+    "twin_swap_is_automorphism": true,
+    "transitive": true,
+    "orbit_size": 18,
+    "n_vertices": 18
+   },
+   "alpha_star_Gp": {
+    "exact": "9",
+    "scipy": 9.0,
+    "matches": true,
+    "formula": "m * alpha*(C_n) = m * n/2"
+   },
+   "theta_Gp": {
+    "formula": 8.72017916286813,
+    "formula_note": "m * theta(C_n), theta multiplicative under lexicographic product",
+    "sdp": 8.720179448457273,
+    "sdp_solver": "cvxpy/SCS",
+    "sdp_matches_formula": true,
+    "gap_below_alpha_star": true
+   },
+   "base_B": {
+    "graph": "C9^v2",
+    "vertices": 81,
+    "max_cliques": 3807,
+    "omega": 4,
+    "alpha_star_exact": "81/4",
+    "alpha_star_scipy": 20.250000000000007,
+    "matches": true
+   },
+   "Lambda_2": {
+    "exact": "81",
+    "is_integer": true,
+    "equals_alpha_star_Gp_squared": true,
+    "S_2": 9.0,
+    "theta_Gp": 8.72017916286813,
+    "quantum_value_attained": false,
+    "status": "STUCK"
+   },
+   "power_commutes_with_blowup": {
+    "identity": "(C_n[barK_m])^v2 = (C_n^v2)[barK_{m^2}]",
+    "sampled_pairs": 200,
+    "mismatches": 0,
+    "holds": true
+   },
+   "sandwich": {
+    "primal_uniform_weight": "1/4",
+    "primal_value": "81",
+    "primal_feasible_reason": "omega(H)=omega(B)=4 (blow-up by independent sets does not enlarge cliques), so every clique-sum <= 4*1/4=1",
+    "dual_value": "81",
+    "equal": true,
+    "conclusion": "alpha*(H) = Lambda_2 = 81 EXACTLY (weak-duality squeeze); S_2(G') = 9.000000"
+   },
+   "detector_D": {
+    "base_M_cover_size": 81,
+    "base_M_cover_family": "n^2 edge-squares, mult 1",
+    "lifted_partition": {
+     "all_are_cliques": true,
+     "is_exact_partition": true,
+     "covered_count": 324,
+     "total_vertices": 324,
+     "max_multiplicity": 1,
+     "integer_weights": true,
+     "cover_value": 81,
+     "value_equals_Lambda": true
+    },
+    "integer_point_in_optimal_face": "YES",
+    "explanation": "the lifted partition is a set of integer (0/1) maximal-clique weights, dual-feasible (it is a partition, so coverage is exactly 1) with objective == Lambda_2 = 81 (the optimum) -> it is an INTEGER point of the optimal face."
+   },
+   "case_role": "DECISIVE stuck test",
+   "case_verdict": "D=YES while STUCK and Lambda_2 integer => D FAILS to discriminate: REFUTED on this case."
+  },
+  "C5[barK2]": {
+   "graph": "C5[barK2]",
+   "n": 5,
+   "m": 2,
+   "Gp_vertices": 10,
+   "vertex_transitive": {
+    "rotation_is_automorphism": true,
+    "twin_swap_is_automorphism": true,
+    "transitive": true,
+    "orbit_size": 10,
+    "n_vertices": 10
+   },
+   "alpha_star_Gp": {
+    "exact": "5",
+    "scipy": 5.0,
+    "matches": true,
+    "formula": "m * alpha*(C_n) = m * n/2"
+   },
+   "theta_Gp": {
+    "formula": 4.47213595499958,
+    "formula_note": "m * theta(C_n), theta multiplicative under lexicographic product",
+    "sdp": 4.472135943983445,
+    "sdp_solver": "cvxpy/SCS",
+    "sdp_matches_formula": true,
+    "gap_below_alpha_star": true
+   },
+   "base_B": {
+    "graph": "C5^v2",
+    "vertices": 25,
+    "max_cliques": 535,
+    "omega": 5,
+    "alpha_star_exact": "5",
+    "alpha_star_scipy": 4.999999999999997,
+    "matches": true
+   },
+   "Lambda_2": {
+    "exact": "20",
+    "is_integer": true,
+    "equals_alpha_star_Gp_squared": false,
+    "S_2": 4.47213595499958,
+    "theta_Gp": 4.47213595499958,
+    "quantum_value_attained": true,
+    "status": "ATTAINED"
+   },
+   "power_commutes_with_blowup": {
+    "identity": "(C_n[barK_m])^v2 = (C_n^v2)[barK_{m^2}]",
+    "sampled_pairs": 200,
+    "mismatches": 0,
+    "holds": true
+   },
+   "sandwich": {
+    "primal_uniform_weight": "1/5",
+    "primal_value": "20",
+    "primal_feasible_reason": "omega(H)=omega(B)=5 (blow-up by independent sets does not enlarge cliques), so every clique-sum <= 5*1/5=1",
+    "dual_value": "20",
+    "equal": true,
+    "conclusion": "alpha*(H) = Lambda_2 = 20 EXACTLY (weak-duality squeeze); S_2(G') = 4.472136"
+   },
+   "detector_D": {
+    "base_M_cover_size": 20,
+    "base_M_cover_family": "5 slope-pentads, mult 4",
+    "lifted_partition": {
+     "all_are_cliques": true,
+     "is_exact_partition": true,
+     "covered_count": 100,
+     "total_vertices": 100,
+     "max_multiplicity": 1,
+     "integer_weights": true,
+     "cover_value": 20,
+     "value_equals_Lambda": true
+    },
+    "integer_point_in_optimal_face": "YES",
+    "explanation": "the lifted partition is a set of integer (0/1) maximal-clique weights, dual-feasible (it is a partition, so coverage is exactly 1) with objective == Lambda_2 = 20 (the optimum) -> it is an INTEGER point of the optimal face."
+   },
+   "case_role": "positive control",
+   "case_verdict": "D=YES and attained: consistent (does not by itself test discrimination)."
+  }
+ },
+ "verdict": {
+  "stuck_cases": [
+   "C7[barK2]",
+   "C9[barK2]"
+  ],
+  "all_stuck_have_integer_Lambda2": true,
+  "all_stuck_give_D_YES": true,
+  "control_C5_attained_D": "YES",
+  "H2prime_detector_status": "REFUTED",
+  "headline": "REFUTED. C7[barK2] and C9[barK2] are vertex-transitive exclusivity graphs that are STUCK at k=2 (S_2 = alpha* = 7, 9 > theta = 6.635, 8.720; quantum value NOT attained) yet have INTEGER Lambda_2 = 49, 81. The optimal face of the Lambda_2 clique-cover LP nonetheless CONTAINS an integer point (an explicit partition of the blow-up into n^2 maximal cliques). So D returns YES on a stuck graph: it does NOT detect quantum-value attainment. The clean 5/5 pattern of the first probe was an ARTIFACT of Lambda_k being non-integer in the odd-cycle family (2^k does not divide n^k), where non-integrality alone forces the NO -- not any genuine integrality obstruction.",
+  "why_it_fails": "The blow-up's integer optimum is the base fractional optimum (y=1/4 on C7^v2's edge-squares) 'unfolded' across the 4 twin copies into a bona-fide partition of unity. D cannot see that this integer partition is a lift of a properly fractional base certificate; it is a genuine coverage-exactly-1 integer point of H, so even strengthening D to 'integer PARTITION of unity' does not rescue it. Concretely both the ATTAINED control C5[barK2] and the STUCK C7,C9[barK2] admit such partitions -- D=YES for all three, opposite attainment status, same verdict.",
+  "the_regime_is_not_empty": "The integer-capacity-AND-stuck regime is NOT empty or rare: every stuck vertex-transitive graph has an integer-alpha* blow-up (clear the denominator q of alpha*=p/q with bar K_q), and all of them defeat D. So D's non-integrality mechanism is not 'the whole story by structural necessity' -- it was the whole story only within the un-blown-up odd-cycle sample.",
+  "possible_repair": "Any surviving detector must be BLOW-UP INVARIANT / primitive: it would have to quotient by twin-imprimitivity (detect that H is a lexicographic blow-up and descend to the primitive base C7^v2, where Lambda=49/4 is again fractional). Equivalently the real obstruction lives at the primitive level and integrality on imprimitive graphs is uninformative. That is a substantially different (and harder) invariant than 'integer point in the optimal face', which as posed is hereby refuted.",
+  "exactness": "all decision-relevant facts exact: alpha*(H)=Lambda_2 by an integer/rational primal-dual sandwich; the integer optimum is an explicitly constructed clique partition verified combinatorially. scipy/cvxpy used only as float cross-checks (alpha*, theta)."
+ }
+}
