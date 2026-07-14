@@ -166,7 +166,7 @@ Grid[Prepend[hRows, hHeader], Frame -> All, Alignment -> Left,
 (*The five (plus H1') live hypotheses, each a sharply-posed problem with a stated proof target:*)
 
 (* ::Item:: *)
-(*H1 (cct optimality) [H]: sup over all gluing words of gap(w) equals gap(cct) = 0.0698975, certified within \[Epsilon] = \[CapitalGamma]\:2081\:2080 - gap(cct) = 0.00156. Counterexamples confined to a thin corridor f_c ~ 2/3, \[Alpha]-bar in [4/3, 1.4301). Target: a NONLINEAR-in-frequency certificate (the affine and Legendre routes are dead, S8-ii/iii) or an ergodic-optimization selection theorem. Plus H1' (\[CapitalGamma]-limit): lim \[CapitalGamma]_k = sup gap.*)
+(*H1 (cct optimality) [H]: sup over all gluing words of gap(w) equals gap(cct) = 0.0698975, certified within \[Epsilon] = \[CapitalGamma]\:2081\:2080 - gap(cct) = 0.00156 (\[CapitalGamma]\:2081\:2080 numeric-only, per S4; the exact k=10 certificate is pending). Counterexamples confined to a thin corridor f_c ~ 2/3, \[Alpha]-bar in [4/3, 1.4301). Target: a NONLINEAR-in-frequency certificate (the affine and Legendre routes are dead, S8-ii/iii) or an ergodic-optimization selection theorem. Plus H1' (\[CapitalGamma]-limit): lim \[CapitalGamma]_k = sup gap.*)
 
 (* ::Item:: *)
 (*H2' (cohomological detection, reopened) [H]: a genuine quantitative-cohomology detector on a cover OTHER than the maximal-clique cover \[LongDash] the \[Delta](y* mod \[DoubleStruckCapitalZ]) route is closed (F9vii, S8-iv). The degree-0 derivation S_k = \[CapitalLambda]_k^(1/k) (S5) stands untouched.*)
@@ -179,7 +179,7 @@ Grid[Prepend[hRows, hHeader], Frame -> All, Alignment -> Left,
  erg003["counts"]["NO"], Length[erg003["families"]], erg003["totalNodes"]}
 
 (* ::Item:: *)
-(*H4' (\[ScriptCapitalA]_IE-maximality) [H]: is the intensity-emulator class \[ScriptCapitalA]_IE the maximal classically-emulable adversary class? (PNR / heralded-Fock / non-fair-sampling devices sit outside it.) The class-relative completeness itself is now PROVEN (F10, Prop O3-C, in Layer 0); only the maximality question remains open.*)
+(*H4' (\[ScriptCapitalA]_IE-maximality) [H]: is the intensity-emulator class \[ScriptCapitalA]_IE the maximal classically-emulable adversary class? (PNR / heralded-Fock / non-fair-sampling devices sit outside it.) The class-relative completeness itself is now proven CONDITIONALLY (F10, Prop O3-C, Layer 0), load-bearing on the KBS single-detector coherent-forgeability theorem + white-box trust on G7/G7-CV; only the maximality question remains open.*)
 
 (* ::Item:: *)
 (*H5 (Paley product) [H]: \[Omega](Paley13^\[Vee]3) = 39, the product witness optimal; bracket [39, 46] with ceiling 46 = Floor[13^(3/2)] (recomputed live below). Target: level-2 Lasserre / non-abelian symmetrization / residual search (the Delsarte LP is dead, S8-v).*)
