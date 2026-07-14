@@ -69,7 +69,22 @@ assembledCells = If[MissingQ[getPos],
    Join[masterCells, sectionCells],
    Join[Take[masterCells, First[getPos] - 1], sectionCells, Drop[masterCells, First[getPos]]]];
 
-nbExpr = Notebook[assembledCells, StyleDefinitions -> "Default.nb"];
+(* Collapse each loader (its caption + the ~45-line fetch/bootstrap Input) into a
+   Closed cell group, so the essay reads as prose + short computation rather than
+   infrastructure. The loader Input is recognized by the NestWhile[ParentDirectory ...]
+   repo-root walk-up; its preceding CodeText caption is the (visible) group head and
+   the code collapses behind a click-to-expand toggle. Nothing is removed -- closed
+   groups still evaluate on "Evaluate Notebook", so the essay runs top-to-bottom. *)
+collapseLoaders[cells_] := Module[{out = {}, i = 1, n = Length[cells]},
+   While[i <= n,
+    If[i < n && MatchQ[cells[[i]], Cell[_String, "CodeText"]] &&
+       MatchQ[cells[[i + 1]], Cell[c_String, "Input"] /; StringContainsQ[c, "NestWhile[ParentDirectory"]],
+      AppendTo[out, Cell[CellGroupData[{cells[[i]], cells[[i + 1]]}, Closed]]]; i += 2,
+      AppendTo[out, cells[[i]]]; i++]];
+   out];
+loaderCount = Count[assembledCells,
+   Cell[c_String, "Input"] /; StringContainsQ[c, "NestWhile[ParentDirectory"]];
+nbExpr = Notebook[collapseLoaders[assembledCells], StyleDefinitions -> "Default.nb"];
 
 writeFallback[] := Module[{str, stream},
    str = ToString[nbExpr, InputForm, CharacterEncoding -> "PrintableASCII"];
@@ -90,6 +105,7 @@ If[! (exportOK && FileExistsQ[nbFile] && FileByteCount[nbFile] > 2000),
 Print["cells (master, sections, assembled): ",
    {Length[masterCells], Length[sectionCells], Length[assembledCells]}];
 Print["style census: ", Sort@Tally[assembledCells[[All, 2]]]];
+Print["collapsed loader groups (Closed): ", loaderCount];
 Print["notebook: ", nbFile];
 Print["bytes: ", FileByteCount[nbFile], "  method: ", method];
 Print["reparse head is Notebook: ",
