@@ -16,7 +16,8 @@ foreach ($f in @("RunBlackboxProtocol.wl", "RunEssay.wl", "RunCaseStudies.wl", "
     "RunBiphotonSimulator.wl", "RunWignerFlow.wl", "RunLedger.wl", "RunEpilogue.wl",
     "RunSupportCohomology.wl", "RunSignedNegativity.wl", "RunD1GECopiesSweep.wl",
     "RunD1K3Activation.wl", "RunSignalingTaxonomy.wl", "RunOpticalCompiler.wl",
-    "RunGaussianHawking.wl", "RunGaussianWitnesses.wl")) {
+    "RunGaussianHawking.wl", "RunGaussianWitnesses.wl",
+    "RunSectionsFourToSix.wl", "RunEssaySectionsC.wl", "RunBlackBoxFrameworkEssay.wl")) {
   Push-Location $root
   $out = & $ws -file $f -print all 2>&1 | Out-String
   Pop-Location
