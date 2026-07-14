@@ -44,7 +44,9 @@ over trans; MESH-003) [C: 320-digit certified, no low-degree closed form].
 **F5. The certificate hierarchy [T]/[C].** Windowed transfer-SDP certificates:
 gap(w) ≤ Γ_k for **all** gluing words; exact rational Γ₇=0.0770206,
 Γ₈=0.0752664, Γ₉=0.0720260 (regenerated tighter than the originals);
-Γ₁₀=0.0714575 [C numeric]. The certificate condition is a Bousch sub-action
+Γ₁₀=0.0714575 [C exact rational] (= 101204058245374929237851941/1416282371680751147635252740;
+certified on WolframBatch Memory8x64 warm-started from k=9, all Stage-3 exact gates
+True, Γ₁₀≤Γ₉ exact). The certificate condition is a Bousch sub-action
 (tropical 0-cochain on de Bruijn-k; Γ_k = max-plus eigenvalue, Karp-verified).
 Spurious policy-iteration values are periodic-orbit densities −1 (cis 3/2,
 trans τ\*, 16/11, 19/13, 25/17): the orbit-spectrum/crowding reading

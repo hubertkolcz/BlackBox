@@ -48,6 +48,7 @@ frameworkRoot = Module[
        "05-CERT-epsilon-certificates/EpsilonCertificate7_regenerated.wl",
        "05-CERT-epsilon-certificates/EpsilonCertificate8_regenerated.wl",
        "05-CERT-epsilon-certificates/EpsilonCertificate9.wl",
+       "05-CERT-epsilon-certificates/EpsilonCertificate10.wl",
        "08-HK-hawking/hawking_gaussian_sector.wl", "08-HK-hawking/gaussian_engine.wl",
        "08-HK-hawking/gaussian_hawking_physics.wl", "08-HK-hawking/gaussian_witnesses_bridge.wl",
        "06-D3-sheaf-cohomology/final_h1_cocycle_results.json",

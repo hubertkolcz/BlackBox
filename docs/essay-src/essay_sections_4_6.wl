@@ -42,6 +42,7 @@ repoRoot = Module[
        "05-CERT-epsilon-certificates/EpsilonCertificate7_regenerated.wl",
        "05-CERT-epsilon-certificates/EpsilonCertificate8_regenerated.wl",
        "05-CERT-epsilon-certificates/EpsilonCertificate9.wl",
+       "05-CERT-epsilon-certificates/EpsilonCertificate10.wl",
        "08-HK-hawking/hawking_gaussian_sector.wl", "08-HK-hawking/gaussian_engine.wl",
        "08-HK-hawking/gaussian_hawking_physics.wl", "08-HK-hawking/gaussian_witnesses_bridge.wl",
        "06-D3-sheaf-cohomology/final_h1_cocycle_results.json",
@@ -166,31 +167,34 @@ sfx6["S4_optimalWord"] = Abs[gluingWordAnchor[[1]] - 8.347042185] < 10^-4 &&
  "gap(cct)" -> N[gapCct, 8], "gap(cct)/(\[Tau]*-4/3)" -> N[gapCct/(tauStar - 4/3), 6]}
 
 (* ::CodeText:: *)
-(*The certificate ladder \[CapitalGamma]_k [T]/[C]. Each \[CapitalGamma]_k is an all-words upper bound on gap-density (a Bousch sub-action / max-plus eigenvalue on the de Bruijn-k subshift). The tightened exact rationals \[CapitalGamma]_7, \[CapitalGamma]_8, \[CapitalGamma]_9 are READ from the committed certificates (regenerated on Wolfram Compute Services, all PSD/pointwise/convergence gates True) and reduced to numbers in-essay \[LongDash] never re-typed:*)
+(*The certificate ladder \[CapitalGamma]_k [T]/[C]. Each \[CapitalGamma]_k is an all-words upper bound on gap-density (a Bousch sub-action / max-plus eigenvalue on the de Bruijn-k subshift). The tightened exact rationals \[CapitalGamma]_7, \[CapitalGamma]_8, \[CapitalGamma]_9, \[CapitalGamma]_10 are READ from the committed certificates (regenerated on Wolfram Compute Services \[LongDash] \[CapitalGamma]_10 on a Memory8x64 kernel warm-started from k=9, all PSD/pointwise/convergence gates True) and reduced to numbers in-essay \[LongDash] never re-typed:*)
 
 (* ::Input:: *)
 Get[FileNameJoin[{repoRoot, "05-CERT-epsilon-certificates", "EpsilonCertificate7_regenerated.wl"}]];
 Get[FileNameJoin[{repoRoot, "05-CERT-epsilon-certificates", "EpsilonCertificate8_regenerated.wl"}]];
 Get[FileNameJoin[{repoRoot, "05-CERT-epsilon-certificates", "EpsilonCertificate9.wl"}]];
+Get[FileNameJoin[{repoRoot, "05-CERT-epsilon-certificates", "EpsilonCertificate10.wl"}]];
 gamma7 = EpsilonCertificate7Regenerated["Gamma"];
 gamma8 = EpsilonCertificate8Regenerated["Gamma"];
 gamma9 = EpsilonCertificate9["Gamma"];
-gammaExact = {gamma7, gamma8, gamma9};
+gamma10 = EpsilonCertificate10["Gamma"];
+gammaExact = {gamma7, gamma8, gamma9, gamma10};
 sfx6["S4_gammaLadderExact"] = AllTrue[gammaExact, Head[#] === Rational &] &&
-   gamma7 > gamma8 > gamma9 > gapCct;   (* strictly decreasing, still above the target *)
+   gamma7 > gamma8 > gamma9 > gamma10 > gapCct;   (* strictly decreasing, still above the target *)
 {"\[CapitalGamma]_7" -> N[gamma7, 10], "\[CapitalGamma]_8" -> N[gamma8, 10], "\[CapitalGamma]_9" -> N[gamma9, 10],
- "exact \[CapitalGamma]_9" -> gamma9}
+ "\[CapitalGamma]_10" -> N[gamma10, 10], "exact \[CapitalGamma]_10" -> gamma10}
 
 (* ::CodeText:: *)
-(*\[CapitalGamma]_10 is NUMERIC-ONLY (0.0714575, no committed exact rational certificate \[LongDash] the k=10 generator ran but no exact block certificate is in the repository). It is recorded honestly as a numeric bracket point, NOT as a kernel-recomputed exact object, and the certified \[Epsilon] uses it as documented in CONVERGENCE-ANALYSIS-2026-07-13.md:*)
+(*\[CapitalGamma]_10 is now EXACT: the k=10 windowed certificate was produced on a WolframBatch Memory8x64 kernel (warm-started from the k=9 certificate; peak ~21 GB, which is why the earlier 16 GB attempts ran out of memory), with every nodeCons/edgeCons equality exact, both Q(5x5) and R(4x4) blocks PSD, and pointwise \[Sigma](e) <= \[CapitalGamma]_10 over all 2048 edges. The certified \[Epsilon] = \[CapitalGamma]_10 - gap(cct) is therefore an exact-rational-backed bracket half-width (see CONVERGENCE-ANALYSIS-2026-07-13.md):*)
 
 (* ::Input:: *)
-gamma10Numeric = 0.0714575;   (* [C numeric] documented value; NO exact certificate committed (honest scope) *)
-epsCertified = gamma10Numeric - gapCct;
-sfx6["S4_gamma10NumericHonest"] = gamma10Numeric < N[gamma9] && gamma10Numeric > gapCct &&
-   Abs[epsCertified - 0.00156] < 10^-4;
-{"\[CapitalGamma]_10 (numeric-only)" -> gamma10Numeric, "\[Epsilon] = \[CapitalGamma]_10 - gap(cct)" -> N[epsCertified, 4],
- "status" -> "numeric bracket point; no exact certificate committed"}
+gamma10Numeric = N[gamma10, 10];   (* now backed by the exact rational certificate loaded above *)
+epsCertified = gamma10 - gapCct;
+sfx6["S4_gamma10Exact"] = Head[gamma10] === Rational && TrueQ[gamma10 <= gamma9] &&
+   gamma10 > gapCct && Abs[N[epsCertified] - 0.00156] < 10^-4;
+{"\[CapitalGamma]_10 (exact)" -> gamma10, "\[CapitalGamma]_10 (numeric)" -> gamma10Numeric,
+ "\[Epsilon] = \[CapitalGamma]_10 - gap(cct)" -> N[epsCertified, 6],
+ "status" -> "exact rational certificate (WolframBatch Memory8x64, warm from k=9; all exact gates True)"}
 
 (* ::CodeText:: *)
 (*The orbit-spectrum reading (CERT-003). Spurious policy-iteration values are periodic-orbit densities minus 1 \[LongDash] cis 3/2, trans \[Tau]*, then 16/11, 19/13, 25/17. \[Tau]* is recomputed live (above); the rationals are the finite-orbit readings. The figure orbit_spectrum.png is regenerated by 05-CERT-epsilon-certificates/orbit_spectrum_figure.wl (embedded by the master essay); here we verify the seed values are ordered and \[Tau]* sits among them:*)
