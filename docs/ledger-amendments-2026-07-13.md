@@ -8,9 +8,10 @@ verification session on 2026-07-13 and then independently re-checked by a review
 session the same day (re-run of the primary artifact; see the "Reviewer re-verification"
 line in each entry).
 
-Covers four ledger items: **MESH-006** (Quad-C5 isomorphism), **ISSUE-011**
+Covers five ledger items: **MESH-006** (Quad-C5 isomorphism), **ISSUE-011**
 (fem_study results snapshot), **CERT-001 / ISSUE-001** (k=7/k=8 certificate
-provenance), and **GE-003 / ISSUE-010** (D1 k=3 brackets, Paley-13).
+provenance), **GE-003 / ISSUE-010** (D1 k=3 brackets, Paley-13), and **BBT-005**
+(H4' reduction: G9 antibunching gate + KCBS eta* = 2/sqrt5 boundary).
 
 ---
 
@@ -219,8 +220,50 @@ recreate the packed binaries before re-running the C solver.
 - `02-D1-theory-frontier/d1_k3_activation.wl` (updated in place, C7 resolution)
 - `02-D1-theory-frontier/d1_k3_maxclique.c`, `d1_k3_graphs.py`, `d1_k3_verify_witnesses.py`
 
+## 5. BBT-005 (new claim) — H4' reduction: G9 antibunching gate + KCBS eta* boundary
+
+**Proposed amendment (status: new BBT-track claim; H4' OPEN-ENDED → REDUCED).** Add
+**BBT-005** recording that the A_IE-maximality question left open by Prop O3-C (BBT-004)
+is now reduced into a closable part and a quantifiable boundary. (A) A **G9 antibunching
+gate** grounded in Glauber's classical bound g2(0) >= 1: for any classical light
+P(alpha) >= 0 the normally-ordered variance is a genuine P-averaged variance, so
+g2(0) = 1 + Var_P(I)/<I>^2 >= 1 under ANY detection; a device with g2(0) < 1 is therefore
+outside the entire classical-optical-emulator family, extending O3-C completeness from
+"single unmodified on-off detector, fair-sampled" to "any classical-light source, any
+detector (PNR/heralded included)" [T, theorem-extension]. (B) A computed **critical KCBS
+detection efficiency** eta* = 2/sqrt(5) = 2 sqrt(5)/5 = 0.8944271910 (exact), above which
+completeness extends to non-fair-sampling adversaries and below which a detection-loophole
+NCHV model matches the KCBS value S = sqrt(5) [C, exact]. H4' status: **REDUCED**, not fully
+closed — detection efficiency remains a physical assumption, as in every Bell/contextuality
+test; A_IE-maximality beyond {G9, eta*} is the residual open problem. Depends on BBT-003,
+BBT-004. Class **A** (both parts exact).
+
+**Evidence.** `00-BBT-blackbox-protocol/g9_antibunching_gate.py` prints the anchors coherent
+g2(0)=1 (Poissonian boundary, symbolic), thermal 2, Fock|1> 0, and a 10^5-field numeric
+certificate that every classical P>=0 mixture has g2 >= 1. `efficiency_threshold_kcbs.py`
+derives eta* = 2/sqrt(5) two independent ways — (i) the efficiency-degraded quantum value
+eta* sqrt(5) meets the NCHV bound 2; (ii) an exact LP over the 11 independent sets of C_5
+gives max fair-sampled loophole value 2/eta reaching sqrt(5) at the same eta* — and tabulates
+the odd-n-cycle generalization eta*_n = ((n-1)/2)/Q_n, Q_n = n cos(pi/n)/(1+cos(pi/n)).
+Integrated into `docs/FRAMEWORK-2026-07-13.md` ("H4' EXECUTED" delta) and
+`00-BBT-blackbox-protocol/PROPOSITION-O3.md` (provenance note); repo commits c24ccb3, ac0f33d.
+
+**Reviewer re-verification (2026-07-13).** Two-reviewer adversarial pass (the H4'/G9 build
+workflow): 0 blocker/major findings; minor honesty-tightenings applied and recorded —
+Part-B phrased "matches the quantum KCBS VALUE S = sqrt(5)" (the LP bounds the KCBS sum, not
+the full context-by-context statistics), and the G9 epsilon band flagged as a heuristic
+INCONCLUSIVE collar (not a rigorous confidence bound for a moment-ratio statistic). Underlying
+physics is textbook (Glauber Phys. Rev. 131 2766 (1963); Larsson PRA 57 R3145 (1998);
+Garg-Mermin PRD 35 3831 (1987)) — the contribution is the protocol gate/boundary, not the
+physics.
+
+**Files.**
+- `00-BBT-blackbox-protocol/g9_antibunching_gate.py`, `efficiency_threshold_kcbs.py`
+- `docs/FRAMEWORK-2026-07-13.md` ("H4' EXECUTED" delta), `00-BBT-blackbox-protocol/PROPOSITION-O3.md`
+- `docs/ledger-snapshot/LEDGER.md` (BBT-005 row added in the repo snapshot)
+
 ---
 
-*Assembled 2026-07-13 by the reviewer session from four verification-session reports,
+*Assembled 2026-07-13 by the reviewer session from five verification-session reports,
 each re-checked as described above. Apply to
 `01-claims-ledger/{ledger.json, LEDGER.md, KNOWN_ISSUES.md}` manually.*
