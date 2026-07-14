@@ -106,14 +106,27 @@ bracket-with-fallback pattern already used for k3 below -- no unconditional full
 FindClique/CEFilter search runs on any of the six graphs unguarded.*)
 
 (* ::Input:: *)
+(* Known-exact k=2 values proven OUTSIDE this runner's 180s in-run budget, folded
+   back per the project's ISSUE-010 discipline. Paley13: omega(Paley13^OR2) = 13
+   EXACTLY, proven 2026-07-13 twice independently -- (a) the calibrated exact
+   branch-and-bound d1_k3_maxclique.c run (13-clique witness verified pairwise),
+   (b) igraph exact clique_number = 13 with a DIFFERENT 13-clique (see
+   d1_k3_verify_witnesses.py and the d1-k3-brackets-2026-07-11.md addendum;
+   ledger GE-003). Consequence: S2(Paley13) = 13/Sqrt[13] = Sqrt[13] =
+   theta(Paley13) exactly -- a SECOND self-complementary vertex-transitive graph
+   (after C5) where two identical copies pin GE to the Lovasz number. *)
+knownExactK2 = <|"Paley13" -> 13|>;
 k2omega = Association@KeyValueMap[Function[{name, g}, Module[
      {lb = invariants[name]["omega"]^2, ceil = invariants[name]["thetaComplementSDP"]^2, exact},
     If[ceil < lb + 1,
       name -> <|"lowerBound" -> lb, "ceiling" -> ceil, "pinned" -> True, "value" -> lb, "method" -> "ceiling"|>,
-      exact = TimeConstrained[Quiet[gek[g, 2]["Omega"]], 180, Missing["TimedOut"]];
+      exact = If[KeyExistsQ[knownExactK2, name], knownExactK2[name],
+        TimeConstrained[Quiet[gek[g, 2]["Omega"]], 180, Missing["TimedOut"]]];
       name -> <|"lowerBound" -> lb, "ceiling" -> ceil, "pinned" -> IntegerQ[exact],
          "value" -> If[IntegerQ[exact], exact, Missing["BracketOnly", {lb, Ceiling[ceil] - 1}]],
-         "method" -> If[IntegerQ[exact], "bruteforce", "unresolved"]|>]]],
+         "method" -> If[IntegerQ[exact],
+           If[KeyExistsQ[knownExactK2, name], "exact (folded-back proof 2026-07-13)", "bruteforce"],
+           "unresolved"]|>]]],
    sweepGraphs];
 k3bracket = Association@KeyValueMap[Function[{name, g}, Module[{lb = invariants[name]["omega"]^3,
       ceil = invariants[name]["thetaComplementSDP"]^3},

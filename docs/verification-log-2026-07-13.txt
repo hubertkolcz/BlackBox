@@ -76,3 +76,9 @@ here as FAILED per the "OK -> True" convention for Run*.wl runners.
 ================================================================================
 END OF LOG
 ================================================================================
+
+--- Amendment 2026-07-13 20:32 ---
+RunD1GECopiesSweep.wl  OK->True  (re-run after fold-back fix: omega(Paley13^OR2)=13 exact,
+proven 2026-07-13 twice independently, replaces the in-run 180s-timeout bracket; consequence
+S2(Paley13)=Sqrt[13]=theta exactly -- second self-complementary VT graph pinning GE at 2 copies)
+FINAL SWEEP STATE: 17/17 OK-gated runners green + RunBlackboxProtocol Summary as designed.
