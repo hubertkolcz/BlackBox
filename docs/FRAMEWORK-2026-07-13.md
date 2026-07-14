@@ -123,18 +123,27 @@ zero/nonzero values on C₅(k=1,2), C₇(k=2,3) and an out-of-sample control (C�
 (iii) functoriality under graph maps. If (i) fails, H2 is refuted as posed and
 the detector must be sought in a finer invariant (semimodule cohomology).
 
-### H3 — No-Activation Hypothesis (ERG-003)
-**Statement.** ω(C₉∨C₉∨C₉∨C₅) = 16: the (3,1) nonagon cell does **not**
-activate; pentagon catalysis remains n=7-unique through three boxes.
-**Evidence.** Five independent methods plateau at 16; zero 17-cliques in >10⁸
-exact search nodes; every found 16-clique has product structure; 2/26 families
-proven NO; the Ramsey shortcut provably cannot decide it (F9v) — consistent
-with a true-but-hard NO.
-**Confidence.** High (beyond reasonable doubt, unproven).
-**Proof target.** All 26 families NO — by search (elim2, per-family) and/or by
-proven per-family relaxation bounds. Purely finite; bounded by compute, not by
-mathematical obstruction. Under H3's negation (any 17-clique at S=18 census):
-a *second activation family* — a discovery, immediately checkable.
+### H3 — No-Activation Hypothesis (ERG-003) — **REFUTED 2026-07-14**
+**Statement (REFUTED).** ω(C₉∨C₉∨C₉∨C₅) = 16.
+**Refutation.** A genuine **17-clique** exists — found in the S=17 family
+(1,3,5,5,3) by the WolframBatch Memory16x128 sweep (2026-07-14, 22,352,404 nodes)
+and **independently verified**: explicit witness in
+`02-D1-theory-frontier/erg003_omega17_witness.json`; my own C₉∨C₉∨C₉∨C₅ adjacency
+check gives **0 nonadjacent pairs of 136**; the solver's own `witness_verified=True`;
+and the node count 22,352,404 was reproduced on both cloud and local runs. So
+**ω ≥ 17 — ω=16 is false.** The earlier "zero 17-cliques in >10⁸ nodes / high
+confidence" was **under-search**: family 11 never finished before (anchors_done
+stayed 0); the fresh 40-min run reached the clique inside its *first* anchor.
+Bracket [16,19] → **[17,19]**. A textbook case for the project's
+verify-surprising-positives discipline — the deeper search found what the shallower
+one missed, and it survived an independent re-check.
+**What this does and doesn't settle.** Activation still requires ω ≥ 18
+(load = ω/(8√5): **ω=17 → 0.950 < 1, still no activation**; ω=18 → 1.006 = activation).
+So the value 16 is corrected, but the (3,1) cell's *activation* is now the sharper
+**open** question: is ω = 17 (no activation, value corrected) or ω ≥ 18 (a **second
+activation family** beyond n=7 — a genuine discovery)? **Next step: the S=18 census**
+(does an 18-clique exist?). This supersedes the prior F9x / ledger "H3 open, ω=16"
+lines.
 
 ### H4 — Two-Lens Completeness Hypothesis (SQ1; the O3 capstone)
 **Statement.** Against the physical adversary class 𝒜 = {classical optical
@@ -223,7 +232,7 @@ selection) rather than inside it.
 | H1 | sup gap = gap(cct) | ergodic optimization | finiteness property fails generically (Bousch–Mairesse); affine tilts inert | Legendre-frontier certificate tight at f_c=2/3 |
 | H1′ | lim Γ_k = sup gap | hierarchy convergence | none known — likely provable | SFT window-approximation argument |
 | H2 | δ(c mod ℤ) is THE detector | sheaf cohomology | gauge invariance untested | compute class over optimal face; C₉ control |
-| H3 | ω(nonagon cell)=16 | finite search | per-family cost wall (fam02+) | bound-elimination + residual sweep |
+| H3 | ~~ω(nonagon cell)=16~~ **REFUTED: ω ≥ 17** (verified 17-clique) | finite search | value 16 was under-search | S=18 census: is ω=17 (safe) or ≥18 (activation)? |
 | H4a | completeness rel. 𝒜 | protocol theory | detector-model assumptions | derive from arXiv:2601.13869 + Cor 1 |
 | H4b | CV column (Sp(2n,ℝ) audit) | Lie theory | none — never attempted | matrix Lie-closure implementation |
 | H4c | unrestricted completeness | complexity theory | sampling hardness (BosonSampling) | out of scope; stated as frontier |
@@ -285,10 +294,11 @@ non-abelian symmetrization, or search.
 
 **H3: bound-elimination → inert (added as F9x).** 0 of 26 families are
 bound-eliminable (inertness lemma: ω(cn(Q_m)) ≥ 8−s_m meets the generator
-constraint). H3 status: open; S=17 is search-bound (2/26 NO, 24 PARTIAL;
-cumulative exact search >200M nodes including a 10-worker parallel pass at
-25 min/family, zero 17-cliques anywhere — evidence for ω=16 strengthens,
-certificate still requires elim2 scale-up at hours-per-family budgets).
+constraint). **H3 status: REFUTED 2026-07-14 — ω ≥ 17** (verified 17-clique in
+family (1,3,5,5,3); see the H3 entry). The earlier "zero 17-cliques, evidence for
+ω=16 strengthens" line was under-search: the deeper WolframBatch run (40 min/family
+on Memory16x128) reached a 17-clique in family 11's first anchor. ω=16 is out;
+bracket [17,19]; activation (ω≥18) is the sharper open question via an S=18 census.
 
 **Net position after the delta.** Proven layer grows by F10, F11 (+F9vii–x);
 the hypothesis set is now {H1, H1′, H3, H5, H4′(maximality), and the reopened

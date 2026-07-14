@@ -1,23 +1,7 @@
 {
- "family": [
-  1,
-  3,
-  5,
-  5,
-  3
- ],
- "S": 17,
- "method": "elim2",
- "status": "YES",
- "nodes": 22352404,
- "anchors_done": 1,
- "plan": [
-  3,
-  2,
-  0,
-  4,
-  1
- ],
+ "graph": "C9 v C9 v C9 v C5 (OR/conormal product, cycle factors)",
+ "omega_lower_bound": 17,
+ "clique_size": 17,
  "witness": [
   [
    0,
@@ -122,7 +106,13 @@
    4
   ]
  ],
- "witness_verified": true,
- "witness_detail": "17 verts, 0 nonadjacent pairs of 136",
- "wall_seconds": 1289.7
+ "family_vector": [
+  1,
+  3,
+  5,
+  5,
+  3
+ ],
+ "nodes": 22352404,
+ "verification": "independent WL adjacency (0 nonadjacent pairs of 136) + solver witness_verified=True + node count 22352404 reproduced on cloud and local"
 }
