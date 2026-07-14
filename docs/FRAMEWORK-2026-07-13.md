@@ -158,13 +158,20 @@ the CV analogue of G7 (the audit NOTES-hawking flags as never done).
 
 ### H5 — Paley Product Hypothesis (GE-003 residue)
 **Statement.** ω(Paley13^∨3) = 39 (= 13·3, the product witness is optimal).
-**Evidence.** Doubly-verified 39-clique; no 40-clique in ~1.7×10⁸ exact nodes +
-5,496 heuristic restarts; ceiling 46 from ϑ-multiplicativity.
-**Confidence.** High.
-**Proof target.** A Delsarte-LP / Schrijver-ϑ′ bound on the ℤ₁₃³ translation
-scheme (explicit Paley eigenvalues) **< 40** would close it outright with an LP
-certificate; otherwise exhaustion of the ~1,000 residual branches (measured
-distribution now known). This is the cheapest of the five to close.
+**Evidence.** Sharpened 2026-07-14 (`02-D1-theory-frontier/paley13-k3-analysis-2026-07-14.md`):
+α(Paley13^⊠2) = 13 = ϑ² exactly, so **Θ(Paley13) = √13** and all EVEN powers are pinned
+(α(⊠2m) = 13^m); only odd powers stay open, with a persistent bracket [3·13^m, ⌊√13·13^m⌋]
+(k=3 = [39,46] is the smallest instance, ratio ≈ 1.20). The 39-clique (product 13×3) is
+doubly-verified and **maximal** (no vertex adjoins all 39); it survives greedy (211k restarts,
+plateau 33), seeded iterated local search (169,679 iters, never 40), exact FindClique{40}
+(timeout), and the tuned bitset-B&B C solver — convergent evidence that α(⊠3) = 39, i.e. ϑ is
+NOT tight at odd powers.
+**Confidence.** High (LB 39 evidenced-tight).
+**Proof target.** The entire gap is ϑ-weakness at odd powers. The Delsarte/Schrijver-ϑ′ route
+is dead (= 46.87 exactly, F9ix), so any UB < 46 needs **Lasserre level 2** (SOS degree 4) on
+the 2197-vertex power, symmetry-reduced under Aut(Paley13)≀S₃ (Polak–Schrijver isotypic block-
+diagonalization of a ~2.4M-variable SDP) — a research-scale computation, not a capped cloud
+run. A Lasserre-2 value < 40 closes H5 outright.
 
 ---
 
