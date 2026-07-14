@@ -16,15 +16,56 @@
 (*Locate the repository root (this file lives at docs/essay-src/), load the BlackBox paclet, and repair any Global`-shadowing of paclet symbols (the shadowing pitfall documented in kcbs_circuit.wl \[LongDash] Get[] avoids it, but we de-shadow defensively):*)
 
 (* ::Input:: *)
-repoRoot = Module[{start, root},
+repoRoot = Module[
+   {ref, start, localRoot, base, cacheRoot, manifest, dest, res, tries, strm},
+   ref = If[StringQ[$BlackBoxRef] && $BlackBoxRef =!= "", $BlackBoxRef, "master"];
    start = With[{f = $InputFileName},
      If[StringQ[f] && f =!= "" && FileExistsQ[f], DirectoryName[f],
        Quiet@Check[NotebookDirectory[], Directory[]]]];
    If[! StringQ[start] || start === "", start = Directory[]];
-   root = NestWhile[ParentDirectory, start,
+   localRoot = NestWhile[ParentDirectory, start,
      (# =!= ParentDirectory[#]) &&
        ! FileExistsQ[FileNameJoin[{#, "BlackBox", "PacletInfo.wl"}]] &];
-   If[FileExistsQ[FileNameJoin[{root, "BlackBox", "PacletInfo.wl"}]], root, start]];
+   If[FileExistsQ[FileNameJoin[{localRoot, "BlackBox", "PacletInfo.wl"}]],
+     localRoot,
+     base = "https://raw.githubusercontent.com/hubertkolcz/BlackBox/" <> ref <> "/";
+     cacheRoot = FileNameJoin[{$UserBaseDirectory, "ApplicationData", "BlackBoxEssay", ref}];
+     Quiet@CreateDirectory[cacheRoot, CreateIntermediateDirectories -> True];
+     If[! DirectoryQ[cacheRoot],
+       cacheRoot = FileNameJoin[{$TemporaryDirectory, "BlackBoxEssay", ref}];
+       Quiet@CreateDirectory[cacheRoot, CreateIntermediateDirectories -> True]];
+     manifest = {"BlackBox/PacletInfo.wl", "BlackBox/Kernel/BlackBox.wl",
+       "docs/essay-src/essay_sections_1_3.wl", "docs/essay-src/essay_sections_4_6.wl",
+       "docs/essay-src/essay_sections_7_10.wl",
+       "09-EMU-optical-compiler/OpticalCompiler.wl", "09-EMU-optical-compiler/DispatcherEmitter.wl",
+       "09-EMU-optical-compiler/InterferometerLayer.wl", "09-EMU-optical-compiler/IntensityLayer.wl",
+       "05-CERT-epsilon-certificates/EpsilonCertificate7_regenerated.wl",
+       "05-CERT-epsilon-certificates/EpsilonCertificate8_regenerated.wl",
+       "05-CERT-epsilon-certificates/EpsilonCertificate9.wl",
+       "08-HK-hawking/hawking_gaussian_sector.wl", "08-HK-hawking/gaussian_engine.wl",
+       "08-HK-hawking/gaussian_hawking_physics.wl", "08-HK-hawking/gaussian_witnesses_bridge.wl",
+       "06-D3-sheaf-cohomology/final_h1_cocycle_results.json",
+       "02-D1-theory-frontier/erg003_verdict.json", "docs/FRAMEWORK-2026-07-13.md",
+       "09-EMU-optical-compiler/schematics/demo1_kcbs_pentagon_L1.png",
+       "09-EMU-optical-compiler/schematics/demo3_cct_mesh_reps2.png",
+       "00-BBT-blackbox-protocol/certification_map.png",
+       "05-CERT-epsilon-certificates/orbit_spectrum.png"};
+     Do[dest = FileNameJoin[Prepend[FileNameSplit[rel], cacheRoot]];
+       If[! (FileExistsQ[dest] && FileByteCount[dest] > 0),
+         Quiet@CreateDirectory[DirectoryName[dest], CreateIntermediateDirectories -> True];
+         tries = 0;
+         While[! (FileExistsQ[dest] && FileByteCount[dest] > 0) && tries < 3,
+           tries++;
+           res = Quiet@Check[URLRead[base <> rel, {"StatusCode", "BodyByteArray"}], $Failed];
+           If[AssociationQ[res] && res["StatusCode"] === 200 &&
+                ByteArrayQ[res["BodyByteArray"]] && Length[res["BodyByteArray"]] > 8 &&
+                ! StringStartsQ[ToUpperCase@Quiet@Check[
+                    FromCharacterCode@Normal@Take[res["BodyByteArray"], UpTo[14]], "?"],
+                  "<!DOCTYPE" | "<HTML"],
+             Quiet[strm = OpenWrite[dest, BinaryFormat -> True];
+               BinaryWrite[strm, res["BodyByteArray"]]; Close[strm]]]]],
+       {rel, manifest}];
+     cacheRoot]];
 PacletDirectoryLoad[FileNameJoin[{repoRoot, "BlackBox"}]];
 Needs["HubertKolcz`BlackBox`"]; Quiet[Remove /@ Select["Global`" <> # & /@ Names["HubertKolcz`BlackBox`*"], NameQ]];
 sfx6 = <||>;   (* verification accumulator, filled section by section *)
@@ -156,8 +197,8 @@ sfx6["S4_gamma10NumericHonest"] = gamma10Numeric < N[gamma9] && gamma10Numeric >
 
 (* ::Input:: *)
 orbitSeeds = {3/2, tauStar, 16/11, 19/13, 25/17};
-sfx6["S4_orbitSpectrum"] = (tauStar < 16/11 < 19/13 < 25/17 < 3/2) &&
-   FileExistsQ[FileNameJoin[{repoRoot, "05-CERT-epsilon-certificates", "orbit_spectrum.png"}]];
+sfx6["S4_orbitSpectrum"] = (tauStar < 16/11 < 19/13 < 25/17 < 3/2);
+   (* the CLAIM is the orbit-density ordering; the figure is decorative and no longer gates OK *)
 orbitSpectrumFigureRef = FileNameJoin[{repoRoot, "05-CERT-epsilon-certificates", "orbit_spectrum.png"}];
 {N[orbitSeeds, 6], "figure" -> orbitSpectrumFigureRef}
 

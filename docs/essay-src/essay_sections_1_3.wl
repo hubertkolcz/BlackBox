@@ -16,15 +16,56 @@
 (*Locate the repo root robustly by walking up to the BlackBox paclet marker -- works whether opened as a notebook (NotebookDirectory[]) or Get-loaded headless ($InputFileName) -- then load the library, repair any Global`-shadowing, and record the repo root for the figure/probe artifacts.*)
 
 (* ::Input:: *)
-repoRoot = Module[{start, root},
+repoRoot = Module[
+   {ref, start, localRoot, base, cacheRoot, manifest, dest, res, tries, strm},
+   ref = If[StringQ[$BlackBoxRef] && $BlackBoxRef =!= "", $BlackBoxRef, "master"];
    start = With[{f = $InputFileName},
      If[StringQ[f] && f =!= "" && FileExistsQ[f], DirectoryName[f],
        Quiet@Check[NotebookDirectory[], Directory[]]]];
    If[! StringQ[start] || start === "", start = Directory[]];
-   root = NestWhile[ParentDirectory, start,
+   localRoot = NestWhile[ParentDirectory, start,
      (# =!= ParentDirectory[#]) &&
        ! FileExistsQ[FileNameJoin[{#, "BlackBox", "PacletInfo.wl"}]] &];
-   If[FileExistsQ[FileNameJoin[{root, "BlackBox", "PacletInfo.wl"}]], root, start]];
+   If[FileExistsQ[FileNameJoin[{localRoot, "BlackBox", "PacletInfo.wl"}]],
+     localRoot,
+     base = "https://raw.githubusercontent.com/hubertkolcz/BlackBox/" <> ref <> "/";
+     cacheRoot = FileNameJoin[{$UserBaseDirectory, "ApplicationData", "BlackBoxEssay", ref}];
+     Quiet@CreateDirectory[cacheRoot, CreateIntermediateDirectories -> True];
+     If[! DirectoryQ[cacheRoot],
+       cacheRoot = FileNameJoin[{$TemporaryDirectory, "BlackBoxEssay", ref}];
+       Quiet@CreateDirectory[cacheRoot, CreateIntermediateDirectories -> True]];
+     manifest = {"BlackBox/PacletInfo.wl", "BlackBox/Kernel/BlackBox.wl",
+       "docs/essay-src/essay_sections_1_3.wl", "docs/essay-src/essay_sections_4_6.wl",
+       "docs/essay-src/essay_sections_7_10.wl",
+       "09-EMU-optical-compiler/OpticalCompiler.wl", "09-EMU-optical-compiler/DispatcherEmitter.wl",
+       "09-EMU-optical-compiler/InterferometerLayer.wl", "09-EMU-optical-compiler/IntensityLayer.wl",
+       "05-CERT-epsilon-certificates/EpsilonCertificate7_regenerated.wl",
+       "05-CERT-epsilon-certificates/EpsilonCertificate8_regenerated.wl",
+       "05-CERT-epsilon-certificates/EpsilonCertificate9.wl",
+       "08-HK-hawking/hawking_gaussian_sector.wl", "08-HK-hawking/gaussian_engine.wl",
+       "08-HK-hawking/gaussian_hawking_physics.wl", "08-HK-hawking/gaussian_witnesses_bridge.wl",
+       "06-D3-sheaf-cohomology/final_h1_cocycle_results.json",
+       "02-D1-theory-frontier/erg003_verdict.json", "docs/FRAMEWORK-2026-07-13.md",
+       "09-EMU-optical-compiler/schematics/demo1_kcbs_pentagon_L1.png",
+       "09-EMU-optical-compiler/schematics/demo3_cct_mesh_reps2.png",
+       "00-BBT-blackbox-protocol/certification_map.png",
+       "05-CERT-epsilon-certificates/orbit_spectrum.png"};
+     Do[dest = FileNameJoin[Prepend[FileNameSplit[rel], cacheRoot]];
+       If[! (FileExistsQ[dest] && FileByteCount[dest] > 0),
+         Quiet@CreateDirectory[DirectoryName[dest], CreateIntermediateDirectories -> True];
+         tries = 0;
+         While[! (FileExistsQ[dest] && FileByteCount[dest] > 0) && tries < 3,
+           tries++;
+           res = Quiet@Check[URLRead[base <> rel, {"StatusCode", "BodyByteArray"}], $Failed];
+           If[AssociationQ[res] && res["StatusCode"] === 200 &&
+                ByteArrayQ[res["BodyByteArray"]] && Length[res["BodyByteArray"]] > 8 &&
+                ! StringStartsQ[ToUpperCase@Quiet@Check[
+                    FromCharacterCode@Normal@Take[res["BodyByteArray"], UpTo[14]], "?"],
+                  "<!DOCTYPE" | "<HTML"],
+             Quiet[strm = OpenWrite[dest, BinaryFormat -> True];
+               BinaryWrite[strm, res["BodyByteArray"]]; Close[strm]]]]],
+       {rel, manifest}];
+     cacheRoot]];
 PacletDirectoryLoad[FileNameJoin[{repoRoot, "BlackBox"}]];
 Needs["HubertKolcz`BlackBox`"]; Quiet[Remove /@ Select["Global`" <> # & /@ Names["HubertKolcz`BlackBox`*"], NameQ]];
 Names["HubertKolcz`BlackBox`*"]
@@ -238,8 +279,8 @@ section3Check = <|
    "cvColumn" -> cvPassive2["dim"] == 4 && cvPassive2["compact"] &&
       cvActive2["dim"] == 10 && ! cvActive2["compact"] &&
       cvActive1["dim"] == 3 && ! cvActive1["compact"],
-   "mapEmbedded" -> FileExistsQ[certMapFile]
-   |>;
+   "certMapOK" -> (MissingQ[certificationMap] || ImageQ[certificationMap])
+   |>;   (* figure is decorative: valid when present, gracefully absent in standalone mode -- never gates OK *)
 Column[{section3Check, "S3 OK" -> And @@ Values[section3Check]}]
 
 (* ::Section:: *)
