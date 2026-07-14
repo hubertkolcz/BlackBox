@@ -1,0 +1,59 @@
+{
+ "sibling_X125": {
+  "graph": "C5vC5vC5 (complement of the strong power), 125 vertices",
+  "alpha_known": 10,
+  "k10_test": {
+   "result": "SAT",
+   "vars": 2425,
+   "clauses": 6225,
+   "solve_seconds": 0.02
+  },
+  "k11_test": {
+   "result": "UNSAT",
+   "vars": 2633,
+   "clauses": 6641,
+   "solve_seconds": 45.9
+  },
+  "conclusion": "SAT alone (naive CDCL, no symmetry-breaking) proves alpha(X125)=10 rigorously in under 1 minute total build+solve -- faster than the full Lasserre-2/GLV SDP pipeline needed to reach the same conclusion via the semidefinite route."
+ },
+ "big_graph_calibration": {
+  "graph": "C9vC9vC9vC5, 3645 vertices, |Aut|=349920",
+  "encoding": "one bool per vertex; binary clause per non-edge of G (1,873,530 total); exact-cardinality-per-C5-layer via pysat CardEnc.equals (sequential counter)",
+  "family0_S17_knownNO": {
+   "family": [
+    1,
+    1,
+    1,
+    7,
+    7
+   ],
+   "elim2_reference": {
+    "status": "NO",
+    "nodes": 2663409,
+    "wall_seconds": 43.5
+   },
+   "cnf_build": {
+    "vars": 26045,
+    "clauses": 1920514,
+    "build_seconds": 3.2
+   },
+   "sat_result": "NO VERDICT after 1020+ seconds observed elapsed (job continued running past this check; a hard 1800s/30-min cap was set but not yet confirmed reached)",
+   "comparison": "at least 23x slower than elim2 tuned 43.5s as of the last check (still running); naive CDCL has no mechanism to exploit the 349,920-element automorphism group that elim2 own family decomposition already implicitly uses"
+  },
+  "family11_S17_knownYES": {
+   "family": [
+    1,
+    3,
+    5,
+    5,
+    3
+   ],
+   "elim2_reference": {
+    "status": "YES (17-clique found)"
+   },
+   "sat_result": "NO VERDICT within the 600s (10 min) test budget actually enforced (process killed at cap)",
+   "comparison": "same symmetry-blindness issue as family0"
+  },
+  "conclusion": "Naive/unmodified SAT is NOT currently cost-competitive with the tuned custom solver at the 3645-vertex scale -- but the sibling result shows the SAT MECHANISM is not the problem; the missing ingredient is symmetry-breaking predicates derived from Aut(G) (the standard SAT-literature remedy for exactly this failure mode, Crawford-Ginsberg-Luks-Roy 1996). This is the identified but UNTESTED next step -- not costed, not ruled out."
+ }
+}
