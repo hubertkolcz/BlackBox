@@ -1,0 +1,17 @@
+{
+ "family": [
+  3,
+  3,
+  4,
+  4,
+  4
+ ],
+ "S": 18,
+ "method": "elim2",
+ "status": "PARTIAL",
+ "nodes": 9650176,
+ "anchors_done": 0,
+ "wall_seconds": 0,
+ "witness": null,
+ "witness_verified": null
+}
