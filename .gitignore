@@ -7,3 +7,8 @@ __pycache__/
 *.bin
 # resumable search scratch state
 06-D3-sheaf-cohomology/p2_state/
+
+# transient sweep/run logs and output dumps
+02-D1-theory-frontier/sweep_logs/
+05-CERT-epsilon-certificates/k6_gen.log
+06-D3-sheaf-cohomology/run2.out
