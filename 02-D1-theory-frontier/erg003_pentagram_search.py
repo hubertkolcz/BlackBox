@@ -142,6 +142,50 @@ def enum_size_cliques(P, need, adj, stats):
         Pw ^= low                        # v exhausted as a chosen vertex
 
 
+def enum_size_cliques_ranged(P, need, adj, stats, i_lo, i_hi, order, colornum):
+    """TOP-LEVEL-ONLY root-split variant of enum_size_cliques (need >= 1 only --
+    the need==0 base case never applies here since this is only ever called at
+    the anchor/X-layer level, where need = sX-1 >= 1). order/colornum MUST be the
+    exact arrays greedy_color(P, adj) would produce for this SAME P -- precompute
+    ONCE and pass the identical arrays to every worker splitting this P's root
+    range, so root index i means the identical vertex/position in every worker.
+
+    Restricts the OUTER loop (which enum_size_cliques runs over i in
+    range(len(order)-1, -1, -1)) to i in [i_lo, i_hi) -- i.e. i = i_hi-1 downto
+    i_lo, using the SAME i-descending traversal and coloring-bound break.
+    Reproduces Pw's exact state at the start of that sub-range by excluding every
+    root at position j >= i_hi (already consumed by earlier chunks in the FULL
+    traversal, per Pw's monotonic-exclusion invariant). Because each root's
+    subtree is disjoint (Pw excludes a root after its subtree completes, in every
+    chunk consistently), a partition of [0, len(order)) into disjoint contiguous
+    [i_lo, i_hi) ranges, unioned across workers, yields EXACTLY the same set of
+    cliques as one call to enum_size_cliques(P, need, adj, stats) -- no omissions,
+    no duplicates. Exhaustively validated against enum_size_cliques and the
+    count-only reference in erg003_ranged_selftest.py (unit-level set-equality on
+    synthetic cases; end-to-end status agreement on the full, already-decided
+    S=17 census)."""
+    assert need >= 1
+    excluded = 0
+    for j in range(len(order) - 1, i_hi - 1, -1):
+        excluded |= (1 << order[j])
+    Pw = P & ~excluded
+    for i in range(i_hi - 1, i_lo - 1, -1):
+        if colornum[i] < need:           # bound: remaining colors too few
+            break
+        v = order[i]
+        low = 1 << v
+        if not (Pw & low):
+            continue                     # v not in P at all (shouldn't happen if
+                                          # order/colornum truly came from this P)
+        stats[0] += 1
+        if stats[1] is not None and (stats[0] & 0x3FFF) == 0 and time.time() > stats[1]:
+            raise Deadline
+        subP = Pw & adj[v]
+        for tail in enum_size_cliques(subP, need - 1, adj, stats):
+            yield low | tail
+        Pw ^= low                        # v exhausted as a chosen vertex
+
+
 def _enum_count_only(P, need, adj):
     """Reference enumerator (count-only, no coloring bound) for selftest."""
     if need == 0:

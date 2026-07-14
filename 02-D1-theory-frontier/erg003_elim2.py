@@ -263,6 +263,96 @@ class Elim2:
         return {"status": "NO", "nodes": stats[0], "anchors_done": ai + 1,
                 "plan": best[1], "witness": None}
 
+    # -- family decision, TOP-LEVEL ROOT-RANGE-SPLIT (multi-core parallel) ---
+    def decide_ranged(self, vec, maxsec=None, i_lo=0, i_hi=None, order=None, colornum=None):
+        """Same decision as decide(), but restricts the anchor/X-layer search to
+        root indices [i_lo, i_hi) in the SAME order/colornum arrays
+        ps.greedy_color(adj[0], adj) produces (pass the identical precomputed
+        arrays to every chunk splitting one family, so root index i means the
+        identical vertex/position everywhere). Disjoint contiguous chunks whose
+        ranges union to [0, len(order)) decide the SAME family exhaustively and
+        without overlap -- validated in erg003_ranged_selftest.py (set-equality
+        unit tests) and against the full, already-decided S=17 census (status
+        agreement end-to-end). sX==1 families have a single trivial anchor {0},
+        handled specially and assigned by convention to the i_lo==0 chunk only.
+        Resumable: a PARTIAL result reports resume_i_hi -- pass it as the next
+        call's i_hi (i_lo unchanged) to continue this exact sub-range."""
+        best = None
+        for plan in self.plans(vec):
+            c = self.plan_cost(vec, plan)
+            if c is not None and (best is None or c < best[0]):
+                best = (c, plan)
+        e1, e2, X, Y, Z = best[1]
+        s_e1, s_e2 = vec[e1], vec[e2]
+        sX, sY, sZ = vec[X], vec[Y], vec[Z]
+        adj, FULL = self.adj, self.FULL
+        stats = [0, (time.time() + maxsec) if maxsec else None]
+
+        def try_anchor(qx):
+            fy = self.filt(qx, s_e2)
+            for qy in ps.enum_size_cliques(fy, sY, adj, stats) if sY > 0 else iter((0,)):
+                if not self.pred(qx, qy, s_e2, stats):
+                    continue
+                fz = self.filt(qx, s_e1)
+                cz = fz
+                for v in ps.bits(qy):
+                    cz &= adj[v]
+                for qz in ps.enum_size_cliques(cz, sZ, adj, stats) if sZ > 0 else iter((0,)):
+                    if not self.pred(qx, qz, s_e1, stats):
+                        continue
+                    m1 = self.pred_witness(qx, qz, s_e1)
+                    m2 = self.pred_witness(qx, qy, s_e2)
+                    wit = {X: qx, Y: qy, Z: qz, e1: m1, e2: m2}
+                    return {"status": "YES", "nodes": stats[0], "plan": best[1],
+                            "witness": [(l, sorted(ps.bits(wit[l]))) for l in range(5)]}
+            return None
+
+        if sX == 1:
+            if i_lo == 0:
+                r = try_anchor(1)
+                if r:
+                    r.update({"i_lo": i_lo, "i_hi": i_hi, "chunk_exhausted": True})
+                    return r
+            return {"status": "NO", "nodes": stats[0], "i_lo": i_lo, "i_hi": i_hi,
+                    "chunk_exhausted": True, "plan": best[1], "witness": None}
+
+        if order is None or colornum is None:
+            order, colornum = ps.greedy_color(adj[0], adj)
+        if i_hi is None:
+            i_hi = len(order)
+        need = sX - 1
+
+        excluded = 0
+        for j in range(len(order) - 1, i_hi - 1, -1):
+            excluded |= (1 << order[j])
+        Pw = adj[0] & ~excluded
+
+        try:
+            for i in range(i_hi - 1, i_lo - 1, -1):
+                if colornum[i] < need:
+                    return {"status": "NO", "nodes": stats[0], "i_lo": i_lo, "i_hi": i_hi,
+                            "chunk_exhausted": True, "plan": best[1], "witness": None}
+                v = order[i]
+                low = 1 << v
+                if not (Pw & low):
+                    continue
+                subP = Pw & adj[v]
+                for t in ps.enum_size_cliques(subP, need - 1, adj, stats):
+                    qx = (low | t) | 1
+                    r = try_anchor(qx)
+                    if r:
+                        r.update({"i_lo": i_lo, "i_hi": i_hi, "chunk_exhausted": False,
+                                  "stopped_at_i": i})
+                        return r
+                Pw ^= low
+        except ps.Deadline:
+            return {"status": "PARTIAL", "nodes": stats[0], "i_lo": i_lo, "i_hi": i_hi,
+                    "resume_i_hi": i + 1, "chunk_exhausted": False, "plan": best[1],
+                    "witness": None}
+
+        return {"status": "NO", "nodes": stats[0], "i_lo": i_lo, "i_hi": i_hi,
+                "chunk_exhausted": True, "plan": best[1], "witness": None}
+
 
 def load_fvec_93():
     fn = os.path.join(HERE, "erg003_fvec.json")
