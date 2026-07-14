@@ -401,6 +401,13 @@
    "decisive_sibling_test": "X125=C5vC5vC5 (alpha=10, theta=5*sqrt5=11.18034): three-point (s=1,t=1)=11.00890 -> floor 11 (does NOT close); Lasserre-2 (s=2,t=0)=10.53412 -> floor 10 (CLOSES). Both validated (gates + symmetry-free full-6251 PSD reconstruction, min eig -1.07e-8).",
    "level_needed": "s=2 (full Lasserre-2) is the level that closes odd-power product gaps; s=1 (three-point) provably insufficient.",
    "conclusion": "LOCAL: three-point is local but provably too weak; s=2 CLOSES the gap (validated on sibling) but for the 3645-vertex/4.77M-stable-pair graph needs MOSEK-class tooling (not a workstation SCS solve). So a LOCAL rigorous omega<=17 certificate is NOT achievable, BUT the SDP avenue is NOT futile: a symmetry-reduced Lasserre-2 MOSEK run is now a justified investment (method proven to close exactly this gap type). Absent that run, [17,19] evidenced-tight stands.",
+   "big_graph_sizing_2026_07_14": {
+    "variables": 2670898,
+    "variable_breakdown": "1 point + 65 edge-orbits + 9309 triangle-orbits + 2661523 four-clique-orbits (all EXACT via Burnside; total 4-cliques of G = 920,935,603,350). Cross-validated: k<=3 by two independent methods, k=4 by integer divisibility.",
+    "blocks": "382 PSD blocks, MAX BLOCK 1309 (=|S_G|/2+1), Sum block^2 = 66,044,594, total cone dim ~33M. Analytic Wigner-Mackey/Clifford reduction, EXACTLY cross-checked on 3 calibration points (125-sibling: 35 blocks max 30 reproduced; 405-intermediate: 103 blocks max 130; big: 382 blocks max 1309). NOTE: the earlier naive ~390 max-block scaling was WRONG by 3.4x.",
+    "wcs_cost": "ASSEMBLY ~1,500-12,000 cr (Memory16x128, bespoke analytic sparse assembler; dense method impossible ~90TB). SOLVE INFEASIBLE ON WCS at any price: Wolfram SDP dies past ~1e4 constraints; interior-point (CLARABEL/MOSEK) needs a 2.67M^2 Schur complement = 57TB; SCS gives no rigorous certificate. MOSEK is a hard prerequisite AND insufficient (2.67M vars infeasible even on 256GB-1TB HPC without further reduction). Wasted-spend risk >90-95%.",
+    "verdict": "A WCS-only certified proof of omega<=17 is NOT attainable -- a SCALE wall, not a credit question. Spend 0 WCS credits on the solve. Real path (if pursued): off-WCS MOSEK/HPC + further structural reduction (chordal/low-rank/finer symmetry) = a days-to-weeks research-software project with non-trivial failure risk. [17,19] evidenced-tight stands."
+   },
    "artifacts": ["erg003_lasserre.py", "erg003_threepoint_sibling.py", "erg003-lasserre2-local-analysis-2026-07-14.md"]
   }
  }

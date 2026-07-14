@@ -91,5 +91,31 @@ activation bracket **ω ∈ [17,19] with 17 evidenced-tight** stands. This mirro
 the Paley-13 [39,46] situation — whose stated resolution (Lasserre-2) is now empirically
 validated on the analogous odd-power gap.
 
+## Exact sizing of the big-graph Lasserre-2 (2026-07-14) — and why WCS can't run it
+
+To price a Wolfram-Compute-Services run, the reduced SDP was sized *exactly* (Burnside orbit
+counts + an analytic Wigner–Mackey/Clifford block computation, both cross-validated on the
+125-sibling and a 405-vertex intermediate):
+
+- **Variables: 2,670,898** moment variables = 1 point + 65 edge-orbits + **9,309** triangle-orbits
+  + **2,661,523** four-clique-orbits (the 4.77M-pair index has 920.9 billion 4-cliques → 2.66M
+  Γ-orbits). All exact.
+- **Blocks: 382 PSD blocks, max block 1309×1309**, Σ block² = 66,044,594, total cone dim ≈ 33M.
+  The earlier naive scaling estimate (~390) was **wrong by 3.4×** — the true max block is
+  |S_G|/2 + 1 = 1309 (driven by the 8 character-orbits with trivial point-group stabiliser).
+
+**WCS cost verdict:** the *assembly* (a bespoke analytic sparse assembler — the sibling's dense
+6251-dim method is categorically impossible at 4.77M, ~90 TB) is ~**1,500–12,000 credits** on
+Memory16x128. The *solve* is **infeasible on WCS at any price**: Wolfram `SemidefiniteOptimization`
+dies far past its ~10⁴-constraint limit; any interior-point (CLARABEL/**MOSEK**) needs a
+2.67M×2.67M Schur complement = **57 TB**; SCS produces no rigorous certificate (can't prove < 18).
+**MOSEK is a hard prerequisite *and* insufficient** — 2.67M variables are infeasible even on a
+256 GB–1 TB HPC node without further structural reduction (chordal/low-rank/finer symmetry).
+Wasted-spend risk > 90–95%.
+
+**So the credit question resolves to: spend 0 on a WCS solve — it is a SCALE wall, not a budget
+question.** A certified ω ≤ 17 by this route is a days-to-weeks off-WCS MOSEK/HPC research-software
+project with non-trivial failure risk. **[17,19] evidenced-tight stands.**
+
 Artifacts: `erg003_lasserre.py` (validated level-1 + block-diagonalizer, big graph),
 `erg003_threepoint_sibling.py` (end-to-end three-point pipeline + the decisive X₁₂₅ result).
