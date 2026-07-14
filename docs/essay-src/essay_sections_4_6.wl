@@ -16,8 +16,15 @@
 (*Locate the repository root (this file lives at docs/essay-src/), load the BlackBox paclet, and repair any Global`-shadowing of paclet symbols (the shadowing pitfall documented in kcbs_circuit.wl \[LongDash] Get[] avoids it, but we de-shadow defensively):*)
 
 (* ::Input:: *)
-essayHere = Quiet@Check[NotebookDirectory[], DirectoryName[$InputFileName]];
-repoRoot = ExpandFileName[FileNameJoin[{essayHere, "..", ".."}]];
+repoRoot = Module[{start, root},
+   start = With[{f = $InputFileName},
+     If[StringQ[f] && f =!= "" && FileExistsQ[f], DirectoryName[f],
+       Quiet@Check[NotebookDirectory[], Directory[]]]];
+   If[! StringQ[start] || start === "", start = Directory[]];
+   root = NestWhile[ParentDirectory, start,
+     (# =!= ParentDirectory[#]) &&
+       ! FileExistsQ[FileNameJoin[{#, "BlackBox", "PacletInfo.wl"}]] &];
+   If[FileExistsQ[FileNameJoin[{root, "BlackBox", "PacletInfo.wl"}]], root, start]];
 PacletDirectoryLoad[FileNameJoin[{repoRoot, "BlackBox"}]];
 Needs["HubertKolcz`BlackBox`"]; Quiet[Remove /@ Select["Global`" <> # & /@ Names["HubertKolcz`BlackBox`*"], NameQ]];
 sfx6 = <||>;   (* verification accumulator, filled section by section *)

@@ -27,7 +27,16 @@ stripComment[block_String] := Module[{s = StringTrim[block]},
    If[StringEndsQ[s, "*)"], s = StringDrop[s, -2]];
    StringTrim[s]];
 
-parseCells[file_] := Module[{lines, cells = {}, i = 1, n, style, buf, content},
+(* When splicing self-contained section fragments under the master's single Title,
+   demote each fragment's headings one level so the assembled essay reads as ONE
+   document (one Title, fragments as top-level Sections) rather than four stacked
+   title pages. Applied only to the fragments; the master keeps its own hierarchy. *)
+demoteMap = <|"Title" -> "Section", "Subtitle" -> "Text",
+   "Section" -> "Subsection", "Subsection" -> "Subsubsection",
+   "Subsubsection" -> "Subsubsection"|>;
+
+parseCells[file_, demote_ : <||>] := Module[
+   {lines, cells = {}, i = 1, n, style, buf, content, cellStyle},
    lines = Import[file, "Lines"];
    n = Length[lines];
    While[i <= n,
@@ -42,12 +51,13 @@ parseCells[file_] := Module[{lines, cells = {}, i = 1, n, style, buf, content},
         If[content =!= "", AppendTo[cells, Cell[content, "Input"]]],
       True,
         content = stripComment[content];
-        If[content =!= "", AppendTo[cells, Cell[content, styleMap[style]]]]],
+        cellStyle = Lookup[demote, styleMap[style], styleMap[style]];
+        If[content =!= "", AppendTo[cells, Cell[content, cellStyle]]]],
      i++]];
    cells];
 
 masterCells = parseCells[masterFile];
-sectionCells = Join @@ (parseCells /@ sectionFiles);
+sectionCells = Join @@ (parseCells[#, demoteMap] & /@ sectionFiles);
 (* Splice the fragments in where the master's Get-section cell sits *)
 getPos = FirstPosition[masterCells,
     Cell[c_String, "Input"] /; StringContainsQ[c, "essay_sections_1_3"], Missing[]];

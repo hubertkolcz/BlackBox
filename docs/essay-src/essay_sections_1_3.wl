@@ -13,11 +13,18 @@
 (*Labeling discipline (mirrors the framework): [T] theorem / machine-verified, [C] certified numeric, [R] refuted route, [H] named hypothesis. Layer-2 statements carry their hypothesis tag inline.*)
 
 (* ::CodeText:: *)
-(*Load the library (two directories up, at the repo root), repair any Global`-shadowing, and record the repo root for the figure/probe artifacts. NotebookDirectory[] is used interactively; under the headless Get-runner $InputFileName resolves the same path.*)
+(*Locate the repo root robustly by walking up to the BlackBox paclet marker -- works whether opened as a notebook (NotebookDirectory[]) or Get-loaded headless ($InputFileName) -- then load the library, repair any Global`-shadowing, and record the repo root for the figure/probe artifacts.*)
 
 (* ::Input:: *)
-essaySrcDir = Quiet@Check[DirectoryName[$InputFileName], Quiet@Check[NotebookDirectory[], Directory[]]];
-repoRoot = FileNameJoin[{essaySrcDir, "..", ".."}];
+repoRoot = Module[{start, root},
+   start = With[{f = $InputFileName},
+     If[StringQ[f] && f =!= "" && FileExistsQ[f], DirectoryName[f],
+       Quiet@Check[NotebookDirectory[], Directory[]]]];
+   If[! StringQ[start] || start === "", start = Directory[]];
+   root = NestWhile[ParentDirectory, start,
+     (# =!= ParentDirectory[#]) &&
+       ! FileExistsQ[FileNameJoin[{#, "BlackBox", "PacletInfo.wl"}]] &];
+   If[FileExistsQ[FileNameJoin[{root, "BlackBox", "PacletInfo.wl"}]], root, start]];
 PacletDirectoryLoad[FileNameJoin[{repoRoot, "BlackBox"}]];
 Needs["HubertKolcz`BlackBox`"]; Quiet[Remove /@ Select["Global`" <> # & /@ Names["HubertKolcz`BlackBox`*"], NameQ]];
 Names["HubertKolcz`BlackBox`*"]

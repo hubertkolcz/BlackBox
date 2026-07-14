@@ -13,8 +13,15 @@
 (*Loader. Locate the repository root from this file's own path (Get sets $InputFileName), load the BlackBox paclet and the EMU master compiler, and repair the Global`-shadowing pitfall that wolframscript's whole-file tokenisation would otherwise introduce (documented in CertifyingQuantumness.wl / RunEssay.wl):*)
 
 (* ::Input:: *)
-$EssaySectionsCDir = Quiet@Check[DirectoryName[$InputFileName], Directory[]];
-$BlackBoxRepoRoot = FileNameJoin[{$EssaySectionsCDir, "..", ".."}];
+$BlackBoxRepoRoot = Module[{start, root},
+   start = With[{f = $InputFileName},
+     If[StringQ[f] && f =!= "" && FileExistsQ[f], DirectoryName[f],
+       Quiet@Check[NotebookDirectory[], Directory[]]]];
+   If[! StringQ[start] || start === "", start = Directory[]];
+   root = NestWhile[ParentDirectory, start,
+     (# =!= ParentDirectory[#]) &&
+       ! FileExistsQ[FileNameJoin[{#, "BlackBox", "PacletInfo.wl"}]] &];
+   If[FileExistsQ[FileNameJoin[{root, "BlackBox", "PacletInfo.wl"}]], root, start]];
 PacletDirectoryLoad[FileNameJoin[{$BlackBoxRepoRoot, "BlackBox"}]];
 Needs["HubertKolcz`BlackBox`"];
 Get[FileNameJoin[{$BlackBoxRepoRoot, "09-EMU-optical-compiler", "OpticalCompiler.wl"}]];

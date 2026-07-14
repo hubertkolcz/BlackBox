@@ -19,10 +19,18 @@
 (*Assembly loader*)
 
 (* ::CodeText:: *)
-(*Locate the repository root from this file's own path (Get sets $InputFileName), load the BlackBox paclet, and repair the Global`-shadowing pitfall (documented in CertifyingQuantumness.wl / RunEssay.wl). Each Get-loaded section repeats this defensively; doing it here first lets the master's own verification cell reference paclet symbols directly.*)
+(*Locate the repository root robustly -- whether this document is opened and evaluated as a notebook (NotebookDirectory[]) or Get-loaded headless (DirectoryName[$InputFileName]) -- by walking up until the BlackBox paclet marker is found. This makes the essay render clean under interactive "Evaluate Notebook" as well as the headless runner. Then load the BlackBox paclet and repair the Global`-shadowing pitfall (documented in CertifyingQuantumness.wl / RunEssay.wl). Each Get-loaded section repeats this defensively; doing it here first lets the master's own verification cell reference paclet symbols directly.*)
 
 (* ::Input:: *)
-frameworkRoot = Quiet@Check[DirectoryName[$InputFileName], Directory[]];
+frameworkRoot = Module[{start, root},
+   start = With[{f = $InputFileName},
+     If[StringQ[f] && f =!= "" && FileExistsQ[f], DirectoryName[f],
+       Quiet@Check[NotebookDirectory[], Directory[]]]];
+   If[! StringQ[start] || start === "", start = Directory[]];
+   root = NestWhile[ParentDirectory, start,
+     (# =!= ParentDirectory[#]) &&
+       ! FileExistsQ[FileNameJoin[{#, "BlackBox", "PacletInfo.wl"}]] &];
+   If[FileExistsQ[FileNameJoin[{root, "BlackBox", "PacletInfo.wl"}]], root, start]];
 PacletDirectoryLoad[FileNameJoin[{frameworkRoot, "BlackBox"}]];
 Needs["HubertKolcz`BlackBox`"];
 Quiet[Remove /@ Select["Global`" <> # & /@ Names["HubertKolcz`BlackBox`*"], NameQ]];
