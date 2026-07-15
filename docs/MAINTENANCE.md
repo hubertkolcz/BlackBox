@@ -80,31 +80,31 @@ the reporting layer all landed; `ISSUE-020` is resolved). Current outstanding st
 
 ```powershell
 # 1: regenerated optical-compiler schematics (EMU-001)
-git add 09-EMU-optical-compiler/schematics/
-git commit -m "Regenerate 09-EMU schematics (KCBS/C7/cct-mesh/table demos, L1-L2)"
+git add optical-synthesis/schematics/
+git commit -m "Regenerate optical-synthesis schematics (KCBS/C7/cct-mesh/table demos, L1-L2)"
 
 # 2: new research source — D1 frontier, MESH hull/falsification, k6 cert, D3 sheaf duals
-git add 02-D1-theory-frontier/erg003_verdict.json `
-        03-MESH-pentagon-composition/final_cct_falsify.py `
-        03-MESH-pentagon-composition/final_cct_hull.py `
-        05-CERT-epsilon-certificates/GenerateEpsilonCertificate_testK6_fast.wl `
-        06-D3-sheaf-cohomology/final_h1_structured_duals.py
+git add open-search-frontier/erg003_verdict.json `
+        pentagon-gluing/final_cct_falsify.py `
+        pentagon-gluing/final_cct_hull.py `
+        composition-optimality/GenerateEpsilonCertificate_testK6_fast.wl `
+        bound-derivation-question/final_h1_structured_duals.py
 git commit -m "Add cct-mesh hull/falsification, ERG-003 verdict, k6 cert gen, H1 structured duals"
 
 # 3: remove the byte-identical Hawking precommit draft (hash a8cf20a0, == NOTES-hawking-2.md)
-git rm 08-HK-hawking/NOTES-hawking-2-precommit-draft.md
+git rm hawking-application/NOTES-hawking-2-precommit-draft.md
 git commit -m "Remove byte-identical precommit draft of NOTES-hawking-2"
 ```
 
 **C. Transient logs — gitignore, do not commit.** These are run scratch, not results:
-`02-D1-theory-frontier/sweep_logs/`, `05-CERT-epsilon-certificates/k6_gen.log`,
-`06-D3-sheaf-cohomology/run2.out`. Extend `.gitignore` (it already ignores `bin/`, `p2_state/`,
+`open-search-frontier/sweep_logs/`, `composition-optimality/k6_gen.log`,
+`bound-derivation-question/run2.out`. Extend `.gitignore` (it already ignores `bin/`, `p2_state/`,
 `*.bin`, `__pycache__/`):
 
 ```
 *.log
 *.out
-02-D1-theory-frontier/sweep_logs/
+open-search-frontier/sweep_logs/
 ```
 
 (If any run log should be *kept* as an audited artifact per §4.2, commit it explicitly and add a
@@ -139,5 +139,5 @@ link checks hosted; WL battery local with committed logs).
 ## 5. Known portability items
 
 - `runners/RunAll.ps1` hardcodes `C:\Program Files\Wolfram Research\WolframScript\wolframscript.exe` — parametrize via `$env:WOLFRAMSCRIPT` (fallback to the current literal). POSIX equivalent: `runners/RunAll.sh`.
-- `05-CERT-epsilon-certificates/extract_pdf.wl` has a hardcoded expired path — historical artifact; move to `zz-attic/` when created.
+- `composition-optimality/extract_pdf.wl` has a hardcoded expired path — historical artifact; move to `zz-attic/` when created.
 - Python entry points assume `python3` on PATH with `requirements.txt` installed.

@@ -13,13 +13,13 @@ But it has **zero `Import` cells** — so *every figure a module rendered to PNG
 
 | Probe in the essay | Hits | Reality in the repo |
 |---|---|---|
-| `Čech` / `cohomolog` | **0 / 0** | 06-D3 is the project's **stated #1 priority** (ESSAY-005), fully worked (P1–P4 + refuted H¹) |
+| `Čech` / `cohomolog` | **0 / 0** | bound-derivation-question is the project's **stated #1 priority** (ESSAY-005), fully worked (P1–P4 + refuted H¹) |
 | `Page curve` / `Bogoliubov` / `Gaussian` / `Wigner` | **0 / 0 / 0 / 0** | HK-006 (Page curve) and HK-007 (A1–A8 Gaussian) are both **built and verified** |
 | `certification_map` | **0** | the 494 KB O3 staircase poster is the single best summary figure in the repo |
-| `signaling` / `communication` | 3 / **0** | 07-SIG (O5) is a complete 3-gate taxonomy, no stage |
-| `hypergraph`, `orbit_spectrum`, optical schematics | 0 | 11 rendered figures across 10-VIZ / 05-CERT / 02-D1 / 09-EMU, none embedded |
+| `signaling` / `communication` | 3 / **0** | signaling-extension (O5) is a complete 3-gate taxonomy, no stage |
+| `hypergraph`, `orbit_spectrum`, optical schematics | 0 | 11 rendered figures across figure-gallery / composition-optimality / open-search-frontier / optical-synthesis, none embedded |
 
-The `10-VIZ/README.md` even says it out loud: *"the main essay … should import figures from this module's `figures/` directory directly rather than duplicating the derivations."* The enhancement is therefore mostly **connection work**, plus three sections lifted from already-written module scripts.
+The `figure-gallery/README.md` even says it out loud: *"the main essay … should import figures from this module's `figures/` directory directly rather than duplicating the derivations."* The enhancement is therefore mostly **connection work**, plus three sections lifted from already-written module scripts.
 
 **Design principles for the pass**
 1. Reuse only — Import rendered figures; paste verified numbers with their ledger IDs; lift narrative from existing essay-ready scripts.
@@ -33,13 +33,13 @@ The `10-VIZ/README.md` even says it out loud: *"the main essay … should import
 
 | # | Figure file (repo-relative) | Insert at | What it shows / why there | Caption + number source |
 |---|---|---|---|---|
-| A1 | `10-VIZ-visual-gallery/figures/leaf_sphere_paper.png` | **Stage 5**, right after the existing `Manipulate` (~line 1786) | Static Paper-theme **twin of the interactive already there** (red leaf DLA=1 vs sphere-filling cascade DLA=3, span=2). The `Manipulate` will not render in a static PDF export — this fixes that. | `VisualGallery.nb` §"so(3) Leaf Confinement"; numbers `{4,2,3,1}` |
-| A2 | `10-VIZ-visual-gallery/figures/hypergraph_paper.png` | **Stage 2** (Three-Number Ruler) | The two-copy GE object that *produces* √5: **25 vertices (C5×C5), 200 exclusivity edges, 10 pentads**, degree 16. Makes the √5 mechanism visible, not tabulated. | `VisualGallery.nb` §"GE Two-Copy Hypergraph"; `structureOK → {True,25,200,10}` |
-| A3 | `00-BBT-blackbox-protocol/certification_map.png` | **Stage 3** (Certification Protocol); **reference again** in The Through-Line | The **3×3 staircase** — ACCESS (A1 table / A2 interventional / A3 attenuation) × ADVERSARY (NCHV / θ-blind tuned / θ-aware). Only **two cells are INDISTINGUISHABLE** (A1×tuned = Prop 1·BBT-002; A2×θ-aware = OQ1-B, fit <1e-9). This *is* the essay's central claim in one image. | `certification_map.nb` (4-section provenance) |
-| A4 | `05-CERT-epsilon-certificates/orbit_spectrum.png` (`.pdf` twin) | **Stage 8** (Ergodic Optimization) | 2-panel: (A) orbit-density spectrum from **trans τ\*=1.3767** to **cis 3/2**, crowding zone 16/11, 19/13, 25/17; (B) seeds vs density — **cct alone drops to density−4/3, gap 0.0698975**. | `05-CERT/orbit_spectrum_figure.wl` header |
-| A5 | `02-D1-theory-frontier/witness_adjacency_certificate.png` | **Stage 11** (ω=17 catalyst) | The 17-clique witness for ω(C9∨C9∨C9∨C5) ≥ 17: **all 136 pairs adjacent, 0 non-adjacent** (family `[1,3,5,5,3]`). | `erg003_omega17_witness.json` (verify caption vs this file) |
-| A6 | `02-D1-theory-frontier/orbit_size_distribution.png` | **Stage 11** (beside A5) | Automorphism-orbit-size distribution of the search graph, **\|Aut\|=349 920** — why symmetry-breaking matters. | `erg003_verdict.json` / `erg003_sat_calibration.json` |
-| A7 | `09-EMU-optical-compiler/schematics/` — **strip of 4**: `demo1_kcbs_pentagon_L1.png`, `demo2_c7_heptagon_L1.png`, `demo3_cct_mesh_reps2.png`, `demo4_table_V0977_L2.png` | **Stage 6** (Optical Constructor) | The compiler's actual output blueprints: KCBS L1 cascade (cosθ=1/φ, genuine so(3) DLA=3); C7 L1 (identity S=7−4θ(C7)); cct-mesh reps=2 (18 modes); pure table V=977/1000 **Layer-2 only, leaf-confined**. | `09-EMU/DESIGN.md`; `blueprints/*.wl` (`kcbs_L1/L2`, `mesh_cct2` are alt renders) |
+| A1 | `figure-gallery/figures/leaf_sphere_paper.png` | **Stage 5**, right after the existing `Manipulate` (~line 1786) | Static Paper-theme **twin of the interactive already there** (red leaf DLA=1 vs sphere-filling cascade DLA=3, span=2). The `Manipulate` will not render in a static PDF export — this fixes that. | `VisualGallery.nb` §"so(3) Leaf Confinement"; numbers `{4,2,3,1}` |
+| A2 | `figure-gallery/figures/hypergraph_paper.png` | **Stage 2** (Three-Number Ruler) | The two-copy GE object that *produces* √5: **25 vertices (C5×C5), 200 exclusivity edges, 10 pentads**, degree 16. Makes the √5 mechanism visible, not tabulated. | `VisualGallery.nb` §"GE Two-Copy Hypergraph"; `structureOK → {True,25,200,10}` |
+| A3 | `certification-protocol/certification_map.png` | **Stage 3** (Certification Protocol); **reference again** in The Through-Line | The **3×3 staircase** — ACCESS (A1 table / A2 interventional / A3 attenuation) × ADVERSARY (NCHV / θ-blind tuned / θ-aware). Only **two cells are INDISTINGUISHABLE** (A1×tuned = Prop 1·BBT-002; A2×θ-aware = OQ1-B, fit <1e-9). This *is* the essay's central claim in one image. | `certification_map.nb` (4-section provenance) |
+| A4 | `composition-optimality/orbit_spectrum.png` (`.pdf` twin) | **Stage 8** (Ergodic Optimization) | 2-panel: (A) orbit-density spectrum from **trans τ\*=1.3767** to **cis 3/2**, crowding zone 16/11, 19/13, 25/17; (B) seeds vs density — **cct alone drops to density−4/3, gap 0.0698975**. | `composition-optimality/orbit_spectrum_figure.wl` header |
+| A5 | `open-search-frontier/witness_adjacency_certificate.png` | **Stage 11** (ω=17 catalyst) | The 17-clique witness for ω(C9∨C9∨C9∨C5) ≥ 17: **all 136 pairs adjacent, 0 non-adjacent** (family `[1,3,5,5,3]`). | `erg003_omega17_witness.json` (verify caption vs this file) |
+| A6 | `open-search-frontier/orbit_size_distribution.png` | **Stage 11** (beside A5) | Automorphism-orbit-size distribution of the search graph, **\|Aut\|=349 920** — why symmetry-breaking matters. | `erg003_verdict.json` / `erg003_sat_calibration.json` |
+| A7 | `optical-synthesis/schematics/` — **strip of 4**: `demo1_kcbs_pentagon_L1.png`, `demo2_c7_heptagon_L1.png`, `demo3_cct_mesh_reps2.png`, `demo4_table_V0977_L2.png` | **Stage 6** (Optical Constructor) | The compiler's actual output blueprints: KCBS L1 cascade (cosθ=1/φ, genuine so(3) DLA=3); C7 L1 (identity S=7−4θ(C7)); cct-mesh reps=2 (18 modes); pure table V=977/1000 **Layer-2 only, leaf-confined**. | `optical-synthesis/DESIGN.md`; `blueprints/*.wl` (`kcbs_L1/L2`, `mesh_cct2` are alt renders) |
 
 *Portability note:* `Import[FileNameJoin[{NotebookDirectory[],…}]]` keeps the essay light and reproducible **provided the notebook stays at repo root** (it does). If you want a fully self-contained single file for submission, an optional final "bake" step replaces each `Import` output with the embedded raster — flagged in Part D.
 
@@ -48,7 +48,7 @@ The `10-VIZ/README.md` even says it out loud: *"the main essay … should import
 ## Part B — Three sections lifted from already-written tracks (no new results)
 
 ### B1 · New **Stage 12 — "The Priority Question: Can the Sheaf *Derive* the Bound?"**
-*Insert after Stage 11, before The Through-Line.* This is the project instruction's explicit #1 priority and is currently missing. All four probes already exist in `06-D3-sheaf-cohomology/`:
+*Insert after Stage 11, before The Through-Line.* This is the project instruction's explicit #1 priority and is currently missing. All four probes already exist in `bound-derivation-question/`:
 
 - **Frame** (quote `RESEARCH.md` priority line): *can the AB sheaf derive local–global relations of GE graphs built as products of KCBS 5-cycles?*
 - **P1/P4 — possibilistic route CLOSED** (`p1p4_census.csv`, `p1p4_torsion.csv`): supports are identical across classical↔quantum↔α\*, so every possibilistic invariant is flat; only the strongly-contextual row flips (`H1torsion {{∞,10}}`, CF→1).
@@ -58,7 +58,7 @@ The `10-VIZ/README.md` even says it out loud: *"the main essay … should import
 - **Verdict:** OPEN, sharply narrowed (obstacle `SH-006`: Bell covers ≠ CSW/GE covers). Optional live cells `Import` the CSV/JSON and print the two `hit_5_2` rows — reuse, not recompute.
 
 ### B2 · New **Stage 13 — "Extending the Ruler: Signaling & Communication Cost"**
-*Insert after Stage 12.* Source: `07-SIG-signaling/signaling_taxonomy.wl` (its `SignalingTaxonomyVerification` cell can be lifted verbatim).
+*Insert after Stage 12.* Source: `signaling-extension/signaling_taxonomy.wl` (its `SignalingTaxonomyVerification` cell can be lifted verbatim).
 
 - 3-gate taxonomy on **7 exemplar models** (SIG-001).
 - **SF(C5, quantum) = 2√5 − 4 ≈ 0.4721**; one-bit LP over all **4⁵ = 1024** strategies gives minimal **μ = 2√5 − 4 bits/round** (SIG-002).
@@ -69,8 +69,8 @@ The `10-VIZ/README.md` even says it out loud: *"the main essay … should import
 *Modify the existing section in place.* Keep the current exhaustive CF≡0 result as Part 1; add two subsections already built and verified:
 
 - **Part 1 (keep):** structural negative — the experiments' Cauchy–Schwarz witness is single-context ⇒ **CF ≡ 0** at every discretization (HK-003).
-- **Part 2 — Qubit sector, the Page curve certified** (HK-006, `04-cluster-state-mbqc/cct_mbqc_hawking_*`): Page curve Rényi-2 **peaks 2.08 / 2.77 / 3.47 bits at N/2** (N=8/10/12); Hayden–Preskill fidelity ~0.77, **OTOC exact 0.25**; CF anchors **CF(2√2)=√2−1, CF(2)=0, CF(2.25)=0.125** — confronted head-to-head vs 4 published papers (Chowdhury 2412.15180, Landsman 1806.02807, BEC 2404.16497).
-- **Part 3 — Gaussian/Bogoliubov sector, the A1–A8 scoreboard** (HK-007, `08-HK/hawking_gaussian_sector.wl`): A1 Planck `Sinh²r=1/(e^{w/T}−1)`; A2 S_vN=thermality; **A3 E_N=2r/ln2**; A4 `θ(n̄)=1+1/(2n̄)>1`; A5 Busch–Parentani Δ<0; **A6 CHSH(r)=2√(1+tanh²2r)→2√2** (lit B=2.25 → r_eff=0.285); A7 Hudson + single-context **CF=0**; **A8 CV-DLA dim 10 = sp(4,ℝ), ACTIVE** — "not passive-linear-optics-emulable, but Gaussian-classically-simulable."
+- **Part 2 — Qubit sector, the Page curve certified** (HK-006, `cluster-state-realization/cct_mbqc_hawking_*`): Page curve Rényi-2 **peaks 2.08 / 2.77 / 3.47 bits at N/2** (N=8/10/12); Hayden–Preskill fidelity ~0.77, **OTOC exact 0.25**; CF anchors **CF(2√2)=√2−1, CF(2)=0, CF(2.25)=0.125** — confronted head-to-head vs 4 published papers (Chowdhury 2412.15180, Landsman 1806.02807, BEC 2404.16497).
+- **Part 3 — Gaussian/Bogoliubov sector, the A1–A8 scoreboard** (HK-007, `hawking-application/hawking_gaussian_sector.wl`): A1 Planck `Sinh²r=1/(e^{w/T}−1)`; A2 S_vN=thermality; **A3 E_N=2r/ln2**; A4 `θ(n̄)=1+1/(2n̄)>1`; A5 Busch–Parentani Δ<0; **A6 CHSH(r)=2√(1+tanh²2r)→2√2** (lit B=2.25 → r_eff=0.285); A7 Hudson + single-context **CF=0**; **A8 CV-DLA dim 10 = sp(4,ℝ), ACTIVE** — "not passive-linear-optics-emulable, but Gaussian-classically-simulable."
 - **Why it belongs:** Part 3 lands Hawking squarely back on the essay's two-lens spine — correlation lens says CF=0, resource lens says the CV-DLA is active — the exact synthesis the essay is built around.
 
 ---

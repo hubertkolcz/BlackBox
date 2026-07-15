@@ -37,20 +37,20 @@ repoRoot = Module[
      manifest = {"BlackBox/PacletInfo.wl", "BlackBox/Kernel/BlackBox.wl",
        "docs/essay-src/essay_sections_1_3.wl", "docs/essay-src/essay_sections_4_6.wl",
        "docs/essay-src/essay_sections_7_10.wl",
-       "09-EMU-optical-compiler/OpticalCompiler.wl", "09-EMU-optical-compiler/DispatcherEmitter.wl",
-       "09-EMU-optical-compiler/InterferometerLayer.wl", "09-EMU-optical-compiler/IntensityLayer.wl",
-       "05-CERT-epsilon-certificates/EpsilonCertificate7_regenerated.wl",
-       "05-CERT-epsilon-certificates/EpsilonCertificate8_regenerated.wl",
-       "05-CERT-epsilon-certificates/EpsilonCertificate9.wl",
-       "05-CERT-epsilon-certificates/EpsilonCertificate10.wl",
-       "08-HK-hawking/hawking_gaussian_sector.wl", "08-HK-hawking/gaussian_engine.wl",
-       "08-HK-hawking/gaussian_hawking_physics.wl", "08-HK-hawking/gaussian_witnesses_bridge.wl",
-       "06-D3-sheaf-cohomology/final_h1_cocycle_results.json",
-       "02-D1-theory-frontier/erg003_verdict.json", "docs/FRAMEWORK-2026-07-13.md",
-       "09-EMU-optical-compiler/schematics/demo1_kcbs_pentagon_L1.png",
-       "09-EMU-optical-compiler/schematics/demo3_cct_mesh_reps2.png",
-       "00-BBT-blackbox-protocol/certification_map.png",
-       "05-CERT-epsilon-certificates/orbit_spectrum.png"};
+       "optical-synthesis/OpticalCompiler.wl", "optical-synthesis/DispatcherEmitter.wl",
+       "optical-synthesis/InterferometerLayer.wl", "optical-synthesis/IntensityLayer.wl",
+       "composition-optimality/EpsilonCertificate7_regenerated.wl",
+       "composition-optimality/EpsilonCertificate8_regenerated.wl",
+       "composition-optimality/EpsilonCertificate9.wl",
+       "composition-optimality/EpsilonCertificate10.wl",
+       "hawking-application/hawking_gaussian_sector.wl", "hawking-application/gaussian_engine.wl",
+       "hawking-application/gaussian_hawking_physics.wl", "hawking-application/gaussian_witnesses_bridge.wl",
+       "bound-derivation-question/final_h1_cocycle_results.json",
+       "open-search-frontier/erg003_verdict.json", "docs/FRAMEWORK-2026-07-13.md",
+       "optical-synthesis/schematics/demo1_kcbs_pentagon_L1.png",
+       "optical-synthesis/schematics/demo3_cct_mesh_reps2.png",
+       "certification-protocol/certification_map.png",
+       "composition-optimality/orbit_spectrum.png"};
      Do[dest = FileNameJoin[Prepend[FileNameSplit[rel], cacheRoot]];
        If[! (FileExistsQ[dest] && FileByteCount[dest] > 0),
          Quiet@CreateDirectory[DirectoryName[dest], CreateIntermediateDirectories -> True];
@@ -78,7 +78,7 @@ sfx6 = <||>;   (* verification accumulator, filled section by section *)
 (*A mesh of edge-glued pentagons is a binary necklace: one orientation letter per gluing, c (cis) or t (trans). Cis rails the short sides onto one endpoint of the running glue edge; trans alternates them. The two closures are not isomorphic (MESH-001), and orientation \[LongDash] not size \[LongDash] controls whether the quantum gap \[CapitalTheta] - \[Alpha] survives (MESH-002). This section reproduces the exact composition laws live, reads the tightened certificate ladder \[CapitalGamma]_7, \[CapitalGamma]_8, \[CapitalGamma]_9 from committed exact-arithmetic certificates, and authors the bracket figure from those live values.*)
 
 (* ::CodeText:: *)
-(*The general word-ring builder (mirrors 03-MESH-pentagon-composition/CaseStudies.wl) and the 3-state interface transfer DP whose max-plus cycle means give exact \[Alpha]-densities:*)
+(*The general word-ring builder (mirrors pentagon-gluing/CaseStudies.wl) and the 3-state interface transfer DP whose max-plus cycle means give exact \[Alpha]-densities:*)
 
 (* ::Input:: *)
 wordRing[word_String, reps_Integer] := Module[
@@ -170,10 +170,10 @@ sfx6["S4_optimalWord"] = Abs[gluingWordAnchor[[1]] - 8.347042185] < 10^-4 &&
 (*The certificate ladder \[CapitalGamma]_k [T]/[C]. Each \[CapitalGamma]_k is an all-words upper bound on gap-density (a Bousch sub-action / max-plus eigenvalue on the de Bruijn-k subshift). The tightened exact rationals \[CapitalGamma]_7, \[CapitalGamma]_8, \[CapitalGamma]_9, \[CapitalGamma]_10 are READ from the committed certificates (regenerated on Wolfram Compute Services \[LongDash] \[CapitalGamma]_10 on a Memory8x64 kernel warm-started from k=9, all PSD/pointwise/convergence gates True) and reduced to numbers in-essay \[LongDash] never re-typed:*)
 
 (* ::Input:: *)
-Get[FileNameJoin[{repoRoot, "05-CERT-epsilon-certificates", "EpsilonCertificate7_regenerated.wl"}]];
-Get[FileNameJoin[{repoRoot, "05-CERT-epsilon-certificates", "EpsilonCertificate8_regenerated.wl"}]];
-Get[FileNameJoin[{repoRoot, "05-CERT-epsilon-certificates", "EpsilonCertificate9.wl"}]];
-Get[FileNameJoin[{repoRoot, "05-CERT-epsilon-certificates", "EpsilonCertificate10.wl"}]];
+Get[FileNameJoin[{repoRoot, "composition-optimality", "EpsilonCertificate7_regenerated.wl"}]];
+Get[FileNameJoin[{repoRoot, "composition-optimality", "EpsilonCertificate8_regenerated.wl"}]];
+Get[FileNameJoin[{repoRoot, "composition-optimality", "EpsilonCertificate9.wl"}]];
+Get[FileNameJoin[{repoRoot, "composition-optimality", "EpsilonCertificate10.wl"}]];
 gamma7 = EpsilonCertificate7Regenerated["Gamma"];
 gamma8 = EpsilonCertificate8Regenerated["Gamma"];
 gamma9 = EpsilonCertificate9["Gamma"];
@@ -197,13 +197,13 @@ sfx6["S4_gamma10Exact"] = Head[gamma10] === Rational && TrueQ[gamma10 <= gamma9]
  "status" -> "exact rational certificate (WolframBatch Memory8x64, warm from k=9; all exact gates True)"}
 
 (* ::CodeText:: *)
-(*The orbit-spectrum reading (CERT-003). Spurious policy-iteration values are periodic-orbit densities minus 1 \[LongDash] cis 3/2, trans \[Tau]*, then 16/11, 19/13, 25/17. \[Tau]* is recomputed live (above); the rationals are the finite-orbit readings. The figure orbit_spectrum.png is regenerated by 05-CERT-epsilon-certificates/orbit_spectrum_figure.wl (embedded by the master essay); here we verify the seed values are ordered and \[Tau]* sits among them:*)
+(*The orbit-spectrum reading (CERT-003). Spurious policy-iteration values are periodic-orbit densities minus 1 \[LongDash] cis 3/2, trans \[Tau]*, then 16/11, 19/13, 25/17. \[Tau]* is recomputed live (above); the rationals are the finite-orbit readings. The figure orbit_spectrum.png is regenerated by composition-optimality/orbit_spectrum_figure.wl (embedded by the master essay); here we verify the seed values are ordered and \[Tau]* sits among them:*)
 
 (* ::Input:: *)
 orbitSeeds = {3/2, tauStar, 16/11, 19/13, 25/17};
 sfx6["S4_orbitSpectrum"] = (tauStar < 16/11 < 19/13 < 25/17 < 3/2);
    (* the CLAIM is the orbit-density ordering; the figure is decorative and no longer gates OK *)
-orbitSpectrumFigureRef = FileNameJoin[{repoRoot, "05-CERT-epsilon-certificates", "orbit_spectrum.png"}];
+orbitSpectrumFigureRef = FileNameJoin[{repoRoot, "composition-optimality", "orbit_spectrum.png"}];
 orbitSpectrumFigure = If[FileExistsQ[orbitSpectrumFigureRef], Import[orbitSpectrumFigureRef],
    Missing["figure unavailable"]];
 Column[{N[orbitSeeds, 6], orbitSpectrumFigure}]
@@ -239,7 +239,7 @@ chainParityFigure
 (*The project's priority question (ESSAY-005): can the Abramsky-Brandenburger sheaf DERIVE (not merely describe) the composed GE exclusivity bound over products of C5? The answer is YES at degree 0 and NO at the naive H\.b9. We reconstruct the weighted-presheaf capacity \[CapitalLambda]_k live \[LongDash] the degree-0 total-mass hom on H\.b0(F) \[LongDash] and read S_k = \[CapitalLambda]_k^(1/k). The mechanism is arithmetic: an INTEGER partition of unity exactly when the quantum value is attained (C5 pentads), properly FRACTIONAL otherwise (C7: 4\[Nmid]49, 8\[Nmid]343).*)
 
 (* ::CodeText:: *)
-(*The weighted presheaf F(K) = {w : K -> [0,1], \[Sum] <= 1} over R = Q>=0 glues trivially, so H\.b0(F) is the packing polytope and \[CapitalLambda]_k = sup_{p} \[Sum] p_v is its total-mass hom (= the exclusivity/packing LP). Machinery verbatim from 06-D3-sheaf-cohomology/bridge_weighted_presheaf.wl:*)
+(*The weighted presheaf F(K) = {w : K -> [0,1], \[Sum] <= 1} over R = Q>=0 glues trivially, so H\.b0(F) is the packing polytope and \[CapitalLambda]_k = sup_{p} \[Sum] p_v is its total-mass hom (= the exclusivity/packing LP). Machinery verbatim from bound-derivation-question/bridge_weighted_presheaf.wl:*)
 
 (* ::Input:: *)
 conormalVerts[n_, k_] := Tuples[Range[0, n - 1], k];
@@ -310,7 +310,7 @@ sfx6["S5_mechanism"] = c5k2Partition && IntegerQ[lam2c5] &&
 (*The naive H\.b9 route is REFUTED as posed [R] (SH-010, F9vii). The candidate connecting class \[Delta](y* mod Z) is (1) UNDEFINED in the fractional case (the canonical C7,k=2 dual has 20776 bad overlaps \[LongDash] not a 0-cocycle), (2) GAUGE non-invariant (the C5,k=2 optimal face is positive-dimensional; an alternate dual has 3000 bad overlaps), and (3) forced to ZERO where defined (connected nerve). The exact counts are read from the committed lane result, not re-typed:*)
 
 (* ::Input:: *)
-h1json = Import[FileNameJoin[{repoRoot, "06-D3-sheaf-cohomology", "final_h1_cocycle_results.json"}], "RawJSON"];
+h1json = Import[FileNameJoin[{repoRoot, "bound-derivation-question", "final_h1_cocycle_results.json"}], "RawJSON"];
 h1BadC7 = h1json["obstruction_1_cocycle_prerequisite"]["C7_k2_canonical_dual"]["bad_overlaps"];
 h1BadC5alt = h1json["obstruction_2_gauge_noninvariance"]["C5_k2"]["D_half_y_1over2_on_both_partitions"]["bad_overlaps"];
 sfx6["S5_h1Refuted"] = (h1BadC7 == 20776) && (h1BadC5alt == 3000) &&
@@ -339,7 +339,7 @@ sfx6["S5_possibilistic"] = (supQuantum === LucasL[5]) && (supQuantum === 11) && 
 
 (* ::Input:: *)
 Block[{GaussianHawkingLoadOnly = True},
-  Get[FileNameJoin[{repoRoot, "08-HK-hawking", "hawking_gaussian_sector.wl"}]]];
+  Get[FileNameJoin[{repoRoot, "hawking-application", "hawking_gaussian_sector.wl"}]]];
 
 (* ::CodeText:: *)
 (*A1 Planck [T]. The horizon acts per frequency as a two-mode squeezer with tanh(r_w)\.b2 = Exp[-w/T_H]; the Hawking-mode occupation Sinh(r_w)\.b2 is then EXACTLY the Planck/Bose factor. Re-proven live by FullSimplify:*)
@@ -402,7 +402,7 @@ sfx6["S6_A7ii_CFzero"] = AllTrue[cfSingleContext, #[[2]] == 0 &];
 TableForm[cfSingleContext, TableHeadings -> {None, {"witness size K", "CF (single context)"}}]
 
 (* ::CodeText:: *)
-(*The qubit information sector [T]. On the isotropic CHSH family CF(S) = (S-2)/2, giving the pinned anchors CF(2)=0, CF(2 Sqrt[2]) = Sqrt[2]-1, CF(2.25)=1/8 \[LongDash] the same numbers the qubit Page/Hayden-Preskill suite (04-cluster-state-mbqc/cct_mbqc_hawking.wl) certifies. Recomputed live:*)
+(*The qubit information sector [T]. On the isotropic CHSH family CF(S) = (S-2)/2, giving the pinned anchors CF(2)=0, CF(2 Sqrt[2]) = Sqrt[2]-1, CF(2.25)=1/8 \[LongDash] the same numbers the qubit Page/Hayden-Preskill suite (cluster-state-realization/cct_mbqc_hawking.wl) certifies. Recomputed live:*)
 
 (* ::Input:: *)
 cfOfS[s_] := Max[0, (s - 2)/2];

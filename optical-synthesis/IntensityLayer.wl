@@ -4,8 +4,8 @@
 (* :Context: HubertKolcz`OpticalCompiler` *)
 (* :Author: Hubert Kolcz -- July 2026 *)
 (* :Summary:
-   The INTENSITY layer of 09-EMU-optical-compiler: the constructive form of the
-   adversarial construction (iii-d) of 00-BBT-blackbox-protocol/mbqc_blackbox_test.py.
+   The INTENSITY layer of optical-synthesis: the constructive form of the
+   adversarial construction (iii-d) of certification-protocol/mbqc_blackbox_test.py.
    Given a no-disturbance target table on a cyclic (or covered) contextuality
    scenario, CompileIntensityEmulator synthesizes the per-context intensity
    fractions plus a source/splitter/detector schedule that a divided classical
@@ -42,7 +42,7 @@
 
 (* Register the BlackBox paclet directory BEFORE BeginPackage so the dependency
    declaration below can load it. Pattern adapted from
-   01-D2-core-computation/BiphotonSimulator.wl lines 13-14 (per repo convention). *)
+   pentagon-foundations/BiphotonSimulator.wl lines 13-14 (per repo convention). *)
 PacletDirectoryLoad[FileNameJoin[{Quiet@Check[DirectoryName[$InputFileName], Directory[]], "..", "BlackBox"}]];
 
 (* BlackBox` is a declared dependency: this loads it and keeps its public symbols

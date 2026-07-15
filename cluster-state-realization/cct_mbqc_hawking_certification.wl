@@ -7,7 +7,7 @@
    tableau; cct_mbqc_patterns.wl mesh carving; cct_mesh_sparse_construction.wl
    the "cct" pentagon mesh).  No external literature was consulted in building
    this file (agnostic-implementation discipline); the ONLY project-internal
-   anchor read is 08-HK-hawking/hawking_cf_bridge.py for the CF conventions and
+   anchor read is hawking-application/hawking_cf_bridge.py for the CF conventions and
    the pinned CF values CF(2)=0, CF(2 sqrt2)=sqrt2-1, CF(2.25)=0.125.
 
    WHAT IS CERTIFIED (all five stages of the task):

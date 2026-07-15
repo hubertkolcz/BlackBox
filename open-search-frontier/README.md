@@ -1,4 +1,4 @@
-# 02-D1-theory-frontier
+# open-search-frontier
 
 Ledger track `D1` — "theory frontier," explicitly scoped as **numerics only; this track never claims a proof**. Investigates whether Cabello's Global Exclusivity (GE) mechanism singles out the Lovász number $\theta(G)$ for every exclusivity graph $G$ — open in general.
 
@@ -8,7 +8,7 @@ Ledger track `D1` — "theory frontier," explicitly scoped as **numerics only; t
 
 ## Relationship to the primary module
 
-This is a **side investigation**, not an input `00-BBT-blackbox-protocol/` depends on. It informs the project's broader argument about GE's scope and limits but does not feed the certification protocol directly.
+This is a **side investigation**, not an input `certification-protocol/` depends on. It informs the project's broader argument about GE's scope and limits but does not feed the certification protocol directly.
 
 ## Ledger cross-reference
 

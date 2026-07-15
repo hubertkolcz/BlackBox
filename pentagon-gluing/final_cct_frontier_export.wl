@@ -5,8 +5,8 @@
      rInner(e)= min_s (T[s,sigma]+Phi[sigma|x]-Phi[s|w]) (alpha inner value, exact)
    and writes node/edge tables (exact numerator/denominator) to a text file. *)
 $HistoryLength = 0;
-certDir = "C:/Users/cp/Desktop/black-box/05-CERT-epsilon-certificates";
-outDir  = "C:/Users/cp/Desktop/black-box/03-MESH-pentagon-composition";
+certDir = "C:/Users/cp/Desktop/black-box/composition-optimality";
+outDir  = "C:/Users/cp/Desktop/black-box/pentagon-gluing";
 certFile = If[Length[$ScriptCommandLine] >= 2, $ScriptCommandLine[[2]], "EpsilonCertificate9.wl"];
 symName  = If[Length[$ScriptCommandLine] >= 3, $ScriptCommandLine[[3]], "EpsilonCertificate9"];
 outFile  = If[Length[$ScriptCommandLine] >= 4, $ScriptCommandLine[[4]], "final_cct_frontier_k9.txt"];

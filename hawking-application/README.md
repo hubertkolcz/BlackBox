@@ -1,4 +1,4 @@
-# 08-HK-hawking
+# hawking-application
 
 Ledger track `HK` — "Hawking-radiation application": illustrates the framework on the classical emulatability of analogue-Hawking-radiation dynamics. **Central finding is structural and negative**: the graph-invariant machinery this whole repository is built on cannot even be posed for the Cauchy-Schwarz-type single-context witnesses real Hawking-pair experiments actually use.
 
@@ -8,11 +8,11 @@ Ledger track `HK` — "Hawking-radiation application": illustrates the framework
 
 ## Read this before extending the primary module toward Hawking radiation
 
-`HK-003`'s structural result means the pentagon/MBQC apparatus in `00-BBT-blackbox-protocol/` and `04-cluster-state-mbqc/` cannot, as built, directly host a certification test for the Cauchy-Schwarz witness real Hawking experiments measure. Continued cluster-state engineering is real progress toward `00-BBT-blackbox-protocol/`'s own stated goal (an MBQC/optical black-box test at scale) but is not currently a path to the Hawking illustration as originally imagined — treat these as two different destinations.
+`HK-003`'s structural result means the pentagon/MBQC apparatus in `certification-protocol/` and `cluster-state-realization/` cannot, as built, directly host a certification test for the Cauchy-Schwarz witness real Hawking experiments measure. Continued cluster-state engineering is real progress toward `certification-protocol/`'s own stated goal (an MBQC/optical black-box test at scale) but is not currently a path to the Hawking illustration as originally imagined — treat these as two different destinations.
 
 ## Relationship to the primary module
 
-Independent application; not imported by `00-BBT-blackbox-protocol/`.
+Independent application; not imported by `certification-protocol/`.
 
 ## Gaussian sector (emulable-side companion)
 
@@ -26,7 +26,7 @@ Boltzmann factor), and greybody is a beamsplitter model. Because Gaussian states
 + Gaussian operations + homodyne are classically efficiently simulable (CV
 Gottesman-Knill: Bartlett & Sanders, PRA 65, 042304 (2002)), **this whole sector
 sits on the EMULABLE side of the two-lens boundary** — the CV mirror of the qubit
-module's Clifford status (`04-cluster-state-mbqc/`). It does **not** contradict
+module's Clifford status (`cluster-state-realization/`). It does **not** contradict
 `HK-003`; it is the emulable-side companion to that single-context negative
 result.
 
@@ -79,7 +79,7 @@ against Builder 1's engine). New public symbols: `PseudospinCorrMatrix`,
   matrix is `DiagonalMatrix[{Tanh[2r], -Tanh[2r], 1}]`, the Horodecki-optimal
   `CHSH(r) = 2 Sqrt[1+Tanh[2r]^2]`, and `Limit[CHSH(r), r->Infinity] = 2 Sqrt[2]`
   — at the ceiling the TMSV realizes the qubit Bell pair of
-  `04-cluster-state-mbqc/cct_mbqc_hawking_certification.wl` (`CF = Sqrt[2]-1`).
+  `cluster-state-realization/cct_mbqc_hawking_certification.wl` (`CF = Sqrt[2]-1`).
   The literature value `B = 2.25` maps to effective squeezing
   `r_eff = 0.285020` (flagged as an idealized pure-TMSV identification). The gate
   is **non-circular**: the pseudospin correlation matrix and `CHSH(r)` are
@@ -100,7 +100,7 @@ against Builder 1's engine). New public symbols: `PseudospinCorrMatrix`,
   exactly 0, confirming the negative result of `hawking_cs_route.py` inside the
   Gaussian engine.
 - **A8 CV dynamical-Lie-algebra audit** — a native-WL reimplementation of
-  `00-BBT-blackbox-protocol/final_o3_cv_dla.py` (exact integer commutator
+  `certification-protocol/final_o3_cv_dla.py` (exact integer commutator
   closure). Validates `u(2)` (dim 4, passive-confined), `sp(4,R)` (dim 10,
   active), `sp(2,R)` (dim 3, active), then audits the Hawking generator set
   (phase + graybody beamsplitter + two-mode squeezer) → **dim 10 = `sp(4,R)`,
@@ -114,7 +114,7 @@ A1–A8 assembly.
 
 ## The two-sector bridge (the gap this module fills)
 
-The qubit Hawking module (`04-cluster-state-mbqc/`) reaches the **information
+The qubit Hawking module (`cluster-state-realization/`) reaches the **information
 dynamics** of black-hole evaporation — Page-curve / Hayden–Preskill scrambling on
 Clifford-simulable cluster states — but it *cannot* reach Hawking's own 1974–75
 **thermal/Bogoliubov** mathematics: temperature, the Planck spectrum, the

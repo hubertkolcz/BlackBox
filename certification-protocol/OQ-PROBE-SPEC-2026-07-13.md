@@ -36,7 +36,7 @@ Design-validation findings that shaped this spec (pilot, run 2026-07-13):
 
 ## Part I — OQ1: interventional DLA bounding
 
-**Deliverable**: `00-BBT-blackbox-protocol/oq1_interventional_dla.py`, standalone,
+**Deliverable**: `certification-protocol/oq1_interventional_dla.py`, standalone,
 Python only (numpy, scipy, cvxpy), no sampling anywhere (exact Born tables),
 runtime < 2 min local. Exit code 0 iff the pre-registered readout holds.
 
@@ -205,7 +205,7 @@ Exit 0 iff the theta=0 anchor passes and OQ1-A and OQ1-B are both SUPPORTED.
 
 ## Part II — OQ2: attenuation-series gate G8
 
-**Deliverable**: `00-BBT-blackbox-protocol/oq2_attenuation_gate.py`, standalone
+**Deliverable**: `certification-protocol/oq2_attenuation_gate.py`, standalone
 (numpy, scipy.optimize.linprog/differential_evolution), structured so that
 `cert_g8` / `gate_g8` can later be merged into `mbqc_blackbox_test.py`
 unchanged. Runtime: pilot phase ~5 min, sampling phase ~10 min, local.

@@ -21,7 +21,7 @@
    signatures (Page curve, Hayden-Preskill mirroring, Bell/CHSH certification
    of carved Hawking pairs) at exact arithmetic and at scales beyond
    statevector simulators -- never a quantum-speedup or spectrum claim.
-   The Sp(2n,R)/CV boundary of 08-HK-hawking/NOTES-hawking.md STANDS: real
+   The Sp(2n,R)/CV boundary of hawking-application/NOTES-hawking.md STANDS: real
    analogue-Hawking pair states are Gaussian continuous-variable states whose
    symmetry group is the real symplectic group Sp(2n,R); nothing here touches
    that regime (no mode spectra, no Hawking temperature, no Bogoliubov
@@ -72,7 +72,7 @@
    (cct_mbqc_hawking_review_probe.wl, reviewer-owned dense re-simulations)
    validates both modules end to end.
 
-   ANCHORS (project-pinned, 08-HK-hawking/hawking_cf_bridge.py conventions):
+   ANCHORS (project-pinned, hawking-application/hawking_cf_bridge.py conventions):
    CF(S)=(S-2)/2 on the isotropic CHSH family; CF(2 sqrt2)=sqrt2-1;
    CF(2)=0; CF(2.25)=0.125.
 
@@ -216,7 +216,7 @@ Print[];
 (* ---------------------------------------------------------------------------
    H4. CHSH / CF ANCHORS on a mesh-carved Hawking pair ([C] canonical carve,
    [B] exact readout, [A] analytic angles).  Anchors per
-   08-HK-hawking/hawking_cf_bridge.py.
+   hawking-application/hawking_cf_bridge.py.
    --------------------------------------------------------------------------- *)
 Print["=== H4: CHSH / contextual-fraction anchors ==="];
 Module[{t, pairs, bundle, tab, T, okT, sOpt, okS, cfTs, cfLPTs, cf0, cfLP0,

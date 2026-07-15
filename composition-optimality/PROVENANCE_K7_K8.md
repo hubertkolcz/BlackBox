@@ -15,7 +15,7 @@ output filename changed:
 - `GenerateEpsilonCertificate_testK7.wl`  (K = 7 -> `EpsilonCertificate_testK7_output.wl`)
 - `GenerateEpsilonCertificate_testK8.wl`  (K = 8 -> `EpsilonCertificate_testK8_output.wl`)
 
-Command lines (run from `05-CERT-epsilon-certificates/`):
+Command lines (run from `composition-optimality/`):
 
 ```
 wolframscript -file GenerateEpsilonCertificate_testK7.wl        # full run, ~14.5 min wall

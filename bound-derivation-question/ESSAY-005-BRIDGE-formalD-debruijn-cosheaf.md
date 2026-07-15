@@ -9,9 +9,9 @@
 > `ESSAY-005-ERGODIC-BRIDGE-2026-07-13.md`.
 
 Date: 2026-07-13. Track D3 / bridge (D). Companion to
-`05-CERT-epsilon-certificates/GenerateEpsilonCertificate9.wl` (certificate structure),
-`05-CERT-epsilon-certificates/CONVERGENCE-ANALYSIS-2026-07-13.md`, and
-`03-MESH-pentagon-composition/CaseStudies.wl` (keys `D3_epsilonCertificate`,
+`composition-optimality/GenerateEpsilonCertificate9.wl` (certificate structure),
+`composition-optimality/CONVERGENCE-ANALYSIS-2026-07-13.md`, and
+`pentagon-gluing/CaseStudies.wl` (keys `D3_epsilonCertificate`,
 `posSigma`/`posCheck`).
 
 This note formalizes the **dynamic / ergodic-optimization** certificate (the windowed

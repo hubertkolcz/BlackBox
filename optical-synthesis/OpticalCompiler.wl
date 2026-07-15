@@ -1,10 +1,10 @@
 (* ::Package:: *)
 
 (* ===========================================================================
-   OpticalCompiler.wl  --  MASTER module of 09-EMU-optical-compiler (Integrator).
+   OpticalCompiler.wl  --  MASTER module of optical-synthesis (Integrator).
 
    The single Get-loadable entry point of the EMU optical compiler: the
-   CONSTRUCTIVE mirror of 00-BBT certification.  It Get-loads the three layer
+   CONSTRUCTIVE mirror of certification-protocol certification.  It Get-loads the three layer
    files and exposes ONE unified public API in context HubertKolcz`OpticalCompiler`,
    ending in the OpticalCompilerVerification association whose "OK" key gates on
    ALL five validation anchors A1-A5 (must evaluate True).

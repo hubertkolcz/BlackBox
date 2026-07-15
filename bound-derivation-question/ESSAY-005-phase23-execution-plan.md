@@ -19,7 +19,7 @@ executors may cite these numbers but MUST regenerate anything that enters a cert
 | C7^v2 | 49 | 1715 | {4:1715} | 4 | 12.250000 |
 | C5^v3 (conormal cube) | 125 | 103,778,725 | {7:500, 8:82,005,625, 9:21,381,000, 10:391,600} | 10 | (do NOT solve; certified 12.5, see P3-C5) |
 
-535 matches the GE-001 census in `01-D2-core-computation/CertifyingQuantumness.wl` ("all 535
+535 matches the GE-001 census in `pentagon-foundations/CertifyingQuantumness.wl` ("all 535
 maximal cliques ... saturating the ten 5-cliques at exactly 1"). The exact dual/primal
 certificates behind the LP column are verified by summation below (P3).
 

@@ -23,7 +23,7 @@ Isomorphism to the actual published graph is now CONFIRMED: arXiv:2605.12828
 Gap on Eight Vertices") Eq. (10) edge set
 `E = {(0,3),(0,5),(1,4),(1,6),(2,5),(2,6),(2,7),(3,6),(3,7),(4,7)}` was fetched and
 machine-checked against the project's reconstruction (`fem_study_results.json`
-`quad_edges`) in `03-MESH-pentagon-composition/quad_c5_verification.wl`:
+`quad_edges`) in `pentagon-gluing/quad_c5_verification.wl`:
 `IsomorphicGraphQ` True with explicit map `{0->2, 1->6, 2->3, 3->0, 4->5, 5->7, 6->1, 7->4}`;
 alpha = 3 for both; theta ≈ 3.4678438 (paclet primal SDP and an independent
 dual-formulation SDP) inside the paper's Table-5 bracket [3.46784373, 3.46784378]
@@ -56,9 +56,9 @@ values spread ~6e-8, wider than the paper's own 5e-8 Table-5 bracket, so the scr
 certifies bracket membership at 1e-6 slack, not 1e-8.
 
 **Files.**
-- `03-MESH-pentagon-composition/quad_c5_verification.wl` (new, runnable, exit-code gated)
-- `03-MESH-pentagon-composition/quad_c5_crosscheck.py` (independent Python toolchain)
-- `03-MESH-pentagon-composition/fem_study.py`, `fem_study_results.json` (reconstruction source)
+- `pentagon-gluing/quad_c5_verification.wl` (new, runnable, exit-code gated)
+- `pentagon-gluing/quad_c5_crosscheck.py` (independent Python toolchain)
+- `pentagon-gluing/fem_study.py`, `fem_study_results.json` (reconstruction source)
 
 ---
 
@@ -100,8 +100,8 @@ end of `main()` (a mid-study crash persists nothing); h4 cis-ring N=3 serializes
 tiny negative LP epsilon (prints -0.000000) rather than exact 0.
 
 **Files.**
-- `03-MESH-pentagon-composition/fem_study.py` (unmodified)
-- `03-MESH-pentagon-composition/fem_study_results.json` (regenerated deliverable, uncommitted)
+- `pentagon-gluing/fem_study.py` (unmodified)
+- `pentagon-gluing/fem_study_results.json` (regenerated deliverable, uncommitted)
 
 ---
 
@@ -109,7 +109,7 @@ tiny negative LP epsilon (prints -0.000000) rather than exact 0.
 
 **Proposed amendment to CERT-001 (keep status: verified; amend note).**
 "verified; ISSUE-001 downgraded/reframed by the 2026-07-13 regeneration test (see
-`05-CERT-epsilon-certificates/PROVENANCE_K7_K8.md`): the K-parameterized
+`composition-optimality/PROVENANCE_K7_K8.md`): the K-parameterized
 reconstruction (`GenerateEpsilonCertificate9.wl`, the CERT-002 pipeline) regenerates
 the same construction and passes the identical exact verification, but converges to
 strictly TIGHTER bounds — Gamma_7' = 763801638996471561227260969 /
@@ -154,10 +154,10 @@ generation; the exported certificate and its in-file Gamma were checked directly
 per review scope.)
 
 **Files.**
-- `05-CERT-epsilon-certificates/PROVENANCE_K7_K8.md` (full narrative)
-- `05-CERT-epsilon-certificates/GenerateEpsilonCertificate_testK7.wl`, `GenerateEpsilonCertificate_testK8.wl`
-- `05-CERT-epsilon-certificates/EpsilonCertificate_testK7_output.wl` (regenerated, exact, self-verified)
-- `05-CERT-epsilon-certificates/EpsilonCertificate.wl`, `EpsilonCertificate8.wl` (committed, unchanged)
+- `composition-optimality/PROVENANCE_K7_K8.md` (full narrative)
+- `composition-optimality/GenerateEpsilonCertificate_testK7.wl`, `GenerateEpsilonCertificate_testK8.wl`
+- `composition-optimality/EpsilonCertificate_testK7_output.wl` (regenerated, exact, self-verified)
+- `composition-optimality/EpsilonCertificate.wl`, `EpsilonCertificate8.wl` (committed, unchanged)
 
 ---
 
@@ -216,9 +216,9 @@ Petersen size-12, and Paley 33-witness all pass (exit 0). Note: the module has n
 recreate the packed binaries before re-running the C solver.
 
 **Files.**
-- `02-D1-theory-frontier/d1-k3-brackets-2026-07-11.md` (2026-07-13 addendum: fold-back + [39,46])
-- `02-D1-theory-frontier/d1_k3_activation.wl` (updated in place, C7 resolution)
-- `02-D1-theory-frontier/d1_k3_maxclique.c`, `d1_k3_graphs.py`, `d1_k3_verify_witnesses.py`
+- `open-search-frontier/d1-k3-brackets-2026-07-11.md` (2026-07-13 addendum: fold-back + [39,46])
+- `open-search-frontier/d1_k3_activation.wl` (updated in place, C7 resolution)
+- `open-search-frontier/d1_k3_maxclique.c`, `d1_k3_graphs.py`, `d1_k3_verify_witnesses.py`
 
 ## 5. BBT-005 (new claim) — H4' reduction: G9 antibunching gate + KCBS eta* boundary
 
@@ -238,7 +238,7 @@ closed — detection efficiency remains a physical assumption, as in every Bell/
 test; A_IE-maximality beyond {G9, eta*} is the residual open problem. Depends on BBT-003,
 BBT-004. Class **A** (both parts exact).
 
-**Evidence.** `00-BBT-blackbox-protocol/g9_antibunching_gate.py` prints the anchors coherent
+**Evidence.** `certification-protocol/g9_antibunching_gate.py` prints the anchors coherent
 g2(0)=1 (Poissonian boundary, symbolic), thermal 2, Fock|1> 0, and a 10^5-field numeric
 certificate that every classical P>=0 mixture has g2 >= 1. `efficiency_threshold_kcbs.py`
 derives eta* = 2/sqrt(5) two independent ways — (i) the efficiency-degraded quantum value
@@ -246,7 +246,7 @@ eta* sqrt(5) meets the NCHV bound 2; (ii) an exact LP over the 11 independent se
 gives max fair-sampled loophole value 2/eta reaching sqrt(5) at the same eta* — and tabulates
 the odd-n-cycle generalization eta*_n = ((n-1)/2)/Q_n, Q_n = n cos(pi/n)/(1+cos(pi/n)).
 Integrated into `docs/FRAMEWORK-2026-07-13.md` ("H4' EXECUTED" delta) and
-`00-BBT-blackbox-protocol/PROPOSITION-O3.md` (provenance note); repo commits c24ccb3, ac0f33d.
+`certification-protocol/PROPOSITION-O3.md` (provenance note); repo commits c24ccb3, ac0f33d.
 
 **Reviewer re-verification (2026-07-13).** Two-reviewer adversarial pass (the H4'/G9 build
 workflow): 0 blocker/major findings; minor honesty-tightenings applied and recorded —
@@ -258,8 +258,8 @@ Garg-Mermin PRD 35 3831 (1987)) — the contribution is the protocol gate/bounda
 physics.
 
 **Files.**
-- `00-BBT-blackbox-protocol/g9_antibunching_gate.py`, `efficiency_threshold_kcbs.py`
-- `docs/FRAMEWORK-2026-07-13.md` ("H4' EXECUTED" delta), `00-BBT-blackbox-protocol/PROPOSITION-O3.md`
+- `certification-protocol/g9_antibunching_gate.py`, `efficiency_threshold_kcbs.py`
+- `docs/FRAMEWORK-2026-07-13.md` ("H4' EXECUTED" delta), `certification-protocol/PROPOSITION-O3.md`
 - `docs/ledger-snapshot/LEDGER.md` (BBT-005 row added in the repo snapshot)
 
 ---

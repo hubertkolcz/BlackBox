@@ -1,6 +1,6 @@
-# 01-D2-core-computation
+# pentagon-foundations
 
-Ledger track `D2` — "primary computational track": the shared KCBS-pentagon computational bedrock. Most other modules in this repository, and the primary `00-BBT-blackbox-protocol/` module itself, import from here. This folder does not answer the project's central question by itself — it supplies the machinery the primary module and several contributing tracks are built from.
+Ledger track `D2` — "primary computational track": the shared KCBS-pentagon computational bedrock. Most other modules in this repository, and the primary `certification-protocol/` module itself, import from here. This folder does not answer the project's central question by itself — it supplies the machinery the primary module and several contributing tracks are built from.
 
 ## Contents
 
@@ -12,7 +12,7 @@ Ledger track `D2` — "primary computational track": the shared KCBS-pentagon co
 
 ## Relationship to the primary module
 
-`00-BBT-blackbox-protocol/mbqc_blackbox_test.py` imports the contextual-fraction and GE machinery here directly. This folder has no dependency on the primary module in the other direction.
+`certification-protocol/mbqc_blackbox_test.py` imports the contextual-fraction and GE machinery here directly. This folder has no dependency on the primary module in the other direction.
 
 ## Ledger cross-reference
 

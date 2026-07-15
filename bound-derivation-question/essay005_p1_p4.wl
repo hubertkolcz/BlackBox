@@ -3,7 +3,7 @@
 (* essay005_p1_p4.wl --- ESSAY-005 probes P1 (support-census negative control)
    and P4 (torsion-vs-GE-value scan) on the fixed 2-copy product cover.
 
-   Parent spec: 06-D3-sheaf-cohomology/ESSAY-005-problem-spec.md (Trap 2; probes
+   Parent spec: bound-derivation-question/ESSAY-005-problem-spec.md (Trap 2; probes
    P1, P4 with acceptance criteria). Design: ESSAY-005-phase23-execution-plan.md
    Sec. 1 (Phase-2 agent A) --- implemented verbatim: paclet functions only, no
    new mathematics. Cover + product model transcribed from SupportCohomology.wl

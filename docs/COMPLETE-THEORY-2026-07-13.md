@@ -41,11 +41,11 @@ enrichment of a flat certificate cannot expose an interior optimum.
 ### THE EVIDENCE
 - Exact concave-hull computation: hull(2/3) = 3/2 exactly; cct actual 1.4032309;
   interior gap 0.0967691; `max_fc[hull(fc) - floor(fc)] = 0.1666667`.
-  File: `03-MESH-pentagon-composition/final_cct_hull.py` (re-run 2026-07-13, confirmed).
+  File: `pentagon-gluing/final_cct_hull.py` (re-run 2026-07-13, confirmed).
 - theta-bar = 3/2 achieved across fc in [1/2,1] by the family `ct, ccctct..., ccccct...`
   (enumerated to period 14) — the flat ceiling is realized, not just bounded.
 - k=9 certified numeric frontier corroboration:
-  `03-MESH-pentagon-composition/final_cct_frontier_k9.txt`
+  `pentagon-gluing/final_cct_frontier_k9.txt`
   (gammaNum/gammaDen exact; 512 nodes, 1024 edges).
 - Falsification harness: `final_cct_falsify.py`; frontier drivers
   `final_cct_frontier.py`, `final_cct_frontier_export.wl`.
@@ -100,7 +100,7 @@ coboundary by construction, hence 0 in `H^1(U;Q/Z)` for every graph — detects
 nothing at both C5 and C7.
 
 ### THE EVIDENCE
-- `06-D3-sheaf-cohomology/final_h1_cocycle_results.json` (verdict + all counts).
+- `bound-derivation-question/final_h1_cocycle_results.json` (verdict + all counts).
 - Probes: `final_h1_cocycle_probe.py`, `final_h1_structured_duals.py`.
 - Cover data confirmed: C5^v2 = 25 vertices / 535 max cliques / 10 pentads;
   C7^v2 = 49 vertices / 1715 max cliques / 49 edge-squares; nerves connected.
@@ -159,11 +159,11 @@ records a **precise obstruction to the cheap route** and leaves the exhaustive
 verdict open.
 
 ### THE EVIDENCE
-- Bound-elim pass: `02-D1-theory-frontier/final_erg003_bounds_elim.py` (0/26 eliminated).
-- Verdict ledger: `02-D1-theory-frontier/erg003_verdict.json`
+- Bound-elim pass: `open-search-frontier/final_erg003_bounds_elim.py` (0/26 eliminated).
+- Verdict ledger: `open-search-frontier/erg003_verdict.json`
   (familiesExhausted 2/26; NO=2 [fam00 `(1,1,1,7,7)`, fam01 `(1,1,2,7,6)`], PARTIAL=24;
   totalNodes 69,449,278; no witness).
-- Per-family results: `02-D1-theory-frontier/erg003_family_results/`;
+- Per-family results: `open-search-frontier/erg003_family_results/`;
   f-vector `erg003_fvec.json`; design note `erg003-pentagram-design-2026-07-13.md`.
 - Gate-validated solver: `erg003_elim2.py` (exact per-family agreement with the chain
   searcher on C9^v2 S=8,9 and C7^v2 S=9,10, including exhaustive NOs).
@@ -214,7 +214,7 @@ sp(4,R) = 10` (active); single-mode squeezer + phase `-> sp(2,R) = 3` (active). 
 **fills the certification map's previously-unbuilt CV column** (the CV analogue of G7).
 
 ### THE EVIDENCE
-- Proof + adversary-class definition: `00-BBT-blackbox-protocol/final_o3_completeness.md`.
+- Proof + adversary-class definition: `certification-protocol/final_o3_completeness.md`.
 - G7-CV implementation (exact-arithmetic, all anchors pass): `final_o3_cv_dla.py`.
 - Base proposition (two-lens necessity, Prop 1/2, Cor 1/2): `PROPOSITION-O3.md`.
 - Certification map generator: `certification_map.wl`; kernel `BlackBox/Kernel/BlackBox.wl`;
@@ -262,7 +262,7 @@ theta-prime there**, and here that equals Lovász theta by theta-multiplicativit
 (`theta(P13) = sqrt13`).
 
 ### THE EVIDENCE
-- LP computation: `02-D1-theory-frontier/final_paley13_lp.py` (re-run 2026-07-13):
+- LP computation: `open-search-frontier/final_paley13_lp.py` (re-run 2026-07-13):
   `theta'(k=1) = sqrt13 = 3.6055512755`; `theta'(k=2) = 13.0000000000` exact;
   `theta'(k=3) = 46.8721665810 = 13^{3/2}`, floor 46.
 - Certification harness: `final_paley13_lp_certify.py`.

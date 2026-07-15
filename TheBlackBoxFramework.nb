@@ -124,25 +124,25 @@ True]];
        \"docs/essay-src/essay_sections_1_3.wl\", \
 \"docs/essay-src/essay_sections_4_6.wl\",
        \"docs/essay-src/essay_sections_7_10.wl\",
-       \"09-EMU-optical-compiler/OpticalCompiler.wl\", \
-\"09-EMU-optical-compiler/DispatcherEmitter.wl\",
-       \"09-EMU-optical-compiler/InterferometerLayer.wl\", \
-\"09-EMU-optical-compiler/IntensityLayer.wl\",
-       \"05-CERT-epsilon-certificates/EpsilonCertificate7_regenerated.wl\",
-       \"05-CERT-epsilon-certificates/EpsilonCertificate8_regenerated.wl\",
-       \"05-CERT-epsilon-certificates/EpsilonCertificate9.wl\",
-       \"05-CERT-epsilon-certificates/EpsilonCertificate10.wl\",
-       \"08-HK-hawking/hawking_gaussian_sector.wl\", \
-\"08-HK-hawking/gaussian_engine.wl\",
-       \"08-HK-hawking/gaussian_hawking_physics.wl\", \
-\"08-HK-hawking/gaussian_witnesses_bridge.wl\",
-       \"06-D3-sheaf-cohomology/final_h1_cocycle_results.json\",
-       \"02-D1-theory-frontier/erg003_verdict.json\", \
+       \"optical-synthesis/OpticalCompiler.wl\", \
+\"optical-synthesis/DispatcherEmitter.wl\",
+       \"optical-synthesis/InterferometerLayer.wl\", \
+\"optical-synthesis/IntensityLayer.wl\",
+       \"composition-optimality/EpsilonCertificate7_regenerated.wl\",
+       \"composition-optimality/EpsilonCertificate8_regenerated.wl\",
+       \"composition-optimality/EpsilonCertificate9.wl\",
+       \"composition-optimality/EpsilonCertificate10.wl\",
+       \"hawking-application/hawking_gaussian_sector.wl\", \
+\"hawking-application/gaussian_engine.wl\",
+       \"hawking-application/gaussian_hawking_physics.wl\", \
+\"hawking-application/gaussian_witnesses_bridge.wl\",
+       \"bound-derivation-question/final_h1_cocycle_results.json\",
+       \"open-search-frontier/erg003_verdict.json\", \
 \"docs/FRAMEWORK-2026-07-13.md\",
-       \"09-EMU-optical-compiler/schematics/demo1_kcbs_pentagon_L1.png\",
-       \"09-EMU-optical-compiler/schematics/demo3_cct_mesh_reps2.png\",
-       \"00-BBT-blackbox-protocol/certification_map.png\",
-       \"05-CERT-epsilon-certificates/orbit_spectrum.png\"};
+       \"optical-synthesis/schematics/demo1_kcbs_pentagon_L1.png\",
+       \"optical-synthesis/schematics/demo3_cct_mesh_reps2.png\",
+       \"certification-protocol/certification_map.png\",
+       \"composition-optimality/orbit_spectrum.png\"};
      Do[dest = FileNameJoin[Prepend[FileNameSplit[rel], cacheRoot]];
        If[! (FileExistsQ[dest] && FileByteCount[dest] > 0),
          Quiet@CreateDirectory[DirectoryName[dest], \
@@ -196,7 +196,7 @@ Hubert Ko\\[LSlash]cz \\[LongDash] July 2026. This file supplies sections \
 S1\\[Dash]S3 of the master computational essay EvaluatingBlackBoxPhysics.wl \
 (spine: docs/ESSAY-OUTLINE.md; framework labeling: \
 docs/FRAMEWORK-2026-07-13.md). It follows the cell grammar and Get-safety of \
-01-D2-core-computation/CertifyingQuantumness.wl. THE PRIME DIRECTIVE (WSRI): \
+pentagon-foundations/CertifyingQuantumness.wl. THE PRIME DIRECTIVE (WSRI): \
 every quantitative claim below is produced by the kernel at evaluation time \
 \\[LongDash] via the HubertKolcz`BlackBox` paclet or an inline recomputation \
 of the pre-registered probe mathematics \\[LongDash] never hand-restated. \
@@ -248,25 +248,25 @@ True]];
        \"docs/essay-src/essay_sections_1_3.wl\", \
 \"docs/essay-src/essay_sections_4_6.wl\",
        \"docs/essay-src/essay_sections_7_10.wl\",
-       \"09-EMU-optical-compiler/OpticalCompiler.wl\", \
-\"09-EMU-optical-compiler/DispatcherEmitter.wl\",
-       \"09-EMU-optical-compiler/InterferometerLayer.wl\", \
-\"09-EMU-optical-compiler/IntensityLayer.wl\",
-       \"05-CERT-epsilon-certificates/EpsilonCertificate7_regenerated.wl\",
-       \"05-CERT-epsilon-certificates/EpsilonCertificate8_regenerated.wl\",
-       \"05-CERT-epsilon-certificates/EpsilonCertificate9.wl\",
-       \"05-CERT-epsilon-certificates/EpsilonCertificate10.wl\",
-       \"08-HK-hawking/hawking_gaussian_sector.wl\", \
-\"08-HK-hawking/gaussian_engine.wl\",
-       \"08-HK-hawking/gaussian_hawking_physics.wl\", \
-\"08-HK-hawking/gaussian_witnesses_bridge.wl\",
-       \"06-D3-sheaf-cohomology/final_h1_cocycle_results.json\",
-       \"02-D1-theory-frontier/erg003_verdict.json\", \
+       \"optical-synthesis/OpticalCompiler.wl\", \
+\"optical-synthesis/DispatcherEmitter.wl\",
+       \"optical-synthesis/InterferometerLayer.wl\", \
+\"optical-synthesis/IntensityLayer.wl\",
+       \"composition-optimality/EpsilonCertificate7_regenerated.wl\",
+       \"composition-optimality/EpsilonCertificate8_regenerated.wl\",
+       \"composition-optimality/EpsilonCertificate9.wl\",
+       \"composition-optimality/EpsilonCertificate10.wl\",
+       \"hawking-application/hawking_gaussian_sector.wl\", \
+\"hawking-application/gaussian_engine.wl\",
+       \"hawking-application/gaussian_hawking_physics.wl\", \
+\"hawking-application/gaussian_witnesses_bridge.wl\",
+       \"bound-derivation-question/final_h1_cocycle_results.json\",
+       \"open-search-frontier/erg003_verdict.json\", \
 \"docs/FRAMEWORK-2026-07-13.md\",
-       \"09-EMU-optical-compiler/schematics/demo1_kcbs_pentagon_L1.png\",
-       \"09-EMU-optical-compiler/schematics/demo3_cct_mesh_reps2.png\",
-       \"00-BBT-blackbox-protocol/certification_map.png\",
-       \"05-CERT-epsilon-certificates/orbit_spectrum.png\"};
+       \"optical-synthesis/schematics/demo1_kcbs_pentagon_L1.png\",
+       \"optical-synthesis/schematics/demo3_cct_mesh_reps2.png\",
+       \"certification-protocol/certification_map.png\",
+       \"composition-optimality/orbit_spectrum.png\"};
      Do[dest = FileNameJoin[Prepend[FileNameSplit[rel], cacheRoot]];
        If[! (FileExistsQ[dest] && FileByteCount[dest] > 0),
          Quiet@CreateDirectory[DirectoryName[dest], \
@@ -412,7 +412,7 @@ Proposition 1)\
 \>", "Subsection",ExpressionUUID->"d2cc357d-e4d4-444f-a90b-67aa7b2a0776"],
 
 Cell["\<\
-The protocol (00-BBT-blackbox-protocol/mbqc_blackbox_test.py; \
+The protocol (certification-protocol/mbqc_blackbox_test.py; \
 PROPOSITION-O3.md) consumes a table T = {p_c(ab)}: per-context outcome \
 distributions on the pentagon, sections (00, 01, 10, 11) with the (1,1) event \
 structurally absent (one photon, one click). Gates C1-C5 test no-disturbance, \
@@ -664,14 +664,14 @@ G7/G7-CV. The residual open problem is H4' (A_IE-maximality). [H]\
 \>", "Text",ExpressionUUID->"92025efb-dc76-fd49-b314-a8fb7cea609e"],
 
 Cell["\<\
-The certification map (00-BBT-blackbox-protocol/certification_map.png; \
+The certification map (certification-protocol/certification_map.png; \
 regenerated by certification_map.wl with the CV column filled) embeds the \
 whole staircase \\[LongDash] access model x adversary strength, plus the \
 orthogonal geometric lens:\
 \>", "CodeText",ExpressionUUID->"4e448773-8f2a-8542-9662-2dedeedffeec"],
 
 Cell["\<\
-certMapFile = FileNameJoin[{repoRoot, \"00-BBT-blackbox-protocol\", \
+certMapFile = FileNameJoin[{repoRoot, \"certification-protocol\", \
 \"certification_map.png\"}];
 certificationMap = If[FileExistsQ[certMapFile], Import[certMapFile], Missing[\
 \"regenerate via certification_map.wl\"]];\
@@ -781,25 +781,25 @@ True]];
        \"docs/essay-src/essay_sections_1_3.wl\", \
 \"docs/essay-src/essay_sections_4_6.wl\",
        \"docs/essay-src/essay_sections_7_10.wl\",
-       \"09-EMU-optical-compiler/OpticalCompiler.wl\", \
-\"09-EMU-optical-compiler/DispatcherEmitter.wl\",
-       \"09-EMU-optical-compiler/InterferometerLayer.wl\", \
-\"09-EMU-optical-compiler/IntensityLayer.wl\",
-       \"05-CERT-epsilon-certificates/EpsilonCertificate7_regenerated.wl\",
-       \"05-CERT-epsilon-certificates/EpsilonCertificate8_regenerated.wl\",
-       \"05-CERT-epsilon-certificates/EpsilonCertificate9.wl\",
-       \"05-CERT-epsilon-certificates/EpsilonCertificate10.wl\",
-       \"08-HK-hawking/hawking_gaussian_sector.wl\", \
-\"08-HK-hawking/gaussian_engine.wl\",
-       \"08-HK-hawking/gaussian_hawking_physics.wl\", \
-\"08-HK-hawking/gaussian_witnesses_bridge.wl\",
-       \"06-D3-sheaf-cohomology/final_h1_cocycle_results.json\",
-       \"02-D1-theory-frontier/erg003_verdict.json\", \
+       \"optical-synthesis/OpticalCompiler.wl\", \
+\"optical-synthesis/DispatcherEmitter.wl\",
+       \"optical-synthesis/InterferometerLayer.wl\", \
+\"optical-synthesis/IntensityLayer.wl\",
+       \"composition-optimality/EpsilonCertificate7_regenerated.wl\",
+       \"composition-optimality/EpsilonCertificate8_regenerated.wl\",
+       \"composition-optimality/EpsilonCertificate9.wl\",
+       \"composition-optimality/EpsilonCertificate10.wl\",
+       \"hawking-application/hawking_gaussian_sector.wl\", \
+\"hawking-application/gaussian_engine.wl\",
+       \"hawking-application/gaussian_hawking_physics.wl\", \
+\"hawking-application/gaussian_witnesses_bridge.wl\",
+       \"bound-derivation-question/final_h1_cocycle_results.json\",
+       \"open-search-frontier/erg003_verdict.json\", \
 \"docs/FRAMEWORK-2026-07-13.md\",
-       \"09-EMU-optical-compiler/schematics/demo1_kcbs_pentagon_L1.png\",
-       \"09-EMU-optical-compiler/schematics/demo3_cct_mesh_reps2.png\",
-       \"00-BBT-blackbox-protocol/certification_map.png\",
-       \"05-CERT-epsilon-certificates/orbit_spectrum.png\"};
+       \"optical-synthesis/schematics/demo1_kcbs_pentagon_L1.png\",
+       \"optical-synthesis/schematics/demo3_cct_mesh_reps2.png\",
+       \"certification-protocol/certification_map.png\",
+       \"composition-optimality/orbit_spectrum.png\"};
      Do[dest = FileNameJoin[Prepend[FileNameSplit[rel], cacheRoot]];
        If[! (FileExistsQ[dest] && FileByteCount[dest] > 0),
          Quiet@CreateDirectory[DirectoryName[dest], \
@@ -843,7 +843,7 @@ the bracket figure from those live values.\
 
 Cell["\<\
 The general word-ring builder (mirrors \
-03-MESH-pentagon-composition/CaseStudies.wl) and the 3-state interface \
+pentagon-gluing/CaseStudies.wl) and the 3-state interface \
 transfer DP whose max-plus cycle means give exact \\[Alpha]-densities:\
 \>", "CodeText",ExpressionUUID->"29595420-d06a-3943-b508-926e59b68f1c"],
 
@@ -995,13 +995,13 @@ reduced to numbers in-essay \\[LongDash] never re-typed:\
 \>", "CodeText",ExpressionUUID->"8f529473-a2ea-7b43-ac4b-6675ee12f8eb"],
 
 Cell["\<\
-Get[FileNameJoin[{repoRoot, \"05-CERT-epsilon-certificates\", \
+Get[FileNameJoin[{repoRoot, \"composition-optimality\", \
 \"EpsilonCertificate7_regenerated.wl\"}]];
-Get[FileNameJoin[{repoRoot, \"05-CERT-epsilon-certificates\", \
+Get[FileNameJoin[{repoRoot, \"composition-optimality\", \
 \"EpsilonCertificate8_regenerated.wl\"}]];
-Get[FileNameJoin[{repoRoot, \"05-CERT-epsilon-certificates\", \
+Get[FileNameJoin[{repoRoot, \"composition-optimality\", \
 \"EpsilonCertificate9.wl\"}]];
-Get[FileNameJoin[{repoRoot, \"05-CERT-epsilon-certificates\", \
+Get[FileNameJoin[{repoRoot, \"composition-optimality\", \
 \"EpsilonCertificate10.wl\"}]];
 gamma7 = EpsilonCertificate7Regenerated[\"Gamma\"];
 gamma8 = EpsilonCertificate8Regenerated[\"Gamma\"];
@@ -1048,7 +1048,7 @@ The orbit-spectrum reading (CERT-003). Spurious policy-iteration values are \
 periodic-orbit densities minus 1 \\[LongDash] cis 3/2, trans \\[Tau]*, then \
 16/11, 19/13, 25/17. \\[Tau]* is recomputed live (above); the rationals are \
 the finite-orbit readings. The figure orbit_spectrum.png is regenerated by \
-05-CERT-epsilon-certificates/orbit_spectrum_figure.wl (embedded by the master \
+composition-optimality/orbit_spectrum_figure.wl (embedded by the master \
 essay); here we verify the seed values are ordered and \\[Tau]* sits among \
 them:\
 \>", "CodeText",ExpressionUUID->"abc3c3ed-1a52-d548-90c5-c778c42d9f2f"],
@@ -1059,7 +1059,7 @@ sfx6[\"S4_orbitSpectrum\"] = (tauStar < 16/11 < 19/13 < 25/17 < 3/2);
    (* the CLAIM is the orbit-density ordering; the figure is decorative and \
 no longer gates OK *)
 orbitSpectrumFigureRef = FileNameJoin[{repoRoot, \
-\"05-CERT-epsilon-certificates\", \"orbit_spectrum.png\"}];
+\"composition-optimality\", \"orbit_spectrum.png\"}];
 orbitSpectrumFigure = If[FileExistsQ[orbitSpectrumFigureRef], \
 Import[orbitSpectrumFigureRef],
    Missing[\"figure unavailable\"]];
@@ -1124,7 +1124,7 @@ Cell["\<\
 The weighted presheaf F(K) = {w : K -> [0,1], \\[Sum] <= 1} over R = Q>=0 \
 glues trivially, so H\\.b0(F) is the packing polytope and \\[CapitalLambda]_k \
 = sup_{p} \\[Sum] p_v is its total-mass hom (= the exclusivity/packing LP). \
-Machinery verbatim from 06-D3-sheaf-cohomology/bridge_weighted_presheaf.wl:\
+Machinery verbatim from bound-derivation-question/bridge_weighted_presheaf.wl:\
 \>", "CodeText",ExpressionUUID->"eec1e1f5-f84c-0346-94ee-f56381d841f9"],
 
 Cell["\<\
@@ -1239,7 +1239,7 @@ from the committed lane result, not re-typed:\
 \>", "CodeText",ExpressionUUID->"fae5325d-f6b3-2549-9277-8d2a3156eae6"],
 
 Cell["\<\
-h1json = Import[FileNameJoin[{repoRoot, \"06-D3-sheaf-cohomology\", \
+h1json = Import[FileNameJoin[{repoRoot, \"bound-derivation-question\", \
 \"final_h1_cocycle_results.json\"}], \"RawJSON\"];
 h1BadC7 = \
 h1json[\"obstruction_1_cocycle_prerequisite\"][\"C7_k2_canonical_dual\"][\"\
@@ -1297,7 +1297,7 @@ CVDLAAudit, ...:\
 
 Cell["\<\
 Block[{GaussianHawkingLoadOnly = True},
-  Get[FileNameJoin[{repoRoot, \"08-HK-hawking\", \"hawking_gaussian_sector.wl\
+  Get[FileNameJoin[{repoRoot, \"hawking-application\", \"hawking_gaussian_sector.wl\
 \"}]]];\
 \>", "Input",ExpressionUUID->"613000d6-51f6-6e40-ac58-06bb220e84b6"],
 
@@ -1405,7 +1405,7 @@ Cell["\<\
 The qubit information sector [T]. On the isotropic CHSH family CF(S) = \
 (S-2)/2, giving the pinned anchors CF(2)=0, CF(2 Sqrt[2]) = Sqrt[2]-1, \
 CF(2.25)=1/8 \\[LongDash] the same numbers the qubit Page/Hayden-Preskill \
-suite (04-cluster-state-mbqc/cct_mbqc_hawking.wl) certifies. Recomputed live:\
+suite (cluster-state-realization/cct_mbqc_hawking.wl) certifies. Recomputed live:\
 \
 \>", "CodeText",ExpressionUUID->"cb6c0028-b1a5-334b-87e4-578eb95e298c"],
 
@@ -1464,7 +1464,7 @@ Hubert Ko\\[LSlash]cz \\[LongDash] July 2026. This is the S7-S10 fragment of \
 the master computational essay Evaluating Black-Box Physics through Optical \
 Emulation (spine in docs/ESSAY-OUTLINE.md). It is a self-contained, \
 Get-loadable, headless-verifiable module in its own right: it loads the \
-paclet and the 09-EMU optical compiler, runs every number it prints through \
+paclet and the optical-synthesis optical compiler, runs every number it prints through \
 the kernel at evaluation time (THE PRIME DIRECTIVE), and closes on the \
 association EssaySectionsCVerification whose \"OK\" key must be True. \
 Labeling discipline mirrors docs/FRAMEWORK-2026-07-13.md: [T] \
@@ -1512,25 +1512,25 @@ True]];
        \"docs/essay-src/essay_sections_1_3.wl\", \
 \"docs/essay-src/essay_sections_4_6.wl\",
        \"docs/essay-src/essay_sections_7_10.wl\",
-       \"09-EMU-optical-compiler/OpticalCompiler.wl\", \
-\"09-EMU-optical-compiler/DispatcherEmitter.wl\",
-       \"09-EMU-optical-compiler/InterferometerLayer.wl\", \
-\"09-EMU-optical-compiler/IntensityLayer.wl\",
-       \"05-CERT-epsilon-certificates/EpsilonCertificate7_regenerated.wl\",
-       \"05-CERT-epsilon-certificates/EpsilonCertificate8_regenerated.wl\",
-       \"05-CERT-epsilon-certificates/EpsilonCertificate9.wl\",
-       \"05-CERT-epsilon-certificates/EpsilonCertificate10.wl\",
-       \"08-HK-hawking/hawking_gaussian_sector.wl\", \
-\"08-HK-hawking/gaussian_engine.wl\",
-       \"08-HK-hawking/gaussian_hawking_physics.wl\", \
-\"08-HK-hawking/gaussian_witnesses_bridge.wl\",
-       \"06-D3-sheaf-cohomology/final_h1_cocycle_results.json\",
-       \"02-D1-theory-frontier/erg003_verdict.json\", \
+       \"optical-synthesis/OpticalCompiler.wl\", \
+\"optical-synthesis/DispatcherEmitter.wl\",
+       \"optical-synthesis/InterferometerLayer.wl\", \
+\"optical-synthesis/IntensityLayer.wl\",
+       \"composition-optimality/EpsilonCertificate7_regenerated.wl\",
+       \"composition-optimality/EpsilonCertificate8_regenerated.wl\",
+       \"composition-optimality/EpsilonCertificate9.wl\",
+       \"composition-optimality/EpsilonCertificate10.wl\",
+       \"hawking-application/hawking_gaussian_sector.wl\", \
+\"hawking-application/gaussian_engine.wl\",
+       \"hawking-application/gaussian_hawking_physics.wl\", \
+\"hawking-application/gaussian_witnesses_bridge.wl\",
+       \"bound-derivation-question/final_h1_cocycle_results.json\",
+       \"open-search-frontier/erg003_verdict.json\", \
 \"docs/FRAMEWORK-2026-07-13.md\",
-       \"09-EMU-optical-compiler/schematics/demo1_kcbs_pentagon_L1.png\",
-       \"09-EMU-optical-compiler/schematics/demo3_cct_mesh_reps2.png\",
-       \"00-BBT-blackbox-protocol/certification_map.png\",
-       \"05-CERT-epsilon-certificates/orbit_spectrum.png\"};
+       \"optical-synthesis/schematics/demo1_kcbs_pentagon_L1.png\",
+       \"optical-synthesis/schematics/demo3_cct_mesh_reps2.png\",
+       \"certification-protocol/certification_map.png\",
+       \"composition-optimality/orbit_spectrum.png\"};
      Do[dest = FileNameJoin[Prepend[FileNameSplit[rel], cacheRoot]];
        If[! (FileExistsQ[dest] && FileByteCount[dest] > 0),
          Quiet@CreateDirectory[DirectoryName[dest], \
@@ -1553,7 +1553,7 @@ UpTo[14]], \"?\"],
      cacheRoot]];
 PacletDirectoryLoad[FileNameJoin[{$BlackBoxRepoRoot, \"BlackBox\"}]];
 Needs[\"HubertKolcz`BlackBox`\"];
-Get[FileNameJoin[{$BlackBoxRepoRoot, \"09-EMU-optical-compiler\", \
+Get[FileNameJoin[{$BlackBoxRepoRoot, \"optical-synthesis\", \
 \"OpticalCompiler.wl\"}]];
 Quiet[Remove /@ Select[\"Global`\" <> # & /@ \
 Names[\"HubertKolcz`BlackBox`*\"], NameQ]];
@@ -1572,8 +1572,8 @@ Cell["\<\
 readResult[relpath_] := Import[FileNameJoin[Prepend[FileNameSplit[relpath], \
 $BlackBoxRepoRoot]], \"RawJSON\"];
 h1Result = \
-readResult[\"06-D3-sheaf-cohomology/final_h1_cocycle_results.json\"];
-erg003 = readResult[\"02-D1-theory-frontier/erg003_verdict.json\"];\
+readResult[\"bound-derivation-question/final_h1_cocycle_results.json\"];
+erg003 = readResult[\"open-search-frontier/erg003_verdict.json\"];\
 \>", "Input",ExpressionUUID->"818c3122-8513-0941-a442-a58b14713c71"],
 
 Cell["\<\
@@ -1583,7 +1583,7 @@ S7 \\[LongDash] The Constructive Mirror: Emulator Blueprints (EMU-001, F8)\
 Cell["\<\
 Sections 1-6 read the device: given a table, decide genuine-vs-emulable \
 through the two lenses. This section runs the same two-lens mathematics in \
-reverse. The 09-EMU three-layer optical compiler is the synthesis dual of the \
+reverse. The optical-synthesis three-layer optical compiler is the synthesis dual of the \
 BBT protocol: hand it a target (a KCBS scenario, an n-cycle, a mesh word, or \
 a no-disturbance table) and it emits a physical optical blueprint together \
 with the blueprint's OWN two-lens verdict \\[LongDash] genuine \
@@ -1672,13 +1672,13 @@ mesh. Displayed from the compiler's own committed output.\
 \>", "CodeText",ExpressionUUID->"8319f845-a31d-b54d-af52-f7d93cf1e6a9"],
 
 Cell["\<\
-With[{f = FileNameJoin[{$BlackBoxRepoRoot, \"09-EMU-optical-compiler\", \
+With[{f = FileNameJoin[{$BlackBoxRepoRoot, \"optical-synthesis\", \
 \"schematics\", \"demo1_kcbs_pentagon_L1.png\"}]},
   If[FileExistsQ[f], Import[f], Missing[\"figure unavailable\"]]]\
 \>", "Input",ExpressionUUID->"945b322f-32fe-de47-b7bb-74df4ca4444f"],
 
 Cell["\<\
-With[{f = FileNameJoin[{$BlackBoxRepoRoot, \"09-EMU-optical-compiler\", \
+With[{f = FileNameJoin[{$BlackBoxRepoRoot, \"optical-synthesis\", \
 \"schematics\", \"demo3_cct_mesh_reps2.png\"}]},
   If[FileExistsQ[f], Import[f], Missing[\"figure unavailable\"]]]\
 \>", "Input",ExpressionUUID->"e195fbb6-d414-4940-b4df-fa37ef7a27d6"],
@@ -1723,7 +1723,7 @@ Chop[HarmonicResidual[deltaC5, N@CycleModel[5, #]] & /@ {\"Classical\", \
 Cell["\<\
 (ii) The affine \\[Alpha]-credit tilt [R] (F9i). No affine-in-f_c certificate \
 family can have limiting gap equal to gap(cct): the linear correction is \
-inert against the kinked \\[Alpha]-floor. Proof: 05-CERT-epsilon-certificates \
+inert against the kinked \\[Alpha]-floor. Proof: composition-optimality \
 (CONVERGENCE-ANALYSIS-2026-07-13.md) / FRAMEWORK F9i. [R, theorem]\
 \>", "CodeText",ExpressionUUID->"c692c83f-3dea-6047-89f8-8ff78c4e54fa"],
 
@@ -1737,7 +1737,7 @@ hyperplane. So the route certifies a gap floor of at least 3/2 - 4/3, \
 recomputed live below \\[LongDash] worse than the flat certificate \
 \\[CapitalGamma]\\:2089. File-sourced: hull(2/3) = 3/2, cct \\[Theta]-bar = \
 1.4032309 (0.0967691 below the hull), from \
-03-MESH-pentagon-composition/final_cct_hull.py.\
+pentagon-gluing/final_cct_hull.py.\
 \>", "CodeText",ExpressionUUID->"03b8d0a2-dd99-1444-bd8a-91dc0fed4351"],
 
 Cell["\<\
@@ -1770,7 +1770,7 @@ the \\[DoubleStruckCapitalZ]\\:2081\\:2083^k translation scheme the Schrijver \
 Lov\\[AAcute]sz ceiling \\[LongDash] so the LP can neither close (< 40) nor \
 tighten (< 46) the Paley bracket. The ceiling at k = 3 is Floor[13^(3/2)], \
 recomputed live; the 13^(k/2) identity is the file-sourced theorem \
-(02-D1-theory-frontier/final_paley13_lp.py):\
+(open-search-frontier/final_paley13_lp.py):\
 \>", "CodeText",ExpressionUUID->"87013cd9-681a-624e-b878-191755874714"],
 
 Cell["{13^(3/2) // N, Floor[13^(3/2)]}", "Input",ExpressionUUID->"89d0ba82-ba86-d248-b2b2-b3030fc5ea8a"],
@@ -1786,7 +1786,7 @@ Cell["\<\
 (vii) The ergodic-sheaf category error [R] (F9ii). The proposed \
 static<->dynamic unification is a category error: the cross-side T->0 limit \
 yields packing 5/2, not a certificate value \\[CapitalGamma], and does not \
-select cct. Proof: 06-D3 / FRAMEWORK F9ii. [R]\
+select cct. Proof: bound-derivation-question / FRAMEWORK F9ii. [R]\
 \>", "CodeText",ExpressionUUID->"b6b666f9-fbbd-3449-b6cd-e5d6cba8b9ed"],
 
 Cell["\<\
@@ -1912,7 +1912,7 @@ Signaling assessment (O5 / SIG-001..003), a feasibility pointer. The KCBS \
 lock's exact cost is the contextual fraction \\[Mu] = 2\\[Sqrt]5 - 4 \
 bits/round, recomputed live in exact arithmetic; the 3-gate signaling \
 taxonomy over 7 exemplars and one refuted candidate identity live in \
-07-SIG-signaling. [T]\
+signaling-extension. [T]\
 \>", "CodeText",ExpressionUUID->"331de57d-f07d-6d4b-b292-836565418484"],
 
 Cell["\<\
@@ -2061,7 +2061,7 @@ contextuality (the H\\.b9 route, refuted as posed, F9vii).\
 Cell["\<\
 docs/FRAMEWORK-2026-07-13.md (the layer/hypothesis architecture, Layer-3 \
 ledger parsed live in S9); docs/COMPLETE-THEORY-2026-07-13.md; \
-05-CERT-epsilon-certificates/CONVERGENCE-ANALYSIS-2026-07-13.md.\
+composition-optimality/CONVERGENCE-ANALYSIS-2026-07-13.md.\
 \>", "Item",ExpressionUUID->"8b7c6fff-6d6f-cb4f-a167-7751905862e7"],
 
 Cell["Global verification (the essay's OK -> True contract)", "Section",ExpressionUUID->"6ad97031-22d6-a644-bd0b-f6ef1aa97619"],

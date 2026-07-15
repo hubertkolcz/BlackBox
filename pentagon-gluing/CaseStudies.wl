@@ -355,7 +355,7 @@ alphaCisTheorem
 (*Load and exactly re-verify the certificate \[LongDash] node and edge equalities, 256 exact PSD checks, strategy-derived rates, closure \[LongDash] plus an end-to-end assembly check: the rational blocks assembled on small cct and pure-trans rings give exact PSD certificates dominating the dense-SDP \[CurlyTheta]:*)
 
 (* ::Input:: *)
-Get[FileNameJoin[{Quiet@Check[NotebookDirectory[], Directory[]], "..", "05-CERT-epsilon-certificates", "EpsilonCertificate.wl"}]];
+Get[FileNameJoin[{Quiet@Check[NotebookDirectory[], Directory[]], "..", "composition-optimality", "EpsilonCertificate.wl"}]];
 epsilonCertificateCheck = Module[
   {kE, nodesE, Qs, Rs, psiE, phiE, stratE, edgesE, ok = True, ratesE, gamE, dE,
    iu = 1, iv = 2, ia = 3, ib = 4, ip = 5, jv = 1, jb = 2, jx = 3, jp = 4},
@@ -414,7 +414,7 @@ epsilonAssemblyCheck = Module[{assemble, kE = EpsilonCertificate["k"]},
 (*Exact re-verification (both k = 7 and k = 8): the pointwise per-edge bound \[Sigma](e) <= \[CapitalGamma] over ALL edges (the all-words density bound), the worst periodic word's de Bruijn cycle mean = \[CapitalGamma] up to the rationalization sliver (periodic attainment), and \[CapitalGamma]_8 < \[CapitalGamma]_7:*)
 
 (* ::Input:: *)
-Get[FileNameJoin[{Quiet@Check[NotebookDirectory[], Directory[]], "..", "05-CERT-epsilon-certificates", "EpsilonCertificate8.wl"}]];
+Get[FileNameJoin[{Quiet@Check[NotebookDirectory[], Directory[]], "..", "composition-optimality", "EpsilonCertificate8.wl"}]];
 posEdges[CE_] := Select[Tuples[CE["Nodes"], 2], StringDrop[#[[1]], 1] === StringDrop[#[[2]], -1] &];
 posSigma[CE_][e_] := Module[{w = e[[1]], x = e[[2]], T, r, ip = 5, jp = 4},
   T = dpTransfer[StringTake[w, {-1}]];

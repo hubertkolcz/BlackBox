@@ -5,13 +5,13 @@ claims ledger) and the literature it cites. Written as a candid self-audit, not 
 
 ## What was built
 
-Two new files in `00-BBT-blackbox-protocol/`:
+Two new files in `certification-protocol/`:
 
 - **BlackBoxCertifier.wl** — a native-Wolfram-Language port of `mbqc_blackbox_test.py`'s
   correlation gates (C1-C5), plus the project's later gate family (G7 DLA hook, eta*, G9, G8,
-  OQ1), wired directly onto the 09-EMU blueprint schema (`BlueprintTable`, `CertifyBlueprint`).
-  It is the missing bridge that lets a single Wolfram session run 09-EMU's own stated loop
-  ("00-BBT certifies; 09-EMU builds") without shelling out to Python.
+  OQ1), wired directly onto the optical-synthesis blueprint schema (`BlueprintTable`, `CertifyBlueprint`).
+  It is the missing bridge that lets a single Wolfram session run optical-synthesis's own stated loop
+  ("certification-protocol certifies; optical-synthesis builds") without shelling out to Python.
 - **ConstructCertifyLoop.nb** — a computational essay that states the four-category taxonomy
   the user asked to have organized explicitly (device metrics / engine self-validation / engine
   trust boundary / engine access-expansion), diagrams it, and runs the construct-certify-verdict
@@ -32,7 +32,7 @@ Lie-algebraic (so(3) DLA) criterion; `TwoLensVerdict` combines them. This is not
 it is BBT-002/BBT-003 (the ledger's "blind spot" and "two-lens necessity" propositions) — but it
 had not previously been exercised through an actual constructed blueprint object end to end.
 Section 7b of the notebook is the first place in the repository where Proposition 1 is
-reproduced by literally constructing a 09-EMU-style blueprint, reading its table back out, and
+reproduced by literally constructing a optical-synthesis-style blueprint, reading its table back out, and
 watching the correlation lens alone misclassify it. That is a legitimate, if modest, new claim
 (candidate ledger entry below) — everything under it (BBT-002, BBT-003, LP-001) is cited, not
 re-derived.
@@ -41,7 +41,7 @@ Against the primary D2 track ("compute probabilistic exclusivity graphs under GE
 Hamiltonians — KCBS 5-cycle as atomic block") this module *is* the atomic-block layer: C3
 (`CEFilter`) is a direct k=2 instantiation of Cabello's consistent-exclusivity principle
 (arXiv:1210.2988) on the KCBS pentagon specifically. It does not attempt the cluster-state or
-Quad-C5 composition layers above it (03-MESH, 04-cluster-state-mbqc already own that ground);
+Quad-C5 composition layers above it (pentagon-gluing, cluster-state-realization already own that ground);
 this module's contribution sits underneath those, at the single-block certification level.
 
 ## What is explicitly NOT claimed
@@ -96,7 +96,7 @@ essay's Output cell and surrounding text were corrected to show both reasons.
 
 | ID | Statement | Value | Tag | Class | Depends on | Status |
 |---|---|---|---|---|---|---|
-| BBT-006 | Native-WL bridge (`BlackBoxCertifier.wl`) wiring the C1-C5/G7/eta* correlation-plus-geometric certification protocol directly onto 09-EMU's blueprint schema (`BlueprintTable`, `CertifyBlueprint`), closing the "00-BBT certifies; 09-EMU builds" loop the repository's own README names. First live reproduction of Proposition 1 (BBT-002) and the two-lens override (BBT-003) through an actually-constructed blueprint object rather than a bare table. | `BlueprintTable[bpL1]` matches `QuantumTable[1]` to 1.665e-16 (machine epsilon); declared-adversary blueprint `bpL2` reads QUANTUM-CERTIFIED at the correlation level, EMULATION-SUSPECT after `TwoLensVerdict` (G7 override); mesh blueprint reads two-lens-agree QUANTUM-CERTIFIED with auto-audited DLA (span 2, dim 3) | NOVEL implementation; reuses BBT-002/BBT-003/LP-001 mathematics without modification | B (exact/kernel-verified numerics; not a new proof) | BBT-002, BBT-003, LP-001, EMU-001 | built + kernel-verified 2026-07-14; G7-CV not ported (scoped gap, see above); companion notebook ConstructCertifyLoop.nb |
+| BBT-006 | Native-WL bridge (`BlackBoxCertifier.wl`) wiring the C1-C5/G7/eta* correlation-plus-geometric certification protocol directly onto optical-synthesis's blueprint schema (`BlueprintTable`, `CertifyBlueprint`), closing the "certification-protocol certifies; optical-synthesis builds" loop the repository's own README names. First live reproduction of Proposition 1 (BBT-002) and the two-lens override (BBT-003) through an actually-constructed blueprint object rather than a bare table. | `BlueprintTable[bpL1]` matches `QuantumTable[1]` to 1.665e-16 (machine epsilon); declared-adversary blueprint `bpL2` reads QUANTUM-CERTIFIED at the correlation level, EMULATION-SUSPECT after `TwoLensVerdict` (G7 override); mesh blueprint reads two-lens-agree QUANTUM-CERTIFIED with auto-audited DLA (span 2, dim 3) | NOVEL implementation; reuses BBT-002/BBT-003/LP-001 mathematics without modification | B (exact/kernel-verified numerics; not a new proof) | BBT-002, BBT-003, LP-001, EMU-001 | built + kernel-verified 2026-07-14; G7-CV not ported (scoped gap, see above); companion notebook ConstructCertifyLoop.nb |
 
 ## Bottom line
 

@@ -2,7 +2,7 @@
 
 Reads erg003_family_results/family_NN.json (canonical records; method field
 distinguishes 'elim2'/'elimination' exhaustive decisions from chain-search
-PARTIALs) and writes 02-D1-theory-frontier/erg003_verdict.json:
+PARTIALs) and writes open-search-frontier/erg003_verdict.json:
   {omega17exists, familiesExhausted, families, witnesses, totalNodes,
    totalWallHours, remaining, method_notes}
 omega17exists: true if any YES; false only if ALL 26 exhausted NO; else null.

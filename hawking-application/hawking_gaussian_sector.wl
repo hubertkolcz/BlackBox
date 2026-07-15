@@ -2,7 +2,7 @@
 
 (* =====================================================================
    hawking_gaussian_sector.wl  --  MASTER ASSEMBLY of the Gaussian
-   (covariance-matrix) Hawking sector, module 08-HK-hawking.  INTEGRATOR
+   (covariance-matrix) Hawking sector, module hawking-application.  INTEGRATOR
    deliverable: loads the engine + Hawking physics + witnesses/bridge and
    runs the unified A1..A8 scoreboard, ending in the association
    GaussianHawkingVerification with "OK" -> True.
@@ -41,7 +41,7 @@
        Bartlett & Sanders, PRA 65, 042304 (2002)).  So this ENTIRE Hawking
        sector sits on the EMULABLE side of the framework's two-lens
        boundary, mirroring the Clifford status of the qubit Hawking module
-       (04-cluster-state-mbqc/cct_mbqc_hawking_certification.wl).  The A8
+       (cluster-state-realization/cct_mbqc_hawking_certification.wl).  The A8
        audit adds the two-tier refinement: the generator set is still
        ACTIVE sp(4,R) (genuine squeezing, not passive u(2)), so it is NOT
        passive-linear-optics-emulable even though it IS Gaussian-

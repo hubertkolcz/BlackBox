@@ -7,7 +7,7 @@
 (*Section Builder C: the constructive mirror, the gates that failed, the named-hypothesis frontier, and methods*)
 
 (* ::Text:: *)
-(*Hubert Ko\[LSlash]cz \[LongDash] July 2026. This is the S7-S10 fragment of the master computational essay Evaluating Black-Box Physics through Optical Emulation (spine in docs/ESSAY-OUTLINE.md). It is a self-contained, Get-loadable, headless-verifiable module in its own right: it loads the paclet and the 09-EMU optical compiler, runs every number it prints through the kernel at evaluation time (THE PRIME DIRECTIVE), and closes on the association EssaySectionsCVerification whose "OK" key must be True. Labeling discipline mirrors docs/FRAMEWORK-2026-07-13.md: [T] theorem/machine-verified, [C] certified numeric, [R] refuted route (an established negative, first-class), [H] named hypothesis (open). Run headless via runners/RunEssaySectionsC.wl.*)
+(*Hubert Ko\[LSlash]cz \[LongDash] July 2026. This is the S7-S10 fragment of the master computational essay Evaluating Black-Box Physics through Optical Emulation (spine in docs/ESSAY-OUTLINE.md). It is a self-contained, Get-loadable, headless-verifiable module in its own right: it loads the paclet and the optical-synthesis optical compiler, runs every number it prints through the kernel at evaluation time (THE PRIME DIRECTIVE), and closes on the association EssaySectionsCVerification whose "OK" key must be True. Labeling discipline mirrors docs/FRAMEWORK-2026-07-13.md: [T] theorem/machine-verified, [C] certified numeric, [R] refuted route (an established negative, first-class), [H] named hypothesis (open). Run headless via runners/RunEssaySectionsC.wl.*)
 
 (* ::CodeText:: *)
 (*Loader. Locate the repository root from this file's own path (Get sets $InputFileName), load the BlackBox paclet and the EMU master compiler, and repair the Global`-shadowing pitfall that wolframscript's whole-file tokenisation would otherwise introduce (documented in CertifyingQuantumness.wl / RunEssay.wl):*)
@@ -34,20 +34,20 @@ $BlackBoxRepoRoot = Module[
      manifest = {"BlackBox/PacletInfo.wl", "BlackBox/Kernel/BlackBox.wl",
        "docs/essay-src/essay_sections_1_3.wl", "docs/essay-src/essay_sections_4_6.wl",
        "docs/essay-src/essay_sections_7_10.wl",
-       "09-EMU-optical-compiler/OpticalCompiler.wl", "09-EMU-optical-compiler/DispatcherEmitter.wl",
-       "09-EMU-optical-compiler/InterferometerLayer.wl", "09-EMU-optical-compiler/IntensityLayer.wl",
-       "05-CERT-epsilon-certificates/EpsilonCertificate7_regenerated.wl",
-       "05-CERT-epsilon-certificates/EpsilonCertificate8_regenerated.wl",
-       "05-CERT-epsilon-certificates/EpsilonCertificate9.wl",
-       "05-CERT-epsilon-certificates/EpsilonCertificate10.wl",
-       "08-HK-hawking/hawking_gaussian_sector.wl", "08-HK-hawking/gaussian_engine.wl",
-       "08-HK-hawking/gaussian_hawking_physics.wl", "08-HK-hawking/gaussian_witnesses_bridge.wl",
-       "06-D3-sheaf-cohomology/final_h1_cocycle_results.json",
-       "02-D1-theory-frontier/erg003_verdict.json", "docs/FRAMEWORK-2026-07-13.md",
-       "09-EMU-optical-compiler/schematics/demo1_kcbs_pentagon_L1.png",
-       "09-EMU-optical-compiler/schematics/demo3_cct_mesh_reps2.png",
-       "00-BBT-blackbox-protocol/certification_map.png",
-       "05-CERT-epsilon-certificates/orbit_spectrum.png"};
+       "optical-synthesis/OpticalCompiler.wl", "optical-synthesis/DispatcherEmitter.wl",
+       "optical-synthesis/InterferometerLayer.wl", "optical-synthesis/IntensityLayer.wl",
+       "composition-optimality/EpsilonCertificate7_regenerated.wl",
+       "composition-optimality/EpsilonCertificate8_regenerated.wl",
+       "composition-optimality/EpsilonCertificate9.wl",
+       "composition-optimality/EpsilonCertificate10.wl",
+       "hawking-application/hawking_gaussian_sector.wl", "hawking-application/gaussian_engine.wl",
+       "hawking-application/gaussian_hawking_physics.wl", "hawking-application/gaussian_witnesses_bridge.wl",
+       "bound-derivation-question/final_h1_cocycle_results.json",
+       "open-search-frontier/erg003_verdict.json", "docs/FRAMEWORK-2026-07-13.md",
+       "optical-synthesis/schematics/demo1_kcbs_pentagon_L1.png",
+       "optical-synthesis/schematics/demo3_cct_mesh_reps2.png",
+       "certification-protocol/certification_map.png",
+       "composition-optimality/orbit_spectrum.png"};
      Do[dest = FileNameJoin[Prepend[FileNameSplit[rel], cacheRoot]];
        If[! (FileExistsQ[dest] && FileByteCount[dest] > 0),
          Quiet@CreateDirectory[DirectoryName[dest], CreateIntermediateDirectories -> True];
@@ -66,7 +66,7 @@ $BlackBoxRepoRoot = Module[
      cacheRoot]];
 PacletDirectoryLoad[FileNameJoin[{$BlackBoxRepoRoot, "BlackBox"}]];
 Needs["HubertKolcz`BlackBox`"];
-Get[FileNameJoin[{$BlackBoxRepoRoot, "09-EMU-optical-compiler", "OpticalCompiler.wl"}]];
+Get[FileNameJoin[{$BlackBoxRepoRoot, "optical-synthesis", "OpticalCompiler.wl"}]];
 Quiet[Remove /@ Select["Global`" <> # & /@ Names["HubertKolcz`BlackBox`*"], NameQ]];
 Quiet[Remove /@ Select["Global`" <> # & /@ Names["HubertKolcz`OpticalCompiler`*"], NameQ]];
 
@@ -75,14 +75,14 @@ Quiet[Remove /@ Select["Global`" <> # & /@ Names["HubertKolcz`OpticalCompiler`*"
 
 (* ::Input:: *)
 readResult[relpath_] := Import[FileNameJoin[Prepend[FileNameSplit[relpath], $BlackBoxRepoRoot]], "RawJSON"];
-h1Result = readResult["06-D3-sheaf-cohomology/final_h1_cocycle_results.json"];
-erg003 = readResult["02-D1-theory-frontier/erg003_verdict.json"];
+h1Result = readResult["bound-derivation-question/final_h1_cocycle_results.json"];
+erg003 = readResult["open-search-frontier/erg003_verdict.json"];
 
 (* ::Section:: *)
 (*S7 \[LongDash] The Constructive Mirror: Emulator Blueprints (EMU-001, F8)*)
 
 (* ::Text:: *)
-(*Sections 1-6 read the device: given a table, decide genuine-vs-emulable through the two lenses. This section runs the same two-lens mathematics in reverse. The 09-EMU three-layer optical compiler is the synthesis dual of the BBT protocol: hand it a target (a KCBS scenario, an n-cycle, a mesh word, or a no-disturbance table) and it emits a physical optical blueprint together with the blueprint's OWN two-lens verdict \[LongDash] genuine so(3)/Sp(2n,\[DoubleStruckCapitalR]) interferometer versus block-local leaf-confined intensity emulator. Every blueprint self-certifies (gate A5, VerifyBlueprint) before it is trusted: it re-simulates its own optics and checks the reproduced statistics against the target. [T]*)
+(*Sections 1-6 read the device: given a table, decide genuine-vs-emulable through the two lenses. This section runs the same two-lens mathematics in reverse. The optical-synthesis three-layer optical compiler is the synthesis dual of the BBT protocol: hand it a target (a KCBS scenario, an n-cycle, a mesh word, or a no-disturbance table) and it emits a physical optical blueprint together with the blueprint's OWN two-lens verdict \[LongDash] genuine so(3)/Sp(2n,\[DoubleStruckCapitalR]) interferometer versus block-local leaf-confined intensity emulator. Every blueprint self-certifies (gate A5, VerifyBlueprint) before it is trusted: it re-simulates its own optics and checks the reproduced statistics against the target. [T]*)
 
 (* ::CodeText:: *)
 (*Demo 1 \[LongDash] the Lapkiewicz KCBS pentagon reconstruction. The compiler emits a Layer-1 Givens/beamsplitter cascade [P,T1,T2,T1,T2] on three modes:*)
@@ -131,11 +131,11 @@ bpMesh = EmitBlueprint[<|"Word" -> "cct", "Reps" -> 2|>];
 (*The committed schematics (re-emitted by runners/RunOpticalCompiler.wl so they never drift from the numbers above): the KCBS Layer-1 cascade and the cct mesh. Displayed from the compiler's own committed output.*)
 
 (* ::Input:: *)
-With[{f = FileNameJoin[{$BlackBoxRepoRoot, "09-EMU-optical-compiler", "schematics", "demo1_kcbs_pentagon_L1.png"}]},
+With[{f = FileNameJoin[{$BlackBoxRepoRoot, "optical-synthesis", "schematics", "demo1_kcbs_pentagon_L1.png"}]},
   If[FileExistsQ[f], Import[f], Missing["figure unavailable"]]]
 
 (* ::Input:: *)
-With[{f = FileNameJoin[{$BlackBoxRepoRoot, "09-EMU-optical-compiler", "schematics", "demo3_cct_mesh_reps2.png"}]},
+With[{f = FileNameJoin[{$BlackBoxRepoRoot, "optical-synthesis", "schematics", "demo3_cct_mesh_reps2.png"}]},
   If[FileExistsQ[f], Import[f], Missing["figure unavailable"]]]
 
 (* ::Text:: *)
@@ -155,10 +155,10 @@ deltaC5 = CycleCoboundary[5];
 Chop[HarmonicResidual[deltaC5, N@CycleModel[5, #]] & /@ {"Classical", "Quantum", "Wright"}]
 
 (* ::CodeText:: *)
-(*(ii) The affine \[Alpha]-credit tilt [R] (F9i). No affine-in-f_c certificate family can have limiting gap equal to gap(cct): the linear correction is inert against the kinked \[Alpha]-floor. Proof: 05-CERT-epsilon-certificates (CONVERGENCE-ANALYSIS-2026-07-13.md) / FRAMEWORK F9i. [R, theorem]*)
+(*(ii) The affine \[Alpha]-credit tilt [R] (F9i). No affine-in-f_c certificate family can have limiting gap equal to gap(cct): the linear correction is inert against the kinked \[Alpha]-floor. Proof: composition-optimality (CONVERGENCE-ANALYSIS-2026-07-13.md) / FRAMEWORK F9i. [R, theorem]*)
 
 (* ::CodeText:: *)
-(*(iii) The Legendre \[Theta]-frontier [R, theorem] (F9viii / CERT-004). A certified Legendre frequency-frontier equals the upper CONCAVE HULL of \[Theta]-bar over cis-frequency f_c \[LongDash] and that hull is pinned flat at 3/2 on f_c in [1/2,1] (the words ct and ccct attain \[Theta]-bar = 3/2 exactly), while cct sits strictly below it, unexposed by any supporting hyperplane. So the route certifies a gap floor of at least 3/2 - 4/3, recomputed live below \[LongDash] worse than the flat certificate \[CapitalGamma]\:2089. File-sourced: hull(2/3) = 3/2, cct \[Theta]-bar = 1.4032309 (0.0967691 below the hull), from 03-MESH-pentagon-composition/final_cct_hull.py.*)
+(*(iii) The Legendre \[Theta]-frontier [R, theorem] (F9viii / CERT-004). A certified Legendre frequency-frontier equals the upper CONCAVE HULL of \[Theta]-bar over cis-frequency f_c \[LongDash] and that hull is pinned flat at 3/2 on f_c in [1/2,1] (the words ct and ccct attain \[Theta]-bar = 3/2 exactly), while cct sits strictly below it, unexposed by any supporting hyperplane. So the route certifies a gap floor of at least 3/2 - 4/3, recomputed live below \[LongDash] worse than the flat certificate \[CapitalGamma]\:2089. File-sourced: hull(2/3) = 3/2, cct \[Theta]-bar = 1.4032309 (0.0967691 below the hull), from pentagon-gluing/final_cct_hull.py.*)
 
 (* ::Input:: *)
 legendreFloor = 3/2 - 4/3;
@@ -172,7 +172,7 @@ legendreFloor = 3/2 - 4/3;
  h1Result["obstruction_2_gauge_noninvariance"]["C5_k2"]["D_half_y_1over2_on_both_partitions"]["bad_overlaps"]}
 
 (* ::CodeText:: *)
-(*(v) The Delsarte / Schrijver \[Theta]' LP [R, theorem] (F9ix / ERG-004a). On the \[DoubleStruckCapitalZ]\:2081\:2083^k translation scheme the Schrijver \[Theta]' equals exactly 13^(k/2) \[LongDash] identical to the Lov\[AAcute]sz ceiling \[LongDash] so the LP can neither close (< 40) nor tighten (< 46) the Paley bracket. The ceiling at k = 3 is Floor[13^(3/2)], recomputed live; the 13^(k/2) identity is the file-sourced theorem (02-D1-theory-frontier/final_paley13_lp.py):*)
+(*(v) The Delsarte / Schrijver \[Theta]' LP [R, theorem] (F9ix / ERG-004a). On the \[DoubleStruckCapitalZ]\:2081\:2083^k translation scheme the Schrijver \[Theta]' equals exactly 13^(k/2) \[LongDash] identical to the Lov\[AAcute]sz ceiling \[LongDash] so the LP can neither close (< 40) nor tighten (< 46) the Paley bracket. The ceiling at k = 3 is Floor[13^(3/2)], recomputed live; the 13^(k/2) identity is the file-sourced theorem (open-search-frontier/final_paley13_lp.py):*)
 
 (* ::Input:: *)
 {13^(3/2) // N, Floor[13^(3/2)]}
@@ -181,7 +181,7 @@ legendreFloor = 3/2 - 4/3;
 (*(vi) The Ramsey obstruction [R] (F9v). The Choudhary-Barbosa Ramsey technique provably cannot certify \[Omega] <= 17 for the mixed nonagon cell (its bound is too weak for this graph). Proof: FRAMEWORK F9v / ERG-003 analysis. [R, theorem]*)
 
 (* ::CodeText:: *)
-(*(vii) The ergodic-sheaf category error [R] (F9ii). The proposed static<->dynamic unification is a category error: the cross-side T->0 limit yields packing 5/2, not a certificate value \[CapitalGamma], and does not select cct. Proof: 06-D3 / FRAMEWORK F9ii. [R]*)
+(*(vii) The ergodic-sheaf category error [R] (F9ii). The proposed static<->dynamic unification is a category error: the cross-side T->0 limit yields packing 5/2, not a certificate value \[CapitalGamma], and does not select cct. Proof: bound-derivation-question / FRAMEWORK F9ii. [R]*)
 
 (* ::CodeText:: *)
 (*(viii) Bound-inertness [R] (F9x / ERG-004b). Zero of the 26 pentagram families are bound-eliminable (the inertness lemma: \[Omega](cn(Q_m)) >= 8 - s_m meets the generator constraint), so S = 17 is search-bound, not bound-decidable. The family count is read live from the committed ERG-003 verdict:*)
@@ -239,7 +239,7 @@ Grid[Prepend[hRows, hHeader], Frame -> All, Alignment -> Left,
 {Floor[13^(3/2)], 13*3}
 
 (* ::CodeText:: *)
-(*Signaling assessment (O5 / SIG-001..003), a feasibility pointer. The KCBS lock's exact cost is the contextual fraction \[Mu] = 2\[Sqrt]5 - 4 bits/round, recomputed live in exact arithmetic; the 3-gate signaling taxonomy over 7 exemplars and one refuted candidate identity live in 07-SIG-signaling. [T]*)
+(*Signaling assessment (O5 / SIG-001..003), a feasibility pointer. The KCBS lock's exact cost is the contextual fraction \[Mu] = 2\[Sqrt]5 - 4 bits/round, recomputed live in exact arithmetic; the 3-gate signaling taxonomy over 7 exemplars and one refuted candidate identity live in signaling-extension. [T]*)
 
 (* ::Input:: *)
 muCost = FullSimplify[ContextualFraction[CycleScenario[5], CycleModel[5, "Quantum"], WorkingPrecision -> Infinity]];
@@ -293,7 +293,7 @@ EssaySectionsCVerification = <|
      still open (the leaf-confinement claim itself) -- same "test that it's
      honestly recorded as open" pattern already used by this repo's own
      D1K3ActivationVerification["C7_honestly_left_open"]
-     (02-D1-theory-frontier/d1_k3_activation.wl). Both keys below are true
+     (open-search-frontier/d1_k3_activation.wl). Both keys below are true
      TODAY, so the essay's OK->True contract still holds, but for the right
      reason: nothing is asserted about mesh leaf-confinement that hasn't
      actually been computed. *)
@@ -334,4 +334,4 @@ Column[{EssaySectionsCVerification, "OK" -> And @@ Values[EssaySectionsCVerifica
 (*Abramsky, Mansfield, Barbosa, arXiv:1111.3620 \[LongDash] cohomology of contextuality (the H\.b9 route, refuted as posed, F9vii).*)
 
 (* ::Item:: *)
-(*docs/FRAMEWORK-2026-07-13.md (the layer/hypothesis architecture, Layer-3 ledger parsed live in S9); docs/COMPLETE-THEORY-2026-07-13.md; 05-CERT-epsilon-certificates/CONVERGENCE-ANALYSIS-2026-07-13.md.*)
+(*docs/FRAMEWORK-2026-07-13.md (the layer/hypothesis architecture, Layer-3 ledger parsed live in S9); docs/COMPLETE-THEORY-2026-07-13.md; composition-optimality/CONVERGENCE-ANALYSIS-2026-07-13.md.*)

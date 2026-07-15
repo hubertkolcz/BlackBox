@@ -8,10 +8,10 @@
 (* :Summary:
    Native-Wolfram-Language port of the black-box certification protocol
    (mbqc_blackbox_test.py) plus its whole "second-generation" gate family
-   (G7-G9, eta*, OQ1/OQ2), wired directly onto the 09-EMU-optical-compiler
-   blueprint schema. 00-BBT certifies; 09-EMU builds; this module is the
+   (G7-G9, eta*, OQ1/OQ2), wired directly onto the optical-synthesis
+   blueprint schema. certification-protocol certifies; optical-synthesis builds; this module is the
    missing pure-WL bridge that lets a SINGLE Wolfram notebook run the full
-   loop -- construct a device (09-EMU) -> certify it (this module) -> get a
+   loop -- construct a device (optical-synthesis) -> certify it (this module) -> get a
    quantitative grade -- with every claim kernel-verified in place, instead
    of shelling out to Python.
 
@@ -82,7 +82,7 @@ InterventionalOrbitProbe::usage = "InterventionalOrbitProbe[] (OQ1, illustrative
 
 (* ---- integration: the two lenses, the blueprint bridge, the grade ------ *)
 TwoLensVerdict::usage = "TwoLensVerdict[tableVerdict_String, reasons_List, dlaAudit] combines the correlation-lens verdict with an (optional) G7 audit per Proposition O3-C: QUANTUM-CERTIFIED + leaf-confined audit -> overridden to EMULATION-SUSPECT (closes the Prop.1/BBT-002 blind spot); QUANTUM-CERTIFIED + no audit supplied -> left standing, flagged 'DLA not audited' (Prop.2/BBT-003: no table functional can decide it either way); otherwise unchanged.";
-BlueprintTable::usage = "BlueprintTable[bp] extracts the exact 20-vector KCBS table from a 09-EMU EmitBlueprint[] Association: L1 (reconstructs Born-rule context probabilities from bp[\"Stages\"], matching DispatcherEmitter.wl's l1ContextProbs / VerifyBlueprint convention exactly), L2 (reads bp[\"Schedule\"][\"TableReproduced\"][\"Exact\"] directly), Mesh (returns the single-pentagon KCBS anchor table, block-local by construction -- see the module header; a genuine per-block joint simulator is out of scope).";
+BlueprintTable::usage = "BlueprintTable[bp] extracts the exact 20-vector KCBS table from a optical-synthesis EmitBlueprint[] Association: L1 (reconstructs Born-rule context probabilities from bp[\"Stages\"], matching DispatcherEmitter.wl's l1ContextProbs / VerifyBlueprint convention exactly), L2 (reads bp[\"Schedule\"][\"TableReproduced\"][\"Exact\"] directly), Mesh (returns the single-pentagon KCBS anchor table, block-local by construction -- see the module header; a genuine per-block joint simulator is out of scope).";
 CertifyBlueprint::usage = "CertifyBlueprint[bp] is the full construct-to-certify bridge: extracts BlueprintTable[bp], runs CertifyTable+TableVerdict (Category 1), reads bp's own DLA claim from \"CertificationVerdict\" (Category 3/G7) and combines via TwoLensVerdict. Gives a full report Association including \"Table\",\"Cert\",\"CorrelationVerdict\",\"DLA\",\"TwoLensVerdict\".";
 GradeReport::usage = "GradeReport[e] or GradeReport[bp] (blueprint or bare table) prints and returns a human-readable quantitative grade: the categorical verdict, the contextual fraction CF_hat against its three named anchors {0 classical, 2Sqrt5-4 quantum-max, 1 Wright/exclusivity-extremal}, the node sum against {2,Sqrt5,5/2}, the G7 DLA reading, and a presentational (non-canonical, explicitly labeled) 0-100 QuantumnessIndex = Clip[100 CF_hat/(2Sqrt5-4),0,100+].";
 EngineMap::usage = "EngineMap[] gives the kernel-generated dependency Graph of the whole assessment engine: the four categories (device metrics / engine self-validation / engine trust-boundary / engine redesign-expansion), color-coded, with edges showing which gates gate/feed/bound which.";
@@ -325,7 +325,7 @@ GradeReport[x_] := Module[{tbl, cert, cv, dla, tl, cfHat, sigma, qIndex},
 EngineMap[] := Module[{nodes, labels, coordList, colBlue, colGray, colAmber, colGreen, colRed, colorList, labelOf, edges},
   nodes = {"C1", "C2", "C3", "C4", "C5", "Sanity", "AEmu", "G7", "EtaStar", "G8", "G9", "OQ1", "VERDICT"};
   labels = {"C1\nno-disturbance", "C2\ncontextual\nfraction", "C3\nCE^2", "C4\npossibilistic\nsupport", "C5\nnode sum",
-    "sanity-first\nanchors", "A1\[Dash]A5\n(09-EMU)", "G7\nDLA hook", "\[Eta]*=2/\[Sqrt]5",
+    "sanity-first\nanchors", "A1\[Dash]A5\n(optical\nsynthesis)", "G7\nDLA hook", "\[Eta]*=2/\[Sqrt]5",
     "G8\nattenuation", "G9\nantibunching", "OQ1\ninterventional", "VERDICT"};
   coordList = {{-4, 3}, {-2, 3}, {0, 3}, {2, 3}, {4, 3},
     {-4.5, 1.6}, {-2.2, 1.6}, {1.5, 1.6}, {3.8, 1.6},

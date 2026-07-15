@@ -1,9 +1,9 @@
 (* ::Package:: *)
 
 (* ===========================================================================
-   InterferometerLayer.wl  --  Layer 1 (Builder A) of 09-EMU-optical-compiler.
+   InterferometerLayer.wl  --  Layer 1 (Builder A) of optical-synthesis.
 
-   The CONSTRUCTIVE mirror of 00-BBT certification, interferometer layer:
+   The CONSTRUCTIVE mirror of certification-protocol certification, interferometer layer:
    given a target unitary (matrix form) or a contextuality scenario (spec form),
    synthesize the Givens / beamsplitter MESH that realizes it, plus the
    pentagon-mesh routing of a (word, reps) target.
@@ -145,7 +145,7 @@ KCBSCascadeStages[n_Integer /; OddQ[n] && n >= 3] := KCBSCascadeStages[n] = Modu
        "sharedDetector" -> sharedDetector|>|>];
 
 (* --- biphoton (spin-1) u(x)u lift, n=5 only ---
-   helpers extracted verbatim from 01-D2-core-computation/BiphotonSimulator.wl
+   helpers extracted verbatim from pentagon-foundations/BiphotonSimulator.wl
    (Encoding B, Sec. 9 of kcbs_circuit.wl). Numeric by construction (ZYZ). *)
 uzB[t_] := DiagonalMatrix[{Exp[-I t/2], Exp[I t/2]}];
 uyB[t_] := {{Cos[t/2], -Sin[t/2]}, {Sin[t/2], Cos[t/2]}};
@@ -292,7 +292,7 @@ diagStage[diag_, n_, exQ_] := <|
 (* ------------------------------------------------------------------ *)
 (* CompileMeshRouting                                                  *)
 (* wordRingEdgesFast copied VERBATIM from                              *)
-(* 04-cluster-state-mbqc/cct_mesh_sparse_construction.wl (Section 1),  *)
+(* cluster-state-realization/cct_mesh_sparse_construction.wl (Section 1),  *)
 (* the O(L) single-Table + one-Flatten construction (no Join-in-loop). *)
 (* ------------------------------------------------------------------ *)
 

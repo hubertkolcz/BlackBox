@@ -94,8 +94,8 @@
 
 (* ---------------------------------------------------------------------------
    wordRingEdgesFast: copied VERBATIM from
-   04-cluster-state-mbqc/cct_mesh_sparse_construction.wl (O(L) replacement for the
-   original wordRing in 03-MESH-pentagon-composition/CaseStudies.wl; verified there to
+   cluster-state-realization/cct_mesh_sparse_construction.wl (O(L) replacement for the
+   original wordRing in pentagon-gluing/CaseStudies.wl; verified there to
    give the EXACT same edge set at reps=1..50 and benchmarked to reps=3e6).
    NOT modified here in any way.
    --------------------------------------------------------------------------- *)

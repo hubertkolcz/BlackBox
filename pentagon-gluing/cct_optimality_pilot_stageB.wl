@@ -12,8 +12,8 @@
    there, the residual slack is entirely theta-side and the tilt is inert. *)
 
 SetDirectory[DirectoryName[$InputFileName]];
-Get[FileNameJoin[{Directory[], "..", "05-CERT-epsilon-certificates", "EpsilonCertificate.wl"}]];
-Get[FileNameJoin[{Directory[], "..", "05-CERT-epsilon-certificates", "EpsilonCertificate8.wl"}]];
+Get[FileNameJoin[{Directory[], "..", "composition-optimality", "EpsilonCertificate.wl"}]];
+Get[FileNameJoin[{Directory[], "..", "composition-optimality", "EpsilonCertificate8.wl"}]];
 
 dpStates = {{0, 0}, {1, 0}, {0, 1}};
 dpTransfer[letter_] := Module[{T = ConstantArray[-Infinity, {3, 3}], out, j},

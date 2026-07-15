@@ -1,6 +1,6 @@
 (* ::Package:: *)
 
-(* :Title: DispatcherEmitter (09-EMU-optical-compiler, Builder C) *)
+(* :Title: DispatcherEmitter (optical-synthesis, Builder C) *)
 (* :Context: HubertKolcz`OpticalCompiler` *)
 (* :Author: Hubert Kolcz *)
 (* :Date: 2026-07-13 *)
@@ -8,7 +8,7 @@
 (* :Summary:
    Layer 3 (dispatcher), the blueprint emitter, the schematic renderer, and the
    self-certification loop of the optical compiler -- the CONSTRUCTIVE mirror of
-   00-BBT certification.  Given a target (a scenario name, a claimed generator
+   certification-protocol certification.  Given a target (a scenario name, a claimed generator
    set, a no-disturbance table, or a pentagon-mesh word), DispatchLayers decides
    per component whether an intensity redistribution (Layer 2, leaf-confined,
    emulable) suffices or a genuine interferometer (Layer 1, so(3) DLA >= 3) is
@@ -37,8 +37,8 @@
    exposes is re-implemented.  The KCBS Givens angle is kept as
    ArcCos[1/GoldenRatio] and matrix entries stay algebraic on the exact path;
    N[...] fills only the "Numeric" twin and the Graphics.  The CV column ports
-   00-BBT/final_o3_cv_dla.py (Sp(2n,R) leaf-confinement) with attribution.  Mesh
-   routing copies wordRingEdgesFast from 04-cluster-state-mbqc verbatim (single
+   certification-protocol/final_o3_cv_dla.py (Sp(2n,R) leaf-confinement) with attribution.  Mesh
+   routing copies wordRingEdgesFast from cluster-state-realization verbatim (single
    Table + one Flatten; no Join-in-loop).
 
    Loadability: definitions only; nothing heavy runs on bare Get.  The A1-A5
@@ -63,7 +63,7 @@ IntensityTableKCBS::usage = "IntensityTableKCBS[t_, delta_] gives the KCBS/cycle
 
 (* ---- Layer 3 : dispatcher --------------------------------------------------- *)
 DispatchLayers::usage = "DispatchLayers[targetSpec_Association] gives the per-component dispatch association: for each component a Span, DLADimension, LeafConfined flag, Verdict (emulable|genuine) and Layer (L1|L2|Mesh). Genuine (DLA>=3)=>L1; leaf-confined (DLA<3) or table-only=>L2.";
-CVLeafConfinedQ::usage = "CVLeafConfinedQ[gens_List, n_Integer] gives the Sp(2n,R) leaf-confinement audit of a claimed Gaussian generator set (ported from 00-BBT/final_o3_cv_dla.py): <|\"Dim\",\"Compact\",\"Confined\"|>. Confined <=> closure subset u(n) (all antisymmetric, dim<=n^2).";
+CVLeafConfinedQ::usage = "CVLeafConfinedQ[gens_List, n_Integer] gives the Sp(2n,R) leaf-confinement audit of a claimed Gaussian generator set (ported from certification-protocol/final_o3_cv_dla.py): <|\"Dim\",\"Compact\",\"Confined\"|>. Confined <=> closure subset u(n) (all antisymmetric, dim<=n^2).";
 
 (* ---- emission + self-certification ----------------------------------------- *)
 EmitBlueprint::usage = "EmitBlueprint[targetSpec_Association] gives the blueprint Association (Section 3 of DESIGN.md): TargetSpec, ModeCount, Layer, Stages, Routing, IntensitySchedule, Unitary, CertificationVerdict, Schematic, Provenance, SelfCertification. Option Method->Automatic|\"L1\"|\"L2\"|\"Mesh\" forces a layer.";
@@ -115,7 +115,7 @@ stageMatrix[stage_Association, n_Integer] := With[{mx = Lookup[stage, "Matrix", 
    ---------------------------------------------------------------------------- *)
 
 (* KCBS / n-cycle cascade geometry.  Extracted verbatim (frames, transitions,
-   prep completion) from 01-D2-core-computation/kcbs_circuit.wl Sections 2-4 and
+   prep completion) from pentagon-foundations/kcbs_circuit.wl Sections 2-4 and
    kcbs_circuit_ncycle.wl buildNCycleCircuit, per repo convention.  For n=5 the
    directions come from the BlackBox paclet's KCBSDirections[] (exact, Q(Sqrt5));
    for general odd n the azimuth step is (n-1)Pi/n (kcbs_circuit_ncycle.wl). *)
@@ -212,7 +212,7 @@ StagesToUnitary[stages_List, n_Integer] := Module[{mats, Uex},
 
 (* ---------------------------------------------------------------------------
    MESH ROUTING.  wordRingEdgesFast is copied VERBATIM from
-   04-cluster-state-mbqc/cct_mesh_sparse_construction.wl (Section 1), per repo
+   cluster-state-realization/cct_mesh_sparse_construction.wl (Section 1), per repo
    convention: all 5L edges via one Table of ragged blocks + a single Flatten,
    NO Join-in-loop.
    --------------------------------------------------------------------------- *)
@@ -346,7 +346,7 @@ DispatchLayers[targetSpec_Association] := Module[{comps, audits, layers, overall
    MESH per-block genuine-vs-emulable audit (closes the honest
    Missing["NotComputed"] stub left by EmitBlueprint's Mesh branch and
    BlackBoxCertifier.wl's blueprintDLA -- see KNOWN_ISSUES.md and
-   10-VIZ-visual-gallery/so3_leaf_confinement_sphere.wl's header for why the
+   figure-gallery/so3_leaf_confinement_sphere.wl's header for why the
    naive shortcut ("reuse CascadeGenerators[] for an arbitrary word, assuming
    UNROTATED standard axes") was previously investigated and rejected: it
    asserted a raw NUMERICAL identity of physical axes across cis/trans
@@ -374,7 +374,7 @@ DispatchLayers[targetSpec_Association] := Module[{comps, audits, layers, overall
    consistent with the compiler's documented block-local honest scope. It
    makes NO claim whatsoever about JOINT/global entanglement across the whole
    mesh's su(2^n) qubits; that route is separately tracked, currently
-   computationally infeasible past ~14 qubits (04-cluster-state-mbqc/
+   computationally infeasible past ~14 qubits (cluster-state-realization/
    cct_cluster_dla.wl, SKIPPED_INFEASIBLE), and remains its own open item --
    not something this closes. *)
 meshBlockEdges[w_List, L_Integer, k_Integer] := Module[{km, u, v},
@@ -394,7 +394,7 @@ meshBlockCycleQ[blockEdges_List] := Module[{verts, g},
 
 (* JOINT (global) entanglement of the mesh's corresponding graph-state topology
    (2026-07-14 addition, closing the "JointEntanglementAudited"->False gap left
-   above -- see 04-cluster-state-mbqc/cct_cluster_dla.wl's Section 10 for the
+   above -- see cluster-state-realization/cct_cluster_dla.wl's Section 10 for the
    full derivation, citations, and validation this reuses).
 
    SCOPE, STATED PRECISELY: this is NOT the su(2^n) dynamical-Lie-algebra /
@@ -402,7 +402,7 @@ meshBlockCycleQ[blockEdges_List] := Module[{verts, g},
    open, infeasible-past-~14-qubits problem -- cct_cluster_dla.wl Sections 6-9).
    It is the strictly easier, well-posed question of whether the ABSTRACT graph
    state this mesh word/reps topology encodes (were it realized as a genuine
-   multi-qubit CZ cluster state, exactly as 04-cluster-state-mbqc's own
+   multi-qubit CZ cluster state, exactly as cluster-state-realization's own
    NewGraphStateTableau/cct_cluster_dla.wl construction does) is genuinely
    multipartite entangled (GME) -- i.e. whether it factorizes as a product
    state across ANY bipartition. By Hein-Eisert-Briegel (PRA 69, 062311, 2004):
@@ -410,7 +410,7 @@ meshBlockCycleQ[blockEdges_List] := Module[{verts, g},
    any mesh size, never sharing the DLA route's exponential blow-up.
 
    IMPORTANT: this certifies a fact about the TOPOLOGY / the corresponding
-   qubit-based cluster-state construction, NOT a claim that 09-EMU's own
+   qubit-based cluster-state construction, NOT a claim that optical-synthesis's own
    OPTICAL Mesh blueprint physically realizes that entanglement -- per this
    file's own "HONEST SCOPE" header, single-photon linear optics cannot
    construct global entanglement without exponential mode count or KLM
@@ -459,7 +459,7 @@ meshDLAAudit[word_String, reps_Integer, storedEdges_List] := Module[
 
 (* ---------------------------------------------------------------------------
    CV column: Sp(2n,R) leaf-confinement.  Ported from
-   00-BBT-blackbox-protocol/final_o3_cv_dla.py (exact matrix Lie closure;
+   certification-protocol/final_o3_cv_dla.py (exact matrix Lie closure;
    confined <=> closure subset u(n), all antisymmetric, dim <= n^2), with
    attribution.  Quadrature order (x1,p1,...,xn,pn).
    --------------------------------------------------------------------------- *)
@@ -536,9 +536,9 @@ EmitBlueprint[targetSpec_Association, opts : OptionsPattern[]] := Module[
        Mesh blueprint existed anywhere in this repo: the so(3)
        CascadeGenerators[] cascade is KCBS-specific (reusing it for an
        arbitrary word by ASSUMING unrotated standard axes was investigated
-       and could not be substantiated -- see 10-VIZ-visual-gallery/
+       and could not be substantiated -- see figure-gallery/
        so3_leaf_confinement_sphere.wl's header), and the su(2^n)
-       cluster-state DLA route (04-cluster-state-mbqc/cct_cluster_dla.wl)
+       cluster-state DLA route (cluster-state-realization/cct_cluster_dla.wl)
        hits SKIPPED_INFEASIBLE past ~14 qubits -- this blueprint's own
        reps=2 case is 18 qubits. meshDLAAudit (defined above, Section 3)
        closes this properly: instead of assuming axes are unrotated, it

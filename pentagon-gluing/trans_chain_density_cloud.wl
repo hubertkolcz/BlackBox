@@ -15,7 +15,7 @@
 
    SELF-CONTAINED: no Needs/Get/PacletDirectoryLoad. Everything needed is
    inlined below with attribution:
-     - transChainWL[m]     : VERBATIM from 03-MESH-pentagon-composition/
+     - transChainWL[m]     : VERBATIM from pentagon-gluing/
                              trans_chain_density_check.wl (identical to the
                              CaseStudies.wl Case-D3 "trans-chain anchors" cell).
      - chordalCliques[h]   : VERBATIM private helper from

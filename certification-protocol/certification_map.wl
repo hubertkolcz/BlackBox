@@ -145,7 +145,7 @@ nb = Notebook[{
      "A2\[Times]\[Theta]-aware: OQ1-B (the \[Theta]-aware ND-polytope fitter reproduces the quantum orbit to < 1e-9). "<>
      "A3\[Times]tuned: OQ2 (oq2_attenuation_gate.py; gate G8 flags the coherent forger 25/25) and Corollary 1. "<>
      "Second lens: G7 DLA audit; Proposition 2 / BBT-003 (no table functional lower-bounds the DLA). "<>
-     "See 00-BBT-blackbox-protocol/PROPOSITION-O3.md and the claims ledger."],
+     "See certification-protocol/PROPOSITION-O3.md and the claims ledger."],
    txt["Provenance: generated 2026-07-13 from PROPOSITION-O3.md (Prop 1/2, Cor 1/2, OQ1/OQ2), "<>
      "the claims ledger (BBT-001/002/003, LP-002), and this session's OQ1/OQ2 probe results. "<>
      "Regenerate: wolframscript -file certification_map.wl."]

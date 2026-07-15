@@ -32,7 +32,7 @@ emulator (OQ1-A: orbit rank 0 vs 2) but not a θ-aware one (OQ1-B: fit <1e-9);
 attenuation/event-semantics defeats even the θ-aware forger (OQ2/G8, 25/25;
 Corollary 1 collapses the class to α=2; anchored to the single-detector
 coherent-forgeability theorem, arXiv:2601.13869). See
-`00-BBT-blackbox-protocol/certification_map.nb`.
+`certification-protocol/certification_map.nb`.
 
 **F4. Exact mesh-composition laws [T].** Two non-isomorphic gluing families
 (cis/trans; MESH-001); orientation, not size, controls gap survival (MESH-002);
@@ -50,14 +50,14 @@ True, Γ₁₀≤Γ₉ exact). The certificate condition is a Bousch sub-action
 (tropical 0-cochain on de Bruijn-k; Γ_k = max-plus eigenvalue, Karp-verified).
 Spurious policy-iteration values are periodic-orbit densities −1 (cis 3/2,
 trans τ\*, 16/11, 19/13, 25/17): the orbit-spectrum/crowding reading
-(`05-CERT-epsilon-certificates/CONVERGENCE-ANALYSIS-2026-07-13.md`).
+(`composition-optimality/CONVERGENCE-ANALYSIS-2026-07-13.md`).
 
 **F6. Degree-0 sheaf derivation of GE [T].** The weighted GE presheaf capacity
 Λ_k computes the composed bound: S_k = Λ_k^{1/k}; exact on C₅ (5/2 → √5) and
 the C₇ negative control (7/2 at k=2,3). Mechanism identified: the optimal dual
 0-cochain is an **integer** partition of unity exactly when the quantum value is
 achieved (C₅ pentads), **properly fractional** otherwise (C₇: 4∤49, 8∤343).
-(`06-D3-sheaf-cohomology/ESSAY-005-ERGODIC-BRIDGE-2026-07-13.md`.)
+(`bound-derivation-question/ESSAY-005-ERGODIC-BRIDGE-2026-07-13.md`.)
 
 **F7. The ERG-003 reduction [T].** ω(C₉∨C₉∨C₉∨C₅) ∈ **[17,19]**; activation ⟺
 ω ≥ 18. The 5-layer pentagram decomposition is exactly equivalent to cliques of
@@ -129,7 +129,7 @@ the detector must be sought in a finer invariant (semimodule cohomology).
 **Refutation.** A genuine **17-clique** exists — found in the S=17 family
 (1,3,5,5,3) by the WolframBatch Memory16x128 sweep (2026-07-14, 22,352,404 nodes)
 and **independently verified**: explicit witness in
-`02-D1-theory-frontier/erg003_omega17_witness.json`; my own C₉∨C₉∨C₉∨C₅ adjacency
+`open-search-frontier/erg003_omega17_witness.json`; my own C₉∨C₉∨C₉∨C₅ adjacency
 check gives **0 nonadjacent pairs of 136**; the solver's own `witness_verified=True`;
 and the node count 22,352,404 was reproduced on both cloud and local runs. So
 **ω ≥ 17 — ω=16 is false.** The earlier "zero 17-cliques in >10⁸ nodes / high
@@ -158,7 +158,7 @@ Lasserre level ≥ 2** on 3645 vertices (research-scale). A brute-force exhausti
 is a 1.7 k–15 k cr uncertain (heavy-tailed) computation. **Honest status: activation OPEN,
 ω ∈ [17,19], ω=17 evidenced-tight, no activation on all evidence** — a direct analogue of the
 Paley-13 [39,46] bracket (evidenced-tight low end, research-scale closure). Details:
-`02-D1-theory-frontier/erg003-activation-analysis-2026-07-14.md`, `erg003_verdict.json`
+`open-search-frontier/erg003-activation-analysis-2026-07-14.md`, `erg003_verdict.json`
 (`activation_S18`). Supersedes the prior F9x / ledger "H3 open, ω=16" lines.
 
 ### H4 — Two-Lens Completeness Hypothesis (SQ1; the O3 capstone)
@@ -183,7 +183,7 @@ the CV analogue of G7 (the audit NOTES-hawking flags as never done).
 
 ### H5 — Paley Product Hypothesis (GE-003 residue)
 **Statement.** ω(Paley13^∨3) = 39 (= 13·3, the product witness is optimal).
-**Evidence.** Sharpened 2026-07-14 (`02-D1-theory-frontier/paley13-k3-analysis-2026-07-14.md`):
+**Evidence.** Sharpened 2026-07-14 (`open-search-frontier/paley13-k3-analysis-2026-07-14.md`):
 α(Paley13^⊠2) = 13 = ϑ² exactly, so **Θ(Paley13) = √13** and all EVEN powers are pinned
 (α(⊠2m) = 13^m); only odd powers stay open, with a persistent bracket [3·13^m, ⌊√13·13^m⌋]
 (k=3 = [39,46] is the smallest instance, ratio ≈ 1.20). The 39-clique (product 13×3) is
@@ -281,7 +281,7 @@ adversary ceiling (PNR/heralded/non-fair-sampling devices are outside it)?
 **F11 [T/C].** G7-CV, the Sp(2n,ℝ) leaf-confinement audit, implemented and
 exact-validated (u(2) dim 4 = passive-confined; +two-mode squeezer → sp(4,ℝ)
 dim 10 = active). The certification map's CV/Gaussian column is **filled**
-(`00-BBT-blackbox-protocol/final_o3_cv_dla.py`; map regenerated).
+(`certification-protocol/final_o3_cv_dla.py`; map regenerated).
 
 **H2 → REFUTED AS POSED (moves to Layer 0 negatives as F9vii).**
 **F9vii [R].** δ(y\* mod ℤ) is not an H¹ detector: (1) undefined exactly in
@@ -325,7 +325,7 @@ three-point (s=1,t=1) bound was shown **provably too weak** (on the analog sibli
 gives 11.009, not closing the ϑ=11.18 gap to α=10), whereas **Lasserre-2 (s=2) closes it
 exactly** (10.534 → floor 10). So a symmetry-reduced Lasserre-2 MOSEK run would very likely
 prove ω≤17 — a now-justified (but MOSEK/HPC-scale, non-local) investment. Details:
-`02-D1-theory-frontier/erg003-lasserre2-local-analysis-2026-07-14.md`.
+`open-search-frontier/erg003-lasserre2-local-analysis-2026-07-14.md`.
 
 **Net position after the delta.** Proven layer grows by F10, F11 (+F9vii–x);
 the hypothesis set is now {H1, H1′, H3, H5, H4′(maximality), and the reopened
@@ -344,7 +344,7 @@ The gauge-invariance failure that killed F9vii pointed at a *face-level* test.
 Candidate **detector D(G,k)**: the optimal face of the Λ_k clique-cover LP of
 G^∨k contains an integer point. Gauge-invariant by construction, and it matched
 the pattern 5/5 on the first probe (YES only at (C₅,k=2) — the two pentads; NO
-at (C₅,k=1),(C₇,k=2),(C₇,k=3),(C₉,k=2)) — `06-D3-sheaf-cohomology/h2prime_*`.
+at (C₅,k=1),(C₇,k=2),(C₇,k=3),(C₉,k=2)) — `bound-derivation-question/h2prime_*`.
 **But that pattern rode entirely on non-integrality of Λ_k=(n/2)^k**, which
 empties the integer set trivially; the discriminating regime (integer Λ_k yet
 stuck) was untested. The stress-test built exactly that regime via the
@@ -373,7 +373,7 @@ extending Prop O3-C's completeness to *any* classical-light source under *any*
 detection. (b) Fair sampling is provably not eliminable by statistics (Garg–
 Mermin threshold), so H4′'s honest endpoint is a **computed critical detection
 efficiency** for the KCBS scenario, above which completeness holds. Build queued
-(G9 gate + efficiency threshold, protocol-style in 00-BBT). H4′ thereby reduces
+(G9 gate + efficiency threshold, protocol-style in certification-protocol). H4′ thereby reduces
 from open-ended to {G9 theorem-extension} + {one numerical boundary}.
 
 ---
@@ -381,7 +381,7 @@ from open-ended to {G9 theorem-extension} + {one numerical boundary}.
 ## Delta 2026-07-13 (H4' EXECUTED): G9 antibunching gate + KCBS eta* boundary
 
 The queued H4' build (parts (a) and (b) above) is now implemented and
-machine-verified in `00-BBT-blackbox-protocol/`. H4' moves from open-ended to a
+machine-verified in `certification-protocol/`. H4' moves from open-ended to a
 closed theorem-extension plus one computed numerical boundary. **H4' is REDUCED,
 not fully closed** -- detection efficiency remains a physical assumption, as in
 every Bell/contextuality test.
@@ -428,7 +428,7 @@ assumption is exactly detection efficiency, located outside the framework as in
 all such tests. H4' status: **reduced** -- photon-statistics part closed by G9;
 fair-sampling part = the eta* boundary; A_IE-maximality beyond these two remains
 the residual open problem. A PROVENANCE note pointing at G9 + eta* is added to
-`00-BBT-blackbox-protocol/PROPOSITION-O3.md`.
+`certification-protocol/PROPOSITION-O3.md`.
 
 **Review deltas (2026-07-13, honesty tightening; no blocker/major findings).**
 Both reviews returned only minor findings; addressed for precision: (1) the

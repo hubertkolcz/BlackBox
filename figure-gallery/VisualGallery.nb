@@ -8,7 +8,7 @@ Notebook[{
 
 Cell["Visual Gallery: Optical-Emulation Showcase Figures", "Title"],
 
-Cell["Supporting computational-essay notebook for \"Evaluating black-box physics through optical emulation.\" Each section below re-derives, from source, the combinatorial or Lie-algebraic facts behind one showcase figure, then imports the rendered figure. This notebook adds no new claims -- every number here is already kernel-verified in the companion .wl scripts in this module (10-VIZ-visual-gallery/); re-running the Input cells below reproduces those same numbers independently.", "Text"],
+Cell["Supporting computational-essay notebook for \"Evaluating black-box physics through optical emulation.\" Each section below re-derives, from source, the combinatorial or Lie-algebraic facts behind one showcase figure, then imports the rendered figure. This notebook adds no new claims -- every number here is already kernel-verified in the companion .wl scripts in this module (figure-gallery/); re-running the Input cells below reproduces those same numbers independently.", "Text"],
 
 Cell[CellGroupData[{
 
@@ -58,9 +58,9 @@ Cell[CellGroupData[{
 
 Cell["Relationship to the Essay", "Section"],
 
-Cell["Both figures illustrate already-verified results; this notebook is a supporting gallery, not the project's main computational essay. The main essay (per docs/ESSAY-OUTLINE.md and EssayTemplate.nb) should import figures from this module's figures/ directory directly rather than duplicating the derivations above. See 10-VIZ-visual-gallery/README.md for the full inventory, the Paper/Gallery theme convention, and an honest note on the one post-export whitespace-crop step applied to the deployed PNGs (documented per-script; it trims Mathematica's default PlotLabel-to-scene margin and touches no geometry, data, or color).", "Text"],
+Cell["Both figures illustrate already-verified results; this notebook is a supporting gallery, not the project's main computational essay. The main essay (per docs/ESSAY-OUTLINE.md and EssayTemplate.nb) should import figures from this module's figures/ directory directly rather than duplicating the derivations above. See figure-gallery/README.md for the full inventory, the Paper/Gallery theme convention, and an honest note on the one post-export whitespace-crop step applied to the deployed PNGs (documented per-script; it trims Mathematica's default PlotLabel-to-scene margin and touches no geometry, data, or color).", "Text"],
 
-Cell["References: A. Cabello, arXiv:1210.2988 (Graph-theoretic Exclusivity principle). J. Ulrey, IJQF 8 (2022) 31-116 = arXiv:2001.09756 (operational taxonomy). Source of all recomputed facts above: BlackBox/Kernel/BlackBox.wl, 00-BBT-blackbox-protocol/PROPOSITION-O3.md, 00-BBT-blackbox-protocol/BlackBoxCertifier.wl.", "Text"]
+Cell["References: A. Cabello, arXiv:1210.2988 (Graph-theoretic Exclusivity principle). J. Ulrey, IJQF 8 (2022) 31-116 = arXiv:2001.09756 (operational taxonomy). Source of all recomputed facts above: BlackBox/Kernel/BlackBox.wl, certification-protocol/PROPOSITION-O3.md, certification-protocol/BlackBoxCertifier.wl.", "Text"]
 
 }, Open  ]]
 

@@ -1,6 +1,6 @@
-# 04-cluster-state-mbqc
+# cluster-state-realization
 
-**Emerging module, uncommitted as of 2026-07-12.** Builds and verifies a literal MBQC cluster-state realization of `03-MESH-pentagon-composition`'s winning `(cct)^infinity` gluing word — the entanglement graph, not just its exclusivity-graph shadow. This is genuinely new territory that doesn't map cleanly onto one pre-existing ledger track (it spans `MESH` and `D3`); it's kept as its own module rather than forced into either.
+**Emerging module, uncommitted as of 2026-07-12.** Builds and verifies a literal MBQC cluster-state realization of `pentagon-gluing`'s winning `(cct)^infinity` gluing word — the entanglement graph, not just its exclusivity-graph shadow. This is genuinely new territory that doesn't map cleanly onto one pre-existing ledger track (it spans `MESH` and `D3`); it's kept as its own module rather than forced into either.
 
 ## Contents
 
@@ -16,7 +16,7 @@ The stabilizer check and the AvN witness do **not** share the same validity radi
 
 ## Relationship to the primary module
 
-Feeds `00-BBT-blackbox-protocol/`'s long-term goal of an MBQC/optical black-box test at scale, but is **not currently imported by `mbqc_blackbox_test.py`**. Treat this module as upstream research, not yet part of the certification protocol itself.
+Feeds `certification-protocol/`'s long-term goal of an MBQC/optical black-box test at scale, but is **not currently imported by `mbqc_blackbox_test.py`**. Treat this module as upstream research, not yet part of the certification protocol itself.
 
 ## Ledger cross-reference
 

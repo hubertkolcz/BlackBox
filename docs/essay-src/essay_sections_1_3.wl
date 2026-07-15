@@ -7,7 +7,7 @@
 (*Section builder A: the pentagon atom, the certification protocol and its located blind spot, and the two irreducible lenses \[LongDash] every number computed live*)
 
 (* ::Text:: *)
-(*Hubert Ko\[LSlash]cz \[LongDash] July 2026. This file supplies sections S1\[Dash]S3 of the master computational essay EvaluatingBlackBoxPhysics.wl (spine: docs/ESSAY-OUTLINE.md; framework labeling: docs/FRAMEWORK-2026-07-13.md). It follows the cell grammar and Get-safety of 01-D2-core-computation/CertifyingQuantumness.wl. THE PRIME DIRECTIVE (WSRI): every quantitative claim below is produced by the kernel at evaluation time \[LongDash] via the HubertKolcz`BlackBox` paclet or an inline recomputation of the pre-registered probe mathematics \[LongDash] never hand-restated. Each section closes with a sectionNCheck association; the file ends with a sectionsVerification block printing OK -> True.*)
+(*Hubert Ko\[LSlash]cz \[LongDash] July 2026. This file supplies sections S1\[Dash]S3 of the master computational essay EvaluatingBlackBoxPhysics.wl (spine: docs/ESSAY-OUTLINE.md; framework labeling: docs/FRAMEWORK-2026-07-13.md). It follows the cell grammar and Get-safety of pentagon-foundations/CertifyingQuantumness.wl. THE PRIME DIRECTIVE (WSRI): every quantitative claim below is produced by the kernel at evaluation time \[LongDash] via the HubertKolcz`BlackBox` paclet or an inline recomputation of the pre-registered probe mathematics \[LongDash] never hand-restated. Each section closes with a sectionNCheck association; the file ends with a sectionsVerification block printing OK -> True.*)
 
 (* ::Text:: *)
 (*Labeling discipline (mirrors the framework): [T] theorem / machine-verified, [C] certified numeric, [R] refuted route, [H] named hypothesis. Layer-2 statements carry their hypothesis tag inline.*)
@@ -37,20 +37,20 @@ repoRoot = Module[
      manifest = {"BlackBox/PacletInfo.wl", "BlackBox/Kernel/BlackBox.wl",
        "docs/essay-src/essay_sections_1_3.wl", "docs/essay-src/essay_sections_4_6.wl",
        "docs/essay-src/essay_sections_7_10.wl",
-       "09-EMU-optical-compiler/OpticalCompiler.wl", "09-EMU-optical-compiler/DispatcherEmitter.wl",
-       "09-EMU-optical-compiler/InterferometerLayer.wl", "09-EMU-optical-compiler/IntensityLayer.wl",
-       "05-CERT-epsilon-certificates/EpsilonCertificate7_regenerated.wl",
-       "05-CERT-epsilon-certificates/EpsilonCertificate8_regenerated.wl",
-       "05-CERT-epsilon-certificates/EpsilonCertificate9.wl",
-       "05-CERT-epsilon-certificates/EpsilonCertificate10.wl",
-       "08-HK-hawking/hawking_gaussian_sector.wl", "08-HK-hawking/gaussian_engine.wl",
-       "08-HK-hawking/gaussian_hawking_physics.wl", "08-HK-hawking/gaussian_witnesses_bridge.wl",
-       "06-D3-sheaf-cohomology/final_h1_cocycle_results.json",
-       "02-D1-theory-frontier/erg003_verdict.json", "docs/FRAMEWORK-2026-07-13.md",
-       "09-EMU-optical-compiler/schematics/demo1_kcbs_pentagon_L1.png",
-       "09-EMU-optical-compiler/schematics/demo3_cct_mesh_reps2.png",
-       "00-BBT-blackbox-protocol/certification_map.png",
-       "05-CERT-epsilon-certificates/orbit_spectrum.png"};
+       "optical-synthesis/OpticalCompiler.wl", "optical-synthesis/DispatcherEmitter.wl",
+       "optical-synthesis/InterferometerLayer.wl", "optical-synthesis/IntensityLayer.wl",
+       "composition-optimality/EpsilonCertificate7_regenerated.wl",
+       "composition-optimality/EpsilonCertificate8_regenerated.wl",
+       "composition-optimality/EpsilonCertificate9.wl",
+       "composition-optimality/EpsilonCertificate10.wl",
+       "hawking-application/hawking_gaussian_sector.wl", "hawking-application/gaussian_engine.wl",
+       "hawking-application/gaussian_hawking_physics.wl", "hawking-application/gaussian_witnesses_bridge.wl",
+       "bound-derivation-question/final_h1_cocycle_results.json",
+       "open-search-frontier/erg003_verdict.json", "docs/FRAMEWORK-2026-07-13.md",
+       "optical-synthesis/schematics/demo1_kcbs_pentagon_L1.png",
+       "optical-synthesis/schematics/demo3_cct_mesh_reps2.png",
+       "certification-protocol/certification_map.png",
+       "composition-optimality/orbit_spectrum.png"};
      Do[dest = FileNameJoin[Prepend[FileNameSplit[rel], cacheRoot]];
        If[! (FileExistsQ[dest] && FileByteCount[dest] > 0),
          Quiet@CreateDirectory[DirectoryName[dest], CreateIntermediateDirectories -> True];
@@ -133,7 +133,7 @@ Column[{section1Check, "S1 OK" -> And @@ Values[section1Check]}]
 (*S2  The Certification Protocol and its Located Blind Spot (BBT-001/002, Proposition 1)*)
 
 (* ::Text:: *)
-(*The protocol (00-BBT-blackbox-protocol/mbqc_blackbox_test.py; PROPOSITION-O3.md) consumes a table T = {p_c(ab)}: per-context outcome distributions on the pentagon, sections (00, 01, 10, 11) with the (1,1) event structurally absent (one photon, one click). Gates C1-C5 test no-disturbance, the contextual fraction, consistent exclusivity, possibilistic support, and the node sum. Proposition 1 (BBT-002) locates an exact blind spot.*)
+(*The protocol (certification-protocol/mbqc_blackbox_test.py; PROPOSITION-O3.md) consumes a table T = {p_c(ab)}: per-context outcome distributions on the pentagon, sections (00, 01, 10, 11) with the (1,1) event structurally absent (one photon, one click). Gates C1-C5 test no-disturbance, the contextual fraction, consistent exclusivity, possibilistic support, and the node sum. Proposition 1 (BBT-002) locates an exact blind spot.*)
 
 (* ::Text:: *)
 (*Proposition 1 (table-level indistinguishability). Let T be any no-disturbance pentagon table with per-context fractions summing to \[LessEqual] 1 (in particular the quantum-optimal table, t = 1/Sqrt[5], \[Delta] = 0). Then an intensity emulator E(T) \[LongDash] classical light divided per context, reporting normalized intensity fractions (f00, f01, f10) = (1 - 2t, t - \[Delta], t + \[Delta]) as click probabilities \[LongDash] produces T exactly in every context. Hence for every sample size and every statistic of the empirical table, E(T) and any quantum device realizing T are identically distributed. [T] Assumptions (each an escape route when dropped): (A1) per-context table access only; (A2) event semantics unverified; (A3) no audit of the internal compilation; (A4) fresh preparation per trial.*)
@@ -263,10 +263,10 @@ cvActive1 = cvLieAudit[{cvPhase[1, 1], cvSq1[1, 1]}];
 (*Proposition O3-C (F10, [T] conditional). Within the intensity-emulator class A_IE (classical light + intensity redistribution up to \[Alpha]* = 5/2 + one unmodified on-off detector, fair-sampled, fresh-per-trial), the gate set {C1-C5, G7, G7-CV, G8} is complete: every device is distinguished or certified NCHV-bounded. Load-bearing premises stated openly: the KBS single-detector coherent-forgeability theorem and white-box trust on G7/G7-CV. The residual open problem is H4' (A_IE-maximality). [H]*)
 
 (* ::CodeText:: *)
-(*The certification map (00-BBT-blackbox-protocol/certification_map.png; regenerated by certification_map.wl with the CV column filled) embeds the whole staircase \[LongDash] access model x adversary strength, plus the orthogonal geometric lens:*)
+(*The certification map (certification-protocol/certification_map.png; regenerated by certification_map.wl with the CV column filled) embeds the whole staircase \[LongDash] access model x adversary strength, plus the orthogonal geometric lens:*)
 
 (* ::Input:: *)
-certMapFile = FileNameJoin[{repoRoot, "00-BBT-blackbox-protocol", "certification_map.png"}];
+certMapFile = FileNameJoin[{repoRoot, "certification-protocol", "certification_map.png"}];
 certificationMap = If[FileExistsQ[certMapFile], Import[certMapFile], Missing["regenerate via certification_map.wl"]];
 
 (* ::CodeText:: *)

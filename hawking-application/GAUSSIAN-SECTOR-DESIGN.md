@@ -2,7 +2,7 @@
 
 **Role:** architecture / build specification. Precise enough for two independent
 builders to produce byte-for-anchor-equivalent modules.
-**Module being specified:** `08-HK-hawking/hawking_gaussian_sector.wl` (main
+**Module being specified:** `hawking-application/hawking_gaussian_sector.wl` (main
 deliverable), optional helpers `gaussian_*.wl`, runner
 `runners/RunGaussianHawking.wl`, one `runners/RunAll.ps1` registration line.
 **Date:** 2026-07-13. **Author:** ARCHITECT pass (this session).
@@ -33,7 +33,7 @@ Einstein equations. Specifically, state up front, in the file header:
   Sanders, PRA 65, 042304 (2002)). Therefore **this entire Hawking sector sits on
   the EMULABLE side of the framework's two-lens boundary**, exactly mirroring the
   Clifford status of the qubit Hawking module
-  (`04-cluster-state-mbqc/cct_mbqc_hawking_certification.wl`). The interesting
+  (`cluster-state-realization/cct_mbqc_hawking_certification.wl`). The interesting
   content (A8) is that the *generator set* is still non-passive: genuine squeezing
   is present (active `sp(4,R)`, not passive `u(2)`), so it is **not** emulable by
   *linear/passive* optics even though it *is* Gaussian-classically simulable — the
@@ -297,7 +297,7 @@ Tabulate `CHSH(r)`, `CF(r)=Max[0,(CHSH-2)/2]` on a grid. Numeric: `r_eff` for
   expect **exactly 0**. Gate `Abs[CF] < 10^-9`. Confirms HK-003.
 
 ### A8 — G7-CV DLA audit ON this module's dynamics (reimplement in WL)
-Reimplement the tiny commutator-closure of `00-BBT-blackbox-protocol/
+Reimplement the tiny commutator-closure of `certification-protocol/
 final_o3_cv_dla.py` natively in WL (do NOT shell to Python). Generators
 `K = Omega . G` from quadratic Hamiltonians `H=(1/2) r^T G r`; `LieClosure` by
 iterated commutators to a fixed point; `dim` via matrix rank (exact). Cross-check
@@ -328,19 +328,19 @@ GaussianHawkingVerification = <|
 
 ## 5. FILE / RUNNER LAYOUT (hard-rule compliant)
 
-- `08-HK-hawking/hawking_gaussian_sector.wl` — main, Get-loadable, defs only,
+- `hawking-application/hawking_gaussian_sector.wl` — main, Get-loadable, defs only,
   self-check guarded by `GaussianHawkingLoadOnly`.
-- optional `08-HK-hawking/gaussian_engine.wl`, `gaussian_pseudospin.wl`,
+- optional `hawking-application/gaussian_engine.wl`, `gaussian_pseudospin.wl`,
   `gaussian_cv_dla.wl` — split helpers, same load-guard discipline. (Prefix
   `gaussian_`.)
 - `runners/RunGaussianHawking.wl` — sets `GaussianHawkingLoadOnly=False` (or Gets
   then calls a `RunAllGates[]`), prints `GaussianHawkingVerification`.
 - `runners/RunAll.ps1` — append ONE registration line for the new runner.
-- Append a short section to `08-HK-hawking/README.md` describing the Gaussian
+- Append a short section to `hawking-application/README.md` describing the Gaussian
   sector (does NOT touch the existing HK-003 negative-result framing; this sector
   is the *emulable-side* companion, not a contradiction of it).
 
-**Do NOT** touch `09-EMU-optical-compiler/` (concurrent workflow). **No cloud
+**Do NOT** touch `optical-synthesis/` (concurrent workflow). **No cloud
 calls.** Seat contention ("activate the product") ⇒ wait 60s, retry.
 
 ---

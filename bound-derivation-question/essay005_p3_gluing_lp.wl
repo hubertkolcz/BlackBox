@@ -3,7 +3,7 @@
 (* essay005_p3_gluing_lp.wl --- ESSAY-005 probe P3: the product-ansatz gluing LP
    with sandwich certificates (encodings E1 glued-LP / E2 product-ansatz).
 
-   Parent spec: 06-D3-sheaf-cohomology/ESSAY-005-problem-spec.md (probe P3,
+   Parent spec: bound-derivation-question/ESSAY-005-problem-spec.md (probe P3,
    Traps 1/2). Design: ESSAY-005-phase23-execution-plan.md Sec. 3 (Phase-3
    agent C) --- implemented as transcription, no new derivation. The presheaf of
    subnormalized weightings on the maximal-clique cover of the conormal power

@@ -1631,7 +1631,7 @@ Stage 2 \[LongDash] The Correlation Lens: the Three-Number Ruler (2 < \
 \>", "Section",ExpressionUUID->"10f08f2b-4109-2d43-9d8a-161852e8f79c"],
 
 Cell["\<\
-Import[FileNameJoin[{NotebookDirectory[], \"10-VIZ-visual-gallery\", \
+Import[FileNameJoin[{NotebookDirectory[], \"figure-gallery\", \
 \"figures\", \"hypergraph_paper.png\"}]]\
 \>", "Input",ExpressionUUID->"446f6b3b-92ea-244b-86d4-fe56857fc9a6"],
 
@@ -2247,7 +2247,7 @@ Cell[CellGroupData[{
 Cell["Stage 3 \[LongDash] The Protocol: Building a Real Test", "Section",ExpressionUUID->"e784462c-3bb4-7447-a040-ee43805f365b"],
 
 Cell["\<\
-Import[FileNameJoin[{NotebookDirectory[], \"00-BBT-blackbox-protocol\", \
+Import[FileNameJoin[{NotebookDirectory[], \"certification-protocol\", \
 \"certification_map.png\"}]]\
 \>", "Input",ExpressionUUID->"590bea32-21c3-4a42-9261-da05c2b148a9"],
 
@@ -2576,7 +2576,7 @@ Motion?\
 \>", "Section",ExpressionUUID->"ef62edf1-a73c-a84d-8cb4-2268e982a790"],
 
 Cell["\<\
-Import[FileNameJoin[{NotebookDirectory[], \"10-VIZ-visual-gallery\", \
+Import[FileNameJoin[{NotebookDirectory[], \"figure-gallery\", \
 \"figures\", \"leaf_sphere_paper.png\"}]]\
 \>", "Input",ExpressionUUID->"34e5f8a4-4b5b-d64d-a7b0-6083eea3d2f1"],
 
@@ -2586,7 +2586,7 @@ orbit is the red ring \[LongDash] a one-dimensional leaf, DLA = 1, emulable \
 by a single optical axis \[LongDash] while the full four-generator KCBS \
 cascade fills the 2-sphere, DLA = 3. Static Paper-theme render, recomputed \
 and hard-gated from the verbatim KCBSDirections / CascadeGenerators / So3Axis \
-/ DLADimension source (10-VIZ). An interactive version appears below.\
+/ DLADimension source (figure-gallery). An interactive version appears below.\
 \>", "Text",ExpressionUUID->"2bd59e96-3a7a-5e45-8f7f-53a41600b0e3"],
 
 Cell["\<\
@@ -2772,26 +2772,26 @@ Stage 6 \[LongDash] The Construct/Certify Loop: the Optical Constructor\
 Cell["\<\
 Figure strip (Stage 6). Four blueprints the optical constructor actually \
 emits, each self-certified (VerifyBlueprint returns OK) before export \
-(09-EMU):\
+(optical-synthesis):\
 \>", "Text",ExpressionUUID->"0cd7446e-b964-794a-bcb7-69109041db13"],
 
 Cell["\<\
-Import[FileNameJoin[{NotebookDirectory[], \"09-EMU-optical-compiler\", \
+Import[FileNameJoin[{NotebookDirectory[], \"optical-synthesis\", \
 \"schematics\", \"demo1_kcbs_pentagon_L1.png\"}]]\
 \>", "Input",ExpressionUUID->"384b4ef5-0d21-254d-b85a-345064cc22ba"],
 
 Cell["\<\
-Import[FileNameJoin[{NotebookDirectory[], \"09-EMU-optical-compiler\", \
+Import[FileNameJoin[{NotebookDirectory[], \"optical-synthesis\", \
 \"schematics\", \"demo2_c7_heptagon_L1.png\"}]]\
 \>", "Input",ExpressionUUID->"5ee79db1-509e-6a42-b361-3cecdc6b03cd"],
 
 Cell["\<\
-Import[FileNameJoin[{NotebookDirectory[], \"09-EMU-optical-compiler\", \
+Import[FileNameJoin[{NotebookDirectory[], \"optical-synthesis\", \
 \"schematics\", \"demo3_cct_mesh_reps2.png\"}]]\
 \>", "Input",ExpressionUUID->"0c9d1eff-3040-ce43-a775-850322327add"],
 
 Cell["\<\
-Import[FileNameJoin[{NotebookDirectory[], \"09-EMU-optical-compiler\", \
+Import[FileNameJoin[{NotebookDirectory[], \"optical-synthesis\", \
 \"schematics\", \"demo4_table_V0977_L2.png\"}]]\
 \>", "Input",ExpressionUUID->"c7f7c8c8-b30f-f04d-9432-76e4f65bcead"],
 
@@ -3935,7 +3935,7 @@ Optimization)\
 \>", "Section",ExpressionUUID->"28935ab9-9b6c-a542-8e71-bfa7cc7a61b9"],
 
 Cell["\<\
-Import[FileNameJoin[{NotebookDirectory[], \"05-CERT-epsilon-certificates\", \
+Import[FileNameJoin[{NotebookDirectory[], \"composition-optimality\", \
 \"orbit_spectrum.png\"}]]\
 \>", "Input",ExpressionUUID->"2405e750-e2ba-0545-a7ed-a0b5cb208e28"],
 
@@ -3944,7 +3944,7 @@ Figure (Stage 8). Why cct is special. (A) The periodic-orbit density spectrum \
 from trans tau* = 1.3767 up to cis 3/2, with mixed orbits 16/11, 19/13, 25/17 \
 crowding a narrow band. (B) Seed value against density: spurious \
 strategy-iteration seeds fall on value = density - 1, while the true optimum \
-cct alone drops to density - 4/3 \[LongDash] the gap 0.0698975 (05-CERT).\
+cct alone drops to density - 4/3 \[LongDash] the gap 0.0698975 (composition-optimality).\
 \>", "Text",ExpressionUUID->"d3a9dcf8-89e2-7543-bf4a-969ec0dce4d4"],
 
 Cell["\<\
@@ -19461,19 +19461,19 @@ Cell[CellGroupData[{
 Cell["Stage 11 \[LongDash] Catalysis: Where \[Omega] = 17 Comes In", "Section",ExpressionUUID->"daf5224d-c2bb-3440-b7e6-f898e25d42ec"],
 
 Cell["\<\
-Import[FileNameJoin[{NotebookDirectory[], \"02-D1-theory-frontier\", \
+Import[FileNameJoin[{NotebookDirectory[], \"open-search-frontier\", \
 \"witness_adjacency_certificate.png\"}]]\
 \>", "Input",ExpressionUUID->"2bd3f5d3-5f0f-2e48-bf50-4337dd4d90b8"],
 
 Cell["\<\
 Figure (Stage 11). The 17-clique witness for \[Omega](C9 v C9 v C9 v C5) \
 \[GreaterEqual] 17: all 136 vertex pairs of the clique are mutually adjacent, \
-0 non-adjacent (family [1,3,5,5,3], reproduced cloud and local; 02-D1, \
+0 non-adjacent (family [1,3,5,5,3], reproduced cloud and local; open-search-frontier, \
 ERG-003).\
 \>", "Text",ExpressionUUID->"f3fe935a-f78d-c84c-9a74-783487224413"],
 
 Cell["\<\
-Import[FileNameJoin[{NotebookDirectory[], \"02-D1-theory-frontier\", \
+Import[FileNameJoin[{NotebookDirectory[], \"open-search-frontier\", \
 \"orbit_size_distribution.png\"}]]\
 \>", "Input",ExpressionUUID->"25583678-731e-774d-a75d-fca3cbe906f9"],
 
@@ -19481,7 +19481,7 @@ Cell["\<\
 Figure (Stage 11). Automorphism-orbit-size distribution of the C9 v C9 v C9 v \
 C5 search graph (3645 vertices, |Aut| = 349,920) \[LongDash] the symmetry \
 that makes the 17-clique search tractable and motivates symmetry-breaking \
-(02-D1, ERG-003).\
+(open-search-frontier, ERG-003).\
 \>", "Text",ExpressionUUID->"fcc20d70-8ab5-cf46-a626-b0f5bae85906"],
 
 Cell["\<\
@@ -20120,7 +20120,7 @@ The project's own stated first priority: can the Abramsky-Brandenburger sheaf \
 be used for deduction over graph-probabilistic settings \[LongDash] deriving \
 the local-global relations of Global-Exclusivity graphs built as products of \
 KCBS 5-cycles, rather than merely housing them? Four probes settle large \
-parts of the question and leave a sharp open core (06-D3, ESSAY-005).\
+parts of the question and leave a sharp open core (bound-derivation-question, ESSAY-005).\
 \>", "Text",ExpressionUUID->"e7181832-ec7d-ff49-b3ea-ff923449fd58"],
 
 Cell["\<\
@@ -20207,7 +20207,7 @@ RGBColor[0.75, 0.2, 0.2]},
 Cell["\<\
 The abstract's final promise is feasibility: does the correlation taxonomy \
 extend to signaling and quantum-communication scenarios? A three-gate \
-taxonomy on seven exemplar models says yes (O5, 07-SIG). The pentagon's \
+taxonomy on seven exemplar models says yes (O5, signaling-extension). The pentagon's \
 quantum box has signaling fraction SF(C5, quantum) = 2\[Sqrt]5 - 4 = 0.4721; \
 a one-bit-communication LP over all 4^5 = 1024 strategies gives the same \
 minimal cost, mu = 2\[Sqrt]5 - 4 bits per round; and the quantum box \
@@ -20246,7 +20246,7 @@ Cell["The Through-Line", "Section",ExpressionUUID->"97bcd27a-4443-9d45-b892-196d
 
 Cell["\<\
 Run end to end, the engine has been exercised on three devices at once \
-(00-BBT, ConstructCertifyLoop): a genuine KCBS cascade built from the optical \
+(certification-protocol, ConstructCertifyLoop): a genuine KCBS cascade built from the optical \
 geometry of Stage 6; the blind-spot intensity emulator, declared \
 leaf-confined; and a mesh-composed device on which both lenses agree. Same \
 four checks, three verdicts \[LongDash] the certification map of Stage 3, in \
@@ -20373,7 +20373,7 @@ The Page-Curve Sector \[LongDash] the Radiation's Information Curve, Certified\
 Cell["\<\
 The same mesh substrate carries the qubit information-dynamics of an \
 evaporating black hole, confronted head-to-head against published results \
-rather than asserted (HK-006, 04-cluster-state-mbqc). The Page curve \
+rather than asserted (HK-006, cluster-state-realization). The Page curve \
 \[LongDash] the radiation's von-Neumann / Renyi-2 entropy rising then falling \
 \[LongDash] peaks at half-evaporation: exact closed-form Renyi-2 maxima of \
 2.08, 2.77, and 3.47 bits at N/2 for N = 8, 10, 12 (vs Chowdhury, \
@@ -20397,7 +20397,7 @@ Cell["The Gaussian / Bogoliubov Sector \[LongDash] the A1-A8 Scoreboard", \
 Cell["\<\
 Treating analogue-Hawking dynamics as a continuous-variable Gaussian state \
 closes the last gap, as an eight-point scoreboard, each entry an exact \
-identity gated in GaussianHawkingVerification (HK-007, 08-HK): A1 the Planck \
+identity gated in GaussianHawkingVerification (HK-007, hawking-application): A1 the Planck \
 spectrum Sinh[r]^2 = 1/(e^(w/T) - 1); A2 entanglement equals thermality, S_vN \
 = (nbar+1) Log(nbar+1) - nbar Log(nbar); A3 logarithmic negativity E_N = \
 2r/Log2 with nu_- = e^(-2r); A4 the Cauchy-Schwarz excess theta(nbar) = 1 + \
@@ -20441,7 +20441,7 @@ Cell[CellGroupData[{
 
 Cell["References", "Section",ExpressionUUID->"cf025021-d1c5-e44d-91e5-5ad3bcb12f87"],
 
-Cell["[1] A. Cabello (2013), “Simple Explanation of the Quantum Violation of a Fundamental Inequality,” Phys. Rev. Lett. 110, 060402. arXiv:1210.2988.\n[2] H. Kołcz, Lie-Poisson geometric criteria for classical optical emulation in MBQC. github.com/hubertkolcz — companion geometric-mechanics repository.\n[3] A. Klyachko, M. Can, S. Binicioğlu, A. Shumovsky (2008), “Simple Test for Hidden Variables in Spin-1 Systems,” Phys. Rev. Lett. 101, 020403. arXiv:0706.0126.\n[4] L. Lovász (1979), “On the Shannon Capacity of a Graph,” IEEE Trans. Inf. Theory 25, 1-7.\n[5] H. Kołcz, BlackBox — this project's own verification code repository. github.com/hubertkolcz/BlackBox.\n[6] S. Abramsky, A. Brandenburger (2011), “The Sheaf-Theoretic Structure of Non-Locality and Contextuality,” New J. Phys. 13, 113036. arXiv:1102.0264.\n[7] M. Ulrey (2022), “The Role of (Non)contextuality in Bell's Theorems from the Perspective of an Operational Modeling Framework,” Int. J. Quantum Found. 8, 31-116. arXiv:2001.09756.\n[8] L. Porto, R. Rabelo, M. Terra Cunha, A. Cabello (2024), “The Quantum Maxima for the Basic Graphs of Exclusivity Are Not Reachable in Bell Scenarios,” Phil. Trans. R. Soc. A 382, 20230006. arXiv:2305.19247.\n[9] U. Tamer, et al. (2026), “The Quad-C5 Graph: Maximum Contextuality Gap on Eight Vertices.” arXiv:2605.12828.\n[10] D. Frustaglia, et al. (2016), “Classical Physics and the Bounds of Quantum Correlations,” Phys. Rev. Lett. 116, 250404. arXiv:1511.08144.\n[11] V. Kovtoniuk, M. Bohmann, A. Semenov (2026), “Nonclassical Photocounting Statistics with a Single On-Off Detector,” Phys. Rev. A 113, 063726. arXiv:2601.13869.\n[EMU] H. Kołcz, 09-EMU optical compiler (this project). Lapkiewicz et al., Nature 474, 490 (2011), for the physical cascade.\n[12] Page-curve confrontation (Chowdhury et al.), arXiv:2412.15180 \[LongDash] qubit Hawking sector (HK-006).\n[13] Quantum information scrambling / Hayden-Preskill (Landsman et al.), arXiv:1806.02807 \[LongDash] HK-006.\n[14] Analogue-Hawking BEC CHSH value B=2.25, arXiv:2404.16497 \[LongDash] HK-006/HK-007 anchor.", "Text", ExpressionUUID -> "c07f6bef-114b-4a07-9ea9-fca48c390077"]
+Cell["[1] A. Cabello (2013), “Simple Explanation of the Quantum Violation of a Fundamental Inequality,” Phys. Rev. Lett. 110, 060402. arXiv:1210.2988.\n[2] H. Kołcz, Lie-Poisson geometric criteria for classical optical emulation in MBQC. github.com/hubertkolcz — companion geometric-mechanics repository.\n[3] A. Klyachko, M. Can, S. Binicioğlu, A. Shumovsky (2008), “Simple Test for Hidden Variables in Spin-1 Systems,” Phys. Rev. Lett. 101, 020403. arXiv:0706.0126.\n[4] L. Lovász (1979), “On the Shannon Capacity of a Graph,” IEEE Trans. Inf. Theory 25, 1-7.\n[5] H. Kołcz, BlackBox — this project's own verification code repository. github.com/hubertkolcz/BlackBox.\n[6] S. Abramsky, A. Brandenburger (2011), “The Sheaf-Theoretic Structure of Non-Locality and Contextuality,” New J. Phys. 13, 113036. arXiv:1102.0264.\n[7] M. Ulrey (2022), “The Role of (Non)contextuality in Bell's Theorems from the Perspective of an Operational Modeling Framework,” Int. J. Quantum Found. 8, 31-116. arXiv:2001.09756.\n[8] L. Porto, R. Rabelo, M. Terra Cunha, A. Cabello (2024), “The Quantum Maxima for the Basic Graphs of Exclusivity Are Not Reachable in Bell Scenarios,” Phil. Trans. R. Soc. A 382, 20230006. arXiv:2305.19247.\n[9] U. Tamer, et al. (2026), “The Quad-C5 Graph: Maximum Contextuality Gap on Eight Vertices.” arXiv:2605.12828.\n[10] D. Frustaglia, et al. (2016), “Classical Physics and the Bounds of Quantum Correlations,” Phys. Rev. Lett. 116, 250404. arXiv:1511.08144.\n[11] V. Kovtoniuk, M. Bohmann, A. Semenov (2026), “Nonclassical Photocounting Statistics with a Single On-Off Detector,” Phys. Rev. A 113, 063726. arXiv:2601.13869.\n[EMU] H. Kołcz, optical-synthesis optical compiler (this project). Lapkiewicz et al., Nature 474, 490 (2011), for the physical cascade.\n[12] Page-curve confrontation (Chowdhury et al.), arXiv:2412.15180 \[LongDash] qubit Hawking sector (HK-006).\n[13] Quantum information scrambling / Hayden-Preskill (Landsman et al.), arXiv:1806.02807 \[LongDash] HK-006.\n[14] Analogue-Hawking BEC CHSH value B=2.25, arXiv:2404.16497 \[LongDash] HK-006/HK-007 anchor.", "Text", ExpressionUUID -> "c07f6bef-114b-4a07-9ea9-fca48c390077"]
 }, Open  ]],
 
 Cell[CellGroupData[{

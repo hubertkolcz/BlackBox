@@ -2,9 +2,9 @@
 
 (* ==========================================================================
    gaussian_witnesses_bridge.wl
-   08-HK-hawking  --  BUILDER 2 deliverable: WITNESSES + BRIDGE + CERTIFICATION
+   hawking-application  --  BUILDER 2 deliverable: WITNESSES + BRIDGE + CERTIFICATION
                       of the Gaussian (covariance-matrix) Hawking sector.
-   Build spec: 08-HK-hawking/GAUSSIAN-SECTOR-DESIGN.md (ARCHITECT pass 2026-07-13).
+   Build spec: hawking-application/GAUSSIAN-SECTOR-DESIGN.md (ARCHITECT pass 2026-07-13).
    Companion engine (BUILDER 1): gaussian_engine.wl + gaussian_hawking_physics.wl.
    Master assembly (INTEGRATOR): hawking_gaussian_sector.wl loads all three and
    runs the full A1..A8 scoreboard.
@@ -33,7 +33,7 @@
        PRA 65, 042304 (2002)). Therefore this ENTIRE Hawking sector sits on the
        EMULABLE side of the framework's two-lens boundary, exactly mirroring
        the Clifford status of the qubit Hawking module
-       (04-cluster-state-mbqc/cct_mbqc_hawking_certification.wl). The A8 audit
+       (cluster-state-realization/cct_mbqc_hawking_certification.wl). The A8 audit
        adds the two-tier refinement: the GENERATOR set is still non-passive
        (genuine squeezing => active sp(4,R), not passive u(2)), so it is NOT
        emulable by linear/passive optics even though it IS Gaussian-classically
@@ -209,7 +209,7 @@ If[DownValues[HawkingSpectrum] === {},
 
 (* ========================================================================== *)
 (* SECTION A4.  CAUCHY-SCHWARZ VIOLATION FROM THE ENGINE COVARIANCE           *)
-(* Cross-anchor to 08-HK-hawking/hawking_cs_route.py (its TMSV closed forms). *)
+(* Cross-anchor to hawking-application/hawking_cs_route.py (its TMSV closed forms). *)
 (* Photon-number factorial moments via Wick/Isserlis on the covariance.       *)
 (* ========================================================================== *)
 
@@ -357,7 +357,7 @@ SingleContextCF[e_List] :=
 
 (* ========================================================================== *)
 (* SECTION A8.  CV DYNAMICAL-LIE-ALGEBRA AUDIT (native WL reimplementation of  *)
-(* 00-BBT-blackbox-protocol/final_o3_cv_dla.py). Exact integer arithmetic.     *)
+(* certification-protocol/final_o3_cv_dla.py). Exact integer arithmetic.     *)
 (*   K = Omega . G from H = (1/2) r^T G r; LieClosure by iterated commutators; *)
 (*   dim by exact matrix rank; compact iff every basis element antisymmetric.  *)
 (* ========================================================================== *)

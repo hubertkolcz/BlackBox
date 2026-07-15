@@ -7,7 +7,7 @@ verbatim), the section spine, the per-claim live-computation manifest, and the f
 manifest. It does **not** restate values — it names, for every quantitative claim, the
 module or paclet call that must produce that value **at essay-evaluation time** (THE
 PRIME DIRECTIVE). Implementation follows the precedent of
-`01-D2-core-computation/CertifyingQuantumness.wl` (a `.wl` computational-essay source,
+`pentagon-foundations/CertifyingQuantumness.wl` (a `.wl` computational-essay source,
 Get-safe, headless-verifiable via a runner that prints a final association `OK -> True`).
 
 ---
@@ -99,7 +99,7 @@ Six-to-eight one-line bullets, each naming its live source. Mirrors
   is table-level indistinguishable by construction; assumptions A1-A4 stated. **[T]**
 - **Live:** the emulator construction reproduces the quantum table (CF-hat ~ 0.4803, all
   certificates clean → QUANTUM-CERTIFIED false positive by design), pulled from
-  `00-BBT-blackbox-protocol/` results; a `CEFilter`/`ContextualFraction` recomputation
+  `certification-protocol/` results; a `CEFilter`/`ContextualFraction` recomputation
   shows the emulator table and the quantum table coincide.
 - Cite the adversary as published: Frustaglia et al. PRL 116 250404 (classical fields
   reach sqrt5); Kovtoniuk-Bohmann-Semenov arXiv:2601.13869 (single-detector
@@ -116,7 +116,7 @@ Six-to-eight one-line bullets, each naming its live source. Mirrors
   failures (`oq2_attenuation_gate.py` result); Corollary 1 collapse to alpha=2.
 - **G7-CV / F11:** Sp(2n,R) leaf-confinement — Lie dims passive **u(n) dim n^2**
   (u(2)=4) vs active **sp(2n,R) dim n(2n+1)** (sp(4,R)=10, sp(2,R)=3), exact-arithmetic
-  Lie closure (`00-BBT-blackbox-protocol/final_o3_cv_dla.py` result). **[C]**
+  Lie closure (`certification-protocol/final_o3_cv_dla.py` result). **[C]**
 - **Prop O3-C / BBT-004 / F10 [T, conditional]:** over the intensity-emulator class
   A_IE the gate set {C1-C5, G7, G7-CV, G8} is complete; load-bearing premise (KBS
   detector model) and white-box trust stated openly.
@@ -170,7 +170,7 @@ Six-to-eight one-line bullets, each naming its live source. Mirrors
   `E_N = 2r/Log[2]`, CS `theta(nbar) = 1 + 1/(2 nbar) > 1`, Busch-Parentani
   `Delta = -Sinh[r]^2 < 0`, CHSH `2 Sqrt[1 + Tanh[2r]^2] -> 2 sqrt2`, single-context
   CF == 0, CV-DLA closes to **dim 10 = sp(4,R), ACTIVE** — all `FullSimplify`/exact Lie
-  closure from `08-HK-hawking/gaussian_*.wl`.
+  closure from `hawking-application/gaussian_*.wl`.
 - **Qubit info-dynamics sector (HK-006) [T]:** Page curve (Chowdhury Renyi-2 at N=8/10/12),
   Hayden-Preskill mirroring, CHSH/CF certification; anchors CF(2 sqrt2)=sqrt2-1,
   CF(2.25)=0.125; confirmed against four published papers. **Live** via the qubit
@@ -179,13 +179,13 @@ Six-to-eight one-line bullets, each naming its live source. Mirrors
   r_eff = 0.285020. **Two-tier emulability verdict** stated. **[T]**
 
 ### S7 — The constructive mirror: emulator blueprints (EMU-001, F8)
-- The 09-EMU three-layer optical compiler as the synthesis dual of the BBT protocol —
+- The optical-synthesis three-layer optical compiler as the synthesis dual of the BBT protocol —
   same two-lens math, target → blueprint.
 - **Live:** demo1 KCBS pentagon L1 = exact Lapkiewicz reconstruction, cascade
   [P,T1,T2,T1,T2], **cos theta = 1/GoldenRatio exactly**, genuine so(3) DLA = 3; demo2
   C7 heptagon **S = 7 - 4 theta(C7)**; demo4 V=977/1000 table leaf-confined
   (`DLADimension` < 3). Each blueprint re-simulated by `VerifyBlueprint` (OK → True).
-- **Embed** `09-EMU-optical-compiler/schematics/demo1_kcbs_pentagon_L1.png` and
+- **Embed** `optical-synthesis/schematics/demo1_kcbs_pentagon_L1.png` and
   `demo3_cct_mesh_reps2.png`.
 
 ### S8 — Gates that failed (the credibility signature; F9)
@@ -275,7 +275,7 @@ VerifyBlueprint OK) · `"negatives"` (hull(2/3)=3/2; theta'(3) floor 46). Final:
 | contextual fraction | 2 sqrt5 - 4 | `ContextualFraction[CycleScenario[5], CycleModel[5,"Quantum"], WorkingPrecision->Infinity]` |
 | DLA jump (G7) | span rank 2, dim 3 | `So3Axis/@CascadeGenerators[]`, `DLADimension[CascadeGenerators[]]` |
 | access staircase | OQ1 rank 0-vs-2; OQ2 25/25 | readers over `oq1_interventional_dla.py`, `oq2_attenuation_gate.py` results |
-| CV Lie dims (G7-CV) | u(2)=4, sp(4,R)=10, sp(2,R)=3 | reader over `00-BBT-blackbox-protocol/final_o3_cv_dla.py` result |
+| CV Lie dims (G7-CV) | u(2)=4, sp(4,R)=10, sp(2,R)=3 | reader over `certification-protocol/final_o3_cv_dla.py` result |
 | certification map | full 3x3 + CV column | `certification_map.wl` regenerates `certification_map.png` live |
 | cis law | theta=N+theta(C_N), alpha=floor(3N/2) | `PentagonRing`/`GlueGraphs`+`LovaszTheta`/`IndependenceNumber` on small N |
 | trans density | tau\* = Root[49x^3-128x^2-75x+218,2] | `Root`/`N` live |
@@ -303,10 +303,10 @@ VerifyBlueprint OK) · `"negatives"` (hull(2/3)=3/2; theta'(3) floor 46). Final:
 
 | Figure | Origin | Section | Regeneration |
 |---|---|---|---|
-| `certification_map.png` | `00-BBT-blackbox-protocol/certification_map.wl` | S3 | live regenerate (CV column filled) |
-| `orbit_spectrum.png` | `05-CERT-epsilon-certificates/orbit_spectrum_figure.wl` | S4 | live regenerate |
-| `demo1_kcbs_pentagon_L1.png` | `09-EMU-optical-compiler/schematics/` | S7 | existing; re-emit via `OpticalCompiler.wl` |
-| `demo3_cct_mesh_reps2.png` | `09-EMU-optical-compiler/schematics/` | S7 | existing; re-emit |
+| `certification_map.png` | `certification-protocol/certification_map.wl` | S3 | live regenerate (CV column filled) |
+| `orbit_spectrum.png` | `composition-optimality/orbit_spectrum_figure.wl` | S4 | live regenerate |
+| `demo1_kcbs_pentagon_L1.png` | `optical-synthesis/schematics/` | S7 | existing; re-emit via `OpticalCompiler.wl` |
+| `demo3_cct_mesh_reps2.png` | `optical-synthesis/schematics/` | S7 | existing; re-emit |
 | Gamma_k bracket plot (NEW) | inline `ListLinePlot` in the essay | S4 | live from the Gamma-ladder readers → gap(cct) |
 | Pentagon-chain gap-parity plot | inline (precedent cell) | S4 | live `PentagonChain` + `LovaszTheta` |
 | Hawking two-sector schematic (NEW, optional) | inline, Gaussian r-sweep of CHSH(r) | S6 | live from `2 Sqrt[1+Tanh[2r]^2]` |

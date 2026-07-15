@@ -663,7 +663,7 @@ fitter reproduces the quantum orbit to < 1e-9). A3\[Times]tuned: OQ2 \
 (oq2_attenuation_gate.py; gate G8 flags the coherent forger 25/25) and \
 Corollary 1. Second lens: G7 DLA audit; Proposition 2 / BBT-003 (no table \
 functional lower-bounds the DLA). See \
-00-BBT-blackbox-protocol/PROPOSITION-O3.md and the claims ledger.\
+certification-protocol/PROPOSITION-O3.md and the claims ledger.\
 \>", "Text",ExpressionUUID->"3551a16f-b1f5-2f43-80ac-af931cfbea82"],
 
 Cell["\<\

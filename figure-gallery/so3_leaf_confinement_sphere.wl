@@ -2,8 +2,8 @@
 (* so3_leaf_confinement_sphere.wl -- showcase figure: geometric meaning of the
    so(3) dynamical-Lie-algebra (DLA) rank test used as the "emulable vs genuine"
    gate for the KCBS cascade (G7 / LeafConfinementAudit in
-   00-BBT-blackbox-protocol/BlackBoxCertifier.wl; Corollary 2, the "2->3 anchor",
-   in 00-BBT-blackbox-protocol/PROPOSITION-O3.md).
+   certification-protocol/BlackBoxCertifier.wl; Corollary 2, the "2->3 anchor",
+   in certification-protocol/PROPOSITION-O3.md).
 
    All four functions below (KCBSDirections, So3Axis, CascadeGenerators,
    DLADimension) are reproduced VERBATIM from BlackBox/Kernel/BlackBox.wl --
@@ -37,7 +37,7 @@
 
    NOTE on scope: this figure visualizes the so(3) KCBS-cascade DLA (the G7
    gate). It is NOT the su(2^n) qubit cluster-state DLA computed in
-   04-cluster-state-mbqc/cct_cluster_dla.wl (a different object, generic
+   cluster-state-realization/cct_cluster_dla.wl (a different object, generic
    exponential 4^n-1 scaling) -- the two must not be conflated. It also does
    NOT depend on any claim about "unrotated standard axes" for cct-word
    mesh blueprints; that claim was checked against the repo during this

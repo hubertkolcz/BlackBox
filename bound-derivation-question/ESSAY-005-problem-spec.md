@@ -4,7 +4,7 @@ The project's stated priority question: **can the Abramsky–Brandenburger (AB) 
 
 ## Trap 1 — the target value is the GE *sequence*, not ϑ(G)
 
-"GE composed bound" for k identical copies of G is the exclusivity-LP value on the k-fold conormal product with the product ansatz — call it S_k(G). For the pentagon: S₁(C₅) = α\* = 5/2 and S₂(C₅) = √5 (Cabello's two-copy derivation; `GE-001`). But **for C₇, C₉ the sequence does not move**: S₁ = S₂ = S₃ = α\* (our `GE-002`, now theorems of Choudhary–Barbosa arXiv:2411.09773, Thms 10/12 — see `02-D1-theory-frontier/d1-external-reconciliation-2026-07-13.md`). Any candidate cohomological invariant must therefore be scored against **S_k(G)**, not against ϑ(G): an invariant that "predicts" ϑ(C₇) ≈ 3.318 at k = 2,3 is *wrong* (the true GE value there is 3.5), even though for the pentagon at k = 2 the two targets coincide at √5. Score candidates on the pair {C₅: 5/2 → √5} AND the negative control {C₇: 3.5 → 3.5 → 3.5}.
+"GE composed bound" for k identical copies of G is the exclusivity-LP value on the k-fold conormal product with the product ansatz — call it S_k(G). For the pentagon: S₁(C₅) = α\* = 5/2 and S₂(C₅) = √5 (Cabello's two-copy derivation; `GE-001`). But **for C₇, C₉ the sequence does not move**: S₁ = S₂ = S₃ = α\* (our `GE-002`, now theorems of Choudhary–Barbosa arXiv:2411.09773, Thms 10/12 — see `open-search-frontier/d1-external-reconciliation-2026-07-13.md`). Any candidate cohomological invariant must therefore be scored against **S_k(G)**, not against ϑ(G): an invariant that "predicts" ϑ(C₇) ≈ 3.318 at k = 2,3 is *wrong* (the true GE value there is 3.5), even though for the pentagon at k = 2 the two targets coincide at √5. Score candidates on the pair {C₅: 5/2 → √5} AND the negative control {C₇: 3.5 → 3.5 → 3.5}.
 
 ## Trap 2 — the level mismatch (possibilistic vs probabilistic)
 
@@ -26,7 +26,7 @@ Cover for one copy: contexts = the 5 edges of C₅ (maximal cliques of the exclu
 
 ## What would count as answering ESSAY-005
 
-Either: (i) a weighted-presheaf invariant (built per P3's reduction) whose value on C₅^(∨k) provably equals S_k and which is functorial enough to transfer to other graphs (validated on the C₇ negative control and, as a stretch target, on Quad-C₅ = arXiv:2605.12828, whose graph is now isomorphism-confirmed in `03-MESH-pentagon-composition/quad_c5_crosscheck.py`); or (ii) a bounded-size impossibility statement per P2 plus the P1/P4 closure of the possibilistic route — which together would justify the essay's claim that *describing* (obstruction) and *deriving* (bound) are separated in principle for GE covers, with the separation located exactly at the possibilistic/probabilistic divide.
+Either: (i) a weighted-presheaf invariant (built per P3's reduction) whose value on C₅^(∨k) provably equals S_k and which is functorial enough to transfer to other graphs (validated on the C₇ negative control and, as a stretch target, on Quad-C₅ = arXiv:2605.12828, whose graph is now isomorphism-confirmed in `pentagon-gluing/quad_c5_crosscheck.py`); or (ii) a bounded-size impossibility statement per P2 plus the P1/P4 closure of the possibilistic route — which together would justify the essay's claim that *describing* (obstruction) and *deriving* (bound) are separated in principle for GE covers, with the separation located exactly at the possibilistic/probabilistic divide.
 
 ## Cost discipline
 

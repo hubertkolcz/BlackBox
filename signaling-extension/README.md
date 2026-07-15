@@ -1,4 +1,4 @@
-# 07-SIG-signaling
+# signaling-extension
 
 Ledger track `SIG` — "signaling / quantum-communication extension": extends the classical/probabilistic-contextual/strongly-contextual taxonomy to models that signal, via three axes (harmonic-residual signaling stratum, Contextuality-by-Default, communication-cost LPs).
 
@@ -8,7 +8,7 @@ Ledger track `SIG` — "signaling / quantum-communication extension": extends th
 
 ## Relationship to the primary module
 
-Independent side extension; not imported by `00-BBT-blackbox-protocol/`.
+Independent side extension; not imported by `certification-protocol/`.
 
 ## Ledger cross-reference
 

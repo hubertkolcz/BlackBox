@@ -2,7 +2,7 @@
 
 (* =====================================================================
    gaussian_engine.wl  --  exact covariance-matrix (Gaussian / symplectic)
-   engine for the Hawking Gaussian sector (module 08-HK-hawking).
+   engine for the Hawking Gaussian sector (module hawking-application).
 
    WHAT THIS FILE IS (honesty header):
    -----------------------------------

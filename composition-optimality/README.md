@@ -1,4 +1,4 @@
-# 05-CERT-epsilon-certificates
+# composition-optimality
 
 Ledger track `CERT` — "epsilon-certificate / ergodic-optimization family": a separate, harder research thread from the primary module. For every possible pentagon-gluing word, is there one universal bound on the per-block quantum-classical gap density? Modeled as a mean-payoff/ergodic-optimization problem over a de Bruijn graph of window size $k$, with certificates $\Gamma_k$ that upper-bound the true supremum.
 
@@ -10,7 +10,7 @@ Ledger track `CERT` — "epsilon-certificate / ergodic-optimization family": a s
 
 ## Relationship to the primary module
 
-No generator script for the k=7/k=8 files survives anywhere in git history (`ISSUE-001`) — a reconstructed pipeline exists and is validated at small k but is explicitly a skeleton. This track is independent of `00-BBT-blackbox-protocol/`; neither depends on the other.
+No generator script for the k=7/k=8 files survives anywhere in git history (`ISSUE-001`) — a reconstructed pipeline exists and is validated at small k but is explicitly a skeleton. This track is independent of `certification-protocol/`; neither depends on the other.
 
 ## Ledger cross-reference
 

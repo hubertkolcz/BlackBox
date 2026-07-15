@@ -4,8 +4,8 @@
    to JSON per window. The max-cycle-mean is then computed INDEPENDENTLY in Python
    (bridge_verify_D.py), not by the builder's Wolfram Karp routine. *)
 $HistoryLength = 0;
-certDir = "C:/Users/cp/Desktop/black-box/05-CERT-epsilon-certificates";
-outDir  = "C:/Users/cp/Desktop/black-box/06-D3-sheaf-cohomology";
+certDir = "C:/Users/cp/Desktop/black-box/composition-optimality";
+outDir  = "C:/Users/cp/Desktop/black-box/bound-derivation-question";
 
 dpStates = {{0,0},{1,0},{0,1}};
 dpTransfer[letter_] := Module[{T = ConstantArray[-Infinity,{3,3}], out, j},

@@ -8,9 +8,9 @@
 > achievement. Do NOT cite "connect the two cohomologies via one dequantization"
 > as done. Master synthesis: `ESSAY-005-ERGODIC-BRIDGE-2026-07-13.md`.
 
-**Formalizer C. Date 2026-07-13.** Companion to `05-CERT-epsilon-certificates/GenerateEpsilonCertificate9.wl`,
-`CONVERGENCE-ANALYSIS-2026-07-13.md`, `03-MESH-pentagon-composition/CaseStudies.wl` (keys `D3_*`),
-and the static side `06-D3-sheaf-cohomology/essay005_p3_gluing_lp.wl`.
+**Formalizer C. Date 2026-07-13.** Companion to `composition-optimality/GenerateEpsilonCertificate9.wl`,
+`CONVERGENCE-ANALYSIS-2026-07-13.md`, `pentagon-gluing/CaseStudies.wl` (keys `D3_*`),
+and the static side `bound-derivation-question/essay005_p3_gluing_lp.wl`.
 
 This note defines a temperature-`T` (inverse temperature `β = 1/T`) free-energy softening of the
 windowed transfer certificate as a **Ruelle transfer operator**, states the **exact numerically

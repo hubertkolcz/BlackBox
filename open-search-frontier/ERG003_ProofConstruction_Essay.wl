@@ -31,9 +31,9 @@ $BlackBoxRepoRoot = Module[
      If[! DirectoryQ[cacheRoot],
        cacheRoot = FileNameJoin[{$TemporaryDirectory, "BlackBoxEssay", ref}];
        Quiet@CreateDirectory[cacheRoot, CreateIntermediateDirectories -> True]];
-     manifest = {"02-D1-theory-frontier/erg003_verdict.json",
-       "02-D1-theory-frontier/erg003_sat_calibration.json",
-       "02-D1-theory-frontier/erg003_s18_detection_summary.json"};
+     manifest = {"open-search-frontier/erg003_verdict.json",
+       "open-search-frontier/erg003_sat_calibration.json",
+       "open-search-frontier/erg003_s18_detection_summary.json"};
      Do[dest = FileNameJoin[Prepend[FileNameSplit[rel], cacheRoot]];
        If[! (FileExistsQ[dest] && FileByteCount[dest] > 0),
          Quiet@CreateDirectory[DirectoryName[dest], CreateIntermediateDirectories -> True];
@@ -51,9 +51,9 @@ $BlackBoxRepoRoot = Module[
        {rel, manifest}];
      cacheRoot]];
 readResult[relpath_] := Import[FileNameJoin[Prepend[FileNameSplit[relpath], $BlackBoxRepoRoot]], "RawJSON"];
-erg003 = readResult["02-D1-theory-frontier/erg003_verdict.json"];
-satCal = Quiet@Check[readResult["02-D1-theory-frontier/erg003_sat_calibration.json"], {}];
-s18det = readResult["02-D1-theory-frontier/erg003_s18_detection_summary.json"];
+erg003 = readResult["open-search-frontier/erg003_verdict.json"];
+satCal = Quiet@Check[readResult["open-search-frontier/erg003_sat_calibration.json"], {}];
+s18det = readResult["open-search-frontier/erg003_s18_detection_summary.json"];
 
 (* ::Section:: *)
 (*S0 \[LongDash] Purpose: what \[Omega] means to a cell of the emulator, and why the search is not idle*)
@@ -105,7 +105,7 @@ thetaC9 = 9 Cos[Pi/9]/(1 + Cos[Pi/9]);
 (* ::Input:: *)
 adjG[u_, v_] := u =!= v && (Or @@ Table[MemberQ[{1, 8}, Mod[u[[t]] - v[[t]], 9]], {t, 1, 3}] ||
     MemberQ[{1, 4}, Mod[u[[4]] - v[[4]], 5]]);
-witness17 = readResult["02-D1-theory-frontier/erg003_omega17_witness.json"]["witness"];
+witness17 = readResult["open-search-frontier/erg003_omega17_witness.json"]["witness"];
 nonAdjPairs = Select[Subsets[witness17, {2}], ! adjG[#[[1]], #[[2]]] &];
 {Length[witness17], Length[Subsets[witness17, {2}]], Length[nonAdjPairs], nonAdjPairs === {}}
 
@@ -273,4 +273,4 @@ Column[{ERG003EssayVerification, "OK" -> And @@ Values[ERG003EssayVerification]}
 (*Crawford, Ginsberg, Luks, Roy, "Symmetry-Breaking Predicates for Search Problems", KR 1996 \[LongDash] the classical account of why unmodified CDCL struggles on symmetric CSPs (\[Section]3), and the standard remedy this essay's own SAT calibration points toward as unfinished work.*)
 
 (* ::Item:: *)
-(*02-D1-theory-frontier/erg003_verdict.json, erg003-activation-analysis-2026-07-14.md, erg003-lasserre2-local-analysis-2026-07-14.md \[LongDash] the full primary record this essay draws every number from.*)
+(*open-search-frontier/erg003_verdict.json, erg003-activation-analysis-2026-07-14.md, erg003-lasserre2-local-analysis-2026-07-14.md \[LongDash] the full primary record this essay draws every number from.*)

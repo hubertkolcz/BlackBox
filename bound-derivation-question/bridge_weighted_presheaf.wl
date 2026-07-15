@@ -4,7 +4,7 @@
    INVARIANT for S_k, with the degree-0 capacity Lambda_k and the C-A1 H^1
    partition-defect test.
 
-   Parent: 06-D3-sheaf-cohomology/ESSAY-005-problem-spec.md (P3 reduction), and
+   Parent: bound-derivation-question/ESSAY-005-problem-spec.md (P3 reduction), and
    the P3 certificate run essay005_p3_gluing_lp.wl -> p3_certificates.json (all
    Trap-1 gates PASS). This module re-derives the SAME LP values but frames them
    as Formalizer A's invariant so the claim is stated and validated as an

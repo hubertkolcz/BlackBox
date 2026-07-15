@@ -1,5 +1,5 @@
 (* Headless acceptance runner for the Hawking Gaussian sector MASTER assembly
-   (08-HK-hawking/hawking_gaussian_sector.wl), which loads the engine +
+   (hawking-application/hawking_gaussian_sector.wl), which loads the engine +
    Hawking physics + witnesses/bridge and runs the unified A1..A8 scoreboard:
    Planck spectrum + T_H extraction (A1), entanglement = thermality (A2),
    logarithmic negativity E_N = 2r/Log2 (A3), Cauchy-Schwarz cross-anchor (A4),
@@ -22,7 +22,7 @@ Needs["HubertKolcz`BlackBox`"];
 
 (* defs-only load: suppress the master's auto-run so we drive it explicitly *)
 GaussianHawkingLoadOnly = True;
-Get[FileNameJoin[{$repoRoot, "08-HK-hawking", "hawking_gaussian_sector.wl"}]];
+Get[FileNameJoin[{$repoRoot, "hawking-application", "hawking_gaussian_sector.wl"}]];
 
 GaussianHawkingSectorRunAll[];
 GaussianHawkingSectorReport[GaussianHawkingVerification];

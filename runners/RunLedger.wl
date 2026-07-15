@@ -3,4 +3,4 @@
    Run:  wolframscript -file RunLedger.wl -print all
    The printed value is the final verification; it must show OK -> True. *)
 SetDirectory[DirectoryName[$InputFileName]];
-Get["../01-D2-core-computation/kcbs_ledger.wl"]
+Get["../pentagon-foundations/kcbs_ledger.wl"]

@@ -43,7 +43,7 @@
          total + per-measurement timing.
      V4. Summary association (last expression).
 
-   Run: wolframscript -file C:/Users/cp/Desktop/black-box/04-cluster-state-mbqc/cct_mbqc_sim_tests.wl
+   Run: wolframscript -file C:/Users/cp/Desktop/black-box/cluster-state-realization/cct_mbqc_sim_tests.wl
    =========================================================================== *)
 
 (* ---------------------------------------------------------------------------
@@ -53,7 +53,7 @@ CCTMBQCLoadOnly = True;
 Module[{libPath},
   libPath = If[StringQ[$InputFileName] && $InputFileName =!= "",
     FileNameJoin[{DirectoryName[$InputFileName], "cct_mbqc_sim.wl"}],
-    "C:/Users/cp/Desktop/black-box/04-cluster-state-mbqc/cct_mbqc_sim.wl"];
+    "C:/Users/cp/Desktop/black-box/cluster-state-realization/cct_mbqc_sim.wl"];
   Print["Loading library: ", libPath];
   Get[libPath]];
 
@@ -106,11 +106,11 @@ refProb[v_, P_, b_] := Module[{vd = Conjugate[v], nn, ee, p},
   p];
 
 (* inline copy of wordRingEdgesFast from
-   04-cluster-state-mbqc/cct_mesh_sparse_construction.wl (that file is a read-only
+   cluster-state-realization/cct_mesh_sparse_construction.wl (that file is a read-only
    self-running SCRIPT - Get would rerun its benchmarks - so the 8-line body
    is reproduced verbatim here with this provenance note; it was verified
    there exactly equal to the original wordRing in
-   03-MESH-pentagon-composition/CaseStudies.wl at reps = 1..50). *)
+   pentagon-gluing/CaseStudies.wl at reps = 1..50). *)
 wordRingEdgesFastLocal[word_String, reps_Integer] := Module[{w, L, edgeBlocks},
    w = Characters[StringRepeat[word, reps]];
    L = Length[w];

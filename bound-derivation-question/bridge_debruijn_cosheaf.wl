@@ -38,7 +38,7 @@ $HistoryLength = 0;
 $RecursionLimit = 100000;
 $IterationLimit = Infinity;
 scriptDir = DirectoryName[ExpandFileName[$InputFileName]];
-certDir = FileNameJoin[{scriptDir, "..", "05-CERT-epsilon-certificates"}];
+certDir = FileNameJoin[{scriptDir, "..", "composition-optimality"}];
 Print["bridge_debruijn_cosheaf.wl start ", DateString[]];
 
 (* ---- interface-DP transfer matrix, verbatim from the generator ---- *)

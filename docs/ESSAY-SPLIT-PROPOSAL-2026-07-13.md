@@ -33,7 +33,7 @@ pentagon this is exact, has exactly one structural blind spot, and is closed
 4. Two-lens necessity — Prop 1/2 (BBT-002/003): no table functional lower-bounds the DLA
 5. Class-relative completeness — Prop O3-C (F10) over the intensity-emulator class 𝒜_IE
 6. The adversary ceiling H4′ — the G9 antibunching gate (g²(0) ≥ 1) + η\* = 2/√5
-7. *(coda)* the constructive mirror — the 09-EMU compiler emits self-certifying blueprints
+7. *(coda)* the constructive mirror — the optical-synthesis compiler emits self-certifying blueprints
 
 **Draws on:** `essay_sections_1_3.wl` (S1–S3) + `essay_sections_7_10.wl` (Prop O3-C, EMU) + the H4′ `.py` gates.
 **Novelty anchor:** two-lens necessity + the class-relative resolution of the central O3 question.
@@ -86,7 +86,7 @@ identically). A structural negative, not a failed search.
 5. The Gaussian sector (HK-007) — Bogoliubov A1–A8: Planck spectrum, entanglement = thermality, CHSH → 2√2 `[rEff225]`
 6. The two-tier emulability verdict
 
-**Draws on:** `essay_sections_4_6.wl` (S6) + `08-HK-hawking/*` (Gaussian) + `04-cluster-state-mbqc/*` (qubit).
+**Draws on:** `essay_sections_4_6.wl` (S6) + `hawking-application/*` (Gaussian) + `cluster-state-realization/*` (qubit).
 **Novelty anchor:** the CF = 0 structural obstruction (a headline contribution of the umbrella essay).
 **Audience:** analogue gravity / quantum simulation / foundations. **Size:** ~40 cells, ~25 live numbers. **The cleanest self-contained application.**
 

@@ -1,6 +1,6 @@
 (* ==========================================================================
    RunGaussianWitnesses.wl -- headless acceptance runner for the WITNESSES /
-   BRIDGE / CERTIFICATION half of the Gaussian Hawking sector (08-HK-hawking,
+   BRIDGE / CERTIFICATION half of the Gaussian Hawking sector (hawking-application,
    BUILDER 2: gaussian_witnesses_bridge.wl). Prints the
    GaussianHawkingVerification association; "OK -> True" is the single
    acceptance criterion (RunAll.ps1 greps for it).
@@ -29,13 +29,13 @@ Needs["HubertKolcz`BlackBox`"];
 GaussianHawkingLoadOnly = True;
 
 (* 2-3. BUILDER 1 engine + Hawking map, if they have landed (real engine wins) *)
-loadIfPresent[rel_] := With[{f = FileNameJoin[{$repoRoot, "08-HK-hawking", rel}]},
+loadIfPresent[rel_] := With[{f = FileNameJoin[{$repoRoot, "hawking-application", rel}]},
   If[FileExistsQ[f], Print["[RunGaussianWitnesses] loading ", rel]; Get[f], Null]];
 loadIfPresent["gaussian_engine.wl"];
 loadIfPresent["gaussian_hawking_physics.wl"];
 
 (* 4. BUILDER 2 witnesses / bridge / certification *)
-Get[FileNameJoin[{$repoRoot, "08-HK-hawking", "gaussian_witnesses_bridge.wl"}]];
+Get[FileNameJoin[{$repoRoot, "hawking-application", "gaussian_witnesses_bridge.wl"}]];
 
 (* run every gate, print the verification association + literal gate values *)
 GaussianHawkingVerification = WitnessBridgeRunAll[];

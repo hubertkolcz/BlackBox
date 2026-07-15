@@ -200,7 +200,7 @@ Leg C establishes — the dynamic side is a *different kind of object*
 
 - **ESSAY-005** — core question (weighted-presheaf invariant for S_k): Leg A answers degree-0, leaves C-A1 open.
 - **SH-004 / SH-006** — the rejected real-valued sheaf Laplacian as a contextuality measure; Leg D's tropical cellular sheaf is the distinct, viable object superseding that rejection (idempotent Hodge theory, H^0 = global sections). `SupportCohomology.wl`'s honest Z-module Čech H^1 is a *different* object on the *blind* support presheaf (P1).
-- **D3_*** (`03-MESH-pentagon-composition/CaseStudies.wl`: `D3_epsilonCertificate`, `posSigma`/`posCheck`) — the certificate data Leg D/C transcribe verbatim; τ*, cis 3/2, alpha-cis theorem are the dynamic-side anchors.
+- **D3_*** (`pentagon-gluing/CaseStudies.wl`: `D3_epsilonCertificate`, `posSigma`/`posCheck`) — the certificate data Leg D/C transcribe verbatim; τ*, cis 3/2, alpha-cis theorem are the dynamic-side anchors.
 - **CF-004** — the visibility/noise family V; Leg C's "V as temperature" is calibratable but conjectural, and the cross-side "same V both sides" identification is the refuted leap.
 
 ## Overall verdict

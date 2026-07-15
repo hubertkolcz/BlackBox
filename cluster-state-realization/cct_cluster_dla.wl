@@ -419,7 +419,7 @@ Print[Style["full su(2^n), matching the CZ-gate universality folklore this bridg
 
    THE FACT USED (Hein, Eisert, Briegel, "Multiparty entanglement in graph
    states", Phys. Rev. A 69, 062311 (2004) -- already cited for graph-state
-   conventions in 04-cluster-state-mbqc/cct_mbqc_sim.wl's header): for a graph
+   conventions in cluster-state-realization/cct_mbqc_sim.wl's header): for a graph
    state |G> with adjacency matrix Gamma (mod 2) and any bipartition
    V = A u B, the entanglement entropy of the reduced state on A (in ebits)
    equals rank_GF(2) of the A-by-B submatrix of Gamma (the "cut matrix").
@@ -523,7 +523,7 @@ Print[Style["beyond) where Sections 6-9's DLA-based UNIVERSAL-CONTROLLABILITY qu
   Bold]];
 Print[Style["open/infeasible. The two questions are genuinely different; this does not close",
   Bold]];
-Print[Style["Proposition 0 -- it closes the separate, well-posed GME question 09-EMU's own",
+Print[Style["Proposition 0 -- it closes the separate, well-posed GME question optical-synthesis's own",
   Bold]];
 Print[Style["Mesh-blueprint audit (DispatcherEmitter.wl meshDLAAudit) actually needs.", Bold]];
 

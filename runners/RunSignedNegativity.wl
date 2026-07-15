@@ -3,4 +3,4 @@
    Run:  wolframscript -file RunSignedNegativity.wl -print all
    The printed value is the final verification; it must show OK -> True. *)
 SetDirectory[DirectoryName[$InputFileName]];
-Get["../01-D2-core-computation/SignedNegativity.wl"]
+Get["../pentagon-foundations/SignedNegativity.wl"]

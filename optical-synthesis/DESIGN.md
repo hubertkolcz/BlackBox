@@ -1,6 +1,6 @@
-# 09-EMU-optical-compiler — Architecture (DESIGN.md)
+# optical-synthesis — Architecture (DESIGN.md)
 
-**The constructive mirror of `00-BBT` certification.** `00-BBT-blackbox-protocol`
+**The constructive mirror of `certification-protocol` certification.** `certification-protocol`
 runs the two-lens theorem in the *analysis* direction: given a table (and a claimed
 compilation), it *certifies* whether a device is quantum or classically-optically
 emulable. This module runs the *same mathematics in the synthesis direction*: given a
@@ -33,10 +33,10 @@ leaf-confined by its own audit (`DLADimension < 3`), and the blueprint says so.
 
 | Layer | Source file (READ ONLY — copy helpers verbatim + attribute) | Direction here |
 |------|------|------|
-| **L1 Interferometer** | `01-D2-core-computation/kcbs_circuit.wl` (Sec. 3–4, cascade `[P,T1..T4]`), `kcbs_circuit_ncycle.wl` (`buildNCycleCircuit`), `01-D2-core-computation/BiphotonSimulator.wl` (u⊗u lift) | synthesize the Givens/beamsplitter mesh of a target unitary |
-| **L2 Intensity** | `00-BBT-blackbox-protocol/mbqc_blackbox_test.py` (`table_intensity`, `sample_table`, construction iii-d) | synthesize per-context intensity fractions + source/splitter/detector schedule |
-| **L3 Dispatcher** | `BlackBox` paclet (`CascadeGenerators`, `So3Axis`, `DLADimension`); `00-BBT/final_o3_cv_dla.py` (Sp(2n,R) CV closure) | decide, per component, L1 vs L2, and stamp the verdict |
-| **Mesh routing** | `04-cluster-state-mbqc/cct_mesh_sparse_construction.wl` (`wordRingEdgesFast`) | translate a `(word, reps)` mesh into a stage/routing list |
+| **L1 Interferometer** | `pentagon-foundations/kcbs_circuit.wl` (Sec. 3–4, cascade `[P,T1..T4]`), `kcbs_circuit_ncycle.wl` (`buildNCycleCircuit`), `pentagon-foundations/BiphotonSimulator.wl` (u⊗u lift) | synthesize the Givens/beamsplitter mesh of a target unitary |
+| **L2 Intensity** | `certification-protocol/mbqc_blackbox_test.py` (`table_intensity`, `sample_table`, construction iii-d) | synthesize per-context intensity fractions + source/splitter/detector schedule |
+| **L3 Dispatcher** | `BlackBox` paclet (`CascadeGenerators`, `So3Axis`, `DLADimension`); `certification-protocol/final_o3_cv_dla.py` (Sp(2n,R) CV closure) | decide, per component, L1 vs L2, and stamp the verdict |
+| **Mesh routing** | `cluster-state-realization/cct_mesh_sparse_construction.wl` (`wordRingEdgesFast`) | translate a `(word, reps)` mesh into a stage/routing list |
 
 **Two-lens dispatch rule (from L3):** a component whose claimed dynamics is
 leaf-confined / poly-DLA / table-only ⇒ **Layer 2 suffices** (emulable, cheap); a
@@ -228,7 +228,7 @@ table-only). The tag is the framework's emulated/genuine boundary, per blueprint
 ## 4. File layout and loadability
 
 ```
-09-EMU-optical-compiler/
+optical-synthesis/
   DESIGN.md                     (this file)
   README.md                     (stub; has the standard "Relationship" section)
   OpticalCompiler.wl            (Builder C: BeginPackage, Gets the three layer files,

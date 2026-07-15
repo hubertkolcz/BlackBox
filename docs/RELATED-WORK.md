@@ -56,7 +56,7 @@ Product of a targeted three-axis search run for `REVIEW-2026-07-13.md`. This fil
 
 - **MUST-CITE** Navascués, Guryanova, Hoban, Acín, Nat. Commun. 6, 6288 (2015), arXiv:1403.4621 — almost-quantum satisfies one-copy exclusivity (Local Orthogonality); finite-copy principles don't pin down Q. The boundary D1 lives on. (Also Sainz et al., Quantum 2, 87 (2018): almost-quantum violates Specker's principle.)
 - **MUST-CITE** Cabello, PRA 100, 032120 (2019), arXiv:1801.06347 — quantum set derived exactly from GE + statistically independent realizations; the strongest "GE singles out ϑ" statement — D1's theoretical backbone.
-- **MUST-CITE** Choudhary–Barbosa, arXiv:2411.09773 (2024/25) — Ramsey-theoretic proofs: no E-principle activation for n≥6-cycle PR boxes at 2–3 copies. Overlaps and partially subsumes `GE-002`'s C7/C9 numerics — engage explicitly in `02-D1-theory-frontier/`.
+- **MUST-CITE** Choudhary–Barbosa, arXiv:2411.09773 (2024/25) — Ramsey-theoretic proofs: no E-principle activation for n≥6-cycle PR boxes at 2–3 copies. Overlaps and partially subsumes `GE-002`'s C7/C9 numerics — engage explicitly in `open-search-frontier/`.
 - Yan, PRL 110, 260406 (2013), arXiv:1303.4357 — E-principle with the complement scenario yields ϑ exactly for self-complementary vertex-transitive graphs (KCBS: √5).
 - Nogueira, Vieira, Terra Cunha, PRA 111, 052418 (2025), arXiv:2411.09036 — within CSW: if all quantum behaviors occur in Nature, GE excludes all post-quantum behaviors. Recent support for the GE certificate.
 - Amaral, Phil. Trans. R. Soc. A 377, 20190010 (2019), arXiv:1904.04182 — resource theory of contextuality; treat our certificates as monotones.

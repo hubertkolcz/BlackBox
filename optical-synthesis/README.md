@@ -1,6 +1,6 @@
-# 09-EMU-optical-compiler
+# optical-synthesis
 
-An optical compiler that runs the `00-BBT` certification mathematics *in the synthesis
+An optical compiler that runs the `certification-protocol` certification mathematics *in the synthesis
 direction*: given a target (a unitary, a no-disturbance table, or a pentagon-mesh word),
 it emits an optical **blueprint** — a Givens/beamsplitter mesh (Layer 1), an
 intensity-redistribution schedule (Layer 2), or a stage/routing list (mesh) — each
@@ -9,9 +9,9 @@ which layer it required and why.
 
 ## What it is
 
-The **constructive mirror of `00-BBT-blackbox-protocol`**. `00-BBT` runs the two-lens
+The **constructive mirror of `certification-protocol`**. `certification-protocol` runs the two-lens
 theorem in the *analysis* direction — from a table (plus a claimed compilation) it
-*certifies* quantum vs classically-optically-emulable. `09-EMU` runs the *same
+*certifies* quantum vs classically-optically-emulable. `optical-synthesis` runs the *same
 mathematics in the synthesis direction* — from a target it *builds* the optical blueprint
 and attaches the certification verdict.
 
@@ -54,10 +54,10 @@ battery). The integrated gate here is `OpticalCompilerVerification` (A1–A5).
 Reused verbatim with attribution: the `BlackBox` paclet (`CascadeGenerators`, `So3Axis`,
 `DLADimension`, `CycleScenario`, `CycleCoboundary`, `ContextualFraction`,
 `KCBSDirections`); the KCBS/n-cycle cascade geometry of
-`01-D2-core-computation/kcbs_circuit.wl` and `kcbs_circuit_ncycle.wl`; the biphoton lift
+`pentagon-foundations/kcbs_circuit.wl` and `kcbs_circuit_ncycle.wl`; the biphoton lift
 of `BiphotonSimulator.wl`; `wordRingEdgesFast` from
-`04-cluster-state-mbqc/cct_mesh_sparse_construction.wl`; and the Sp(2n,R)
-leaf-confinement audit ported from `00-BBT-blackbox-protocol/final_o3_cv_dla.py`.
+`cluster-state-realization/cct_mesh_sparse_construction.wl`; and the Sp(2n,R)
+leaf-confinement audit ported from `certification-protocol/final_o3_cv_dla.py`.
 
 ## Honest scope
 
@@ -65,7 +65,7 @@ The compiler emits emulators of **block-local** statistics (per-block tables,
 block-local AvN witnesses) — exactly what Prop. 1 / the certification map says classical
 optics CAN do. It does **not** construct globally-entangled cluster states: single-photon
 linear optics cannot, absent exponential mode count or KLM nonlinearity. A Layer-2
-blueprint is the constructive form of `00-BBT`'s adversarial case (iii-d) — a divided
+blueprint is the constructive form of `certification-protocol`'s adversarial case (iii-d) — a divided
 classical beam reproducing a quantum table exactly — flagged leaf-confined
 (`DLADimension < 3`) by its own DLA audit. The emulated/genuine boundary carried in every
 blueprint is the framework's two-lens theorem applied constructively.
@@ -84,13 +84,13 @@ re-simulated from its own data by `VerifyBlueprint` (`OK -> True`) before it is 
 
 ## Relationship to the primary module
 
-`00-BBT` *certifies*; `09-EMU` *builds*. Layer-2 blueprints are the constructive form of
-`00-BBT`'s adversarial case (iii-d): a divided classical beam reproducing a quantum table
+`certification-protocol` *certifies*; `optical-synthesis` *builds*. Layer-2 blueprints are the constructive form of
+`certification-protocol`'s adversarial case (iii-d): a divided classical beam reproducing a quantum table
 exactly, flagged leaf-confined by its own DLA audit. The Givens-cascade and mesh layers
-reuse `01-D2-core-computation` (`kcbs_circuit.wl`, `kcbs_circuit_ncycle.wl`,
-`BiphotonSimulator.wl`) and `04-cluster-state-mbqc` (`wordRingEdgesFast`); the dispatcher
+reuse `pentagon-foundations` (`kcbs_circuit.wl`, `kcbs_circuit_ncycle.wl`,
+`BiphotonSimulator.wl`) and `cluster-state-realization` (`wordRingEdgesFast`); the dispatcher
 reuses the `BlackBox` paclet (`CascadeGenerators` / `So3Axis` / `DLADimension`) and the
-CV `Sp(2n,R)` port of `00-BBT/final_o3_cv_dla.py`.
+CV `Sp(2n,R)` port of `certification-protocol/final_o3_cv_dla.py`.
 
 ## Regeneration commands
 
@@ -99,7 +99,7 @@ CV `Sp(2n,R)` port of `00-BBT/final_o3_cv_dla.py`.
 wolframscript -file runners/RunOpticalCompiler.wl -print all      # OK -> True
 
 # standalone per-layer extended gates
-wolframscript -file 09-EMU-optical-compiler/tests_interferometer_layer.wl   # Layer 1 (A/A1,A2,A4)
+wolframscript -file optical-synthesis/tests_interferometer_layer.wl   # Layer 1 (A/A1,A2,A4)
 wolframscript -file runners/RunIntensityLayer.wl -print all                 # Layer 2 (B/A3, 27 checks)
 
 # whole-repo battery (registers RunOpticalCompiler.wl)

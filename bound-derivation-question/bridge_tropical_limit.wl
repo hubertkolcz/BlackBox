@@ -18,7 +18,7 @@
 
    All local; numeric eigenvalues only; log-sum-exp stabilized. No cloud, no SDP. *)
 
-$certDir = "C:/Users/cp/Desktop/black-box/05-CERT-epsilon-certificates";
+$certDir = "C:/Users/cp/Desktop/black-box/composition-optimality";
 
 (* interface-DP transfer matrix, verbatim from CaseStudies.wl / the generator *)
 dpStates = {{0, 0}, {1, 0}, {0, 1}};
