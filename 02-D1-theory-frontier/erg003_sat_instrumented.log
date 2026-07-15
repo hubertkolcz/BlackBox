@@ -1,0 +1,11 @@
+[2026-07-14T16:16:51] building CNF for family [1, 1, 1, 7, 7] (known NO via elim2: 43.5s / 2,663,409 nodes)
+[2026-07-14T16:16:54] CNF built: vars=26045 clauses=1920514 build_time=3.8s
+[2026-07-14T16:17:34] stage=1 budget=200000 result=None elapsed=0.7min conflicts=200009 decisions=861458 propagations=148589257 restarts=4602 conflict_rate=5126/s
+[2026-07-14T16:18:36] stage=2 budget=400000 result=None elapsed=1.7min conflicts=600011 decisions=2544258 propagations=430449822 restarts=16660 conflict_rate=5955/s
+[2026-07-14T16:20:52] stage=3 budget=800000 result=None elapsed=3.9min conflicts=1400013 decisions=5530735 propagations=985150450 restarts=33633 conflict_rate=5909/s
+[2026-07-14T16:25:15] stage=4 budget=1600000 result=None elapsed=8.3min conflicts=3000013 decisions=12276584 propagations=2061079485 restarts=79001 conflict_rate=6002/s
+[2026-07-14T16:33:30] stage=5 budget=3200000 result=None elapsed=16.6min conflicts=6200015 decisions=24014567 propagations=4091159354 restarts=145432 conflict_rate=6231/s
+[2026-07-14T16:52:17] stage=6 budget=6400000 result=None elapsed=35.4min conflicts=12600016 decisions=52194410 propagations=8093664724 restarts=318653 conflict_rate=5938/s
+[2026-07-14T17:51:14] stage=7 budget=12800000 result=None elapsed=94.3min conflicts=25400024 decisions=100490203 propagations=15464406720 restarts=569607 conflict_rate=4488/s
+[2026-07-14T19:40:09] stage=8 budget=25600000 result=None elapsed=203.2min conflicts=51000024 decisions=208370883 propagations=29262121577 restarts=1197812 conflict_rate=4183/s
+[2026-07-15T00:06:35] stage=9 budget=51200000 result=None elapsed=469.7min conflicts=102200027 decisions=390619661 propagations=52879999343 restarts=2090520 conflict_rate=3627/s

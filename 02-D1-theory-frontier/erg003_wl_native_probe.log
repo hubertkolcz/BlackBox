@@ -1,0 +1,18 @@
+[2026-07-14T16:56:30] === building vertex/connection-set structures ===
+[2026-07-14T16:56:30] |S_G|=2616  |S_Xbar|=1028  [0.0481607s]
+[2026-07-14T16:56:33] Xbar: neighbor table built dims={3645, 1028}  [3.4737289s]
+[2026-07-14T16:58:07] Xbar: Graph built VertexCount=3645 EdgeCount=1873530 deg(v1)=1028  [total 97.2034839s]
+[2026-07-14T16:58:07] === SPARSE-FIRST TEST: FindIndependentVertexSet[Xbar,{18}], TimeConstraint 900s ===
+[2026-07-14T17:13:07] FindIndependentVertexSet[Xbar,{18}] result: $TimedOut  [900.0127101s]
+[2026-07-14T17:13:07] === SPARSE sanity: FindIndependentVertexSet[Xbar,{17}] (expect success, fast) ===
+[2026-07-14T17:15:07] FindIndependentVertexSet[Xbar,{17}]: found=False  [120.0131241s]
+[2026-07-14T17:15:07] === unconstrained max independent set in Xbar, TimeConstraint 300s (what does WL find unprompted?) ===
+[2026-07-14T17:20:07] FindIndependentVertexSet[Xbar] (max) result size: $TimedOut  [300.0045992s]
+[2026-07-14T17:20:07] === building G (dense) for the direct FindClique comparison ===
+[2026-07-14T17:20:16] G: neighbor table built dims={3645, 2616}  [8.6103752s]
+[2026-07-14T17:29:33] G: Graph built VertexCount=3645 EdgeCount=4767660 deg(v1)=2616  [total 565.9848797s]
+[2026-07-14T17:29:35] === DENSE comparison: FindClique[G,{18}], TimeConstraint 900s ===
+[2026-07-14T17:44:35] FindClique[G,{18}] result: $TimedOut  [900.0017732s]
+[2026-07-14T17:44:35] === GraphAutomorphismGroup on Xbar (sparser, likely faster), TimeConstraint 300s (cross-check |Aut|=349920) ===
+[2026-07-14T17:44:37] GraphAutomorphismGroup[Xbar] order: 349920  (expect 349920)  [2.1137556s]
+[2026-07-14T17:44:37] === PROBE DONE ===

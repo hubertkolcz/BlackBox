@@ -1,0 +1,12 @@
+=== starting family0_S17_knownNO family=[1, 1, 1, 7, 7] cap=1200s ===
+[family0_S17_knownNO] built symmetric CNF: vars=44260 clauses=2029805 generators_used=5 generators_skipped=[3] build_seconds=3.32 (total build+aug wall=3.41s)
+
+=== family0_S17_knownNO: NO VERDICT -- hit 1200s cap (elapsed=1200.06s) ===
+=== starting family11_S17_knownYES family=[1, 3, 5, 5, 3] cap=1200s ===
+[family11_S17_knownYES] built symmetric CNF: vars=49423 clauses=2053247 generators_used=6 generators_skipped=[] build_seconds=3.30 (total build+aug wall=3.41s)
+
+=== family11_S17_knownYES: NO VERDICT -- hit 1200s cap (elapsed=1200.08s) ===
+======================================================================
+FINAL SUMMARY
+  family0_S17_knownNO: family=[1, 1, 1, 7, 7] verdict=NO VERDICT wallclock_to_verdict=1200.06s hit_cap=True
+  family11_S17_knownYES: family=[1, 3, 5, 5, 3] verdict=NO VERDICT wallclock_to_verdict=1200.08s hit_cap=True

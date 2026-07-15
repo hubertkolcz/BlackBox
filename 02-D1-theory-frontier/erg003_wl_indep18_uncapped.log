@@ -1,0 +1,3 @@
+[2026-07-14T17:25:13] === rebuilding Xbar (validated construction, ~97s) ===
+[2026-07-14T17:26:52] Xbar rebuilt: VertexCount=3645 EdgeCount=1873530  [98.7275029s]
+[2026-07-14T17:26:52] === UNCAPPED FindIndependentVertexSet[Xbar,{18}] -- no TimeConstraint, will run until it finishes ===

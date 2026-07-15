@@ -1,0 +1,136 @@
+{
+ "family": [
+  1,
+  1,
+  1,
+  7,
+  7
+ ],
+ "cnf_vars": 26045,
+ "cnf_clauses": 1920514,
+ "build_seconds": 3.821877956390381,
+ "history": [
+  {
+   "stage": 1,
+   "conf_budget_this_stage": 200000,
+   "stage_seconds": 39.0,
+   "elapsed_seconds": 39.0,
+   "result": null,
+   "stats": {
+    "restarts": 4602,
+    "conflicts": 200009,
+    "decisions": 861458,
+    "propagations": 148589257
+   }
+  },
+  {
+   "stage": 2,
+   "conf_budget_this_stage": 400000,
+   "stage_seconds": 61.7,
+   "elapsed_seconds": 100.8,
+   "result": null,
+   "stats": {
+    "restarts": 16660,
+    "conflicts": 600011,
+    "decisions": 2544258,
+    "propagations": 430449822
+   }
+  },
+  {
+   "stage": 3,
+   "conf_budget_this_stage": 800000,
+   "stage_seconds": 136.2,
+   "elapsed_seconds": 236.9,
+   "result": null,
+   "stats": {
+    "restarts": 33633,
+    "conflicts": 1400013,
+    "decisions": 5530735,
+    "propagations": 985150450
+   }
+  },
+  {
+   "stage": 4,
+   "conf_budget_this_stage": 1600000,
+   "stage_seconds": 262.9,
+   "elapsed_seconds": 499.8,
+   "result": null,
+   "stats": {
+    "restarts": 79001,
+    "conflicts": 3000013,
+    "decisions": 12276584,
+    "propagations": 2061079485
+   }
+  },
+  {
+   "stage": 5,
+   "conf_budget_this_stage": 3200000,
+   "stage_seconds": 495.2,
+   "elapsed_seconds": 995.0,
+   "result": null,
+   "stats": {
+    "restarts": 145432,
+    "conflicts": 6200015,
+    "decisions": 24014567,
+    "propagations": 4091159354
+   }
+  },
+  {
+   "stage": 6,
+   "conf_budget_this_stage": 6400000,
+   "stage_seconds": 1127.0,
+   "elapsed_seconds": 2122.0,
+   "result": null,
+   "stats": {
+    "restarts": 318653,
+    "conflicts": 12600016,
+    "decisions": 52194410,
+    "propagations": 8093664724
+   }
+  },
+  {
+   "stage": 7,
+   "conf_budget_this_stage": 12800000,
+   "stage_seconds": 3536.9,
+   "elapsed_seconds": 5658.9,
+   "result": null,
+   "stats": {
+    "restarts": 569607,
+    "conflicts": 25400024,
+    "decisions": 100490203,
+    "propagations": 15464406720
+   }
+  },
+  {
+   "stage": 8,
+   "conf_budget_this_stage": 25600000,
+   "stage_seconds": 6534.5,
+   "elapsed_seconds": 12193.4,
+   "result": null,
+   "stats": {
+    "restarts": 1197812,
+    "conflicts": 51000024,
+    "decisions": 208370883,
+    "propagations": 29262121577
+   }
+  },
+  {
+   "stage": 9,
+   "conf_budget_this_stage": 51200000,
+   "stage_seconds": 15986.3,
+   "elapsed_seconds": 28179.7,
+   "result": null,
+   "stats": {
+    "restarts": 2090520,
+    "conflicts": 102200027,
+    "decisions": 390619661,
+    "propagations": 52879999343
+   }
+  }
+ ],
+ "elim2_reference": {
+  "status": "NO",
+  "nodes": 2663409,
+  "wall_seconds": 43.5
+ }
+}

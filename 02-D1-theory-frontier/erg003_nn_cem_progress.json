@@ -1,0 +1,1453 @@
+{
+ "history": [
+  {
+   "gen": 0,
+   "mean_size": 15.79,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 448,
+   "seconds": 22.8,
+   "best_ever": 16
+  },
+  {
+   "gen": 1,
+   "mean_size": 15.805,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 449,
+   "seconds": 22.8,
+   "best_ever": 16
+  },
+  {
+   "gen": 2,
+   "mean_size": 15.85,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 449,
+   "seconds": 22.4,
+   "best_ever": 16
+  },
+  {
+   "gen": 3,
+   "mean_size": 15.87,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 22.4,
+   "best_ever": 16
+  },
+  {
+   "gen": 4,
+   "mean_size": 15.845,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 22.0,
+   "best_ever": 16
+  },
+  {
+   "gen": 5,
+   "mean_size": 15.81,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 22.2,
+   "best_ever": 16
+  },
+  {
+   "gen": 6,
+   "mean_size": 15.84,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 23.8,
+   "best_ever": 16
+  },
+  {
+   "gen": 7,
+   "mean_size": 15.87,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 447,
+   "seconds": 22.6,
+   "best_ever": 16
+  },
+  {
+   "gen": 8,
+   "mean_size": 15.805,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 449,
+   "seconds": 22.8,
+   "best_ever": 16
+  },
+  {
+   "gen": 9,
+   "mean_size": 15.87,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 23.0,
+   "best_ever": 16
+  },
+  {
+   "gen": 10,
+   "mean_size": 15.85,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 22.6,
+   "best_ever": 16
+  },
+  {
+   "gen": 11,
+   "mean_size": 15.85,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 449,
+   "seconds": 21.9,
+   "best_ever": 16
+  },
+  {
+   "gen": 12,
+   "mean_size": 15.86,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 22.7,
+   "best_ever": 16
+  },
+  {
+   "gen": 13,
+   "mean_size": 15.89,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 22.9,
+   "best_ever": 16
+  },
+  {
+   "gen": 14,
+   "mean_size": 15.85,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 22.4,
+   "best_ever": 16
+  },
+  {
+   "gen": 15,
+   "mean_size": 15.89,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 449,
+   "seconds": 23.0,
+   "best_ever": 16
+  },
+  {
+   "gen": 16,
+   "mean_size": 15.835,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 22.7,
+   "best_ever": 16
+  },
+  {
+   "gen": 17,
+   "mean_size": 15.755,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 22.8,
+   "best_ever": 16
+  },
+  {
+   "gen": 18,
+   "mean_size": 15.85,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 448,
+   "seconds": 22.6,
+   "best_ever": 16
+  },
+  {
+   "gen": 19,
+   "mean_size": 15.85,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 23.3,
+   "best_ever": 16
+  },
+  {
+   "gen": 20,
+   "mean_size": 15.865,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 448,
+   "seconds": 24.6,
+   "best_ever": 16
+  },
+  {
+   "gen": 21,
+   "mean_size": 15.82,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 447,
+   "seconds": 23.9,
+   "best_ever": 16
+  },
+  {
+   "gen": 22,
+   "mean_size": 15.78,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 449,
+   "seconds": 23.9,
+   "best_ever": 16
+  },
+  {
+   "gen": 23,
+   "mean_size": 15.845,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 449,
+   "seconds": 22.4,
+   "best_ever": 16
+  },
+  {
+   "gen": 24,
+   "mean_size": 15.86,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 23.4,
+   "best_ever": 16
+  },
+  {
+   "gen": 25,
+   "mean_size": 15.815,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 449,
+   "seconds": 22.6,
+   "best_ever": 16
+  },
+  {
+   "gen": 26,
+   "mean_size": 15.775,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 22.7,
+   "best_ever": 16
+  },
+  {
+   "gen": 27,
+   "mean_size": 15.8,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 23.7,
+   "best_ever": 16
+  },
+  {
+   "gen": 28,
+   "mean_size": 15.805,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 23.8,
+   "best_ever": 16
+  },
+  {
+   "gen": 29,
+   "mean_size": 15.84,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 449,
+   "seconds": 23.8,
+   "best_ever": 16
+  },
+  {
+   "gen": 30,
+   "mean_size": 15.82,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 449,
+   "seconds": 22.9,
+   "best_ever": 16
+  },
+  {
+   "gen": 31,
+   "mean_size": 15.805,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 22.5,
+   "best_ever": 16
+  },
+  {
+   "gen": 32,
+   "mean_size": 15.855,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 449,
+   "seconds": 23.2,
+   "best_ever": 16
+  },
+  {
+   "gen": 33,
+   "mean_size": 15.82,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 22.9,
+   "best_ever": 16
+  },
+  {
+   "gen": 34,
+   "mean_size": 15.785,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 22.0,
+   "best_ever": 16
+  },
+  {
+   "gen": 35,
+   "mean_size": 15.815,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 22.2,
+   "best_ever": 16
+  },
+  {
+   "gen": 36,
+   "mean_size": 15.84,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 22.2,
+   "best_ever": 16
+  },
+  {
+   "gen": 37,
+   "mean_size": 15.835,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 449,
+   "seconds": 22.2,
+   "best_ever": 16
+  },
+  {
+   "gen": 38,
+   "mean_size": 15.785,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 22.6,
+   "best_ever": 16
+  },
+  {
+   "gen": 39,
+   "mean_size": 15.84,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 22.9,
+   "best_ever": 16
+  },
+  {
+   "gen": 40,
+   "mean_size": 15.89,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 448,
+   "seconds": 22.6,
+   "best_ever": 16
+  },
+  {
+   "gen": 41,
+   "mean_size": 15.88,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 448,
+   "seconds": 22.1,
+   "best_ever": 16
+  },
+  {
+   "gen": 42,
+   "mean_size": 15.785,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 448,
+   "seconds": 22.3,
+   "best_ever": 16
+  },
+  {
+   "gen": 43,
+   "mean_size": 15.825,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 448,
+   "seconds": 22.1,
+   "best_ever": 16
+  },
+  {
+   "gen": 44,
+   "mean_size": 15.835,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 449,
+   "seconds": 22.2,
+   "best_ever": 16
+  },
+  {
+   "gen": 45,
+   "mean_size": 15.78,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 23.1,
+   "best_ever": 16
+  },
+  {
+   "gen": 46,
+   "mean_size": 15.8,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 448,
+   "seconds": 22.2,
+   "best_ever": 16
+  },
+  {
+   "gen": 47,
+   "mean_size": 15.82,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 449,
+   "seconds": 22.6,
+   "best_ever": 16
+  },
+  {
+   "gen": 48,
+   "mean_size": 15.76,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 448,
+   "seconds": 22.5,
+   "best_ever": 16
+  },
+  {
+   "gen": 49,
+   "mean_size": 15.81,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 449,
+   "seconds": 23.0,
+   "best_ever": 16
+  },
+  {
+   "gen": 50,
+   "mean_size": 15.835,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 22.4,
+   "best_ever": 16
+  },
+  {
+   "gen": 51,
+   "mean_size": 15.83,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 449,
+   "seconds": 22.4,
+   "best_ever": 16
+  },
+  {
+   "gen": 52,
+   "mean_size": 15.83,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 22.6,
+   "best_ever": 16
+  },
+  {
+   "gen": 53,
+   "mean_size": 15.825,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 22.2,
+   "best_ever": 16
+  },
+  {
+   "gen": 54,
+   "mean_size": 15.865,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 448,
+   "seconds": 22.3,
+   "best_ever": 16
+  },
+  {
+   "gen": 55,
+   "mean_size": 15.885,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 449,
+   "seconds": 22.2,
+   "best_ever": 16
+  },
+  {
+   "gen": 56,
+   "mean_size": 15.845,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 22.6,
+   "best_ever": 16
+  },
+  {
+   "gen": 57,
+   "mean_size": 15.765,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 22.2,
+   "best_ever": 16
+  },
+  {
+   "gen": 58,
+   "mean_size": 15.865,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 448,
+   "seconds": 22.7,
+   "best_ever": 16
+  },
+  {
+   "gen": 59,
+   "mean_size": 15.815,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 449,
+   "seconds": 23.1,
+   "best_ever": 16
+  },
+  {
+   "gen": 60,
+   "mean_size": 15.825,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 22.3,
+   "best_ever": 16
+  },
+  {
+   "gen": 61,
+   "mean_size": 15.82,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 449,
+   "seconds": 22.1,
+   "best_ever": 16
+  },
+  {
+   "gen": 62,
+   "mean_size": 15.81,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 22.6,
+   "best_ever": 16
+  },
+  {
+   "gen": 63,
+   "mean_size": 15.835,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 449,
+   "seconds": 22.3,
+   "best_ever": 16
+  },
+  {
+   "gen": 64,
+   "mean_size": 15.855,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 449,
+   "seconds": 22.2,
+   "best_ever": 16
+  },
+  {
+   "gen": 65,
+   "mean_size": 15.815,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 22.5,
+   "best_ever": 16
+  },
+  {
+   "gen": 66,
+   "mean_size": 15.865,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 22.6,
+   "best_ever": 16
+  },
+  {
+   "gen": 67,
+   "mean_size": 15.82,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 449,
+   "seconds": 22.8,
+   "best_ever": 16
+  },
+  {
+   "gen": 68,
+   "mean_size": 15.89,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 22.4,
+   "best_ever": 16
+  },
+  {
+   "gen": 69,
+   "mean_size": 15.865,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 22.6,
+   "best_ever": 16
+  },
+  {
+   "gen": 70,
+   "mean_size": 15.86,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 23.0,
+   "best_ever": 16
+  },
+  {
+   "gen": 71,
+   "mean_size": 15.845,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 448,
+   "seconds": 23.1,
+   "best_ever": 16
+  },
+  {
+   "gen": 72,
+   "mean_size": 15.875,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 25.0,
+   "best_ever": 16
+  },
+  {
+   "gen": 73,
+   "mean_size": 15.795,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 24.8,
+   "best_ever": 16
+  },
+  {
+   "gen": 74,
+   "mean_size": 15.79,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 23.7,
+   "best_ever": 16
+  },
+  {
+   "gen": 75,
+   "mean_size": 15.845,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 449,
+   "seconds": 25.1,
+   "best_ever": 16
+  },
+  {
+   "gen": 76,
+   "mean_size": 15.855,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 23.2,
+   "best_ever": 16
+  },
+  {
+   "gen": 77,
+   "mean_size": 15.82,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 449,
+   "seconds": 28.8,
+   "best_ever": 16
+  },
+  {
+   "gen": 78,
+   "mean_size": 15.85,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 26.0,
+   "best_ever": 16
+  },
+  {
+   "gen": 79,
+   "mean_size": 15.865,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 23.9,
+   "best_ever": 16
+  },
+  {
+   "gen": 80,
+   "mean_size": 15.835,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 449,
+   "seconds": 24.7,
+   "best_ever": 16
+  },
+  {
+   "gen": 81,
+   "mean_size": 15.855,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 449,
+   "seconds": 24.9,
+   "best_ever": 16
+  },
+  {
+   "gen": 82,
+   "mean_size": 15.835,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 449,
+   "seconds": 27.0,
+   "best_ever": 16
+  },
+  {
+   "gen": 83,
+   "mean_size": 15.86,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 24.5,
+   "best_ever": 16
+  },
+  {
+   "gen": 84,
+   "mean_size": 15.75,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 25.0,
+   "best_ever": 16
+  },
+  {
+   "gen": 85,
+   "mean_size": 15.865,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 24.2,
+   "best_ever": 16
+  },
+  {
+   "gen": 86,
+   "mean_size": 15.845,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 23.7,
+   "best_ever": 16
+  },
+  {
+   "gen": 87,
+   "mean_size": 15.855,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 23.0,
+   "best_ever": 16
+  },
+  {
+   "gen": 88,
+   "mean_size": 15.885,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 449,
+   "seconds": 25.2,
+   "best_ever": 16
+  },
+  {
+   "gen": 89,
+   "mean_size": 15.845,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 26.9,
+   "best_ever": 16
+  },
+  {
+   "gen": 90,
+   "mean_size": 15.795,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 449,
+   "seconds": 23.4,
+   "best_ever": 16
+  },
+  {
+   "gen": 91,
+   "mean_size": 15.815,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 22.4,
+   "best_ever": 16
+  },
+  {
+   "gen": 92,
+   "mean_size": 15.79,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 22.6,
+   "best_ever": 16
+  },
+  {
+   "gen": 93,
+   "mean_size": 15.885,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 23.0,
+   "best_ever": 16
+  },
+  {
+   "gen": 94,
+   "mean_size": 15.76,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 449,
+   "seconds": 22.3,
+   "best_ever": 16
+  },
+  {
+   "gen": 95,
+   "mean_size": 15.815,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 22.3,
+   "best_ever": 16
+  },
+  {
+   "gen": 96,
+   "mean_size": 15.79,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 22.3,
+   "best_ever": 16
+  },
+  {
+   "gen": 97,
+   "mean_size": 15.8,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 449,
+   "seconds": 22.6,
+   "best_ever": 16
+  },
+  {
+   "gen": 98,
+   "mean_size": 15.83,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 23.2,
+   "best_ever": 16
+  },
+  {
+   "gen": 99,
+   "mean_size": 15.78,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 448,
+   "seconds": 23.1,
+   "best_ever": 16
+  },
+  {
+   "gen": 100,
+   "mean_size": 15.875,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 449,
+   "seconds": 22.9,
+   "best_ever": 16
+  },
+  {
+   "gen": 101,
+   "mean_size": 15.825,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 23.0,
+   "best_ever": 16
+  },
+  {
+   "gen": 102,
+   "mean_size": 15.83,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 449,
+   "seconds": 25.0,
+   "best_ever": 16
+  },
+  {
+   "gen": 103,
+   "mean_size": 15.8,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 449,
+   "seconds": 25.7,
+   "best_ever": 16
+  },
+  {
+   "gen": 104,
+   "mean_size": 15.845,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 449,
+   "seconds": 22.8,
+   "best_ever": 16
+  },
+  {
+   "gen": 105,
+   "mean_size": 15.785,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 23.0,
+   "best_ever": 16
+  },
+  {
+   "gen": 106,
+   "mean_size": 15.85,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 25.2,
+   "best_ever": 16
+  },
+  {
+   "gen": 107,
+   "mean_size": 15.805,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 24.6,
+   "best_ever": 16
+  },
+  {
+   "gen": 108,
+   "mean_size": 15.82,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 22.5,
+   "best_ever": 16
+  },
+  {
+   "gen": 109,
+   "mean_size": 15.87,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 22.2,
+   "best_ever": 16
+  },
+  {
+   "gen": 110,
+   "mean_size": 15.83,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 23.1,
+   "best_ever": 16
+  },
+  {
+   "gen": 111,
+   "mean_size": 15.835,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 449,
+   "seconds": 23.9,
+   "best_ever": 16
+  },
+  {
+   "gen": 112,
+   "mean_size": 15.885,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 24.2,
+   "best_ever": 16
+  },
+  {
+   "gen": 113,
+   "mean_size": 15.865,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 22.5,
+   "best_ever": 16
+  },
+  {
+   "gen": 114,
+   "mean_size": 15.815,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 22.8,
+   "best_ever": 16
+  },
+  {
+   "gen": 115,
+   "mean_size": 15.87,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 23.1,
+   "best_ever": 16
+  },
+  {
+   "gen": 116,
+   "mean_size": 15.8,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 24.1,
+   "best_ever": 16
+  },
+  {
+   "gen": 117,
+   "mean_size": 15.84,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 25.1,
+   "best_ever": 16
+  },
+  {
+   "gen": 118,
+   "mean_size": 15.895,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 22.9,
+   "best_ever": 16
+  },
+  {
+   "gen": 119,
+   "mean_size": 15.855,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 449,
+   "seconds": 22.4,
+   "best_ever": 16
+  },
+  {
+   "gen": 120,
+   "mean_size": 15.89,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 24.1,
+   "best_ever": 16
+  },
+  {
+   "gen": 121,
+   "mean_size": 15.825,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 448,
+   "seconds": 23.1,
+   "best_ever": 16
+  },
+  {
+   "gen": 122,
+   "mean_size": 15.86,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 24.0,
+   "best_ever": 16
+  },
+  {
+   "gen": 123,
+   "mean_size": 15.84,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 25.7,
+   "best_ever": 16
+  },
+  {
+   "gen": 124,
+   "mean_size": 15.87,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 449,
+   "seconds": 23.0,
+   "best_ever": 16
+  },
+  {
+   "gen": 125,
+   "mean_size": 15.825,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 22.5,
+   "best_ever": 16
+  },
+  {
+   "gen": 126,
+   "mean_size": 15.82,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 449,
+   "seconds": 23.0,
+   "best_ever": 16
+  },
+  {
+   "gen": 127,
+   "mean_size": 15.79,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 23.1,
+   "best_ever": 16
+  },
+  {
+   "gen": 128,
+   "mean_size": 15.78,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 23.6,
+   "best_ever": 16
+  },
+  {
+   "gen": 129,
+   "mean_size": 15.79,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 23.9,
+   "best_ever": 16
+  },
+  {
+   "gen": 130,
+   "mean_size": 15.855,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 23.7,
+   "best_ever": 16
+  },
+  {
+   "gen": 131,
+   "mean_size": 15.81,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 449,
+   "seconds": 23.6,
+   "best_ever": 16
+  },
+  {
+   "gen": 132,
+   "mean_size": 15.845,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 23.9,
+   "best_ever": 16
+  },
+  {
+   "gen": 133,
+   "mean_size": 15.825,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 449,
+   "seconds": 24.1,
+   "best_ever": 16
+  },
+  {
+   "gen": 134,
+   "mean_size": 15.86,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 23.5,
+   "best_ever": 16
+  },
+  {
+   "gen": 135,
+   "mean_size": 15.83,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 23.6,
+   "best_ever": 16
+  },
+  {
+   "gen": 136,
+   "mean_size": 15.86,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 449,
+   "seconds": 23.6,
+   "best_ever": 16
+  },
+  {
+   "gen": 137,
+   "mean_size": 15.81,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 24.0,
+   "best_ever": 16
+  },
+  {
+   "gen": 138,
+   "mean_size": 15.85,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 23.7,
+   "best_ever": 16
+  },
+  {
+   "gen": 139,
+   "mean_size": 15.86,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 24.5,
+   "best_ever": 16
+  },
+  {
+   "gen": 140,
+   "mean_size": 15.825,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 449,
+   "seconds": 24.3,
+   "best_ever": 16
+  },
+  {
+   "gen": 141,
+   "mean_size": 15.79,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 450,
+   "seconds": 26.7,
+   "best_ever": 16
+  },
+  {
+   "gen": 142,
+   "mean_size": 15.83,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 25.1,
+   "best_ever": 16
+  },
+  {
+   "gen": 143,
+   "mean_size": 15.855,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 449,
+   "seconds": 25.1,
+   "best_ever": 16
+  },
+  {
+   "gen": 144,
+   "mean_size": 15.91,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 449,
+   "seconds": 24.5,
+   "best_ever": 16
+  },
+  {
+   "gen": 145,
+   "mean_size": 15.795,
+   "max_size": 16,
+   "min_size": 12,
+   "n_terms": 448,
+   "seconds": 23.4,
+   "best_ever": 16
+  },
+  {
+   "gen": 146,
+   "mean_size": 15.85,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 450,
+   "seconds": 24.0,
+   "best_ever": 16
+  },
+  {
+   "gen": 147,
+   "mean_size": 15.855,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 449,
+   "seconds": 23.5,
+   "best_ever": 16
+  },
+  {
+   "gen": 148,
+   "mean_size": 15.785,
+   "max_size": 16,
+   "min_size": 13,
+   "n_terms": 448,
+   "seconds": 22.7,
+   "best_ever": 16
+  },
+  {
+   "gen": 149,
+   "mean_size": 15.875,
+   "max_size": 16,
+   "min_size": 14,
+   "n_terms": 450,
+   "seconds": 23.1,
+   "best_ever": 16
+  }
+ ],
+ "best_ever": 16,
+ "best_clique": [
+  [
+   6,
+   6,
+   6,
+   2
+  ],
+  [
+   5,
+   8,
+   4,
+   1
+  ],
+  [
+   7,
+   7,
+   4,
+   4
+  ],
+  [
+   6,
+   5,
+   6,
+   0
+  ],
+  [
+   5,
+   3,
+   8,
+   0
+  ],
+  [
+   8,
+   7,
+   5,
+   1
+  ],
+  [
+   1,
+   1,
+   7,
+   0
+  ],
+  [
+   7,
+   1,
+   5,
+   1
+  ],
+  [
+   5,
+   2,
+   6,
+   0
+  ],
+  [
+   6,
+   6,
+   8,
+   3
+  ],
+  [
+   2,
+   2,
+   7,
+   0
+  ],
+  [
+   6,
+   5,
+   4,
+   1
+  ],
+  [
+   8,
+   8,
+   5,
+   4
+  ],
+  [
+   7,
+   0,
+   3,
+   1
+  ],
+  [
+   2,
+   3,
+   7,
+   0
+  ],
+  [
+   3,
+   0,
+   7,
+   0
+  ]
+ ]
+}
