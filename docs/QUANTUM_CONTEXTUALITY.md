@@ -44,7 +44,7 @@ that started the investigation:
 ## 3. The canonical experiment — Lapkiewicz et al., Nature 474, 490 (2011)
 
 Single heralded photon (SPDC, 20 mm ppKTP, 405 nm pump, 810 nm photons, D₀ herald,
-~3500 heralded counts/s) in **three modes**: two polarizations of one spatial beam +
+~3500 heralded counts/s) in **three modes**: two polarizations of one spatial beam 
 one extra spatial mode. Calcite PBSs merge/split modes; every two-mode transformation
 is a half-wave plate. Five contexts = five configurations of ONE apparatus: wave
 plates WP₁–WP₄ (109.1°, 109.1°, 109.1°, −64.1°) switched on one at a time; the

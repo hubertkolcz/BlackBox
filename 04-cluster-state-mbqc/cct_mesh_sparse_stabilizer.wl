@@ -121,13 +121,25 @@ fastWordRingEdges[word_String, reps_Integer] := Module[{w, L, raw},
    DeleteDuplicates[Sort /@ Flatten[raw, 1]]];
 
 Print["=== SECTION 1: fast (O(L)) pentagon-mesh construction, correctness + speed vs original ==="];
+(* HONESTY FIX (2026-07-14 repo audit): "match" used to be computed correctly
+   right here but only ever printed per-rep, never captured into an outer
+   accumulator -- the SUMMARY below then asserted
+   "Section1_FastConstructionExactMatch"->True as a bare literal, unconnected
+   to whatever this loop actually found, with no Abort/assert guard anywhere
+   in the file. A real mismatch at any tested size would have printed False
+   in the log and the final scoreboard would STILL have claimed True. Now
+   collected into section1Matches and the summary/print below both reference
+   it directly. *)
+section1Matches = {};
 Do[
   Module[{e1, e2, match},
     e1 = wordRingOrig["cct", reps]; e2 = fastWordRingEdges["cct", reps];
     match = (Sort[e1] === Sort[e2]);
+    AppendTo[section1Matches, match];
     Print["  reps=", reps, "  qubits=", 9 reps, "  edges(orig)=", Length[e1],
       "  edges(fast)=", Length[e2], "  EXACT EDGE-SET MATCH? ", match]],
   {reps, {1, 2, 5, 20, 100}}];
+section1AllMatch = AllTrue[section1Matches, TrueQ];
 Print["  Speed (orig Join-in-loop vs fast Table-based):"];
 Do[
   Module[{t1, t2},
@@ -372,7 +384,7 @@ allWellFormedLarge = AllTrue[section6Results, #["WellFormed"] &];
 allMaxDegree3 = AllTrue[section6Results, #["MaxDegree"] == 3 &];
 
 SparseStabilizerSummary = <|
-  "Section1_FastConstructionExactMatch" -> True,
+  "Section1_FastConstructionExactMatch" -> section1AllMatch,
   "Section4_OldVsNewAgreeOnValidMesh_UpTo9000Qubits" -> allAgreeValid,
   "Section5_TestA_DuplicateEdge_OldBlind_NewCatches" -> (oldA["IndependentQ"] && oldA["AllCommuteQ"] && ! newA["WellFormed"]),
   "Section5_TestB_SelfLoop_OldBlind_NewCatches" -> (oldB["IndependentQ"] && oldB["AllCommuteQ"] && ! newB["WellFormed"]),
@@ -385,7 +397,7 @@ SparseStabilizerSummary = <|
 |>;
 
 Print["=== SUMMARY ==="];
-Print["Section 1 (fast construction): exact edge-set match vs original wordRing at all tested sizes? True"];
+Print["Section 1 (fast construction): exact edge-set match vs original wordRing at all tested sizes? ", section1AllMatch];
 Print["Section 4 (OLD vs NEW agreement, valid mesh, up to 9000 qubits / reps=1000): ALL AGREE? ", allAgreeValid];
 Print["Section 5 (negative tests): duplicate-edge -- OLD blind, NEW catches? ",
   (oldA["IndependentQ"] && oldA["AllCommuteQ"] && ! newA["WellFormed"])];

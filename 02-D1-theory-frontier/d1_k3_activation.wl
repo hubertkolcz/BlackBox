@@ -96,7 +96,13 @@ D1K3ActivationVerification = <|
   "C7_honestly_left_open" -> !resultC7["pinned"] && resultC7["omega_range"] == {8, 9}, (* still True: refers to the ceiling-only method's in-session outcome, kept as historical record *)
   "C7_resolved_by_search_2026_07_13" -> resultC7Resolved["omega_exact"] == 8 && resultC7Resolved["load@p=1/2"] == 1 && resultC7Resolved["margin"] == 0, (* the ISSUE-010 fold-back *)
   "ceilingNumbersExact" -> Abs[ceilingC9 - 8.795110420626887] < 10^-6 && Abs[ceilingC7 - 9.392813364071452] < 10^-6,
-  "directCEFilterAttempted" -> True (* attemptC7k3/attemptC9k3 above: substantive result if your environment is fast enough, else Missing["NotAttempted-TimedOut"] honestly recorded *)
+  (* HONESTY FIX (2026-07-14 repo audit): this used to hardcode True
+     unconditionally -- the comment already admitted attemptC7k3/attemptC9k3
+     can come back as Missing["NotAttempted-TimedOut"] on a timeout, but the
+     verification field never actually looked at that outcome. Now it
+     genuinely reflects whether BOTH attempts returned a real (non-Missing)
+     Passes result. *)
+  "directCEFilterAttempted" -> !MissingQ[attemptC7k3["Passes"]] && !MissingQ[attemptC9k3["Passes"]]
   |>;
 Column[{D1K3ActivationVerification, "OK" -> And @@ (Values[D1K3ActivationVerification] /. Missing[__] -> False)}]
 

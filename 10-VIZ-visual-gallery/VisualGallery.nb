@@ -1,0 +1,68 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell["Visual Gallery: Optical-Emulation Showcase Figures", "Title"],
+
+Cell["Supporting computational-essay notebook for \"Evaluating black-box physics through optical emulation.\" Each section below re-derives, from source, the combinatorial or Lie-algebraic facts behind one showcase figure, then imports the rendered figure. This notebook adds no new claims -- every number here is already kernel-verified in the companion .wl scripts in this module (10-VIZ-visual-gallery/); re-running the Input cells below reproduces those same numbers independently.", "Text"],
+
+Cell[CellGroupData[{
+
+Cell["The GE Two-Copy Exclusivity Hypergraph", "Section"],
+
+Cell["Cabello's Graph-theoretic Exclusivity (GE) principle (arXiv:1210.2988) derives the quantum bound sqrt(5) for KCBS from two copies of the pentagon scenario. The two-copy exclusivity structure is itself a graph: vertex set C5 x C5 (25 events), edges wherever either coordinate is C5-adjacent. This section rebuilds that graph from the definition and checks it against the project's own prior count (GE-002, MESH-006).", "Text"],
+
+Cell["Rebuild the C5 x C5 OR-product graph and check its structure against the prior count:", "CodeText"],
+
+Cell["c5Adj[i_, j_] := Mod[i - j, 5] == 1 || Mod[j - i, 5] == 1;\nverts = Tuples[Range[0, 4], 2];\nedgeType[{i1_, j1_}, {i2_, j2_}] := Module[{ai = c5Adj[i1, i2], aj = c5Adj[j1, j2]},\n   Which[ai && aj, \"both\", ai, \"i\", aj, \"j\", True, \"none\"]];\nedges = Select[Subsets[verts, {2}], edgeType @@ # =!= \"none\" &];\ng = Graph[verts, UndirectedEdge @@@ edges];\npentads = Select[FindClique[g, Infinity, All], Length[#] == 5 &];\nstructureOK = And[Length[verts] == 25, Length[edges] == 200, Length[pentads] == 10,\n   Union[VertexDegree[g]] == {16}];\n{structureOK, Length[verts], Length[edges], Length[pentads]}", "Input"],
+
+Cell["{True, 25, 200, 10}", "Output"],
+
+Cell["structureOK came back True: 25 vertices, 200 exclusivity edges, and exactly 10 maximal 5-cliques (\"pentads\"), each a transversal with one vertex per outer C5-cluster. Rendering all ten pentads as translucent overlapping stars over the faint 200-edge backdrop, in a pentagon-of-pentagons layout, makes that combinatorial fact directly visible instead of just tabulated:", "Text"],
+
+Cell["Import[FileNameJoin[{NotebookDirectory[], \"figures\", \"hypergraph_paper.png\"}]]", "Input"],
+
+Cell["Paper theme above; a dark Gallery theme of the same figure below. See ge_pentad_hypergraph.wl for the full construction and both vector PDF originals in figures/.", "Text"],
+
+Cell["Import[FileNameJoin[{NotebookDirectory[], \"figures\", \"hypergraph_gallery.png\"}]]", "Input"]
+
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["so(3) Leaf Confinement on the KCBS Cascade Sphere", "Section"],
+
+Cell["The Lie-Poisson / dynamical-Lie-algebra (DLA) rank test is this project's resource-scaling criterion for classical optical emulability -- the G7 gate (LeafConfinementAudit in BlackBoxCertifier.wl), tied to Corollary 2, the \"2->3 anchor\" (PROPOSITION-O3.md). This section recomputes it directly from the verbatim KCBSDirections / CascadeGenerators / So3Axis / DLADimension definitions in BlackBox/Kernel/BlackBox.wl -- not paraphrased, fetched from source.", "Text"],
+
+Cell["Recompute the cascade generators, their common span, and the DLA rank of the full cascade versus a single generator:", "CodeText"],
+
+Cell["KCBSDirections[] := Module[{c2 = Cos[Pi/5]/(1 + Cos[Pi/5])},\n   Table[{Sqrt[1 - c2] Cos[4 Pi i/5], Sqrt[1 - c2] Sin[4 Pi i/5], Sqrt[c2]}, {i, 0, 4}]];\nSo3Axis[m_?MatrixQ] := {m[[3, 2]], m[[1, 3]], m[[2, 1]]};\nCascadeGenerators[] := Module[{vecs = KCBSDirections[], frame, sf, transitions},\n   frame[a_, b_] := {a, b, Cross[a, b]};\n   sf = {frame[vecs[[1]], vecs[[2]]], frame[vecs[[3]], vecs[[2]]], frame[vecs[[3]], vecs[[4]]],\n     frame[vecs[[5]], vecs[[4]]], frame[vecs[[5]], vecs[[1]]]};\n   transitions = Table[sf[[k + 1]] . Transpose[sf[[k]]], {k, 4}];\n   MatrixLog /@ N[transitions]];\nDLADimension[gens_List] := Module[{comms},\n   comms = Flatten[Table[So3Axis[gens[[i]] . gens[[j]] - gens[[j]] . gens[[i]]],\n      {i, Length[gens]}, {j, i + 1, Length[gens]}], 1];\n   MatrixRank[Join[So3Axis /@ gens, comms], Tolerance -> 10^-8]];\ngens = CascadeGenerators[];\naxes = So3Axis /@ gens;\n{Length[gens], MatrixRank[axes, Tolerance -> 10^-8], DLADimension[gens], DLADimension[{gens[[1]]}]}", "Input"],
+
+Cell["{4, 2, 3, 1}", "Output"],
+
+Cell["Read as {nGenerators, span, dlaFull, dlaLeaf}: four generators whose axes span only a 2-plane in so(3), yet whose commutator closure (dlaFull) fills all of so(3) at dimension 3 -- while any single generator's closure (dlaLeaf) stays 1-dimensional. Geometrically: one generator's flow-orbit on the unit sphere is a circle, a 1-dimensional \"leaf\" (classically emulable by one optical axis). Combine >= 2 non-commuting generators -- the actual cascade -- and the orbit fills the full 2-sphere: no single-axis classical emulation suffices. The figure below draws both together: the red ring is the leaf, the blue cloud is the sphere-filling orbit of the genuine 4-generator cascade.", "Text"],
+
+Cell["Import[FileNameJoin[{NotebookDirectory[], \"figures\", \"leaf_sphere_paper.png\"}]]", "Input"],
+
+Cell["Gallery theme of the same figure:", "Text"],
+
+Cell["Import[FileNameJoin[{NotebookDirectory[], \"figures\", \"leaf_sphere_gallery.png\"}]]", "Input"]
+
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Relationship to the Essay", "Section"],
+
+Cell["Both figures illustrate already-verified results; this notebook is a supporting gallery, not the project's main computational essay. The main essay (per docs/ESSAY-OUTLINE.md and EssayTemplate.nb) should import figures from this module's figures/ directory directly rather than duplicating the derivations above. See 10-VIZ-visual-gallery/README.md for the full inventory, the Paper/Gallery theme convention, and an honest note on the one post-export whitespace-crop step applied to the deployed PNGs (documented per-script; it trims Mathematica's default PlotLabel-to-scene margin and touches no geometry, data, or color).", "Text"],
+
+Cell["References: A. Cabello, arXiv:1210.2988 (Graph-theoretic Exclusivity principle). J. Ulrey, IJQF 8 (2022) 31-116 = arXiv:2001.09756 (operational taxonomy). Source of all recomputed facts above: BlackBox/Kernel/BlackBox.wl, 00-BBT-blackbox-protocol/PROPOSITION-O3.md, 00-BBT-blackbox-protocol/BlackBoxCertifier.wl.", "Text"]
+
+}, Open  ]]
+
+}, WindowTitle -> "Visual Gallery - Optical Emulation Showcase Figures", StyleDefinitions -> "Default.nb"]
+(* End of Notebook Content *)

@@ -1,17 +1,1 @@
-{
- "family": [
-  2,
-  2,
-  2,
-  6,
-  6
- ],
- "S": 18,
- "method": "elim2",
- "status": "PARTIAL",
- "nodes": 28229632,
- "anchors_done": 34,
- "wall_seconds": 0,
- "witness": null,
- "witness_verified": null
-}
+{"family": [2, 2, 2, 6, 6], "S": 18, "method": "elim2", "status": "NO", "nodes": 32768, "anchors_done": 386, "plan": [4, 3, 1, 0, 2], "wall_seconds": 64.8, "note": "harvested 2026-07-14 from live WCS job 4bc03c8b-0fad-4b5a-8d19-990a9b4bbe1a dashboard (all 386/386 anchors done, status=NO); the job's own checkpoint-bundle export is broken (missing json import), so this was captured manually from the dashboard rather than the bundle"}

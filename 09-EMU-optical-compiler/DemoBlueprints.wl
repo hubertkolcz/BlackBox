@@ -81,7 +81,7 @@ EmitDemoBlueprints[baseDir_String] := Module[
         (* .png + .pdf schematic *)
         png = FileNameJoin[{schemDir, name <> ".png"}];
         pdf = FileNameJoin[{schemDir, name <> ".pdf"}];
-        Export[png, bp["Schematic"], ImageResolution -> 144];
+        Export[png, bp["Schematic"], ImageResolution -> 200];
         Export[pdf, bp["Schematic"]];
         name -> <|"Layer" -> bp["Layer"], "ModeCount" -> bp["ModeCount"],
            "VerifyOK" -> v["OK"], "MaxDeviation" -> v["MaxDeviation"],

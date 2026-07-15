@@ -395,3 +395,135 @@ Print[Style["shape (pentagon vs. chain vs. star) is IRRELEVANT to Proposition 0'
 Print[Style["integrability criterion once any single connected CZ graph plus full local", Bold]];
 Print[Style["Pauli control is present: connectivity alone already drives the DLA to the", Bold]];
 Print[Style["full su(2^n), matching the CZ-gate universality folklore this bridges to.", Bold]];
+
+(* ============================================================================
+   SECTION 10 (2026-07-14 addition): Genuine Multipartite Entanglement (GME)
+   via graph connectivity -- an EXACT, POLYNOMIAL-TIME complement to the
+   exponential DLA route above.
+   ============================================================================
+
+   SCOPE, STATED PRECISELY (do not conflate with Sections 1-9): Sections 1-9
+   compute the DYNAMICAL LIE ALGEBRA of the CONTROL generators (local Pauli +
+   CZ) -- whether this gate set can reach ARBITRARY unitaries on the full
+   2^n-dimensional space (universal controllability, Proposition 0). That
+   question is genuinely open past ~n=8 (Sections 7-8) and this section does
+   NOT close it. This section answers a DIFFERENT, strictly easier, and
+   well-posed question: is the ONE SPECIFIC STATE this mesh actually prepares
+   -- the graph state |G> = prod_{(i,j) in E} CZ_ij |+>^n -- genuinely
+   entangled across every bipartition (GME), i.e. does it fail to factorize
+   as a product state across ANY split of its qubits? Section 9's own closing
+   remark ("connectivity alone already drives the DLA to the full su(2^n)")
+   is an empirical n=5 pattern about the HARDER controllability question;
+   THIS section proves the EASIER entangled-state question exactly, for ANY
+   n, in polynomial time, via standard stabilizer/graph-state theory.
+
+   THE FACT USED (Hein, Eisert, Briegel, "Multiparty entanglement in graph
+   states", Phys. Rev. A 69, 062311 (2004) -- already cited for graph-state
+   conventions in 04-cluster-state-mbqc/cct_mbqc_sim.wl's header): for a graph
+   state |G> with adjacency matrix Gamma (mod 2) and any bipartition
+   V = A u B, the entanglement entropy of the reduced state on A (in ebits)
+   equals rank_GF(2) of the A-by-B submatrix of Gamma (the "cut matrix").
+   Hence |G> factorizes across (A,B) [zero entanglement] iff that cut
+   submatrix is the zero matrix over GF(2), iff no edge of G crosses the cut.
+   So |G> is GENUINELY multipartite entangled (no bipartition factorizes) iff
+   every nontrivial cut has >=1 crossing edge iff the graph G is CONNECTED --
+   checkable in O(V+E) by a single traversal, for ANY n, including scales
+   Section 8 showed are representationally impossible for the DLA route. *)
+
+GraphAdjacencyMatrixMod2[n_Integer, edges_List] := Module[{m = ConstantArray[0, {n, n}]},
+   Do[m[[e[[1]], e[[2]]]] = 1; m[[e[[2]], e[[1]]]] = 1, {e, edges}]; m];
+
+(* Gaussian elimination over GF(2); used only for the small validation cases
+   below -- the SCALABLE certificate is GraphStateGMEQ (connectivity), not this. *)
+RankGF2[mat_List] := Module[{m = Mod[mat, 2], rows, cols, r = 1, c, piv},
+   If[mat === {} || mat[[1]] === {}, Return[0]];
+   {rows, cols} = Dimensions[m];
+   Do[
+     If[r <= rows,
+       piv = FirstPosition[m[[r ;;, c]], 1];
+       If[piv =!= Missing["NotFound"],
+         piv = piv[[1]] + r - 1;
+         If[piv != r, {m[[r]], m[[piv]]} = {m[[piv]], m[[r]]}];
+         Do[If[k != r && m[[k, c]] == 1, m[[k]] = Mod[m[[k]] + m[[r]], 2]], {k, rows}];
+         r++]],
+     {c, cols}];
+   Min[r - 1, rows, cols]];
+
+GraphStateCutRankGF2[n_Integer, edges_List, A_List] := Module[{gamma, B, cut},
+   gamma = GraphAdjacencyMatrixMod2[n, edges];
+   B = Complement[Range[n], A];
+   If[A === {} || B === {}, Return[0]];
+   cut = gamma[[A, B]];
+   RankGF2[cut]];
+
+(* the poly-time GME certificate: connected <=> genuinely multipartite
+   entangled graph state (the equivalence is the cited theorem; this
+   implements it directly via connectivity, O(V+E), never looping over the
+   2^n-1 bipartitions the cut-rank formula is stated for). *)
+GraphStateGMEQ[n_Integer, edges_List] := ConnectedGraphQ[Graph[Range[n], UndirectedEdge @@@ edges]];
+
+Print[""];
+Print[Style["Section 10: GME via graph connectivity -- validation against known-Schmidt-rank cases.",
+  Bold, Blue]];
+
+(* validation 1: a single Bell pair (edge {1,2}) -- known 1 ebit of entanglement
+   across the only nontrivial cut *)
+bellCutRank = GraphStateCutRankGF2[2, {{1, 2}}, {1}];
+bellGME = GraphStateGMEQ[2, {{1, 2}}];
+Print["  Bell pair (edge 1-2): cut-rank({1}|{2}) = ", bellCutRank,
+  " (expect 1, i.e. 1 ebit); GME = ", bellGME, " (expect True)"];
+
+(* validation 2: two DISJOINT Bell pairs (edges {1,2},{3,4}) -- a PRODUCT state
+   across {1,2}|{3,4}: cut-rank must be 0, GME must be False *)
+prodCutRank = GraphStateCutRankGF2[4, {{1, 2}, {3, 4}}, {1, 2}];
+prodGME = GraphStateGMEQ[4, {{1, 2}, {3, 4}}];
+Print["  Two disjoint pairs (1-2)(3-4): cut-rank({1,2}|{3,4}) = ", prodCutRank,
+  " (expect 0, a product state); GME = ", prodGME, " (expect False)"];
+
+(* validation 3: PentagonChain[1], n=5 -- cross-check against the real mesh
+   topology Sections 5-6 already trust. Uses a single-vertex cut, whose
+   cut-rank is PROVABLY exactly 1 for any vertex of degree >=1 in a simple
+   graph (rank of one nonzero row vector over GF(2) is always 1) -- avoiding
+   any assumption about the paclet's specific vertex-labeling convention. *)
+pent1GME = GraphStateGMEQ[pent1N, pent1Edges];
+pent1SingleCutRank = GraphStateCutRankGF2[pent1N, pent1Edges, {pent1Edges[[1, 1]]}];
+Print["  PentagonChain[1] (n=5, C5 ring): GME = ", pent1GME, " (expect True); single-vertex",
+  " cut-rank = ", pent1SingleCutRank, " (expect exactly 1, by construction)"];
+
+(* validation 4: PentagonChain[2], n=8 -- EXACTLY the size Section 7 marked
+   INFEASIBLE for the DLA route. The GME question, unlike the DLA question,
+   is answered here instantly. *)
+pent2GME = GraphStateGMEQ[pent2N, pent2Edges];
+Print["  PentagonChain[2] (n=8, the DLA-INFEASIBLE case from Section 7): GME = ", pent2GME,
+  "  -- answered in O(V+E), no exponential blow-up."];
+
+(* validation 5: scale check -- confirm this stays instant far past the ~8-qubit
+   DLA ceiling. Uses a plain large cycle (any connected topology demonstrates
+   the point; PentagonChainEdges' own O(L^2) list-Join construction, per its
+   docstring analogue in cct_mesh_sparse_construction.wl, is irrelevant and
+   deliberately not exercised here). *)
+{tScale, bigGME} = AbsoluteTiming[
+   Module[{nBig = 50000, edgesBig},
+     edgesBig = Table[{i, Mod[i, 50000] + 1}, {i, 50000}];
+     GraphStateGMEQ[nBig, edgesBig]]];
+Print["  A 50,000-vertex connected cycle (far past any DLA-feasible size): GME = ", bigGME,
+  ", computed in ", tScale, "s -- confirms no exponential blow-up."];
+
+gmeSectionOK = (bellCutRank == 1) && bellGME && (prodCutRank == 0) && !prodGME &&
+   pent1GME && (pent1SingleCutRank == 1) && pent2GME && bigGME;
+Print["  Section 10 self-check (all validations pass): ", gmeSectionOK];
+Print[""];
+Print[Style["CONCLUSION (Section 10): graph connectivity is an EXACT, poly-time certificate",
+  Bold]];
+Print[Style["of genuine multipartite entanglement for any CZ graph state this project builds --",
+  Bold]];
+Print[Style["a real answer to the joint/global-entanglement question at scales (n=8 and far",
+  Bold]];
+Print[Style["beyond) where Sections 6-9's DLA-based UNIVERSAL-CONTROLLABILITY question remains",
+  Bold]];
+Print[Style["open/infeasible. The two questions are genuinely different; this does not close",
+  Bold]];
+Print[Style["Proposition 0 -- it closes the separate, well-posed GME question 09-EMU's own",
+  Bold]];
+Print[Style["Mesh-blueprint audit (DispatcherEmitter.wl meshDLAAudit) actually needs.", Bold]];
+

@@ -120,7 +120,7 @@ bpC7 = EmitBlueprint[<|"Scenario" -> "Cn", "n" -> 7|>];
 {bpC7["Layer"], VerifyBlueprint[bpC7]["OK"], 7 - 4 LovaszTheta[CycleGraph[7]]}
 
 (* ::CodeText:: *)
-(*Demo 3 \[LongDash] the cct pentagon-mesh chain (reps = 2). This is a block-local emulator: single-photon linear optics reproduces each block's table but constructs no globally-entangled cluster (the KLM caveat, honest in every header). Its geometric lens reports LEAF-CONFINED (DLA < 3 per block) \[LongDash] the constructive shadow of Prop. 2:*)
+(*Demo 3 \[LongDash] the cct pentagon-mesh chain (reps = 2). This is a block-local emulator: single-photon linear optics reproduces each block's table but constructs no globally-entangled cluster (the KLM caveat, honest in every header). Its geometric lens does NOT yet have a computable per-block DLA test for mesh compositions \[LongDash] flagged as an open item during a 2026-07-14 repo audit (the su(2^n) cluster-state route is representationally infeasible at this size, and reusing the KCBS cascade generators for an arbitrary word could not be substantiated). The mesh's TOPOLOGY is independently self-certified below (gate A5 reconstructs and matches the routing exactly); the leaf-confinement claim itself is honestly recorded as not-yet-computed, not asserted either way:*)
 
 (* ::Input:: *)
 bpMesh = EmitBlueprint[<|"Word" -> "cct", "Reps" -> 2|>];
@@ -139,7 +139,7 @@ With[{f = FileNameJoin[{$BlackBoxRepoRoot, "09-EMU-optical-compiler", "schematic
   If[FileExistsQ[f], Import[f], Missing["figure unavailable"]]]
 
 (* ::Text:: *)
-(*Reading. The compiler closes the loop opened in S2-S3: the very construction that makes a KCBS table forgeable at the correlation level (the tuned intensity emulator, Prop. 1) is here emitted as an explicit optical schedule and stamped LEAF-CONFINED by its own geometric lens \[LongDash] while the genuine Lapkiewicz cascade is stamped GENUINE with DLA = 3. Synthesis and certification are the same theorem read in two directions.*)
+(*Reading. The compiler closes the loop opened in S2-S3: the very construction that makes a KCBS table forgeable at the correlation level (the tuned intensity emulator, Prop. 1) is here emitted as an explicit optical schedule, with its topology independently self-certified \[LongDash] while the genuine Lapkiewicz cascade is stamped GENUINE with DLA = 3 and the mesh's own leaf-confinement claim is honestly left open pending a real per-block mesh-DLA test (a repo-audit finding, not a claim this essay makes). Synthesis and certification are the same theorem read in two directions, where both directions are actually computed.*)
 
 (* ::Section:: *)
 (*S8 \[LongDash] Gates That Failed (the credibility signature, F9)*)
@@ -284,8 +284,23 @@ EssaySectionsCVerification = <|
      bpKCBS["CertificationVerdict"]["KCBS-cascade"]["Verdict"] === "genuine"),
   "emuSelfCert" -> TrueQ[vKCBS["OK"]] && vKCBS["MaxDeviation"] < 10^-10,
   "emuHeptagon" -> TrueQ[VerifyBlueprint[bpC7]["OK"]],
-  "emuMeshLeafConfined" -> TrueQ[VerifyBlueprint[bpMesh]["OK"]] &&
-     AllTrue[Values[bpMesh["CertificationVerdict"]], TrueQ[#["LeafConfined"]] &],
+  (* HONESTY FIX (2026-07-14 repo audit): this used to be a single
+     "emuMeshLeafConfined" key asserting TrueQ[#["LeafConfined"]] -- which
+     depended on DispatcherEmitter.wl's now-removed hardcode and was
+     vacuously True regardless of the mesh's actual DLA (never computed).
+     Split into what's actually independently verified (the mesh topology/
+     routing, via gate A5's statistics/target checks) versus what's honestly
+     still open (the leaf-confinement claim itself) -- same "test that it's
+     honestly recorded as open" pattern already used by this repo's own
+     D1K3ActivationVerification["C7_honestly_left_open"]
+     (02-D1-theory-frontier/d1_k3_activation.wl). Both keys below are true
+     TODAY, so the essay's OK->True contract still holds, but for the right
+     reason: nothing is asserted about mesh leaf-confinement that hasn't
+     actually been computed. *)
+  "emuMeshTopologyVerified" -> TrueQ[VerifyBlueprint[bpMesh]["StatisticsMatch"]] &&
+     TrueQ[VerifyBlueprint[bpMesh]["TargetReproduced"]],
+  "emuMeshLeafConfinementHonestlyOpen" -> AllTrue[Values[bpMesh["CertificationVerdict"]],
+     MissingQ[#["LeafConfined"]] &],
   (* S8 *)
   "laplacianRejected" -> AllTrue[HarmonicResidual[deltaC5, N@CycleModel[5, #]] & /@
      {"Classical", "Quantum", "Wright"}, Abs[#] < 10^-10 &],

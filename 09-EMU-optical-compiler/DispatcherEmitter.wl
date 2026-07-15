@@ -343,6 +343,121 @@ DispatchLayers[targetSpec_Association] := Module[{comps, audits, layers, overall
   <|"Components" -> audits, "OverallLayer" -> overall|>];
 
 (* ---------------------------------------------------------------------------
+   MESH per-block genuine-vs-emulable audit (closes the honest
+   Missing["NotComputed"] stub left by EmitBlueprint's Mesh branch and
+   BlackBoxCertifier.wl's blueprintDLA -- see KNOWN_ISSUES.md and
+   10-VIZ-visual-gallery/so3_leaf_confinement_sphere.wl's header for why the
+   naive shortcut ("reuse CascadeGenerators[] for an arbitrary word, assuming
+   UNROTATED standard axes") was previously investigated and rejected: it
+   asserted a raw NUMERICAL identity of physical axes across cis/trans
+   routing that was never checked against this mesh's real construction.
+
+   WHAT THIS DOES INSTEAD (a narrower, VERIFIED claim, not that rejected one):
+   CascadeGenerators[] is built purely from the ABSTRACT KCBS-pentagon
+   combinatorial pattern (KCBSDirections[] never references physical mode
+   numbers or routing at all), and this very module already relies on that
+   same abstractness to reuse CascadeGenerators[] verbatim for arbitrary Cn
+   scenarios (scenarioComponents's Cn branch: "so(3) audit is n-independent:
+   genuine"). Separately, the DLA-dimension rank computation is invariant
+   under any fixed change of basis: conjugating so(3) generators by a
+   rotation only rotates their axis vectors (So3Axis), so MatrixRank of the
+   axis set is unchanged regardless of WHICH physical rotation a cis/trans
+   routing choice corresponds to. So the only thing that actually needs
+   checking -- and the only thing the previous attempt skipped -- is whether
+   a given mesh block's own local exclusivity structure really IS a genuine,
+   non-degenerate 5-cycle (a bona fide independent KCBS-pentagon unit, not a
+   collapsed/merged structure at small L). meshDLAAudit verifies exactly that,
+   block by block, directly from the blueprint's OWN stored edge list (never
+   assumed), and only THEN applies the existing so(3) audit.
+
+   SCOPE, STATED HONESTLY: this certifies per-block LOCAL genuineness only --
+   consistent with the compiler's documented block-local honest scope. It
+   makes NO claim whatsoever about JOINT/global entanglement across the whole
+   mesh's su(2^n) qubits; that route is separately tracked, currently
+   computationally infeasible past ~14 qubits (04-cluster-state-mbqc/
+   cct_cluster_dla.wl, SKIPPED_INFEASIBLE), and remains its own open item --
+   not something this closes. *)
+meshBlockEdges[w_List, L_Integer, k_Integer] := Module[{km, u, v},
+  km = Mod[k - 1, L];
+  {u, v} = If[w[[km + 1]] === "c", {3 km + 1, 3 km + 2}, {3 km + 2, 3 km + 1}];
+  Sort /@ {{u, v}, {u, 3 k + 1}, {3 k + 1, 3 k + 2}, {3 k + 2, 3 k + 3}, {3 k + 3, v}}];
+
+(* A block's own 5 edges form a genuine KCBS-pentagon unit iff they are a
+   simple 5-cycle: exactly 5 distinct vertices, each of degree 2, connected.
+   At small L (block routes to itself / a near neighbour) this can degenerate
+   -- correctly flagged False rather than assumed True. *)
+meshBlockCycleQ[blockEdges_List] := Module[{verts, g},
+  verts = Union[Flatten[blockEdges]];
+  If[Length[DeleteDuplicates[blockEdges]] =!= 5 || Length[verts] =!= 5, False,
+    g = Graph[verts, UndirectedEdge @@@ blockEdges];
+    ConnectedGraphQ[g] && AllTrue[VertexDegree[g], # == 2 &]]];
+
+(* JOINT (global) entanglement of the mesh's corresponding graph-state topology
+   (2026-07-14 addition, closing the "JointEntanglementAudited"->False gap left
+   above -- see 04-cluster-state-mbqc/cct_cluster_dla.wl's Section 10 for the
+   full derivation, citations, and validation this reuses).
+
+   SCOPE, STATED PRECISELY: this is NOT the su(2^n) dynamical-Lie-algebra /
+   universal-controllability question (that remains its own separate, genuinely
+   open, infeasible-past-~14-qubits problem -- cct_cluster_dla.wl Sections 6-9).
+   It is the strictly easier, well-posed question of whether the ABSTRACT graph
+   state this mesh word/reps topology encodes (were it realized as a genuine
+   multi-qubit CZ cluster state, exactly as 04-cluster-state-mbqc's own
+   NewGraphStateTableau/cct_cluster_dla.wl construction does) is genuinely
+   multipartite entangled (GME) -- i.e. whether it factorizes as a product
+   state across ANY bipartition. By Hein-Eisert-Briegel (PRA 69, 062311, 2004):
+   a graph state is GME iff its graph is connected -- an O(V+E) check, exact at
+   any mesh size, never sharing the DLA route's exponential blow-up.
+
+   IMPORTANT: this certifies a fact about the TOPOLOGY / the corresponding
+   qubit-based cluster-state construction, NOT a claim that 09-EMU's own
+   OPTICAL Mesh blueprint physically realizes that entanglement -- per this
+   file's own "HONEST SCOPE" header, single-photon linear optics cannot
+   construct global entanglement without exponential mode count or KLM
+   nonlinearity, and the Mesh layer as built here (Stages = combinatorial
+   routing only, no per-block Unitary/IntensitySchedule yet specified) makes
+   no such physical claim either. *)
+meshGraphStateGMEQ[n_Integer, edges_List] := ConnectedGraphQ[Graph[Range[n], UndirectedEdge @@@ edges]];
+
+meshDLAAudit[word_String, reps_Integer, storedEdges_List] := Module[
+   {w, L, blockData, allVerified, allGenuine, gens, span, dla, nModes, jointGME},
+   w = Characters[StringRepeat[word, reps]];
+   L = Length[w];
+   nModes = 3 L;
+   gens = CascadeGenerators[];
+   {span, dla} = Lookup[$dlaCache, Key[gens], Module[{sp, dl},
+      sp = MatrixRank[So3Axis /@ gens, Tolerance -> 10^-8];
+      dl = DLADimension[gens];
+      $dlaCache[gens] = {sp, dl}; {sp, dl}]];
+   blockData = Table[Module[{be = meshBlockEdges[w, L, k], cycleOK, inBP},
+      cycleOK = meshBlockCycleQ[be];
+      inBP = SubsetQ[storedEdges, DeleteDuplicates[be]];
+      <|"Block" -> k, "Modes" -> {3 k + 1, 3 k + 2, 3 k + 3}, "Letter" -> w[[k + 1]],
+        "CycleVerified" -> cycleOK, "InBlueprintEdgeList" -> inBP,
+        "Span" -> If[cycleOK && inBP, span, Missing["BlockNotVerified"]],
+        "DLADimension" -> If[cycleOK && inBP, dla, Missing["BlockNotVerified"]],
+        "LeafConfined" -> If[cycleOK && inBP, dla < 3, Missing["BlockNotVerified"]],
+        "Verdict" -> If[cycleOK && inBP, If[dla < 3, "emulable", "genuine"],
+           Missing["BlockNotVerified"]]|>],
+     {k, 0, L - 1}];
+   allVerified = AllTrue[blockData, TrueQ[#["CycleVerified"]] && TrueQ[#["InBlueprintEdgeList"]] &];
+   allGenuine = allVerified && AllTrue[blockData, #["Verdict"] === "genuine" &];
+   jointGME = meshGraphStateGMEQ[nModes, storedEdges];
+   <|"Name" -> "pentagon-mesh",
+     "Span" -> If[allVerified, span, Missing["BlockNotVerified"]],
+     "DLADimension" -> If[allVerified, dla, Missing["BlockNotVerified"]],
+     "LeafConfined" -> If[allVerified, !allGenuine, Missing["BlockNotVerified"]],
+     "Verdict" -> If[allVerified, If[allGenuine, "genuine", "mixed"], Missing["BlockNotVerified"]],
+     "Layer" -> "Mesh",
+     "Blocks" -> blockData,
+     "AllBlocksVerified" -> allVerified,
+     "Method" -> "Per-block structural C5-isomorphism check against the blueprint's own stored edge list, then the existing so(3) CascadeGenerators/DLADimension audit reused per verified block (same n-independent-cascade precedent already used for Cn scenarios).",
+     "JointEntanglementAudited" -> True,
+     "JointlyEntangledTopology" -> jointGME,
+     "JointEntanglementMethod" -> "Graph-connectivity GME certificate (Hein-Eisert-Briegel PRA 69, 062311 (2004); O(V+E), exact at any mesh size) applied to the mesh's own stored edge list -- see cct_cluster_dla.wl Section 10. Certifies the ABSTRACT graph-state topology only, NOT that this optical Mesh blueprint physically realizes it (still block-local per this module's honest scope; no per-block Unitary/IntensitySchedule is specified at the Mesh layer today).",
+     "ScopeNote" -> "Per-block LOCAL genuineness certified above (so(3) DLA, per block). JointlyEntangledTopology certifies GME of the corresponding graph-state topology (poly-time, any size) -- a DIFFERENT and easier question than su(2^n) universal controllability, which remains its own separate, open, infeasible-past-~14-qubits problem (cct_cluster_dla.wl Sections 6-9) and is NOT resolved here."|>];
+
+(* ---------------------------------------------------------------------------
    CV column: Sp(2n,R) leaf-confinement.  Ported from
    00-BBT-blackbox-protocol/final_o3_cv_dla.py (exact matrix Lie closure;
    confined <=> closure subset u(n), all antisymmetric, dim <= n^2), with
@@ -414,9 +529,28 @@ EmitBlueprint[targetSpec_Association, opts : OptionsPattern[]] := Module[
    (* MESH target *)
    If[KeyExistsQ[targetSpec, "Word"],
     mesh = CompileMeshRouting[targetSpec["Word"], targetSpec["Reps"]];
-    verdict = <|"Mesh" -> <|"Name" -> "pentagon-mesh", "Span" -> Missing[],
-       "DLADimension" -> Missing[], "LeafConfined" -> True,
-       "Verdict" -> "emulable", "Layer" -> "Mesh"|>|>;
+    (* MESH DLA AUDIT CLOSED (2026-07-14): this used to hardcode
+       "LeafConfined"->True, "Verdict"->"emulable" regardless of word/reps
+       (a fabricated conclusion), then honestly downgraded to Missing[] once
+       that was caught, because no content-aware, tractable DLA test for a
+       Mesh blueprint existed anywhere in this repo: the so(3)
+       CascadeGenerators[] cascade is KCBS-specific (reusing it for an
+       arbitrary word by ASSUMING unrotated standard axes was investigated
+       and could not be substantiated -- see 10-VIZ-visual-gallery/
+       so3_leaf_confinement_sphere.wl's header), and the su(2^n)
+       cluster-state DLA route (04-cluster-state-mbqc/cct_cluster_dla.wl)
+       hits SKIPPED_INFEASIBLE past ~14 qubits -- this blueprint's own
+       reps=2 case is 18 qubits. meshDLAAudit (defined above, Section 3)
+       closes this properly: instead of assuming axes are unrotated, it
+       VERIFIES per block, from this blueprint's own edge list, that the
+       block really is an isomorphic KCBS-pentagon (5-cycle) unit, and only
+       then applies the existing so(3) audit -- a verified precondition
+       replacing an unverified assumption. It still makes NO joint/global
+       entanglement claim (see "JointEntanglementAudited" in its output);
+       that su(2^n) route remains its own separate open item. See
+       BlackBoxCertifier.wl's blueprintDLA (generic over this shape, no
+       change needed) and KNOWN_ISSUES.md for the historical record. *)
+    verdict = <|"Mesh" -> meshDLAAudit[targetSpec["Word"], targetSpec["Reps"], mesh["EdgeList"]]|>;
     bp = <|
       "TargetSpec" -> targetSpec, "ModeCount" -> mesh["ModeCount"], "Layer" -> "Mesh",
       "Stages" -> mesh["Blocks"], "Routing" -> mesh["Routing"],
@@ -476,65 +610,93 @@ OpticalCompilerSchematic[bp_Association] := Which[
   bp["Layer"] === "Mesh", schematicMesh[bp],
   True, Graphics[{Text["(empty blueprint)", {0, 0}]}]];
 
-schematicL1[bp_Association] := Module[{n = 3, stages, xs, prims, ang},
+(* ---- shared visual style (2026-07-14 pass): soft-glow nodes, smooth round-capped
+   wires, a compact numeric angle label with the exact closed form on Tooltip (fixes
+   long algebraic labels overlapping at high stage counts, e.g. the C7 heptagon),
+   rounded block glyphs. Presentation-only: no Stages/Routing/IntensitySchedule
+   numeric content is touched by any of this. ---- *)
+$schemInk = GrayLevel[0.12]; $schemSub = GrayLevel[0.40]; $schemGrid = GrayLevel[0.80];
+$schemSrc = RGBColor[0.14, 0.40, 0.70]; $schemDet = RGBColor[0.80, 0.34, 0.16];
+$schemMuted = RGBColor[0.55, 0.57, 0.63];
+schemWire[{x1_, y1_}, {x2_, y2_}] := {$schemGrid, CapForm["Round"], JoinForm["Round"],
+   Thickness[0.0026], Line[{{x1, y1}, {x2, y2}}]};
+schemNode[{x_, y_}, col_] := {EdgeForm[None], {Opacity[0.16], col, Disk[{x, y}, 0.273]},
+   {Opacity[0.30], col, Disk[{x, y}, 0.195]}, col, Disk[{x, y}, 0.13], White, Opacity[0.9], Disk[{x, y}, 0.0416]};
+schemDetector[{x_, y_}, a_, col_] := {EdgeForm[None],
+   {Opacity[0.16], col, Disk[{x, y}, 0.323, {a - 0.62, a + 0.62}]}, col, Disk[{x, y}, 0.17, {a - 0.44, a + 0.44}]};
+schemBS[{x_, y1_}, {x_, y2_}, wsz_, col_] := {CapForm["Round"], JoinForm["Round"],
+   {Opacity[0.22], col, Thickness[0.011], Line[{{x - wsz, y1}, {x + wsz, y2}}], Line[{{x - wsz, y2}, {x + wsz, y1}}]},
+   {col, Thickness[0.0032], Line[{{x - wsz, y1}, {x + wsz, y2}}], Line[{{x - wsz, y2}, {x + wsz, y1}}]},
+   {White, EdgeForm[Directive[col, Thickness[0.0022]]], Disk[{x, (y1 + y2)/2}, 0.045]}};
+schemAngleLabel[Automatic, numeric_] := Tooltip[Style[NumberForm[N[numeric], {5, 4}], $schemSub, 9],
+   NumberForm[numeric, {16, 15}]];
+schemAngleLabel[exact_, numeric_] := Tooltip[Style[NumberForm[N[numeric], {5, 4}], $schemSub, 9],
+   TraditionalForm[exact]];
+
+schematicL1[bp_Association] := Module[{n = 3, stages, xs, prims},
   stages = bp["Stages"];
   xs = Range[Length[stages]];
   prims = Join[
-    (* mode lines *)
-    Table[{GrayLevel[0.5], Line[{{0, m}, {Length[stages] + 1, m}}]}, {m, n}],
-    (* sources at left, detectors at right *)
-    Table[{RGBColor[0.15, 0.5, 0.85], Disk[{0, m}, 0.12]}, {m, n}],
-    Table[{RGBColor[0.85, 0.3, 0.2], Polygon[{{Length[stages] + 1, m - 0.14},
-       {Length[stages] + 1, m + 0.14}, {Length[stages] + 1.28, m}}]}, {m, n}],
+    (* mode lines, glowing sources, detector wedges *)
+    Table[schemWire[{0, m}, {Length[stages] + 1, m}], {m, n}],
+    Table[schemNode[{0, m}, $schemSrc], {m, n}],
+    Table[schemDetector[{Length[stages] + 1, m}, 0, $schemDet], {m, n}],
     (* stage glyphs *)
     Flatten@Table[
       With[{st = stages[[k]], x = xs[[k]]},
        Switch[st["Type"],
-        "Prep", {RGBColor[0.4, 0.4, 0.45],
-          Rectangle[{x - 0.22, 0.6}, {x + 0.22, n + 0.4}],
-          White, Text[Style[st["Label"], 11], {x, (n + 1)/2}]},
+        "Prep", {EdgeForm[None], {Opacity[0.88], $schemInk,
+           Rectangle[{x - 0.22, 0.6}, {x + 0.22, n + 0.4}, RoundingRadius -> 0.06]},
+          White, Text[Style[st["Label"], Bold, 12], {x, (n + 1)/2}]},
         "BS", With[{i = st["Modes"][[1]], j = st["Modes"][[2]]},
-          ang = st["Parameter"]["Exact"];
-          {Black, Line[{{x - 0.2, i}, {x + 0.2, j}}], Line[{{x - 0.2, j}, {x + 0.2, i}}],
-           RGBColor[0.2, 0.2, 0.2],
-           Text[Style[TraditionalForm[ang], 8], {x, (i + j)/2 + 0.28}],
-           Text[Style[st["Label"], 9], {x, Min[i, j] - 0.3}]}],
+          {schemBS[{x, i}, {x, j}, 0.20, $schemInk],
+           Text[schemAngleLabel[st["Parameter"]["Exact"], st["Parameter"]["Numeric"]], {x, n + 0.38}],
+           Text[Style[st["Label"], 9, $schemSub], {x, Min[i, j] - 0.3}]}],
         _, {}]], {k, Length[stages]}]];
-  Graphics[prims, PlotRange -> {{-0.5, Length[stages] + 1.6}, {0.3, n + 0.7}},
-    ImageSize -> 520, AspectRatio -> 0.5,
-    PlotLabel -> Style["Layer 1 interferometer  (" <> ToString[bp["Layer"]] <> ")", 12]]];
+  Graphics[prims, PlotRange -> {{-0.5, Length[stages] + 1.6}, {0.15, n + 0.75}},
+    ImageSize -> 560, AspectRatio -> 0.48, Background -> White,
+    PlotLabel -> Style["Layer 1 interferometer  (" <> ToString[bp["Layer"]] <> ")", 13, $schemInk]]];
 
 schematicL2[bp_Association] := Module[{cs = bp["IntensitySchedule"], nrows, prims},
   nrows = Length[cs];
   prims = Flatten@Table[
     With[{y = nrows - c + 1, ctx = cs[[c]]},
-     {GrayLevel[0.5], Line[{{0, y}, {4, y}}],
-      RGBColor[0.15, 0.5, 0.85], Disk[{0, y}, 0.12],
-      Black, Text[Style["ctx " <> ToString[ctx["Context"]], 9], {0.6, y + 0.28}],
-      (* three splitter fractions *)
-      RGBColor[0.85, 0.3, 0.2],
-      Text[Style[Row[{"f00=", TraditionalForm[ctx["Fractions"]["f00"]["Exact"]]}], 8], {2.2, y + 0.28}],
-      Text[Style[Row[{"f01=", TraditionalForm[ctx["Fractions"]["f01"]["Exact"]]}], 8], {2.2, y}],
-      Text[Style[Row[{"f10=", TraditionalForm[ctx["Fractions"]["f10"]["Exact"]]}], 8], {2.2, y - 0.28}],
-      RGBColor[0.85, 0.3, 0.2], Polygon[{{4, y - 0.14}, {4, y + 0.14}, {4.28, y}}]}],
+     {schemWire[{0, y}, {4, y}], schemNode[{0, y}, $schemSrc],
+      Text[Style["ctx " <> ToString[ctx["Context"]], 9, $schemInk], {0.62, y + 0.30}],
+      (* three splitter fractions: compact numeric, exact form on Tooltip *)
+      Text[Style["f00=", 8, $schemDet], {1.85, y + 0.28}],
+      Text[schemAngleLabel[ctx["Fractions"]["f00"]["Exact"], ctx["Fractions"]["f00"]["Numeric"]], {2.35, y + 0.28}],
+      Text[Style["f01=", 8, $schemDet], {1.85, y}],
+      Text[schemAngleLabel[ctx["Fractions"]["f01"]["Exact"], ctx["Fractions"]["f01"]["Numeric"]], {2.35, y}],
+      Text[Style["f10=", 8, $schemDet], {1.85, y - 0.28}],
+      Text[schemAngleLabel[ctx["Fractions"]["f10"]["Exact"], ctx["Fractions"]["f10"]["Numeric"]], {2.35, y - 0.28}],
+      schemDetector[{4, y}, 0, $schemDet]}],
     {c, nrows}];
-  Graphics[prims, PlotRange -> {{-0.5, 5}, {0, nrows + 1}}, ImageSize -> 520,
-    PlotLabel -> Style["Layer 2 intensity emulator (per-context splitter schedule)", 12]]];
+  Graphics[prims, PlotRange -> {{-0.5, 5}, {0, nrows + 1}}, ImageSize -> 560, Background -> White,
+    PlotLabel -> Style["Layer 2 intensity emulator (per-context splitter schedule)", 13, $schemInk]]];
 
-schematicMesh[bp_Association] := Module[{routing = bp["Routing"], blocks = bp["Stages"], prims},
+schematicMesh[bp_Association] := Module[{routing = bp["Routing"], blocks = bp["Stages"], prims, blockX},
+  blockX[idx_] := 1.35 idx;
   prims = Join[
-    (* block index key: "Index" (Builder A, authoritative) or "Block" (this module) *)
-    Table[With[{x = 1.3 Lookup[b, "Index", Lookup[b, "Block", 0]]},
-      {RGBColor[0.25, 0.45, 0.7], Rectangle[{x - 0.4, -0.4}, {x + 0.4, 0.4}],
-       White, Text[Style[b["Letter"], 11], {x, 0}],
-       Black, Text[Style["blk " <> ToString[Lookup[b, "Index", Lookup[b, "Block", 0]]], 8], {x, -0.7}]}], {b, blocks}],
-    Table[With[{x1 = 1.3 r["From"], x2 = 1.3 r["To"],
-        col = If[r["Orientation"] === "trans", RGBColor[0.85, 0.3, 0.2], GrayLevel[0.4]]},
-      {col, Arrow[{{x1 + 0.4, 0}, {x2 - 0.4, 0}}],
-       Text[Style[r["Orientation"], 7], {(x1 + x2)/2 + 0.65, 0.28}]}], {r, routing}]];
-  Graphics[prims, PlotRange -> All, ImageSize -> 560, AspectRatio -> 0.28,
+    (* block index key: "Index" (Builder A, authoritative) or "Block" (this module);
+       rounded, glow-tinted blocks colored by letter (c=structural, t=trans-highlight) *)
+    Table[With[{x = blockX[Lookup[b, "Index", Lookup[b, "Block", 0]]], letter = b["Letter"]},
+      Module[{col = If[letter == "t", $schemDet, $schemSrc]},
+       {EdgeForm[None], {Opacity[0.14], col, Rectangle[{x - 0.46, -0.46}, {x + 0.46, 0.46}, RoundingRadius -> 0.12]},
+        {col, Rectangle[{x - 0.4, -0.4}, {x + 0.4, 0.4}, RoundingRadius -> 0.10]},
+        White, Text[Style[b["Letter"], Bold, 13], {x, 0}],
+        $schemSub, Text[Style["blk " <> ToString[Lookup[b, "Index", Lookup[b, "Block", 0]]], 8], {x, -0.68}]}]],
+      {b, blocks}],
+    (* smooth Bezier routing arcs, arched above the blocks; trans-orientation highlighted *)
+    Table[With[{x1 = blockX[r["From"]], x2 = blockX[r["To"]], transQ = (r["Orientation"] === "trans")},
+      Module[{col = If[transQ, $schemDet, $schemMuted], yArc = 0.62},
+       {col, CapForm["Round"], Thickness[If[transQ, 0.008, 0.005]], Arrowheads[0.05],
+        Arrow[BezierCurve[{{x1 + 0.42, 0.05}, {(x1 + x2)/2, yArc}, {x2 - 0.42, 0.05}}]],
+        Text[Style[r["Orientation"], 8, If[transQ, $schemDet, $schemSub]], {(x1 + x2)/2, yArc + 0.16}]}]],
+      {r, routing}]];
+  Graphics[prims, PlotRange -> All, ImageSize -> 620, AspectRatio -> 0.36, Background -> White,
     PlotLabel -> Style["Pentagon-mesh routing  word=" <> bp["TargetSpec"]["Word"] <>
-       "  reps=" <> ToString[bp["TargetSpec"]["Reps"]], 12]]];
+       "  reps=" <> ToString[bp["TargetSpec"]["Reps"]], 13, $schemInk]]];
 
 OpticalCompilerExportSchematics[dir_String] := Module[{bps, files},
   If[! DirectoryQ[dir], CreateDirectory[dir, CreateIntermediateDirectories -> True]];
@@ -543,7 +705,7 @@ OpticalCompilerExportSchematics[dir_String] := Module[{bps, files},
          {"mesh_cct2", EmitBlueprint[<|"Word" -> "cct", "Reps" -> 2|>]}};
   files = Flatten@Table[
      With[{name = b[[1]], g = b[[2]]["Schematic"]},
-      {Export[FileNameJoin[{dir, name <> ".png"}], g, ImageResolution -> 144],
+      {Export[FileNameJoin[{dir, name <> ".png"}], g, ImageResolution -> 200],
        Export[FileNameJoin[{dir, name <> ".pdf"}], g]}], {b, bps}];
   files];
 
@@ -604,13 +766,30 @@ VerifyBlueprint[bp_Association] := Module[
         dlaOK = (comp["Verdict"] === "emulable") && (comp["Layer"] === "L2") &&
            TrueQ[comp["LeafConfined"]]]],
     layer === "Mesh",
-      Module[{rebuilt, stored},
+      Module[{rebuilt, stored, freshAudit, storedAudit},
        rebuilt = wordRingEdgesFast[bp["TargetSpec"]["Word"], bp["TargetSpec"]["Reps"]];
        stored = bp["MeshEdgeList"];
        statMatch = (Sort[rebuilt] === Sort[stored]);
        maxDev = 0;
        targetOK = statMatch;
-       dlaOK = (bp["CertificationVerdict"]["Mesh"]["Layer"] === "Mesh")],
+       (* MESH DLA AUDIT CLOSED (2026-07-14): this used to just check that
+          the "Layer" tag reads "Mesh" -- a tag EmitBlueprint sets on itself
+          moments earlier, so the comparison was tautological and could
+          never catch a fabricated verdict (this is exactly how the
+          LeafConfined->True hardcode upstream went undetected by gate A5).
+          Now it genuinely RE-DERIVES the per-block audit from the
+          blueprint's own TargetSpec + MeshEdgeList (self-certification
+          discipline, matching L1/L2's own re-simulate-from-stored-data
+          convention) and requires the fresh recomputation to agree with
+          the stored verdict -- a real, non-tautological, independent check.
+          See meshDLAAudit's header (Section 3) for the scope/reasoning;
+          still makes no joint/global entanglement claim. *)
+       storedAudit = bp["CertificationVerdict"]["Mesh"];
+       freshAudit = meshDLAAudit[bp["TargetSpec"]["Word"], bp["TargetSpec"]["Reps"], stored];
+       dlaOK = statMatch && (storedAudit["Layer"] === "Mesh") &&
+          TrueQ[storedAudit["AllBlocksVerified"]] && TrueQ[freshAudit["AllBlocksVerified"]] &&
+          (freshAudit["Verdict"] === storedAudit["Verdict"]) &&
+          (freshAudit["DLADimension"] === storedAudit["DLADimension"])],
     True, statMatch = False; maxDev = Infinity; targetOK = False; dlaOK = False];
    ok = TrueQ[statMatch] && TrueQ[targetOK] && TrueQ[dlaOK];
    <|"StatisticsMatch" -> TrueQ[statMatch], "MaxDeviation" -> maxDev,

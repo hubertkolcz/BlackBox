@@ -1,27 +1,40 @@
 # ERG-003 S=18 census, HYBRID driver: uses 64 cores (Compute64x128), not 10-16.
 #
-# The 10 S=18 families split by X-layer size (sX, hence anchor count):
-#   CHEAP  = {0,1,2,4,5} sX=2, 386 anchors      -- 1 core each (proven fast enough)
-#   MEDIUM = {3,7,8}     sX=3, 37,464 anchors   -- multiple cores each, ranged-split
-#   HARD   = {6,9}       sX=4, 1,202,564 anchors -- multiple cores each, ranged-split
+# FOLLOW-UP FIX (2026-07-14): the original CHEAP={0,1,2,4,5} sX=2/386-anchor
+# families ran 1-core-each via decide()'s single-threaded checkpoint (ai, the
+# sequential DFS-leaf anchor count). Live monitoring of job 4bc03c8b-... showed
+# families 1,2,4,5 making ZERO forward progress stage after stage -- node counts
+# oscillating in a narrow band, anchors_done never advancing -- because a single
+# pathological anchor's Y/Z backtracking subtree doesn't finish within one 210s
+# stage, and only the OUTER anchor index is checkpointed (no mid-anchor resume),
+# so every subsequent stage re-derives and discards the same bounded progress.
+# Root-range-split parallelism (decide_ranged(), already used for MEDIUM/HARD)
+# doesn't eliminate this but bounds its damage: splitting the (family-independent,
+# 386-root) space across w workers means (w-1)/w of the family still reaches a
+# terminal verdict even if one chunk is permanently stuck. Family 0 finished
+# cleanly (status=NO, 386/386, see erg003_family_results_s18/family_00.json) and
+# is carried forward as a static terminal result -- no active workers spent on it.
 #
-# CHEAP families use the existing single-threaded checkpoint mechanism (proven,
-# migrated from the real 438-credit detection sweep -- erg003_s18_sweep.py).
-# MEDIUM/HARD families use the NEW root-range-split parallelism (validated in
-# erg003_ranged_selftest.py / erg003_ranged_e2e_selftest.py / erg003_ranged_mp_test.py):
-# splitting the anchor search at the top-level recursion branch point across
-# multiple worker PROCESSES, each independently exhausting a disjoint contiguous
-# index range and reporting a resumable checkpoint. No redundant work (validated
+# The 10 S=18 families split by X-layer size (sX, hence anchor count):
+#   CHEAP_DONE = {0}                  sX=2, 386 anchors, ALREADY TERMINAL (NO)
+#   RANGED     = {1,2,4,5,3,7,8,6,9}  all go through decide_ranged/chunked workers
+#
+# decide_ranged()'s plan-selection is byte-identical to decide()'s, so both pick
+# the same elimination plan for a given family vec and search the exact same
+# tree -- only the traversal is chunked differently (validated in
+# erg003_ranged_selftest.py / erg003_ranged_e2e_selftest.py / erg003_ranged_mp_test.py:
 # exact set-equality across nchunks in {1,2,3,5,7} on the real anchor spaces, plus
-# real ~4x throughput at 4 concurrent workers -- scaling the SAME proven mechanism
-# to more chunks per family is not new logic, just more of it).
+# real ~4x throughput at 4 concurrent workers). Switching 1,2,4,5 onto it is a
+# pure dispatch change -- decide_ranged needs only vec/order/colornum/i_lo/i_hi,
+# none of which differ in kind for cheap vs medium/hard families.
 #
 # Machine: Compute64x128 (64 vCPU, official rate 1970 cr/hr = 32.83 cr/min, ~1.95
 # cores per cr/min -- same compute-per-credit as Compute192x384 but a much smaller
 # 492.5cr commitment floor vs 1477.5cr, and closer to the concurrency scale already
 # validated locally (4 workers) than a 192-way jump would be).
 #
-# Total worker allocation: 5 (cheap, 1 each) + 29 (medium, ~10/10/9) + 30 (hard, 15/15) = 64.
+# Total worker allocation: 0 (family 0, terminal) + 16 (1,2,4,5 @ 4 each) +
+# 24 (3,7,8 @ 8 each) + 24 (6,9 @ 12 each) = 64.
 #
 # ------------------------------- OBSERVABILITY -------------------------------
 # Designed to run in STAGES (call main(maxsec=<stage length>) repeatedly -- the
@@ -49,16 +62,17 @@ TELEMETRY_DIR = os.path.join(HERE, "erg003_s18_telemetry")
 MANIFEST_PATH = os.path.join(HERE, "erg003_s18_run_manifest.json")
 DASHBOARD_PATH = os.path.join(HERE, "erg003_s18_dashboard.json")
 
-CHEAP = [0, 1, 2, 4, 5]
-MEDIUM = [3, 7, 8]
-HARD = [6, 9]
+CHEAP_DONE = [0]
+RANGED = [1, 2, 4, 5, 3, 7, 8, 6, 9]
 ANCHOR_TOTALS = {0: 386, 1: 386, 2: 386, 4: 386, 5: 386, 3: 37464, 7: 37464, 8: 37464,
                  6: 1202564, 9: 1202564}
-# 64-core allocation (Compute64x128): cheap families need only 1 core each (proven
-# sufficient at Memory16x128 scale); the freed-up cores go where they matter --
-# medium families (~10/10/9) and hard families (15/15), a 5-7x jump in per-family
-# parallelism over the prior 16-core hybrid plan (was 2 for medium, 2-3 for hard).
-WORKERS_PER_FAMILY = {**{i: 1 for i in CHEAP}, 3: 10, 7: 10, 8: 9, 6: 15, 9: 15}
+# 64-core allocation (Compute64x128): family 0 is already terminal (NO) -- 0 active
+# workers. The 4 former-cheap families that were stuck get 4 workers each (were 1
+# each, made zero progress); medium/hard are trimmed ~20% to fund that (was 10/10/9
+# and 15/15; see design doc for the tradeoff -- bounded one-time medium/hard
+# slowdown vs fixing a family class that was provably making zero forward progress
+# no matter how many more 210s-capped stages were thrown at it).
+WORKERS_PER_FAMILY = {0: 0, 1: 4, 2: 4, 4: 4, 5: 4, 3: 8, 7: 8, 8: 8, 6: 12, 9: 12}
 assert sum(WORKERS_PER_FAMILY.values()) == 64, sum(WORKERS_PER_FAMILY.values())
 
 
@@ -95,7 +109,8 @@ def write_run_manifest():
             "elim2 two-layer CSP-elimination solver (pentagram-layer reduction over H=C9^v3, "
             "729 vertices); anchors = X-layer candidate cliques enumerated via a Tomita "
             "greedy-coloring-bounded backtracker (erg003_pentagram_search.enum_size_cliques).",
-            "MEDIUM/HARD families parallelized via root-range-split: the anchor enumerator's "
+            "RANGED families (all but the already-terminal family 0) parallelized via "
+            "root-range-split: the anchor enumerator's "
             "top-level recursion branch is partitioned into disjoint contiguous index ranges "
             "across worker processes -- validated exact set-equality (unit tests vs the "
             "coloring-bound enumerator AND an independent count-only reference) and end-to-end "
@@ -149,11 +164,11 @@ def checkpoint_bundle():
     This is the artifact a LATER job resumes from -- not just the original
     438-credit sweep's checkpoints, but wherever THIS run actually got to."""
     bundle = {"cheap": {}, "ranged": {}, "bundled_at": now_iso()}
-    for i in CHEAP:
+    for i in CHEAP_DONE:
         fn = os.path.join(CHEAP_RESULT_DIR, f"family_{i:02d}.json")
         if os.path.exists(fn):
             bundle["cheap"][str(i)] = json.load(open(fn))
-    for i in (MEDIUM + HARD):
+    for i in RANGED:
         for c in range(WORKERS_PER_FAMILY[i]):
             cp = load_chunk_checkpoint(i, c)
             if cp is not None:
@@ -250,27 +265,13 @@ def _run_ranged_worker(args):
         return {"i": i, "c": c, "status": "ERROR", "err": repr(ex)}
 
 
-def _run_cheap_worker_with_telemetry(args):
-    i, maxsec = args
-    label = f"cheap_f{i:02d}"
-    t0 = time.time()
-    r = flat_sweep._run_one(args)
-    dt = time.time() - t0
-    _append_telemetry(label, {
-        "ts": now_iso(), "family": i, "chunk": None, "stage_seconds": round(dt, 2),
-        "nodes_this_stage": r.get("nodes"), "anchors_done": r.get("anchors_done"),
-        "anchor_total": ANCHOR_TOTALS[i], "status": r.get("status"),
-        "rate_anchors_per_min": None})
-    return r
-
-
 def build_dashboard(t_run_start):
     """Read EVERY currently-known checkpoint (cheap + ranged) and aggregate into a
     single live-status snapshot. Safe to call any time -- only reads, and is only
     ever called by the MAIN process after a stage's workers have all returned."""
     fams = ps.families(18, cap=8)
     families_status = {}
-    for i in CHEAP:
+    for i in CHEAP_DONE:
         fn = os.path.join(HERE, "erg003_family_results_s18", f"family_{i:02d}.json")
         if os.path.exists(fn):
             d = json.load(open(fn))
@@ -278,8 +279,8 @@ def build_dashboard(t_run_start):
             done = d.get("anchors_done", 0)
             families_status[i] = {"family": list(fams[i]), "status": d.get("status"),
                                    "nodes": d.get("nodes"), "coverage_frac": round(done / total, 4),
-                                   "anchors_done": done, "anchor_total": total, "n_workers": 1}
-    for i in (MEDIUM + HARD):
+                                   "anchors_done": done, "anchor_total": total, "n_workers": 0}
+    for i in RANGED:
         chunk_results = []
         for c in range(WORKERS_PER_FAMILY[i]):
             cp = load_chunk_checkpoint(i, c)
@@ -330,26 +331,33 @@ def main(maxsec, migrate=True):
         if n:
             print(f"[checkpoint] migrated {n} cheap-family checkpoints", flush=True)
 
-    tasks_cheap = [(i, maxsec) for i in CHEAP]
+    # CHEAP_DONE families (just family 0) are already terminal (NO) -- no active
+    # worker task, just carried forward into the summary/dashboard below.
+    cheap_done_results = []
+    for i in CHEAP_DONE:
+        fn = os.path.join(CHEAP_RESULT_DIR, f"family_{i:02d}.json")
+        if os.path.exists(fn):
+            d = json.load(open(fn))
+            cheap_done_results.append({"i": i, "family": d.get("family"), "status": d.get("status"),
+                                        "nodes": d.get("nodes"), "anchors_done": d.get("anchors_done"),
+                                        "already_terminal": True})
+
     tasks_ranged = []
-    for i in (MEDIUM + HARD):
+    for i in RANGED:
         nworkers = WORKERS_PER_FAMILY[i]
         chunks, order, colornum, vec = initial_chunks(i, nworkers)
         for c, (lo, hi) in enumerate(chunks):
             tasks_ranged.append((i, c, lo, hi, maxsec))
 
-    print(f"[plan] cheap={len(tasks_cheap)} single-threaded workers, "
-          f"ranged={len(tasks_ranged)} chunk workers (medium+hard) "
-          f"= {len(tasks_cheap) + len(tasks_ranged)} total  (manifest {'written' if wrote_manifest else 'exists'})",
+    print(f"[plan] cheap_done={len(CHEAP_DONE)} terminal (0 active workers), "
+          f"ranged={len(tasks_ranged)} chunk workers "
+          f"= {len(tasks_ranged)} total  (manifest {'written' if wrote_manifest else 'exists'})",
           flush=True)
 
-    with mp.Pool(sum(WORKERS_PER_FAMILY.values())) as pool:
-        r_cheap_async = pool.map_async(_run_cheap_worker_with_telemetry, tasks_cheap)
-        r_ranged_async = pool.map_async(_run_ranged_worker, tasks_ranged)
-        r_cheap = r_cheap_async.get()
-        r_ranged = r_ranged_async.get()
+    with mp.Pool(sum(WORKERS_PER_FAMILY.values()) or 1) as pool:
+        r_ranged = pool.map(_run_ranged_worker, tasks_ranged)
 
-    # aggregate medium/hard families' chunk results into a per-family verdict
+    # aggregate ranged families' chunk results into a per-family verdict
     ranged_by_family = {}
     for r in r_ranged:
         ranged_by_family.setdefault(r["i"], []).append(r)
@@ -370,7 +378,7 @@ def main(maxsec, migrate=True):
 
     dashboard = build_dashboard(t_run_start)
 
-    summary = {"S": 18, "cheap_results": r_cheap, "medium_hard_verdicts": family_verdicts,
+    summary = {"S": 18, "cheap_done_results": cheap_done_results, "ranged_verdicts": family_verdicts,
                "worker_allocation": WORKERS_PER_FAMILY, "dashboard": dashboard}
     with open(os.path.join(HERE, "erg003_s18_hybrid_summary.json"), "w") as f:
         json.dump(summary, f, indent=1)

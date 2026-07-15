@@ -625,10 +625,20 @@ CCTMBQCRunV0Foundations[] := Module[
          (TableauStats[tb]["DirtyRows"] === 0);
     FreeTableau[tb]; ok];
   CCTAssert[okDefaults, "V0(e): fresh-tableau analytic defaults", okDefaults];
+  (* HONESTY FIX (2026-07-14 repo audit): "AllOK" used to be a bare True
+     sitting beside these genuinely-computed sibling booleans without ever
+     actually conjoining them. Every contributing check is also wrapped in
+     CCTAssert (which Abort[]s on failure), so this was tautologically safe
+     in practice -- execution could not reach this line unless everything
+     already passed -- but the field itself misrepresented what it was.
+     Now it's a real AND, matching the companion suite's own correct pattern
+     (cct_mbqc_sim_tests.wl: "AllPass" -> (v0OK && v1OK && ...)). *)
   res = <|"IdiomOK" -> okIdiom, "AdjSortOK" -> okAdjSort, "gOK" -> gOK,
     "HOK" -> hOK, "SOK" -> sOK, "SdgOK" -> sdgOK, "XYZOK" -> (xOK && yOK && zOK),
     "CZOK" -> czOK, "CNOTOK" -> cnOK, "HSdgYOK" -> hsdgOK,
-    "TableauDefaultsOK" -> okDefaults, "AllOK" -> True|>;
+    "TableauDefaultsOK" -> okDefaults,
+    "AllOK" -> (okIdiom && okAdjSort && gOK && hOK && sOK && sdgOK &&
+       xOK && yOK && zOK && czOK && cnOK && hsdgOK && okDefaults)|>;
   res];
 
 (* ---------------------------------------------------------------------------
@@ -670,6 +680,7 @@ If[!TrueQ[CCTMBQCLoadOnly],
     FreeTableau[tab];
     Print[];
     Print["CCTMBQCSimSelfCheck: ", <|"V0" -> v0["AllOK"], "C5InitOK" -> eqOK,
-      "DeterminismOK" -> detOK, "ForcedConflictOK" -> conflictOK, "AllPass" -> True|>];
+      "DeterminismOK" -> detOK, "ForcedConflictOK" -> conflictOK,
+      "AllPass" -> (TrueQ[v0["AllOK"]] && eqOK && detOK && conflictOK)|>];
   ]
 ]

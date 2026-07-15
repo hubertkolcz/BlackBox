@@ -9,9 +9,14 @@
  "S": 18,
  "method": "elim2",
  "status": "PARTIAL",
- "nodes": 102334464,
+ "nodes": 16384,
  "anchors_done": 0,
- "wall_seconds": 0,
- "witness": null,
- "witness_verified": null
+ "plan": [
+  3,
+  2,
+  0,
+  4,
+  1
+ ],
+ "wall_seconds": 101.4
 }

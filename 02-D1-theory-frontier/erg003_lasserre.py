@@ -88,7 +88,11 @@ def block_diagonalizer(seed=3, tol=1e-7):
     return [V[:, g] for g in groups]
 
 
-def _g0_perms():
+def _g0_generators():
+    """The 6 raw G0 generators as permutation arrays on vertex indices (P[i] = index
+    vertex i maps to), same order/indexing as erg003_helper.verts. Factored out of
+    _g0_perms so callers (e.g. erg003_sat_symmetry.py) can use the generators directly
+    without materializing the full 96-element closure."""
     from itertools import product
     el = list(product(*[range(m) for m in (9, 9, 9, 5)])); ix = {e: i for i, e in enumerate(el)}
     def neg(c):
@@ -96,7 +100,11 @@ def _g0_perms():
     def prm(p):
         return lambda e: (e[p[0]], e[p[1]], e[p[2]], e[3])
     gens = [neg(0), neg(1), neg(2), neg(3), prm((1, 0, 2)), prm((1, 2, 0))]
-    gp = [tuple(ix[g(e)] for e in el) for g in gens]
+    return [tuple(ix[g(e)] for e in el) for g in gens]
+
+
+def _g0_perms():
+    gp = _g0_generators()
     grp = {tuple(range(NA))}; fr = [tuple(range(NA))]
     while fr:
         nf = []
