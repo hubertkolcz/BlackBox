@@ -139,6 +139,53 @@ def save_chunk_checkpoint(i, c, out):
         json.dump(out, f, indent=1)
 
 
+CHEAP_RESULT_DIR = os.path.join(HERE, "erg003_family_results_s18")
+
+
+def checkpoint_bundle():
+    """Read EVERY currently-known checkpoint (cheap + ranged) into one JSON-able
+    dict -- small (tens of KB), meant to be pushed to durable storage (CloudObject)
+    every stage so progress survives the ephemeral remote machine being torn down.
+    This is the artifact a LATER job resumes from -- not just the original
+    438-credit sweep's checkpoints, but wherever THIS run actually got to."""
+    bundle = {"cheap": {}, "ranged": {}, "bundled_at": now_iso()}
+    for i in CHEAP:
+        fn = os.path.join(CHEAP_RESULT_DIR, f"family_{i:02d}.json")
+        if os.path.exists(fn):
+            bundle["cheap"][str(i)] = json.load(open(fn))
+    for i in (MEDIUM + HARD):
+        for c in range(WORKERS_PER_FAMILY[i]):
+            cp = load_chunk_checkpoint(i, c)
+            if cp is not None:
+                bundle["ranged"][f"{i}_{c}"] = cp
+    return bundle
+
+
+def load_checkpoint_bundle(bundle):
+    """Inverse of checkpoint_bundle(): write a bundle (e.g. downloaded from a prior
+    run's CloudObject) back out to the individual checkpoint file paths, so THIS
+    job resumes from it. Never overwrites a checkpoint that's already MORE advanced
+    locally (defends against an accidental stale-bundle download clobbering
+    same-run progress -- compares nodes/anchors_done, keeps whichever is larger)."""
+    n_loaded = 0
+    os.makedirs(CHEAP_RESULT_DIR, exist_ok=True)
+    for i_str, cp in bundle.get("cheap", {}).items():
+        fn = os.path.join(CHEAP_RESULT_DIR, f"family_{int(i_str):02d}.json")
+        existing = json.load(open(fn)) if os.path.exists(fn) else None
+        if existing is None or cp.get("anchors_done", 0) >= existing.get("anchors_done", 0):
+            json.dump(cp, open(fn, "w"), indent=1)
+            n_loaded += 1
+    os.makedirs(RESULT_DIR_RANGED, exist_ok=True)
+    for key, cp in bundle.get("ranged", {}).items():
+        i_str, c_str = key.split("_")
+        i, c = int(i_str), int(c_str)
+        existing = load_chunk_checkpoint(i, c)
+        if existing is None or cp.get("nodes", 0) >= existing.get("nodes", 0):
+            save_chunk_checkpoint(i, c, cp)
+            n_loaded += 1
+    return n_loaded
+
+
 def initial_chunks(i, nworkers):
     """Static partition of family i's root range into nworkers disjoint,
     roughly-equal contiguous chunks."""
