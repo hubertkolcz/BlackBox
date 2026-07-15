@@ -720,7 +720,7 @@ Module[{bx, navy = RGBColor[0.16, 0.28, 0.46], amber = RGBColor[0.80, 0.50, \
  Graphics[{
    bx[-2.4, \"interior A: genuinely quantum\",
     {Lighter[navy, 0.35], Disk[{-2.4, 0.05}, 0.16],
-     White, Text[Style[\"\[CapitalIHat]\.b3\", 13, FontFamily -> \
+     White, Text[Style[\"\:03b3\", 13, FontFamily -> \
 \"Helvetica\"], {-2.4, 0.05}],
      GrayLevel[0.85], Text[Style[\"single photon\", 8, FontFamily -> \
 \"Helvetica\"], {-2.4, -0.45}]}],
@@ -735,7 +735,7 @@ Module[{bx, navy = RGBColor[0.16, 0.28, 0.46], amber = RGBColor[0.80, 0.50, \
 {0, 1.4}],
    GrayLevel[0.5], Arrow[{{-2.4, -0.85}, {-2.4, -1.5}}], Arrow[{{2.4, -0.85}, \
 {2.4, -1.5}}],
-   ink, Text[Style[\"identical click statistics out \[AHat]\.80\.94 can you \
+   ink, Text[Style[\"identical click statistics out \:2014 can you \
 tell which?\", 10, Bold, FontFamily -> \"Helvetica\"], {0, -1.75}]
    }, ImageSize -> 480, PlotRange -> {{-3.9, 3.9}, {-2.0, 1.6}}]
 ]\
@@ -751,7 +751,7 @@ Cell[BoxData[
      {RGBColor[0.45399999999999996`, 0.532, 0.649], 
       DiskBox[{-2.4, 0.05}, 0.16]}, 
      {GrayLevel[1], InsetBox[
-       StyleBox["\<\"\[CapitalIHat]\.b3\"\>",
+       StyleBox["\<\"\:03b3\"\>",
         StripOnInput->False,
         FontFamily->"Helvetica",
         FontSize->13], {-2.4, 0.05}]}, 
@@ -792,7 +792,7 @@ Cell[BoxData[
     {GrayLevel[0.5], ArrowBox[{{-2.4, -0.85}, {-2.4, -1.5}}], 
      ArrowBox[{{2.4, -0.85}, {2.4, -1.5}}]}, 
     {GrayLevel[0.18], InsetBox[
-      StyleBox["\<\"identical click statistics out \[AHat]\.80\.94 can you \
+      StyleBox["\<\"identical click statistics out \:2014 can you \
 tell which?\"\>",
        StripOnInput->False,
        FontFamily->"Helvetica",
@@ -1565,8 +1565,7 @@ Manipulate[
      PlotRange -> {0, n/2 + 0.6}, ImageSize -> 205, ImagePadding -> {{30, 8}, \
 {34, 26}},
      LabelStyle -> Directive[FontFamily -> \"Helvetica\", 9, GrayLevel[0.3]],
-     PlotLabel -> Style[Row[{\"gap \[CapitalIHat]\[Cedilla]-\[CapitalIHat]\
-\[PlusMinus] = \", NumberForm[th - a, {4, 3}]}], FontFamily -> \"Helvetica\", \
+     PlotLabel -> Style[Row[{\"gap \:03b8-\:03b1 = \", NumberForm[th - a, {4, 3}]}], FontFamily -> \"Helvetica\", \
 10, GrayLevel[0.25]]],
     Show[
      ListPlot[gaps, Filling -> Axis, PlotStyle -> navy, FillingStyle -> \
@@ -2517,10 +2516,10 @@ Manipulate[
   Framed[Column[{
      Graphics[{
        {GrayLevel[0.75], Dashed, Line[{{0, 2}, {6, 2}}]},
-       {GrayLevel[0.35], Text[Style[\"classical  \[CapitalIHat]\[PlusMinus] = \
+       {GrayLevel[0.35], Text[Style[\"classical  \:03b1 = \
 2\", 9, FontFamily -> \"Helvetica\"], {6.05, 2}, {-1, 0}]},
        {navy, Dashed, Line[{{0, s5}, {6, s5}}]},
-       {navy, Text[Style[\"quantum  \[AHat]\.88\.9a5\", 9, FontFamily -> \
+       {navy, Text[Style[\"quantum  \:221a5\", 9, FontFamily -> \
 \"Helvetica\"], {6.05, s5}, {-1, 0}]},
        {amber, Dashed, Line[{{0, 2.5}, {6, 2.5}}]},
        {amber, Text[Style[\"ceiling  5/2\", 9, FontFamily -> \"Helvetica\"], \
@@ -2531,7 +2530,7 @@ err}}],
 err}, {3.15, shat + err}}]},
        {navy, PointSize[0.032], Point[{3, shat}]},
        {GrayLevel[0.2], Text[Style[Row[{\"S = \", NumberForm[shat, {3, 3}], \
-\" \[CapitalAHat]\[PlusMinus] \", NumberForm[err, {3, 3}]}], 10, FontFamily \
+\" \:00b1 \", NumberForm[err, {3, 3}]}], 10, FontFamily \
 -> \"Helvetica\"], {3, shat + err + 0.11}]}},
       PlotRange -> {{0, 7.2}, {1.8, 2.78}}, ImageSize -> 480, AspectRatio -> \
 0.48,
@@ -2976,7 +2975,7 @@ With[{gens = gensV, seed = seedV, leaf = leafV},
      {RGBColor[.85, .2, .2], Tube[leaf, 0.012]},
      {GrayLevel[0.3], PointSize[0.011], Point[walk]}
      }, Boxed -> False, PlotRange -> 1.2, ImageSize -> 330,
-    PlotLabel -> \"red leaf: 1 motion (DLA 1)   \[AHat]\.80\[Cent]   grey \
+    PlotLabel -> \"red leaf: 1 motion (DLA 1)   \:2022   grey \
 cloud: full cascade (DLA 3)\"]],
   {{steps, 300, \"cascade steps\"}, 20, 1500, 20, Appearance -> \"Labeled\"},
   ControlPlacement -> Bottom]]\
@@ -5133,11 +5132,11 @@ Thickness[0.006]], Joined -> True,
 block\"},
       ImageSize -> 480, ImagePadding -> {{55, 25}, {42, 26}},
       PlotLabel -> Row[{\"running average after \", n, \" blocks = \", \
-NumberForm[Last[run], {4, 4}], \"   (moving \[AHat]\.86\.92 fixed target)\"}]],
+NumberForm[Last[run], {4, 4}], \"   (moving \:2192 fixed target)\"}]],
      Graphics[{{RGBColor[.85, .55, .2], Dashed, Line[{{0, lim}, {120, \
 lim}}]},
        {RGBColor[.85, .55, .2], Text[Style[\"fixed target: gap(cct) = 0.0699  \
-(the n \[IDoubleDot]\.94\[Cent] \[AHat]\.88\.9e limit)\", 9], {58, lim + \
+(the n \:2192 \:221e limit)\", 9], {58, lim + \
 0.012}]},
        {RGBColor[.2, .45, .85], PointSize[0.02], Point[{Min[n, 120], \
 Last[run]}]}}]]
@@ -6552,16 +6551,16 @@ Cell[CellGroupData[{
 Cell["\<\
 Module[{green = RGBColor[0.24, 0.55, 0.36], amber = RGBColor[0.80, 0.50, 0.18],
    navy = RGBColor[0.16, 0.28, 0.46], ink = GrayLevel[0.18], dot, g},
- dot[c_] := Style[\"\[AHat]\.97\.8f \", c, 13];
+ dot[c_] := Style[\"\:25cf \", c, 13];
  g = Grid[{
     {Style[\"regime\", White, Bold, 11, FontFamily -> \"Helvetica\"],
      Style[\"reach\", White, Bold, 11, FontFamily -> \"Helvetica\"]},
     {Row[{dot[amber], \"dense many-body DLA (exact)\"}],
-     \"1 pentagon \[IDoubleDot]\.94\[Cent] dim 1023 = 4\[AHat]\.81\[Micro]-1; \
- 8 blocks \[AHat]\.89\.83 137 GiB \[IDoubleDot]\.94\[Cent] infeasible\"},
+     \"1 pentagon \:2192 dim 1023 = 4\:2075-1; \
+ 8 blocks \:2243 137 GiB \:2192 infeasible\"},
     {Row[{dot[green], \"sparse stabilizer path\"}],
      \"structure verified to 27,000,000 qubits / 9,000,000 pentagons in \
-\[AHat]\.89\.83 312 s\"}
+\:2243 312 s\"}
     },
    Background -> {None, {navy, White, GrayLevel[0.965]}},
    Frame -> None,
@@ -6603,19 +6602,18 @@ Cell[BoxData[
        FontColor->GrayLevel[1]]},
      {
       TemplateBox[{
-        StyleBox["\"\[AHat]\.97\.8f \"", 
+        StyleBox["\"\:25cf \"", 
          RGBColor[0.8, 0.5, 0.18], 13, StripOnInput -> False], 
         "\"dense many-body DLA (exact)\""},
-       "RowDefault"], "\<\"1 pentagon \[IDoubleDot]\.94\[Cent] dim 1023 = 4\
-\[AHat]\.81\[Micro]-1;  8 blocks \[AHat]\.89\.83 137 GiB \[IDoubleDot]\.94\
-\[Cent] infeasible\"\>"},
+       "RowDefault"], "\<\"1 pentagon \:2192 dim 1023 = 4\
+\:2075-1;  8 blocks \:2243 137 GiB \:2192 infeasible\"\>"},
      {
       TemplateBox[{
-        StyleBox["\"\[AHat]\.97\.8f \"", 
+        StyleBox["\"\:25cf \"", 
          RGBColor[0.24, 0.55, 0.36], 13, StripOnInput -> False], 
         "\"sparse stabilizer path\""},
        "RowDefault"], "\<\"structure verified to 27,000,000 qubits / \
-9,000,000 pentagons in \[AHat]\.89\.83 312 s\"\>"}
+9,000,000 pentagons in \:2243 312 s\"\>"}
     },
     AutoDelete->False,
     GridBoxAlignment->{"Columns" -> {{Left}}},
@@ -13042,24 +13040,24 @@ GrayLevel[0.18], badge, rowBg},
     Style[\"construction\", White, Bold, 11, FontFamily -> \"Helvetica\"],
     Style[\"result\", White, Bold, 11, FontFamily -> \"Helvetica\"],
     Style[\"verdict\", White, Bold, 11, FontFamily -> \"Helvetica\"]},
-   {\"C5\[IDoubleDot]\.8f\.9aC5\", \"two pentagon copies (co-normal)\",
-    Row[{\"\[CapitalIDoubleDot]\.89 = 5 \[IDoubleDot]\.94\[Cent] reaches \", \
+   {\"C5\:2297C5\", \"two pentagon copies (co-normal)\",
+    Row[{\"\:03c9 = 5 \:2192 reaches \", \
 Sqrt[5]}], badge[\"ACTIVATES\", green]},
-   {\"C7\[IDoubleDot]\.8f\.9aC7\[IDoubleDot]\.8f\.9aC5\", \"two heptagon \
+   {\"C7\:2297C7\:2297C5\", \"two heptagon \
 copies + one pentagon (co-normal)\",
-    Row[{\"9-clique, load 9\", Sqrt[5], \"/20 \[AHat]\.89\.83 1.006 > 1\"}], \
+    Row[{\"9-clique, load 9\", Sqrt[5], \"/20 \:2243 1.006 > 1\"}], \
 badge[\"ACTIVATES (mix)\", green]},
    {\"Quad-C5\", \"four-pentagon graph (arXiv:2605.12828)\",
-    \"\[CapitalIHat]\[Cedilla] = 3.468,  \[CapitalIHat]\.94 = 0.468\", badge[\
+    \"\:03b8 = 3.468,  \:0394 = 0.468\", badge[\
 \"ACTIVATES\", green]},
-   {\"C9\[AHat]\.8b\.81C9\[AHat]\.8b\.81C9\[AHat]\.8b\.81C5\", \"three \
+   {\"C9\:22c1C9\:22c1C9\:22c1C5\", \"three \
 nonagons + one pentagon (co-normal)\",
-    \"clique \[AHat]\.89\[Yen] 17 = 2\[AHat]\.81\.b4+1  (Stage 11)\", \
+    \"clique \:2265 17 = 2\:2074+1  (Stage 11)\", \
 badge[\"ACTIVATES (catalysis)\", green]},
-   {\"Paley(13)\[AHat]\.8b\.813\", \"Paley-13, co-normal cube (3 copies)\",
-    \"\[CapitalIDoubleDot]\.89 bracketed in [39, 46]\", badge[\"OPEN\", \
+   {\"Paley(13)\:22c13\", \"Paley-13, co-normal cube (3 copies)\",
+    \"\:03c9 bracketed in [39, 46]\", badge[\"OPEN\", \
 amber]},
-   {\"C9\[IDoubleDot]\.8f\.9aC9\", \"nonagon copies alone\",
+   {\"C9\:2297C9\", \"nonagon copies alone\",
     \"never exceed the bound\", badge[\"DORMANT\", gray]}
    },
   Background -> {None, rowBg},
@@ -13120,10 +13118,10 @@ Cell[BoxData[
       FontSize->11,
       FontWeight->Bold,
       FontColor->GrayLevel[1]]},
-    {"\<\"C5\[IDoubleDot]\.8f\.9aC5\"\>", "\<\"two pentagon copies \
+    {"\<\"C5\:2297C5\"\>", "\<\"two pentagon copies \
 (co-normal)\"\>", 
      TemplateBox[{
-      "\"\[CapitalIDoubleDot]\.89 = 5 \[IDoubleDot]\.94\[Cent] reaches \"", 
+      "\"\:03c9 = 5 \:2192 reaches \"", 
        SqrtBox["5"]},
       "RowDefault"], 
      FrameBox[
@@ -13142,10 +13140,10 @@ Cell[BoxData[
       FrameStyle->None,
       RoundingRadius->10,
       StripOnInput->False]},
-    {"\<\"C7\[IDoubleDot]\.8f\.9aC7\[IDoubleDot]\.8f\.9aC5\"\>", "\<\"two \
+    {"\<\"C7\:2297C7\:2297C5\"\>", "\<\"two \
 heptagon copies + one pentagon (co-normal)\"\>", 
      TemplateBox[{"\"9-clique, load 9\"", 
-       SqrtBox["5"], "\"/20 \[AHat]\.89\.83 1.006 > 1\""},
+       SqrtBox["5"], "\"/20 \:2243 1.006 > 1\""},
       "RowDefault"], 
      FrameBox[
       StyleBox["\<\"ACTIVATES (mix)\"\>",
@@ -13164,7 +13162,7 @@ heptagon copies + one pentagon (co-normal)\"\>",
       RoundingRadius->10,
       StripOnInput->False]},
     {"\<\"Quad-C5\"\>", "\<\"four-pentagon graph (arXiv:2605.12828)\"\>", "\<\
-\"\[CapitalIHat]\[Cedilla] = 3.468,  \[CapitalIHat]\.94 = 0.468\"\>", 
+\"\:03b8 = 3.468,  \:0394 = 0.468\"\>", 
      FrameBox[
       StyleBox["\<\"ACTIVATES\"\>",
        StripOnInput->False,
@@ -13181,9 +13179,8 @@ heptagon copies + one pentagon (co-normal)\"\>",
       FrameStyle->None,
       RoundingRadius->10,
       StripOnInput->False]},
-    {"\<\"C9\[AHat]\.8b\.81C9\[AHat]\.8b\.81C9\[AHat]\.8b\.81C5\"\>", \
-"\<\"three nonagons + one pentagon (co-normal)\"\>", "\<\"clique \[AHat]\.89\
-\[Yen] 17 = 2\[AHat]\.81\.b4+1  (Stage 11)\"\>", 
+    {"\<\"C9\:22c1C9\:22c1C9\:22c1C5\"\>", \
+"\<\"three nonagons + one pentagon (co-normal)\"\>", "\<\"clique \:2265 17 = 2\:2074+1  (Stage 11)\"\>", 
      FrameBox[
       StyleBox["\<\"ACTIVATES (catalysis)\"\>",
        StripOnInput->False,
@@ -13200,8 +13197,8 @@ heptagon copies + one pentagon (co-normal)\"\>",
       FrameStyle->None,
       RoundingRadius->10,
       StripOnInput->False]},
-    {"\<\"Paley(13)\[AHat]\.8b\.813\"\>", "\<\"Paley-13, co-normal cube (3 \
-copies)\"\>", "\<\"\[CapitalIDoubleDot]\.89 bracketed in [39, 46]\"\>", 
+    {"\<\"Paley(13)\:22c13\"\>", "\<\"Paley-13, co-normal cube (3 \
+copies)\"\>", "\<\"\:03c9 bracketed in [39, 46]\"\>", 
      FrameBox[
       StyleBox["\<\"OPEN\"\>",
        StripOnInput->False,
@@ -13218,7 +13215,7 @@ copies)\"\>", "\<\"\[CapitalIDoubleDot]\.89 bracketed in [39, 46]\"\>",
       FrameStyle->None,
       RoundingRadius->10,
       StripOnInput->False]},
-    {"\<\"C9\[IDoubleDot]\.8f\.9aC9\"\>", "\<\"nonagon copies alone\"\>", "\<\
+    {"\<\"C9\:2297C9\"\>", "\<\"nonagon copies alone\"\>", "\<\
 \"never exceed the bound\"\>", 
      FrameBox[
       StyleBox["\<\"DORMANT\"\>",
@@ -20665,10 +20662,10 @@ vikcBQ0jKXxFyDy/z7qmT/01esMv+qNuWXroL34/c/FCerZOYtfPl/qJW5tn
 }, Open  ]],
 
 Cell["\<\
-C9\[AHat]\.8b\.81C9\[AHat]\.8b\.81C9\[AHat]\.8b\.81C5 is 4-dimensional \
-\[AHat]\.80\.94 three C9 factors plus the pentagon catalyst. Rather than \
+C9\:22c1C9\:22c1C9\:22c1C5 is 4-dimensional \
+\:2014 three C9 factors plus the pentagon catalyst. Rather than \
 dragging a slider through the fourth dimension by hand, this native animation \
-plays a genuine 4D double rotation automatically \[AHat]\.80\.94 simultaneous \
+plays a genuine 4D double rotation automatically \:2014 simultaneous \
 rotation in two orthogonal planes, the one motion that only exists in four \
 dimensions or more:\
 \>", "CodeText",ExpressionUUID->"5f9c7661-5cab-4e4a-a7bb-4e702171700f"],
@@ -20706,8 +20703,8 @@ Line[{witP[[#[[1]]]], witP[[#[[2]]]]}] & /@ edgesAll},
     {RGBColor[.85, .3, .15], PointSize[0.026], Point[witP]}
     }, Boxed -> False, ImageSize -> 650, SphericalRegion -> True, PlotRange \
 -> 3.2, PerformanceGoal -> \"Speed\",
-   PlotLabel -> Column[{Style[\"C9 \[AHat]\.8b\.81 C9 \[AHat]\.8b\.81 C9 \
-\[AHat]\.8b\.81 C5\", Bold, 9], Style[\"true 4D double rotation, native \
+   PlotLabel -> Column[{Style[\"C9 \:22c1 C9 \:22c1 C9 \
+\:22c1 C5\", Bold, 9], Style[\"true 4D double rotation, native \
 Animate\", 8, GrayLevel[0.45]]}, Alignment -> Center]]
   ],
  {tt, 0, 2 Pi}, AnimationRunning -> True, AnimationRate -> 0.2333, \
@@ -20941,8 +20938,8 @@ edgeActive[#] &]},
        Point[witCoords[[i]]]}, {i, 17}]
     }, Boxed -> False, ImageSize -> 420, SphericalRegion -> True, ViewPoint \
 -> {1.5, -2.2, 1.4}, PlotRange -> All,
-   PlotLabel -> Column[{Style[\"C9 \[AHat]\.8b\.81 C9 \[AHat]\.8b\.81 C9 \
-\[AHat]\.8b\.81 C5, the verified 17-clique -- drag to rotate\", Bold, 10],
+   PlotLabel -> Column[{Style[\"C9 \:22c1 C9 \:22c1 C9 \
+\:22c1 C5, the verified 17-clique -- drag to rotate\", Bold, 10],
       Style[\"C5 layer \" <> ToString[c5layer] <> \": \" <> ToString[nActive] \
 <> \" of the 17 witness events sit here\", 9, GrayLevel[0.45]]}, Alignment -> \
 Center]]
@@ -21757,19 +21754,19 @@ The abstract promised that analogue Hawking radiation would supply the \
 application; the Through-Line named Hawking-pair correlations only as an \
 example of the correlation lens's one-context limit. This closing section \
 builds the actual example. Reusing the exact cct pentagon-mesh graph state of \
-Stages 7 to 9 \[AHat]\.80\.94 the same wordRingEdgesFast[\"cct\",reps] edge \
-list, unmodified \[AHat]\.80\.94 one Z-measurement carve isolates a genuine \
+Stages 7 to 9 \:2014 the same wordRingEdgesFast[\"cct\",reps] edge \
+list, unmodified \:2014 one Z-measurement carve isolates a genuine \
 analogue-Hawking Bell pair, and a second carve on the same mesh yields the \
 GHZ triple that powers a non-trivial Clifford computation: Anders and \
 Browne's contextual OR gate (PRL 102, 050502 (2009)). Both run as native \
-Wolfram quantum circuits \[AHat]\.80\.94 the essay's first use of that \
-framework \[AHat]\.80\.94 and both lenses built in Stages 1 through 6 are \
+Wolfram quantum circuits \:2014 the essay's first use of that \
+framework \:2014 and both lenses built in Stages 1 through 6 are \
 turned on the result.\
 \>", "Text",ExpressionUUID->"cb76c75e-a331-4de5-9d8a-56c2224947de"],
 
 Cell["\<\
-The graph state |G\[AHat]\.8c\.aa = (\[AHat]\.88\.8f CZ over mesh edges)|+\
-\[AHat]\.8c\.aa\[AHat]\.8a\.979, as a native quantum circuit:\
+The graph state |G\:27e9 = (\:220f CZ over mesh edges)|+\
+\:27e9\:22979, as a native quantum circuit:\
 \>", "CodeText",ExpressionUUID->"8fa1f2c6-1269-4b2b-9e49-1304e3cf049f"],
 
 Cell[CellGroupData[{
@@ -22656,7 +22653,7 @@ exact mesh) designates the adjacent pair {3k+2, 3k+3} the Hawking mode \
 (exterior, the tip) and partner mode (interior); at k=0 that is qubits 2 and \
 3. Z-measuring every other qubit to a fixed outcome deletes it from the graph \
 (Hein et al., PRA 69, 062311 (2004)) and leaves {2,3} disconnected from the \
-rest of the mesh \[AHat]\.80\.94 a Bell pair up to one local Hadamard:\
+rest of the mesh \:2014 a Bell pair up to one local Hadamard:\
 \>", "Text",ExpressionUUID->"29d78e97-d4cc-4479-842e-e091b8557671"],
 
 Cell[CellGroupData[{
@@ -22695,9 +22692,9 @@ Cell[BoxData[
 }, Open  ]],
 
 Cell["\<\
-That is exactly (|00\[AHat]\.8c\.aa+|01\[AHat]\.8c\.aa+|10\[AHat]\.8c\.aa-|11\
-\[AHat]\.8c\.aa)/2 = (H\[AHat]\.8a\.97I)|\[CapitalIHat]\.a6\[AHat]\.81\.ba\
-\[AHat]\.8c\.aa. The geometric lens (Stage 5) prices entanglement by exactly \
+That is exactly (|00\:27e9+|01\:27e9+|10\:27e9-|11\
+\:27e9)/2 = (H\:2297I)|\:03a6\:207a\
+\:27e9. The geometric lens (Stage 5) prices entanglement by exactly \
 this correlation-matrix construction; turned on the carved pair it reads the \
 Tsirelson-optimal violation off the exact singular values, not a sampled \
 estimate:\
@@ -22715,9 +22712,9 @@ CFval = FullSimplify[(Smax - 2)/2];
 Grid[{
    {Style[\"correlation matrix T\", Bold], MatrixForm[Tmat]},
    {Style[\"singular values\", Bold], sv},
-   {Style[\"CHSH optimum S\", Bold], Row[{Smax, \"  \[AHat]\.89\.83  \", \
+   {Style[\"CHSH optimum S\", Bold], Row[{Smax, \"  \:2243  \", \
 N[Smax]}]},
-   {Style[\"contextual fraction CF\", Bold], Row[{CFval, \"  \[AHat]\.89\.83  \
+   {Style[\"contextual fraction CF\", Bold], Row[{CFval, \"  \:2243  \
 \", N[CFval]}]}
   }, Frame -> All, Alignment -> Left, Spacings -> {1.3, 1.1}, Background -> \
 {None, {GrayLevel[0.93]}}]\
@@ -22762,7 +22759,7 @@ Cell[BoxData[
       FontWeight->Bold], 
      TemplateBox[{
        RowBox[{"2", " ", 
-         SqrtBox["2"]}], "\"  \[AHat]\.89\.83  \"", "2.8284271247461903`"},
+         SqrtBox["2"]}], "\"  \:2243  \"", "2.8284271247461903`"},
       "RowDefault"]},
     {
      StyleBox["\<\"contextual fraction CF\"\>",
@@ -22771,7 +22768,7 @@ Cell[BoxData[
      TemplateBox[{
        RowBox[{
          RowBox[{"-", "1"}], "+", 
-         SqrtBox["2"]}], "\"  \[AHat]\.89\.83  \"", "0.41421356237309515`"},
+         SqrtBox["2"]}], "\"  \:2243  \"", "0.41421356237309515`"},
       "RowDefault"]}
    },
    AutoDelete->False,
@@ -22787,7 +22784,7 @@ Cell[BoxData[
 }, Open  ]],
 
 Cell["\<\
-S = 2\[AHat]\.88\.9a2 and CF = \[AHat]\.88\.9a2-1 exactly \[AHat]\.80\.94 the \
+S = 2\:221a2 and CF = \:221a2-1 exactly \:2014 the \
 same two numbers cct_mbqc_hawking_certification.wl pins as its ground truth \
 for an ideal carved pair. The mesh really does carry a genuine \
 analogue-Hawking correlation, and the geometric lens really does certify it, \
@@ -22799,7 +22796,7 @@ Carving the computation instead: Z-measuring the other six qubits leaves \
 survivors {1,2,3}, the induced path of Stage 7, as a GHZ triple after one \
 fixed local Clifford. That correction (H conjugates X into Z and Y into -Y) \
 can be folded directly into which operator gets measured, rather than applied \
-as a separate gate \[AHat]\.80\.94 so the circuit below performs the entire \
+as a separate gate \:2014 so the circuit below performs the entire \
 Anders-Browne OR(a,b) protocol as a single pass of genuine quantum \
 measurements, with the byproduct correction left as classical post-processing \
 of the outcomes:\
@@ -23686,7 +23683,7 @@ Cell[BoxData[
         {Dashing[{Small, Small}]}},
        TemplateBox[{
          RowBox[{"\"Measurement\"", "[", "None", "]"}], 
-         RowBox[{"\[AHat]\.8a\.97", "1"}]}, "Superscript", SyntaxForm -> 
+         RowBox[{"\:2297", "1"}]}, "Superscript", SyntaxForm -> 
         SuperscriptBox]],
       Annotation[#, 
        Superscript[
@@ -23737,7 +23734,7 @@ Cell[BoxData[
         {Dashing[{Small, Small}]}},
        TemplateBox[{
          RowBox[{"\"Measurement\"", "[", "None", "]"}], 
-         RowBox[{"\[AHat]\.8a\.97", "1"}]}, "Superscript", SyntaxForm -> 
+         RowBox[{"\:2297", "1"}]}, "Superscript", SyntaxForm -> 
         SuperscriptBox]],
       Annotation[#, 
        Superscript[
@@ -23788,7 +23785,7 @@ Cell[BoxData[
         {Dashing[{Small, Small}]}},
        TemplateBox[{
          RowBox[{"\"Measurement\"", "[", "None", "]"}], 
-         RowBox[{"\[AHat]\.8a\.97", "1"}]}, "Superscript", SyntaxForm -> 
+         RowBox[{"\:2297", "1"}]}, "Superscript", SyntaxForm -> 
         SuperscriptBox]],
       Annotation[#, 
        Superscript[
@@ -23839,7 +23836,7 @@ Cell[BoxData[
         {Dashing[{Small, Small}]}},
        TemplateBox[{
          RowBox[{"\"Measurement\"", "[", "None", "]"}], 
-         RowBox[{"\[AHat]\.8a\.97", "1"}]}, "Superscript", SyntaxForm -> 
+         RowBox[{"\:2297", "1"}]}, "Superscript", SyntaxForm -> 
         SuperscriptBox]],
       Annotation[#, 
        Superscript[
@@ -23890,7 +23887,7 @@ Cell[BoxData[
         {Dashing[{Small, Small}]}},
        TemplateBox[{
          RowBox[{"\"Measurement\"", "[", "None", "]"}], 
-         RowBox[{"\[AHat]\.8a\.97", "1"}]}, "Superscript", SyntaxForm -> 
+         RowBox[{"\:2297", "1"}]}, "Superscript", SyntaxForm -> 
         SuperscriptBox]],
       Annotation[#, 
        Superscript[
@@ -23941,7 +23938,7 @@ Cell[BoxData[
         {Dashing[{Small, Small}]}},
        TemplateBox[{
          RowBox[{"\"Measurement\"", "[", "None", "]"}], 
-         RowBox[{"\[AHat]\.8a\.97", "1"}]}, "Superscript", SyntaxForm -> 
+         RowBox[{"\:2297", "1"}]}, "Superscript", SyntaxForm -> 
         SuperscriptBox]],
       Annotation[#, 
        Superscript[
@@ -23992,7 +23989,7 @@ Cell[BoxData[
         {Dashing[{Small, Small}]}},
        TemplateBox[{
          RowBox[{"\"Measurement\"", "[", "None", "]"}], 
-         RowBox[{"\[AHat]\.8a\.97", "1"}]}, "Superscript", SyntaxForm -> 
+         RowBox[{"\:2297", "1"}]}, "Superscript", SyntaxForm -> 
         SuperscriptBox]],
       Annotation[#, 
        Superscript[
@@ -24043,7 +24040,7 @@ Cell[BoxData[
         {Dashing[{Small, Small}]}},
        TemplateBox[{
          RowBox[{"\"Measurement\"", "[", "None", "]"}], 
-         RowBox[{"\[AHat]\.8a\.97", "1"}]}, "Superscript", SyntaxForm -> 
+         RowBox[{"\:2297", "1"}]}, "Superscript", SyntaxForm -> 
         SuperscriptBox]],
       Annotation[#, 
        Superscript[
@@ -24094,7 +24091,7 @@ Cell[BoxData[
         {Dashing[{Small, Small}]}},
        TemplateBox[{
          RowBox[{"\"Measurement\"", "[", "None", "]"}], 
-         RowBox[{"\[AHat]\.8a\.97", "1"}]}, "Superscript", SyntaxForm -> 
+         RowBox[{"\:2297", "1"}]}, "Superscript", SyntaxForm -> 
         SuperscriptBox]],
       Annotation[#, 
        Superscript[
@@ -24174,7 +24171,7 @@ Cell[BoxData[
 }, Open  ]],
 
 Cell["\<\
-Run exhaustively \[AHat]\.80\.94 no sampling, every branch of every input:\
+Run exhaustively \:2014 no sampling, every branch of every input:\
 \>", "Text",ExpressionUUID->"9ea211c8-1694-4e72-96df-91fe611ae872"],
 
 Cell[CellGroupData[{
@@ -24288,7 +24285,7 @@ Cell[BoxData["0"], "Output",
 }, Open  ]],
 
 Cell["\<\
-Zero of eight. No affine function of (a,b) equals OR \[AHat]\.80\.94 the \
+Zero of eight. No affine function of (a,b) equals OR \:2014 the \
 nonlinearity is bought by the carved GHZ correlations, not by classical \
 post-processing, exactly the Mermin all-versus-nothing argument \
 cct_mbqc_contextual_nand.wl proves as matrices. It is the same verdict Stage \
@@ -24298,11 +24295,11 @@ for a genuine two-input Boolean computation built on top of it.\
 
 Cell["\<\
 Scaling it up. A native dense-statevector circuit like the ones above cannot \
-grow past a few tens of qubits \[AHat]\.80\.94 that is a simulator limit, not \
+grow past a few tens of qubits \:2014 that is a simulator limit, not \
 a physics one. What does scale is the argument: isolating an edge by \
-Z-measuring only its own other neighbours \[AHat]\.80\.94 not the rest of the \
-mesh \[AHat]\.80\.94 disconnects it as its own graph-state component (Hein et \
-al.), so the S=2\[AHat]\.88\.9a2 result above holds at every edge of every \
+Z-measuring only its own other neighbours \:2014 not the rest of the \
+mesh \:2014 disconnects it as its own graph-state component (Hein et \
+al.), so the S=2\:221a2 result above holds at every edge of every \
 cct mesh, at any size. Checked live, at the scale this project's own \
 Hawking-evaporation stack already runs its full certification stack \
 (reps=1000, matching cct_mbqc_hawking_certification_tests.wl's M=100 \
@@ -24366,16 +24363,16 @@ Cell[BoxData[
 Cell["\<\
 Nine thousand qubits, twelve thousand edges, and the measurement footprint \
 needed to isolate any one Hawking pair stays exactly 3, at every one of the \
-1000 positions checked \[AHat]\.80\.94 independent of mesh size, exactly as \
+1000 positions checked \:2014 independent of mesh size, exactly as \
 the disconnection argument predicts. Three thousand disjoint Hawking pairs \
 are available in that one necklace, each individually certified by the same \
-exact S=2\[AHat]\.88\.9a2 the 9-qubit circuit above demonstrated concretely.\
+exact S=2\:221a2 the 9-qubit circuit above demonstrated concretely.\
 \>", "Text",ExpressionUUID->"9128feef-cbd7-407c-bfa0-331d4249179e"],
 
 Cell["\<\
 The application promised in the abstract is delivered: a genuine, non-trivial \
-Clifford computation \[AHat]\.80\.94 contextual, not classically fakeable \
-\[AHat]\.80\.94 runs as a native quantum circuit on the same pentagon-mesh \
+Clifford computation \:2014 contextual, not classically fakeable \
+\:2014 runs as a native quantum circuit on the same pentagon-mesh \
 substrate that carries analogue-Hawking correlations, and both of this \
 essay's lenses certify it live, from the smallest legible instance up to the \
 scale this project's own black-hole model reaches.\
@@ -24459,38 +24456,38 @@ Cell[CellGroupData[{
 Cell["References", "Section",ExpressionUUID->"cf025021-d1c5-e44d-91e5-5ad3bcb12f87"],
 
 Cell["\<\
-[1] A. Cabello (2013), \[AHat]\.80\.9cSimple Explanation of the Quantum \
-Violation of a Fundamental Inequality,\[AHat]\.80\.9d Phys. Rev. Lett. 110, \
+[1] A. Cabello (2013), \:201cSimple Explanation of the Quantum \
+Violation of a Fundamental Inequality,\:201d Phys. Rev. Lett. 110, \
 060402. arXiv:1210.2988.
-[2] H. Ko\[CapitalARing]\.82cz, Lie-Poisson geometric criteria for classical \
-optical emulation in MBQC. github.com/hubertkolcz \[AHat]\.80\.94 companion \
+[2] H. Ko\:0142cz, Lie-Poisson geometric criteria for classical \
+optical emulation in MBQC. github.com/hubertkolcz \:2014 companion \
 geometric-mechanics repository.
-[3] A. Klyachko, M. Can, S. Binicio\[CapitalADoubleDot]\.9flu, A. Shumovsky \
-(2008), \[AHat]\.80\.9cSimple Test for Hidden Variables in Spin-1 Systems,\
-\[AHat]\.80\.9d Phys. Rev. Lett. 101, 020403. arXiv:0706.0126.
-[4] L. Lov\[CapitalATilde]\[DownExclamation]sz (1979), \[AHat]\.80\.9cOn the \
-Shannon Capacity of a Graph,\[AHat]\.80\.9d IEEE Trans. Inf. Theory 25, 1-7.
-[5] H. Ko\[CapitalARing]\.82cz, BlackBox \[AHat]\.80\.94 this project's own \
+[3] A. Klyachko, M. Can, S. Binicio\:011flu, A. Shumovsky \
+(2008), \:201cSimple Test for Hidden Variables in Spin-1 Systems,\
+\:201d Phys. Rev. Lett. 101, 020403. arXiv:0706.0126.
+[4] L. Lov\[CapitalATilde]\[DownExclamation]sz (1979), \:201cOn the \
+Shannon Capacity of a Graph,\:201d IEEE Trans. Inf. Theory 25, 1-7.
+[5] H. Ko\:0142cz, BlackBox \:2014 this project's own \
 verification code repository. github.com/hubertkolcz/BlackBox.
-[6] S. Abramsky, A. Brandenburger (2011), \[AHat]\.80\.9cThe Sheaf-Theoretic \
-Structure of Non-Locality and Contextuality,\[AHat]\.80\.9d New J. Phys. 13, \
+[6] S. Abramsky, A. Brandenburger (2011), \:201cThe Sheaf-Theoretic \
+Structure of Non-Locality and Contextuality,\:201d New J. Phys. 13, \
 113036. arXiv:1102.0264.
-[7] M. Ulrey (2022), \[AHat]\.80\.9cThe Role of (Non)contextuality in Bell's \
+[7] M. Ulrey (2022), \:201cThe Role of (Non)contextuality in Bell's \
 Theorems from the Perspective of an Operational Modeling \
-Framework,\[AHat]\.80\.9d Int. J. Quantum Found. 8, 31-116. arXiv:2001.09756.
+Framework,\:201d Int. J. Quantum Found. 8, 31-116. arXiv:2001.09756.
 [8] L. Porto, R. Rabelo, M. Terra Cunha, A. Cabello (2024), \
-\[AHat]\.80\.9cThe Quantum Maxima for the Basic Graphs of Exclusivity Are Not \
-Reachable in Bell Scenarios,\[AHat]\.80\.9d Phil. Trans. R. Soc. A 382, \
+\:201cThe Quantum Maxima for the Basic Graphs of Exclusivity Are Not \
+Reachable in Bell Scenarios,\:201d Phil. Trans. R. Soc. A 382, \
 20230006. arXiv:2305.19247.
-[9] U. Tamer, et al. (2026), \[AHat]\.80\.9cThe Quad-C5 Graph: Maximum \
-Contextuality Gap on Eight Vertices.\[AHat]\.80\.9d arXiv:2605.12828.
-[10] D. Frustaglia, et al. (2016), \[AHat]\.80\.9cClassical Physics and the \
-Bounds of Quantum Correlations,\[AHat]\.80\.9d Phys. Rev. Lett. 116, 250404. \
+[9] U. Tamer, et al. (2026), \:201cThe Quad-C5 Graph: Maximum \
+Contextuality Gap on Eight Vertices.\:201d arXiv:2605.12828.
+[10] D. Frustaglia, et al. (2016), \:201cClassical Physics and the \
+Bounds of Quantum Correlations,\:201d Phys. Rev. Lett. 116, 250404. \
 arXiv:1511.08144.
-[11] V. Kovtoniuk, M. Bohmann, A. Semenov (2026), \[AHat]\.80\.9cNonclassical \
-Photocounting Statistics with a Single On-Off Detector,\[AHat]\.80\.9d Phys. \
+[11] V. Kovtoniuk, M. Bohmann, A. Semenov (2026), \:201cNonclassical \
+Photocounting Statistics with a Single On-Off Detector,\:201d Phys. \
 Rev. A 113, 063726. arXiv:2601.13869.
-[EMU] H. Ko\[CapitalARing]\.82cz, optical-synthesis optical compiler (this \
+[EMU] H. Ko\:0142cz, optical-synthesis optical compiler (this \
 project). Lapkiewicz et al., Nature 474, 490 (2011), for the physical \
 cascade.
 [12] Page-curve confrontation (Chowdhury et al.), arXiv:2412.15180 \
