@@ -14,7 +14,9 @@
      (ii)  demo2_c7_heptagon_L1     -- the C7 heptagon cascade: Layer-1, six Givens
            stages, numeric identity S = 7 - 4 theta(C7).
      (iii) demo3_ddt_mesh_reps2     -- the ddt pentagon-mesh chain, reps = 2:
-           block-local, shared-mode routing shown, per-block verdicts (emulable).
+           block-local, shared-mode routing shown, per-block verdicts (genuine,
+           so(3) DLA = 3 per structurally-verified block; joint whole-mesh
+           verdict remains open -- see meshDLAAudit's ScopeNote).
      (iv)  demo4_table_V0977_L2     -- a pure no-disturbance table at visibility
            V = 977/1000: Layer-2 ONLY (leaf-confined), the divided-beam intensity
            schedule that reproduces it exactly.

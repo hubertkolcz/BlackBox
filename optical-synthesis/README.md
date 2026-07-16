@@ -79,7 +79,7 @@ re-simulated from its own data by `VerifyBlueprint` (`OK -> True`) before it is 
 |------|--------|-------|---------------|
 | `demo1_kcbs_pentagon_L1` | `<\|"Scenario"->"KCBS"\|>` | L1 | Lapkiewicz reconstruction: cascade `[P,T1,T2,T1,T2]`, exact `cos θ = 1/GoldenRatio`, genuine (so(3) DLA = 3). |
 | `demo2_c7_heptagon_L1` | `<\|"Scenario"->"Cn","n"->7\|>` | L1 | C7 heptagon cascade: six Givens stages, numeric identity `S = 7 − 4·θ(C7)`. |
-| `demo3_ddt_mesh_reps2` | `<\|"Word"->"ddt","Reps"->2\|>` | Mesh | ddt pentagon-mesh chain reps=2: block-local, shared-mode routing (direct/twisted), per-block verdicts (emulable). |
+| `demo3_ddt_mesh_reps2` | `<\|"Word"->"ddt","Reps"->2\|>` | Mesh | ddt pentagon-mesh chain reps=2: block-local, shared-mode routing (direct/twisted), per-block verdicts (genuine, so(3) DLA = 3 per structurally-verified block; the joint whole-mesh verdict remains open). |
 | `demo4_table_V0977_L2` | table at `V = 977/1000` | L2 | Pure no-disturbance table, **Layer-2 only** (leaf-confined): the divided-beam intensity schedule reproducing it exactly. |
 
 ## Relationship to the primary module

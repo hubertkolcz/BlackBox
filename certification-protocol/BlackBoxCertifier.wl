@@ -288,7 +288,14 @@ BlueprintTable[bp_Association] := Which[
    fails IntegerQ, so this correctly falls through to Missing["NotAudited"]
    for Mesh blueprints today, and will pick up a real per-block audit
    automatically if/when one is ever wired in upstream, with no further edit
-   needed here. *)
+   needed here.
+   State update (2026-07-16): DispatcherEmitter's meshDLAAudit now computes a
+   real per-block structural audit -- each verified 5-cycle block carries
+   integer DLADimension -> 3, verdict "genuine" -- so Mesh blueprints no longer
+   fall through to Missing["NotAudited"]; the general case below picks the
+   audit up exactly as anticipated, with no edit needed here. The JOINT
+   whole-mesh leaf-confinement verdict remains open: meshDLAAudit's ScopeNote
+   is explicit that it makes no claim about the composed su(2^n) dynamics. *)
 blueprintDLA[bp_Association] := Module[{comp},
   Which[
    KeyExistsQ[bp, "CertificationVerdict"] && AssociationQ[bp["CertificationVerdict"]] && Length[bp["CertificationVerdict"]] > 0,
