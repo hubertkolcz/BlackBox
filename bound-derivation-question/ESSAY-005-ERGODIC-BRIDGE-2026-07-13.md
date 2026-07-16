@@ -127,15 +127,15 @@ cohomological invariant" claim overstates it.
    (value `S_k`) is a **category error**. Static falsifier confirms:
    `S(C5;T) → 5/2` (the packing number) as `T→0` for T in [1, 1e-3] — it returns
    the packing value, exhibits **no** de Bruijn / mean-payoff structure, and does
-   **not** select `cct`. The two LPs live on different base spaces (conormal
-   powers of C5 vs de Bruijn `{c,t}` words), the static side has no shift/ergodic
+   **not** select `ddt`. The two LPs live on different base spaces (conormal
+   powers of C5 vs de Bruijn `{d,t}` words), the static side has no shift/ergodic
    average (finite k copies ≠ orbit length →∞), and no operator homomorphism
    carries one onto the other. Each side dequantizes its **own** Ruelle operator —
-   a generic thermodynamic fact holding for any payoff, blind to `cct` (the
+   a generic thermodynamic fact holding for any payoff, blind to `ddt` (the
    contextuality optimizer).
 
-**Anchors / context used.** gap(cct)=0.0698975 (irrational); τ*=1.37671774591586;
-cis density 3/2. Static T→0 limit = 5/2 (packing), not any Γ_K.
+**Anchors / context used.** gap(ddt)=0.0698975 (irrational); τ*=1.37671774591586;
+direct density 3/2. Static T→0 limit = 5/2 (packing), not any Γ_K.
 
 **Borrowed vs new.** Borrowed: Maslov/Litvinov dequantization; pressure →
 ergodic-optimization; Bousch–Mairesse / Chazottes–Hochman non-selection. New: the
@@ -145,11 +145,11 @@ under one dequantization.
 **Exact open statement.** Two things stay open (and are *conjectural, at risk*):
 (i) the visibility family V (CF-004) as temperature — calibratable but not
 established, and asserting the *same* V is the temperature on *both* sides is
-exactly the refuted cross-side leap; (ii) whether `cct` is the `T→0` equilibrium
-measure `μ_β → δ_cct` — **fragile**: the observed orbit-crowding (near-optimal
-periodic words 16/11, 19/13, 25/17, … crowding the irrational gap(cct)) is direct
+exactly the refuted cross-side leap; (ii) whether `ddt` is the `T→0` equilibrium
+measure `μ_β → δ_ddt` — **fragile**: the observed orbit-crowding (near-optimal
+periodic words 16/11, 19/13, 25/17, … crowding the irrational gap(ddt)) is direct
 evidence the finiteness property may fail, so selection can fail even though the
-value leg `F_K(∞)=Γ_K → gap(cct)` holds. Global optimality of `cct` is itself
+value leg `F_K(∞)=Γ_K → gap(ddt)` holds. Global optimality of `ddt` is itself
 open in-project.
 
 ---
@@ -182,13 +182,13 @@ Leg C establishes — the dynamic side is a *different kind of object*
    (temperature/visibility) family of operators specializes to BOTH the static GE
    packing LP and the dynamic de Bruijn mean-payoff certificate. None is known;
    the static side's only "dynamical" axis is the copy-number k (Cabello product,
-   Θ(C5)=√5 growth rate) — a *different* shift from the gluing shift `{c,t}^Z`.
+   Θ(C5)=√5 growth rate) — a *different* shift from the gluing shift `{d,t}^Z`.
 2. **A real higher cohomology, not a proxy.** A proven semimodule/tropical Čech
    `H^1` (Montanhano-style, or a lattice/Tarski-Laplacian `H^1`) whose class —
    not a denominator test — equals or refines `S_k` (C-A1), with the C5/C7
    dichotomy as a theorem.
 3. **A selection theorem on the dynamic side.** A finiteness-property proof (or
-   its failure) settling whether `μ_β → δ_cct`, converting the value-leg
+   its failure) settling whether `μ_β → δ_ddt`, converting the value-leg
    convergence into an equilibrium-state statement — the piece orbit-crowding
    currently threatens.
 4. **A operator homomorphism** connecting the (+,×) static Ruelle operator and the
@@ -200,7 +200,7 @@ Leg C establishes — the dynamic side is a *different kind of object*
 
 - **ESSAY-005** — core question (weighted-presheaf invariant for S_k): Leg A answers degree-0, leaves C-A1 open.
 - **SH-004 / SH-006** — the rejected real-valued sheaf Laplacian as a contextuality measure; Leg D's tropical cellular sheaf is the distinct, viable object superseding that rejection (idempotent Hodge theory, H^0 = global sections). `SupportCohomology.wl`'s honest Z-module Čech H^1 is a *different* object on the *blind* support presheaf (P1).
-- **D3_*** (`pentagon-gluing/CaseStudies.wl`: `D3_epsilonCertificate`, `posSigma`/`posCheck`) — the certificate data Leg D/C transcribe verbatim; τ*, cis 3/2, alpha-cis theorem are the dynamic-side anchors.
+- **D3_*** (`pentagon-gluing/CaseStudies.wl`: `D3_epsilonCertificate`, `posSigma`/`posCheck`) — the certificate data Leg D/C transcribe verbatim; τ*, direct 3/2, alpha-direct theorem are the dynamic-side anchors.
 - **CF-004** — the visibility/noise family V; Leg C's "V as temperature" is calibratable but conjectural, and the cross-side "same V both sides" identification is the refuted leap.
 
 ## Overall verdict

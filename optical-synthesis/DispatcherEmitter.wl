@@ -212,7 +212,7 @@ StagesToUnitary[stages_List, n_Integer] := Module[{mats, Uex},
 
 (* ---------------------------------------------------------------------------
    MESH ROUTING.  wordRingEdgesFast is copied VERBATIM from
-   cluster-state-realization/cct_mesh_sparse_construction.wl (Section 1), per repo
+   cluster-state-realization/ddt_mesh_sparse_construction.wl (Section 1), per repo
    convention: all 5L edges via one Table of ragged blocks + a single Flatten,
    NO Join-in-loop.
    --------------------------------------------------------------------------- *)
@@ -221,7 +221,7 @@ wordRingEdgesFast[word_String, reps_Integer] := Module[{w, L, edgeBlocks},
    L = Length[w];
    edgeBlocks = Table[
      Module[{km = Mod[k - 1, L], u, v},
-       {u, v} = If[w[[km + 1]] === "c", {3 km + 1, 3 km + 2}, {3 km + 2, 3 km + 1}];
+       {u, v} = If[w[[km + 1]] === "d", {3 km + 1, 3 km + 2}, {3 km + 2, 3 km + 1}];
        {{u, v}, {u, 3 k + 1}, {3 k + 1, 3 k + 2}, {3 k + 2, 3 k + 3}, {3 k + 3, v}}],
      {k, 0, L - 1}];
    DeleteDuplicates[Sort /@ Flatten[edgeBlocks, 1]]];
@@ -236,11 +236,11 @@ CompileMeshRouting[word_String, reps_Integer] := Module[
       "Letter" -> w[[k + 1]]|>, {k, 0, L - 1}];
    (* routing: block k glues to block k-1's shared pair.  The glue orientation
       INTO block k is set by the FROM-block letter w[[k]] (block k-1's letter):
-      wordRingEdgesFast picks {u,v} = If[w[[km+1]]==="c", {3km+1,3km+2},
-      {3km+2,3km+1}] with km = k-1, i.e. cis iff w[[k]] === "c". *)
+      wordRingEdgesFast picks {u,v} = If[w[[km+1]]==="d", {3km+1,3km+2},
+      {3km+2,3km+1}] with km = k-1, i.e. direct iff w[[k]] === "d". *)
    routing = Table[<|"From" -> k - 1, "To" -> k,
       "SharedModes" -> {3 (k - 1) + 1, 3 (k - 1) + 2},
-      "Orientation" -> If[w[[k]] === "c", "cis", "trans"]|>, {k, 1, L - 1}];
+      "Orientation" -> If[w[[k]] === "d", "direct", "twisted"]|>, {k, 1, L - 1}];
    <|"Word" -> word, "Reps" -> reps, "L" -> L, "ModeCount" -> 3 L,
      "Blocks" -> blocks, "Routing" -> routing, "EdgeList" -> edges|>];
 
@@ -349,7 +349,7 @@ DispatchLayers[targetSpec_Association] := Module[{comps, audits, layers, overall
    figure-gallery/so3_leaf_confinement_sphere.wl's header for why the
    naive shortcut ("reuse CascadeGenerators[] for an arbitrary word, assuming
    UNROTATED standard axes") was previously investigated and rejected: it
-   asserted a raw NUMERICAL identity of physical axes across cis/trans
+   asserted a raw NUMERICAL identity of physical axes across direct/twisted
    routing that was never checked against this mesh's real construction.
 
    WHAT THIS DOES INSTEAD (a narrower, VERIFIED claim, not that rejected one):
@@ -361,7 +361,7 @@ DispatchLayers[targetSpec_Association] := Module[{comps, audits, layers, overall
    genuine"). Separately, the DLA-dimension rank computation is invariant
    under any fixed change of basis: conjugating so(3) generators by a
    rotation only rotates their axis vectors (So3Axis), so MatrixRank of the
-   axis set is unchanged regardless of WHICH physical rotation a cis/trans
+   axis set is unchanged regardless of WHICH physical rotation a direct/twisted
    routing choice corresponds to. So the only thing that actually needs
    checking -- and the only thing the previous attempt skipped -- is whether
    a given mesh block's own local exclusivity structure really IS a genuine,
@@ -375,11 +375,11 @@ DispatchLayers[targetSpec_Association] := Module[{comps, audits, layers, overall
    makes NO claim whatsoever about JOINT/global entanglement across the whole
    mesh's su(2^n) qubits; that route is separately tracked, currently
    computationally infeasible past ~14 qubits (cluster-state-realization/
-   cct_cluster_dla.wl, SKIPPED_INFEASIBLE), and remains its own open item --
+   ddt_cluster_dla.wl, SKIPPED_INFEASIBLE), and remains its own open item --
    not something this closes. *)
 meshBlockEdges[w_List, L_Integer, k_Integer] := Module[{km, u, v},
   km = Mod[k - 1, L];
-  {u, v} = If[w[[km + 1]] === "c", {3 km + 1, 3 km + 2}, {3 km + 2, 3 km + 1}];
+  {u, v} = If[w[[km + 1]] === "d", {3 km + 1, 3 km + 2}, {3 km + 2, 3 km + 1}];
   Sort /@ {{u, v}, {u, 3 k + 1}, {3 k + 1, 3 k + 2}, {3 k + 2, 3 k + 3}, {3 k + 3, v}}];
 
 (* A block's own 5 edges form a genuine KCBS-pentagon unit iff they are a
@@ -394,16 +394,16 @@ meshBlockCycleQ[blockEdges_List] := Module[{verts, g},
 
 (* JOINT (global) entanglement of the mesh's corresponding graph-state topology
    (2026-07-14 addition, closing the "JointEntanglementAudited"->False gap left
-   above -- see cluster-state-realization/cct_cluster_dla.wl's Section 10 for the
+   above -- see cluster-state-realization/ddt_cluster_dla.wl's Section 10 for the
    full derivation, citations, and validation this reuses).
 
    SCOPE, STATED PRECISELY: this is NOT the su(2^n) dynamical-Lie-algebra /
    universal-controllability question (that remains its own separate, genuinely
-   open, infeasible-past-~14-qubits problem -- cct_cluster_dla.wl Sections 6-9).
+   open, infeasible-past-~14-qubits problem -- ddt_cluster_dla.wl Sections 6-9).
    It is the strictly easier, well-posed question of whether the ABSTRACT graph
    state this mesh word/reps topology encodes (were it realized as a genuine
    multi-qubit CZ cluster state, exactly as cluster-state-realization's own
-   NewGraphStateTableau/cct_cluster_dla.wl construction does) is genuinely
+   NewGraphStateTableau/ddt_cluster_dla.wl construction does) is genuinely
    multipartite entangled (GME) -- i.e. whether it factorizes as a product
    state across ANY bipartition. By Hein-Eisert-Briegel (PRA 69, 062311, 2004):
    a graph state is GME iff its graph is connected -- an O(V+E) check, exact at
@@ -454,8 +454,8 @@ meshDLAAudit[word_String, reps_Integer, storedEdges_List] := Module[
      "Method" -> "Per-block structural C5-isomorphism check against the blueprint's own stored edge list, then the existing so(3) CascadeGenerators/DLADimension audit reused per verified block (same n-independent-cascade precedent already used for Cn scenarios).",
      "JointEntanglementAudited" -> True,
      "JointlyEntangledTopology" -> jointGME,
-     "JointEntanglementMethod" -> "Graph-connectivity GME certificate (Hein-Eisert-Briegel PRA 69, 062311 (2004); O(V+E), exact at any mesh size) applied to the mesh's own stored edge list -- see cct_cluster_dla.wl Section 10. Certifies the ABSTRACT graph-state topology only, NOT that this optical Mesh blueprint physically realizes it (still block-local per this module's honest scope; no per-block Unitary/IntensitySchedule is specified at the Mesh layer today).",
-     "ScopeNote" -> "Per-block LOCAL genuineness certified above (so(3) DLA, per block). JointlyEntangledTopology certifies GME of the corresponding graph-state topology (poly-time, any size) -- a DIFFERENT and easier question than su(2^n) universal controllability, which remains its own separate, open, infeasible-past-~14-qubits problem (cct_cluster_dla.wl Sections 6-9) and is NOT resolved here."|>];
+     "JointEntanglementMethod" -> "Graph-connectivity GME certificate (Hein-Eisert-Briegel PRA 69, 062311 (2004); O(V+E), exact at any mesh size) applied to the mesh's own stored edge list -- see ddt_cluster_dla.wl Section 10. Certifies the ABSTRACT graph-state topology only, NOT that this optical Mesh blueprint physically realizes it (still block-local per this module's honest scope; no per-block Unitary/IntensitySchedule is specified at the Mesh layer today).",
+     "ScopeNote" -> "Per-block LOCAL genuineness certified above (so(3) DLA, per block). JointlyEntangledTopology certifies GME of the corresponding graph-state topology (poly-time, any size) -- a DIFFERENT and easier question than su(2^n) universal controllability, which remains its own separate, open, infeasible-past-~14-qubits problem (ddt_cluster_dla.wl Sections 6-9) and is NOT resolved here."|>];
 
 (* ---------------------------------------------------------------------------
    CV column: Sp(2n,R) leaf-confinement.  Ported from
@@ -538,7 +538,7 @@ EmitBlueprint[targetSpec_Association, opts : OptionsPattern[]] := Module[
        arbitrary word by ASSUMING unrotated standard axes was investigated
        and could not be substantiated -- see figure-gallery/
        so3_leaf_confinement_sphere.wl's header), and the su(2^n)
-       cluster-state DLA route (cluster-state-realization/cct_cluster_dla.wl)
+       cluster-state DLA route (cluster-state-realization/ddt_cluster_dla.wl)
        hits SKIPPED_INFEASIBLE past ~14 qubits -- this blueprint's own
        reps=2 case is 18 qubits. meshDLAAudit (defined above, Section 3)
        closes this properly: instead of assuming axes are unrotated, it
@@ -679,7 +679,7 @@ schematicMesh[bp_Association] := Module[{routing = bp["Routing"], blocks = bp["S
   blockX[idx_] := 1.35 idx;
   prims = Join[
     (* block index key: "Index" (Builder A, authoritative) or "Block" (this module);
-       rounded, glow-tinted blocks colored by letter (c=structural, t=trans-highlight) *)
+       rounded, glow-tinted blocks colored by letter (c=structural, t=twisted-highlight) *)
     Table[With[{x = blockX[Lookup[b, "Index", Lookup[b, "Block", 0]]], letter = b["Letter"]},
       Module[{col = If[letter == "t", $schemDet, $schemSrc]},
        {EdgeForm[None], {Opacity[0.14], col, Rectangle[{x - 0.46, -0.46}, {x + 0.46, 0.46}, RoundingRadius -> 0.12]},
@@ -687,12 +687,12 @@ schematicMesh[bp_Association] := Module[{routing = bp["Routing"], blocks = bp["S
         White, Text[Style[b["Letter"], Bold, 13], {x, 0}],
         $schemSub, Text[Style["blk " <> ToString[Lookup[b, "Index", Lookup[b, "Block", 0]]], 8], {x, -0.68}]}]],
       {b, blocks}],
-    (* smooth Bezier routing arcs, arched above the blocks; trans-orientation highlighted *)
-    Table[With[{x1 = blockX[r["From"]], x2 = blockX[r["To"]], transQ = (r["Orientation"] === "trans")},
-      Module[{col = If[transQ, $schemDet, $schemMuted], yArc = 0.62},
-       {col, CapForm["Round"], Thickness[If[transQ, 0.008, 0.005]], Arrowheads[0.05],
+    (* smooth Bezier routing arcs, arched above the blocks; twisted-orientation highlighted *)
+    Table[With[{x1 = blockX[r["From"]], x2 = blockX[r["To"]], twistedQ = (r["Orientation"] === "twisted")},
+      Module[{col = If[twistedQ, $schemDet, $schemMuted], yArc = 0.62},
+       {col, CapForm["Round"], Thickness[If[twistedQ, 0.008, 0.005]], Arrowheads[0.05],
         Arrow[BezierCurve[{{x1 + 0.42, 0.05}, {(x1 + x2)/2, yArc}, {x2 - 0.42, 0.05}}]],
-        Text[Style[r["Orientation"], 8, If[transQ, $schemDet, $schemSub]], {(x1 + x2)/2, yArc + 0.16}]}]],
+        Text[Style[r["Orientation"], 8, If[twistedQ, $schemDet, $schemSub]], {(x1 + x2)/2, yArc + 0.16}]}]],
       {r, routing}]];
   Graphics[prims, PlotRange -> All, ImageSize -> 620, AspectRatio -> 0.36, Background -> White,
     PlotLabel -> Style["Pentagon-mesh routing  word=" <> bp["TargetSpec"]["Word"] <>
@@ -702,7 +702,7 @@ OpticalCompilerExportSchematics[dir_String] := Module[{bps, files},
   If[! DirectoryQ[dir], CreateDirectory[dir, CreateIntermediateDirectories -> True]];
   bps = {{"kcbs_L1", EmitBlueprint[<|"Scenario" -> "KCBS"|>]},
          {"kcbs_L2", EmitBlueprint[<|"Scenario" -> "KCBS"|>, Method -> "L2"]},
-         {"mesh_cct2", EmitBlueprint[<|"Word" -> "cct", "Reps" -> 2|>]}};
+         {"mesh_ddt2", EmitBlueprint[<|"Word" -> "ddt", "Reps" -> 2|>]}};
   files = Flatten@Table[
      With[{name = b[[1]], g = b[[2]]["Schematic"]},
       {Export[FileNameJoin[{dir, name <> ".png"}], g, ImageResolution -> 200],
@@ -842,17 +842,17 @@ OpticalCompilerVerification := Module[
       a3["CFExact"] && a3["f00"];
 
    (* ---- A4: mesh routing matches wordRingEdgesFast exactly (reps 1,2,3) ---- *)
-   a4reps = Table[Module[{bp = EmitBlueprint[<|"Word" -> "cct", "Reps" -> r|>], v},
+   a4reps = Table[Module[{bp = EmitBlueprint[<|"Word" -> "ddt", "Reps" -> r|>], v},
        v = VerifyBlueprint[bp];
-       (Sort[bp["MeshEdgeList"]] === Sort[wordRingEdgesFast["cct", r]]) &&
-        (bp["ModeCount"] === 3 StringLength[StringRepeat["cct", r]]) && v["OK"]], {r, 1, 3}];
+       (Sort[bp["MeshEdgeList"]] === Sort[wordRingEdgesFast["ddt", r]]) &&
+        (bp["ModeCount"] === 3 StringLength[StringRepeat["ddt", r]]) && v["OK"]], {r, 1, 3}];
    a4 = <|"AllRepsMatch" -> AllTrue[a4reps, TrueQ], "reps" -> a4reps|>;
    a4["OK"] = a4["AllRepsMatch"];
 
    (* ---- A5: self-certification of L1 / L2 / Mesh blueprints ---- *)
    bpL2 = EmitBlueprint[<|"Scenario" -> "KCBS"|>, Method -> "L2"];
    vL2 = VerifyBlueprint[bpL2];
-   bpMesh = EmitBlueprint[<|"Word" -> "cct", "Reps" -> 2|>];
+   bpMesh = EmitBlueprint[<|"Word" -> "ddt", "Reps" -> 2|>];
    vMesh = VerifyBlueprint[bpMesh];
    (* CV column port sanity (final_o3_cv_dla.py anchors) *)
    cvSets = cvValidationSets[];

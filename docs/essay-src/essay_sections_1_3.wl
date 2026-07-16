@@ -48,7 +48,7 @@ repoRoot = Module[
        "bound-derivation-question/final_h1_cocycle_results.json",
        "open-search-frontier/erg003_verdict.json", "docs/FRAMEWORK-2026-07-13.md",
        "optical-synthesis/schematics/demo1_kcbs_pentagon_L1.png",
-       "optical-synthesis/schematics/demo3_cct_mesh_reps2.png",
+       "optical-synthesis/schematics/demo3_ddt_mesh_reps2.png",
        "certification-protocol/certification_map.png",
        "composition-optimality/orbit_spectrum.png"};
      Do[dest = FileNameJoin[Prepend[FileNameSplit[rel], cacheRoot]];

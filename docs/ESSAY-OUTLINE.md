@@ -123,20 +123,20 @@ Six-to-eight one-line bullets, each naming its live source. Mirrors
 - **Embed `certification_map.png`** (regenerated live by `certification_map.wl`).
 
 ### S4 — Composition: the mesh laws and the optimal word (F4, F5, CERT-003)
-- **cis/trans dichotomy (MESH-001/002):** two non-isomorphic gluing families; orientation
-  not size controls gap survival. cis law theta = N + theta(C_N), alpha = floor(3N/2).
+- **direct/twisted dichotomy (MESH-001/002):** two non-isomorphic gluing families; orientation
+  not size controls gap survival. direct law theta = N + theta(C_N), alpha = floor(3N/2).
   **Live:** `PentagonRing`/`GlueGraphs` + `LovaszTheta`/`IndependenceNumber` reproduce the
   law for small N; even-N pinch vs odd-N residual gap.
 - **tau\* [C]:** `Root[49 x^3 - 128 x^2 - 75 x + 218, 2]` = 1.37671774591586, recomputed
-  live via `Root`/`N`; trans density.
-- **alpha-cis theorem (F4):** alpha-bar(w) >= max(4/3, 1 + f_c/2), equality at 4/3 iff
-  w = (cct)^k; gap(cct) = 0.0698975 (irrational, no low-degree closed form); 61% over
-  trans. **[T]/[C]**
+  live via `Root`/`N`; twisted density.
+- **alpha-direct theorem (F4):** alpha-bar(w) >= max(4/3, 1 + f_d/2), equality at 4/3 iff
+  w = (ddt)^k; gap(ddt) = 0.0698975 (irrational, no low-degree closed form); 61% over
+  twisted. **[T]/[C]**
 - **Gamma_k certificate ladder (F5):** exact rationals Gamma_7 = 0.07702057,
   Gamma_8 = 0.07526640, Gamma_9 = 0.0720260 read from `EpsilonCertificate{7,8,9}*.wl`;
-  Gamma_10 = 0.0714575 numeric; the monotone bracket → gap(cct); certified
-  eps = Gamma_10 - gap(cct) = 0.00156. Bousch sub-action / max-plus eigenvalue framing.
-- **Orbit-spectrum reading (CERT-003):** seed values = orbit density - 1 — cis 3/2, trans
+  Gamma_10 = 0.0714575 numeric; the monotone bracket → gap(ddt); certified
+  eps = Gamma_10 - gap(ddt) = 0.00156. Bousch sub-action / max-plus eigenvalue framing.
+- **Orbit-spectrum reading (CERT-003):** seed values = orbit density - 1 — direct 3/2, twisted
   tau\*, 16/11, 19/13, 25/17 — matched to ~4e-6 (finite-k truncation). **Embed
   `orbit_spectrum.png`** (from `orbit_spectrum_figure.wl`).
 
@@ -186,17 +186,17 @@ Six-to-eight one-line bullets, each naming its live source. Mirrors
   C7 heptagon **S = 7 - 4 theta(C7)**; demo4 V=977/1000 table leaf-confined
   (`DLADimension` < 3). Each blueprint re-simulated by `VerifyBlueprint` (OK → True).
 - **Embed** `optical-synthesis/schematics/demo1_kcbs_pentagon_L1.png` and
-  `demo3_cct_mesh_reps2.png`.
+  `demo3_ddt_mesh_reps2.png`.
 
 ### S8 — Gates that failed (the credibility signature; F9)
 A dedicated section — negative results are first-class. Each with its live/refuted anchor:
 - **Sheaf Laplacian (SH-004/F9iv) [R]:** `HarmonicResidual` = 0 on classical, quantum,
   Wright alike — a no-disturbance projector, live.
 - **Affine alpha-credit tilt (F9i) [R]:** no affine-in-f_c certificate family has limit
-  gap(cct).
+  gap(ddt).
 - **Legendre theta-frontier (F9viii/CERT-004) [R, theorem]:** the concave hull is pinned
-  flat at 3/2 on f_c in [1/2,1]; cct sits 0.0967691 below, unexposed — live via
-  `final_cct_hull.py` result (hull(2/3)=3/2, cct theta-bar=1.4032309).
+  flat at 3/2 on f_c in [1/2,1]; ddt sits 0.0967691 below, unexposed — live via
+  `final_ddt_hull.py` result (hull(2/3)=3/2, ddt theta-bar=1.4032309).
 - **Q/Z H1 detector (F9vii) [R]:** cross-reference S5 (20776 bad overlaps).
 - **Delsarte / Schrijver theta' (F9ix/ERG-004a) [R, theorem]:** theta' = 13^(k/2) exactly;
   theta'(3) = 46.87, floor 46 = the Lovasz ceiling — cannot tighten [39,46]. Read from
@@ -204,14 +204,14 @@ A dedicated section — negative results are first-class. Each with its live/ref
 - **Ramsey obstruction (F9v) [R]:** Choudhary-Barbosa technique cannot certify omega<=17
   for the mixed nonagon cell.
 - **Ergodic-sheaf category error (F9ii) [R]:** cross-side T→0 yields packing 5/2, not
-  Gamma, and does not select cct.
+  Gamma, and does not select ddt.
 - **Bound-inertness (F9x/ERG-004b) [R]:** 0 of 26 pentagram families eliminated.
 
 ### S9 — The framework under named hypotheses (the honest frontier; Layer 1)
 The five open hypotheses stated as sharply-posed problems with proof targets, developed
 under-hypothesis exactly as Layer 2 of the FRAMEWORK does. Each **[H]**, with its Layer-2
 consequence tagged "under H*":
-- **H1 (cct optimality):** sup gap = gap(cct); certified within eps = Gamma_10 - gap(cct)
+- **H1 (ddt optimality):** sup gap = gap(ddt); certified within eps = Gamma_10 - gap(ddt)
   = 0.00156; corridor f_c ~ 2/3, alpha-bar in [4/3, 1.4301); target: nonlinear-in-
   frequency certificate (Legendre route dead). **+ H1' (Gamma-limit).**
 - **H2' (cohomological detection, reopened):** a genuine quantitative-cohomology detector
@@ -255,8 +255,8 @@ Boolean recomputed live:
 `"atom"` (hierarchy 2, sqrt5, 5/2 + geometry sum) · `"blindspot"` (emulator table ==
 quantum table) · `"twoLens"` (`DLADimension[CascadeGenerators[]] == 3`, `So3Axis` rank 2)
 · `"cvColumn"` (u(2)=4, sp(4,R)=10 from the CV reader) · `"completeness"` (Prop O3-C
-premises present) · `"mesh"` (cis law on small N; tau\* root; gap(cct) bracket monotone)
-· `"gammaLadder"` (Gamma_7>Gamma_8>Gamma_9>Gamma_10 → gap(cct)) · `"sheaf0"`
+premises present) · `"mesh"` (direct law on small N; tau\* root; gap(ddt) bracket monotone)
+· `"gammaLadder"` (Gamma_7>Gamma_8>Gamma_9>Gamma_10 → gap(ddt)) · `"sheaf0"`
 (S1=5/2, S2=RootReduce=sqrt5, C7=7/2) · `"h1Refuted"` (bad-overlap counts nonzero) ·
 `"laplacian"` (`HarmonicResidual` == 0 on all three) · `"hawking"` (CF==0 single-context;
 Planck + CHSH symbolic identities; CV-DLA dim 10) · `"emu"` (cos theta == 1/GoldenRatio;
@@ -277,21 +277,21 @@ VerifyBlueprint OK) · `"negatives"` (hull(2/3)=3/2; theta'(3) floor 46). Final:
 | access staircase | OQ1 rank 0-vs-2; OQ2 25/25 | readers over `oq1_interventional_dla.py`, `oq2_attenuation_gate.py` results |
 | CV Lie dims (G7-CV) | u(2)=4, sp(4,R)=10, sp(2,R)=3 | reader over `certification-protocol/final_o3_cv_dla.py` result |
 | certification map | full 3x3 + CV column | `certification_map.wl` regenerates `certification_map.png` live |
-| cis law | theta=N+theta(C_N), alpha=floor(3N/2) | `PentagonRing`/`GlueGraphs`+`LovaszTheta`/`IndependenceNumber` on small N |
-| trans density | tau\* = Root[49x^3-128x^2-75x+218,2] | `Root`/`N` live |
-| alpha-cis / gap(cct) | max(4/3,1+f_c/2); 0.0698975 | `CaseStudies.wl` reader; bracket monotonicity check |
+| direct law | theta=N+theta(C_N), alpha=floor(3N/2) | `PentagonRing`/`GlueGraphs`+`LovaszTheta`/`IndependenceNumber` on small N |
+| twisted density | tau\* = Root[49x^3-128x^2-75x+218,2] | `Root`/`N` live |
+| alpha-direct / gap(ddt) | max(4/3,1+f_d/2); 0.0698975 | `CaseStudies.wl` reader; bracket monotonicity check |
 | Gamma_k ladder | 0.07702057, 0.07526640, 0.0720260, 0.0714575; eps=0.00156 | readers over `EpsilonCertificate{7,8,9}*.wl` + Gamma_10 numeric |
-| orbit spectrum | cis 3/2, trans tau\*, 16/11, 19/13, 25/17 | `orbit_spectrum_figure.wl` regenerates `orbit_spectrum.png`; residual check |
+| orbit spectrum | direct 3/2, twisted tau\*, 16/11, 19/13, 25/17 | `orbit_spectrum_figure.wl` regenerates `orbit_spectrum.png`; residual check |
 | degree-0 sheaf | S1=5/2, S2=sqrt5, C7 7/2; Lambda_2(C5)=5, Lambda_2(C7)=49/4, Lambda_3(C7)=343/8 | `bridge_weighted_presheaf.wl`/`essay005_p3_gluing_lp.wl` recompute; `RootReduce` |
 | divisibility | 4 does not divide 49; 8 does not divide 343 | `Mod` live |
 | H1 refutation | 20776 and 3000 bad overlaps | reader over `final_h1_cocycle_results.json` |
 | single-copy sheaf | |S_e| 32/11/0, LucasL[5]=11; torsion 2, Hardy 1 | `PossibilisticSupport`, `CechObstruction` |
 | Hawking CF | CF == 0 at K=2,4,9,11 | `hawking_cs_route.py` reader + live incidence recompute |
 | Gaussian anchors | Planck, E_N=2r/Log[2], CS theta(nbar), CHSH→2 sqrt2, CV-DLA=10 | `gaussian_*.wl` `FullSimplify` + exact Lie closure |
-| qubit sector | CF(2 sqrt2)=sqrt2-1, CF(2.25)=0.125; Page/HP | readers over `cct_mbqc_hawking_*.wl` results |
+| qubit sector | CF(2 sqrt2)=sqrt2-1, CF(2.25)=0.125; Page/HP | readers over `ddt_mbqc_hawking_*.wl` results |
 | EPR bridge | r_eff = 0.285020 at B=2.25 | live solve of CHSH(r)=2.25 |
 | EMU blueprints | cos theta = 1/GoldenRatio; S=7-4 theta(C7); DLA<3 | `OpticalCompiler.wl` demos + `VerifyBlueprint` |
-| Legendre dead | hull(2/3)=3/2, cct 0.0967691 below | reader over `final_cct_hull.py` result |
+| Legendre dead | hull(2/3)=3/2, ddt 0.0967691 below | reader over `final_ddt_hull.py` result |
 | Delsarte dead | theta'(3)=46.87, floor 46 | reader over `final_paley13_lp.py` result |
 | ERG-003 | omega in {16..19}, omega(H)=8, 2/26 NO | `(1+Sec[Pi/9])^3<9` live; `erg003_verdict.json` reader |
 | Paley bracket | [39,46], 46=floor(13^1.5) | `Floor[13^(3/2)]` live |
@@ -306,8 +306,8 @@ VerifyBlueprint OK) · `"negatives"` (hull(2/3)=3/2; theta'(3) floor 46). Final:
 | `certification_map.png` | `certification-protocol/certification_map.wl` | S3 | live regenerate (CV column filled) |
 | `orbit_spectrum.png` | `composition-optimality/orbit_spectrum_figure.wl` | S4 | live regenerate |
 | `demo1_kcbs_pentagon_L1.png` | `optical-synthesis/schematics/` | S7 | existing; re-emit via `OpticalCompiler.wl` |
-| `demo3_cct_mesh_reps2.png` | `optical-synthesis/schematics/` | S7 | existing; re-emit |
-| Gamma_k bracket plot (NEW) | inline `ListLinePlot` in the essay | S4 | live from the Gamma-ladder readers → gap(cct) |
+| `demo3_ddt_mesh_reps2.png` | `optical-synthesis/schematics/` | S7 | existing; re-emit |
+| Gamma_k bracket plot (NEW) | inline `ListLinePlot` in the essay | S4 | live from the Gamma-ladder readers → gap(ddt) |
 | Pentagon-chain gap-parity plot | inline (precedent cell) | S4 | live `PentagonChain` + `LovaszTheta` |
 | Hawking two-sector schematic (NEW, optional) | inline, Gaussian r-sweep of CHSH(r) | S6 | live from `2 Sqrt[1+Tanh[2r]^2]` |
 

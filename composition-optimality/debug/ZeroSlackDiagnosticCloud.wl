@@ -18,7 +18,7 @@ result = CloudEvaluate[Module[
    dpTransfer[letter_] := Module[{T = ConstantArray[-Infinity, {3, 3}], out, j},
       Do[If[!(dpStates[[i, 1]] == 1 && s1 == 1) && !(s1 == 1 && s2 == 1) &&
           !(s2 == 1 && s3 == 1) && !(s3 == 1 && dpStates[[i, 2]] == 1),
-         out = If[letter === "c", {s1, s2}, {s2, s1}];
+         out = If[letter === "d", {s1, s2}, {s2, s1}];
          j = Position[dpStates, out][[1, 1]];
          T[[i, j]] = Max[T[[i, j]], s1 + s2 + s3]],
         {i, 3}, {s1, 0, 1}, {s2, 0, 1}, {s3, 0, 1}];
@@ -44,13 +44,13 @@ result = CloudEvaluate[Module[
       Mean[posSigma[CE] /@ edges]];
 
    fullReport[CE_, bottleneckWord_String] := Module[{muCct, muBot},
-      muCct = cycleMean[CE, "cct"];
+      muCct = cycleMean[CE, "ddt"];
       muBot = cycleMean[CE, bottleneckWord];
       <|"gamma" -> CE["Gamma"], "muCct" -> muCct, "muBot" -> muBot,
         "forcedViolation" -> muBot - muCct|>];
 
-   r7 = fullReport[CE7, "cttt"];
-   r8 = fullReport[CE8, "ctt"];
+   r7 = fullReport[CE7, "dttt"];
+   r8 = fullReport[CE8, "dtt"];
    <|"k7" -> r7, "k8" -> r8,
      "matchesKnown" -> (r7["forcedViolation"] == 560723/400000000 &&
                          r8["forcedViolation"] == 39023/60000000)|>

@@ -261,7 +261,7 @@ channel values are explained, not coincidental. Every cascade gate is strongly
 magic-capable as a channel — the flow note's conservation is purely an orbit
 fact. Headless: `wolframscript -file RunEpilogue.wl -print all`.
 
-### LovaszThetaSparse + lovasz_theta_sparse.py — exact ϑ at 10⁵ pentagon blocks, and the cis/trans CORRECTION (commit c906427, CaseStudies.wl §D3)
+### LovaszThetaSparse + lovasz_theta_sparse.py — exact ϑ at 10⁵ pentagon blocks, and the direct/twisted CORRECTION (commit c906427, CaseStudies.wl §D3)
 
 **Method.** The dense primal SDP behind `LovaszTheta` (n(n+1)/2 variables) saturates
 near 150 vertices. `LovaszThetaSparse` (BlackBox v1.1.0) uses the Lovász dual
@@ -281,18 +281,18 @@ density units), else the interior point biases high at N ≥ 10⁴.
 **The correction.** Edge-glued pentagon meshes carry a hidden binary design
 parameter, the gluing ORIENTATION: each pentagon meets its glue edge {u,v} with a
 one-edge side and a two-edge side; attaching consecutive short sides to the SAME
-endpoint (**cis**) is what `PentagonChain` builds (the c1-vertices form a rail);
-ALTERNATING endpoints (**trans**) is what the CaseStudies ring builder builds. The
+endpoint (**direct**) is what `PentagonChain` builds (the c1-vertices form a rail);
+ALTERNATING endpoints (**twisted**) is what the CaseStudies ring builder builds. The
 two families are NOT isomorphic, proven by the dense solver itself:
-ϑ(trans-ring 21) = 28.8676 < ϑ(cis-chain 19) = 29.0399, and ϑ is monotone under
-induced subgraphs, so cis chains do not embed in trans rings. Consequently the
+ϑ(twisted-ring 21) = 28.8676 < ϑ(direct-chain 19) = 29.0399, and ϑ is monotone under
+induced subgraphs, so direct chains do not embed in twisted rings. Consequently the
 previously "certified" scaling bracket ϑ(ring 10⁵) ∈ [142 491, 150 000] is
-WITHDRAWN — its disjoint-chain lower bound anchored cis-chain values
+WITHDRAWN — its disjoint-chain lower bound anchored direct-chain values
 (ϑ(chain 31) = 47.0268, itself correct) in the wrong family — and the expected
 density rise 1.377 → 1.5 does not exist.
 
 **Exact laws (all machine-verified, both solvers agreeing to certificate level):**
-- **trans ring** (the CaseStudies mesh): ϑ = τ\*·N − o(N) with the density limit an
+- **twisted ring** (the CaseStudies mesh): ϑ = τ\*·N − o(N) with the density limit an
   ALGEBRAIC NUMBER in closed form:
   **τ\* = Root[49x³ − 128x² − 75x + 218, middle root] = 1.3767177459158590533…**
   = 128/147 + (2√27409/147)·cos(⅓ arccos(−2852191/27409^{3/2}) − 2π/3),
@@ -310,7 +310,7 @@ density rise 1.377 → 1.5 does not exist.
   ≤ 10⁵τ\* = 137 671.7746). The theorem α = ⌊4N/3⌋ is untouched, so the quantum gap
   stays EXTENSIVE with algebraic slope: ϑ − α = (τ\* − 4/3)·N = 0.0433844126·N
   (= 4 338.8 at N = 10⁵, exact instead of bracketed).
-- **cis ring** (PentagonChain closed up): **ϑ(N) = N + ϑ(C_N) — a THEOREM**, and
+- **direct ring** (PentagonChain closed up): **ϑ(N) = N + ϑ(C_N) — a THEOREM**, and
   **α = ⌊3N/2⌋ — also a THEOREM** (CaseStudies §D3; proven by the analytic argument
   below, with the explicit rail-umbrella witness spot-checked at N∈{5,7,9,11}).
   ϑ upper: delete the N glue edges → C_N ⊔ C₂N; monotonicity + additivity +
@@ -322,34 +322,36 @@ density rise 1.377 → 1.5 does not exist.
   + alternate rail vertices. Even N collapses the whole sandwich,
   α = ϑ = α\* = 3N/2 — NO quantum gap; odd N approaches it with deficit π²/8N and
   bounded gap ϑ − α → 1/2.
-- **cis chains**: ϑ = (3m+2)/2 exactly at even m (the parity law's ϑ = α case);
+- **direct chains**: ϑ = (3m+2)/2 exactly at even m (the parity law's ϑ = α case);
   per-block increments → 3/2.
 
 **Reading:** the bulk quantum advantage of pentagon meshes is set by the gluing
-orientation (trans: ≈ 0.0434 per block, extensive), not by closing the topology —
-closure and block parity only modulate it; the cis family saturates the exclusivity
+orientation (twisted: ≈ 0.0434 per block, extensive), not by closing the topology —
+closure and block parity only modulate it; the direct family saturates the exclusivity
 bound α\* classically and carries no bulk gap.
 
 **The optimal gluing word (follow-up computation).** Treating a mesh as a binary
-necklace over {cis, trans}, pure trans is NOT gap-optimal: the word **(cct)^∞** —
-two cis gluings, then one trans "reset" — keeps the trans staircase α/L = 4/3 while
+necklace over {direct, twisted}, pure twisted is NOT gap-optimal: the word **(ddt)^∞** —
+two direct gluings, then one twisted "reset" — keeps the twisted staircase α/L = 4/3 while
 lifting ϑ/L to 1.40323086923899745 (continuum-certified, below), i.e. **gap
-0.0698975 per block = 1.6111× the pure-trans gap**. Method: exact α densities as
+0.0698975 per block = 1.6111× the pure-twisted gap**. Method: exact α densities as
 max-plus cycle means of a 3-state interface transfer DP (exact rational arithmetic;
-the pure-trans staircase is its transfer matrix's 3-cycle gaining 4 per 3 blocks);
+the pure-twisted staircase is its transfer matrix's 3-cycle gaining 4 per 3 blocks);
 certified chordal ϑ at 1200–2400 blocks; exhaustive sweep of all binary bracelets
-of period ≤ 6, and over periods ≤ 12 every word with α-density 4/3 has cis-fraction
-≤ 2/3 with equality UNIQUELY for cct (its best higher-period rivals cctcctctt,
-cctcctcctctt rank strictly below). Design rule: trans letters protect the classical
-bound (each t breaks the cis rail before it can lift α), cis letters buy quantum
-value; the optimum is the densest cis packing α tolerates. Refined conjecture:
-(cct)^∞ is globally optimal over all gluing words. Tooling:
-`lovasz_theta_sparse.py words`; WL anchor wordRing/cct in CaseStudies §D3
+of period ≤ 6, and over periods ≤ 12 every word with α-density 4/3 has direct-fraction
+≤ 2/3 with equality UNIQUELY for ddt (its best higher-period rivals ddtddtdtt,
+ddtddtddtdtt rank strictly below); a full gap-density census of every binary
+necklace up to period 18 (~29,000 words; word_census.py, Pmax=18 run) confirms
+ddt and its powers as the unique maximum, runner-ups ~0.001 below. Design rule: twisted letters protect the classical
+bound (each t breaks the direct rail before it can lift α), direct letters buy quantum
+value; the optimum is the densest direct packing α tolerates. Refined conjecture:
+(ddt)^∞ is globally optimal over all gluing words. Tooling:
+`lovasz_theta_sparse.py words`; WL anchor wordRing/ddt in CaseStudies §D3
 (key D3_gluingWordOptimum).
 
-**No τ\*-style closed form for the cct density — a finding in itself.** The (cct)
+**No τ\*-style closed form for the ddt density — a finding in itself.** The (ddt)
 unit cell yields a 9×9 DFT symbol with 12 edge-orbit parameters; the mesh's
-reflection automorphism (|Aut(cct-ring of m cells)| = 2m, machine-checked) pairs
+reflection automorphism (|Aut(ddt-ring of m cells)| = 2m, machine-checked) pairs
 them to 7, and the continuum minimax has the same active-set shape as τ\* (J-block
 + ONE interior frequency, φ ≈ 0.70345π). Newton on the reduced KKT at 320 digits
 (residual 10⁻³¹⁹, positive multipliers, witness feasible over a 2²⁰-point grid)
@@ -363,7 +365,7 @@ height ≲ 10⁶ (≲ 10⁶⁰ at degree 3), for the density, cos φ, and every 
 parameter. Contrast: τ\* is a cubic with two-digit coefficients. The algebraic
 complexity of the symbol minimax explodes with word period; at period 3 the exact
 object standing in for a closed form is the polynomial KKT system itself
-(CaseStudies §D3, key D3_cctDensityCharacterized).
+(CaseStudies §D3, key D3_ddtDensityCharacterized).
 
 ## 7. Wigner negativity toolchain (Wolfram Community, N. Murzin)
 
@@ -432,7 +434,7 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
 - **Pentagon-mesh realizability — dimension resolved, noise quantified, lab run still
   open (`realizability.py`, 2026-07-12).** The vague "does a real device realize the
   ϑ-density advantage?" is now two hardware-deciding curves in the chain length N (open
-  trans chain of N pentagons), triple-checked across three independent SDP paths (dense
+  twisted chain of N pentagons), triple-checked across three independent SDP paths (dense
   CLARABEL, dense SCS, the chordal-decomposition solver). (i) **Dimension is *not* a
   barrier: d(N) = 3 for every N.** The optimal ϑ-SDP Gram matrix has rank 3 at every
   chain length (interior-point returns the max-rank optimum, so 3 is the minimum
@@ -454,15 +456,15 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   0.9685; that used a wrong noise floor of 0 and overstated the requirement — the isotropic
   I/3 floor is the standard model.] (iii) **Resonances (ϑ = α ⟹ no quantum advantage),
   characterized** (`realizability.py` resonance_scan). Mechanism: the Lovász sandwich
-  α ≤ ϑ ≤ χ̄ (clique-cover number) collapses exactly when α = χ̄. **Cis chains obey a
+  α ≤ ϑ ≤ χ̄ (clique-cover number) collapses exactly when α = χ̄. **Direct chains obey a
   parity law** — ϑ = α for every *even* N (verified N=2..14), gap for odd N: since
-  |V|=3N+2 is even iff N even, an even cis chain has α = |V|/2 with a perfect clique cover
-  into |V|/2 edges (α = χ̄), forcing ϑ = α; so **even cis chains carry no contextual
-  advantage** — an exact sharpening of "cis is classical". **Trans chains** resonate only
+  |V|=3N+2 is even iff N even, an even direct chain has α = |V|/2 with a perfect clique cover
+  into |V|/2 edges (α = χ̄), forcing ϑ = α; so **even direct chains carry no contextual
+  advantage** — an exact sharpening of "direct is classical". **Twisted chains** resonate only
   sporadically, at N = 2 and N = 5 (verified to N=20; not periodic), a sandwich coincidence
   (both still contain induced C₅'s, so not perfection). Either way a resonance is a sharp
   instance of the bond-dependence boundary B1 (§10) — gluing contextual pentagons can
-  destroy the advantage entirely, the bond (cis/trans) and length deciding. What remains genuinely open: an actual laboratory
+  destroy the advantage entirely, the bond (direct/twisted) and length deciding. What remains genuinely open: an actual laboratory
   run, and a full device error model — these are idealized projective-measurement /
   isotropic-noise targets (computable bounds), and a sequential-measurement test still
   faces the compatibility/detection loopholes of §3, so this quantifies the *target*, not
@@ -479,12 +481,12 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   own Quad-C5 (arXiv:2605.12828) shows the doubly-covered quad *ring* needs d=4 (topology-
   dependent; not independent prior art). (D) noise saturation v\*→0.885 + non-accumulation +
   statistical limiter — **NOVEL** (specific constants via standard CSW tools; chained-
-  inequality analogs have v\*→1, not a finite saturation). (E) cis parity law — ADJACENT: the
-  even-cis θ=α collapse is a König–Egerváry-graph instance (Larson et al. 2013); the parity
+  inequality analogs have v\*→1, not a finite saturation). (E) direct parity law — ADJACENT: the
+  even-direct θ=α collapse is a König–Egerváry-graph instance (Larson et al. 2013); the parity
   law + gap direction are new. (F) CF=c·ν non-cyclic — ADJACENT: Cervantes arXiv:2110.07113
   proves CNTF=2·CNT2 for *cyclic* only; extension is new but CbD theory warns non-cyclic
   proportionality can fail — the honest claim is "constant along a white-noise ray within a
-  linear piece, verified CHSH/PM/GHZ", not a universal law. (G) (cct)^∞ gluing-word optimum
+  linear piece, verified CHSH/PM/GHZ", not a universal law. (G) (ddt)^∞ gluing-word optimum
   via ergodic optimization — **NOVEL** (chain-cacti extremal literature optimizes combinatorial
   counts and finds *uniform* chains; a θ-density optimum at a non-uniform period-3 word is
   unstated). Caveats: verification pass found nothing to confirm (no source even claimed to
@@ -510,17 +512,17 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   box on the square is AvN over Z₄ with a witness that is CONSISTENT mod 2 — a
   strictly-modular obstruction no prime reduction can see. Čech-layer follow-ups
   are now all closed.
-- Pentagon meshes (§6, cis/trans correction): ~~closed form for the trans-ring
+- Pentagon meshes (§6, direct/twisted correction): ~~closed form for the twisted-ring
   density constant~~ RESOLVED — τ\* = Root[49x³ − 128x² − 75x + 218, 2], exact KKT
-  certificate in §6/CaseStudies §D3. ~~Prove ϑ(cis-ring N) = N + ϑ(C_N) and
-  α(cis-ring N) = ⌊3N/2⌋~~ RESOLVED — both are theorems now (§6/§D3: subgraph
+  certificate in §6/CaseStudies §D3. ~~Prove ϑ(direct-ring N) = N + ϑ(C_N) and
+  α(direct-ring N) = ⌊3N/2⌋~~ RESOLVED — both are theorems now (§6/§D3: subgraph
   monotonicity + one-extra-dimension representation; pentagon window counting).
-  ~~Is the extensive trans gap optimal over all gluing words?~~ RESOLVED — NO:
-  (cct)^∞ beats it by 61% (gap 0.0698975 per block, §6). ~~Closed form for the
-  cct density~~ RESOLVED — negatively: certified global optimum
+  ~~Is the extensive twisted gap optimal over all gluing words?~~ RESOLVED — NO:
+  (ddt)^∞ beats it by 61% (gap 0.0698975 per block, §6). ~~Closed form for the
+  ddt density~~ RESOLVED — negatively: certified global optimum
   1.40323086923899745105894248 (320-digit KKT), but LLL excludes any minimal
   polynomial of degree ≤ 36 with height ≲ 10⁶; the exact characterization is the
-  KKT system (§6). Global optimality of (cct)^∞ — PARTIALLY RESOLVED
+  KKT system (§6). Global optimality of (ddt)^∞ — PARTIALLY RESOLVED
   (machine-checked lemmas, CaseStudies §D3 key D3_towardsGlobalOptimality):
   LEMMA A, α\* = 3L/2 for every gluing word (uniform ½-packing + a
   word-independent fractional edge cover: ½ on each block's (B,X) edge and its
@@ -528,25 +530,25 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   universally; LEMMA B, ᾱ ≥ 4/3 for every word (potential certificate
   φ = (0,−⅓,−⅔) on the 3-state interface DP: six inequalities, all ≥ 4/3,
   telescoping along any word); PINCH: gap ≤ min(ϑ̄−4/3, 3/2−ᾱ) ≤ 1/6, and any
-  cct-beater needs ϑ̄ > 1.40323087 AND ᾱ < 1.4301025 simultaneously;
-  EXHAUSTIVE: all aperiodic bracelets p ≤ 9 certified below cct (max 0.0685 at
-  cctcctctt; overall runner-up cctcctcctctt at 0.0689 vs 0.0698975). The
+  ddt-beater needs ϑ̄ > 1.40323087 AND ᾱ < 1.4301025 simultaneously;
+  EXHAUSTIVE: all aperiodic bracelets p ≤ 9 certified below ddt (max 0.0685 at
+  ddtddtdtt; overall runner-up ddtddtddtdtt at 0.0689 vs 0.0698975). The
   completion — a transfer-SDP sub-action (windowed chordal dual templates ⇒
   density bound on ϑ̄) — yields ε-OPTIMALITY (see the ε-certificate paragraph):
-  the exact bracket **sup_w gap̄(w) ∈ [gap(cct)=0.069898, Γ₈=0.075309]**, cct
-  optimal to within ε=0.0054. Whether sup = gap(cct) is OPEN (NOT obstructed):
-  each Γ_k is rational and gap(cct) irrational, but rationals converge to
-  irrationals, so the τ_cct height result rules out only a SINGLE finite exact
+  the exact bracket **sup_w gap̄(w) ∈ [gap(ddt)=0.069898, Γ₈=0.075309]**, ddt
+  optimal to within ε=0.0054. Whether sup = gap(ddt) is OPEN (NOT obstructed):
+  each Γ_k is rational and gap(ddt) irrational, but rationals converge to
+  irrationals, so the τ_ddt height result rules out only a SINGLE finite exact
   rational certificate — not the limit, not global optimality [ADVERSARIALLY
-  CORRECTED: the earlier "obstructed by the τ_cct field" was a non-sequitur].
-  ~~α-density/cis-fraction characterization~~ RESOLVED — THEOREM (CaseStudies
-  §D3, key D3_alphaCisTheorem): ᾱ(w) ≥ max(4/3, 1 + f_c/2) for every word
+  CORRECTED: the earlier "obstructed by the τ_ddt field" was a non-sequitur].
+  ~~α-density/direct-fraction characterization~~ RESOLVED — THEOREM (CaseStudies
+  §D3, key D3_alphaDirectTheorem): ᾱ(w) ≥ max(4/3, 1 + f_d/2) for every word
   (letter-weighted potential certificate (0,−½,−1) with rates (3/2, 1)); hence
-  ᾱ = 4/3 ⟹ f_c ≤ 2/3, with equality iff w = (cct)^k — any ccc gives
-  ᾱ ≥ 4/3 + 1/(3p) strictly (adjusted max-plus cube of the cis step has
-  min-max exactly 13/3 = 3·(4/3) + ⅓), and f_c = 2/3 without ccc forces all
-  cis-runs equal to 2 by the run-average argument. Note the naive converse is
-  false: cctt has f_c = 1/2 but ᾱ = 11/8. ~~Construct the explicit ε-optimality
+  ᾱ = 4/3 ⟹ f_c ≤ 2/3, with equality iff w = (ddt)^k — any ddd gives
+  ᾱ ≥ 4/3 + 1/(3p) strictly (adjusted max-plus cube of the direct step has
+  min-max exactly 13/3 = 3·(4/3) + ⅓), and f_c = 2/3 without ddd forces all
+  direct-runs equal to 2 by the run-average argument. Note the naive converse is
+  false: ddtt has f_c = 1/2 but ᾱ = 11/8. ~~Construct the explicit ε-optimality
   certificate~~ RESOLVED — CONSTRUCTED (EpsilonCertificate.wl [k=7],
   EpsilonCertificate8.wl [k=8]; keys D3_epsilonCertificate,
   D3_periodicOrbitSufficiency): a window-k transfer-SDP sub-action — per
@@ -554,11 +556,11 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   / R (4×4, X-triangle + apex), closure potentials ψ, DP potentials Φ with fixed
   strategy — proving the **DENSITY bound gap̄(w) ≤ Γ_k for EVERY gluing word**
   (Γ₇ = 1541247/20000000 = 0.0770624, Γ₈ = 941357/12500000 = 0.0753086; ε =
-  0.0054 above gap(cct) at k=8). IMPORTANT (adversarially corrected): this is an
+  0.0054 above gap(ddt) at k=8). IMPORTANT (adversarially corrected): this is an
   L→∞ DENSITY bound, NOT a per-finite-ring bound. θ(ring_L) ≤ Σd is exact per
   ring (Schur on M = [[I+B,e],[eᵀ,σ]] ⪰ 0), but the α side telescopes only up to
   a bounded boundary, α(ring_L) ≥ Σr − 2·max|Φ| — so the EXACT per-ring form
-  α(ring) ≥ Σr is FALSE (cctt at L=4: α=5 < Σr=5.488, per-block gap 0.0839 > Γ₇);
+  α(ring) ≥ Σr is FALSE (ddtt at L=4: α=5 < Σr=5.488, per-block gap 0.0839 > Γ₇);
   both boundaries (ψ closed-walk-exact, Φ finite-valued) vanish under /L, giving
   gap̄(w) ≤ Γ_k. The rigorous machine-checked core is the POINTWISE per-edge
   bound σ(e) ≤ Γ_k (exact rational, all 256/512 edges). PERIODIC-ORBIT
@@ -567,16 +569,16 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   words of the certified functional = max cycle mean of σ = Γ_k (Karp +
   mean-payoff LP duality; a maximizing invariant measure for a locally-constant
   potential sits on a periodic orbit) — realized at the certificate's BOTTLENECK
-  words (cttt)^∞ [k=7] / (ctt)^∞ [k=8], low cis-fraction, NOT cct. Hence no
+  words (dttt)^∞ [k=7] / (dtt)^∞ [k=8], low direct-fraction, NOT ddt. Hence no
   aperiodic word beats the best periodic word for the certified bound. Γ_k =
   0.1667, 0.1250, 0.1020, 0.0953, 0.0824, 0.0770624, 0.0753086 (k=2..8;
   decrements non-monotone). Bonus: the Q/R clique family solves the per-cycle
   transfer-SDP EXACTLY (word_density_transfer_sdp; < 10⁻⁶ loss) — position-space,
   no DFT symbol.
-  Trans-CHAIN density — now PROVEN (existence) + identified, upgraded from the old
-  "strong numerics" (`trans_chain_proofs.py`, Python-only, 2026-07-12). TWO results:
-  (a) **α(trans-chain m) = ⌊4(m+1)/3⌋ for ALL m — PROVEN** (was conjectured/verified
-  m=3..12). Tropical proof: the trans interface transfer matrix Tt = [[1,1,2],[1,1,−∞],
+  Twisted-CHAIN density — now PROVEN (existence) + identified, upgraded from the old
+  "strong numerics" (`twisted_chain_proofs.py`, Python-only, 2026-07-12). TWO results:
+  (a) **α(twisted-chain m) = ⌊4(m+1)/3⌋ for ALL m — PROVEN** (was conjectured/verified
+  m=3..12). Tropical proof: the twisted interface transfer matrix Tt = [[1,1,2],[1,1,−∞],
   [0,1,1]] has max-cycle-mean exactly 4/3, and the state-vector orbit satisfies
   vec(m+3) = vec(m)+4 *exactly*; max-plus translation-equivariance (v+c)⊙Tt = (v⊙Tt)+c
   promotes the three verified base residues to a full induction, so α(m+3)=α(m)+4 with
@@ -588,46 +590,46 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   lim a_m/m = inf_m a_m/m exists. Value = τ\* via the O(1) ring bracket
   ϑ(ring_m) ≤ a_m ≤ ϑ(ring_{m+1}) (verified every tested m; the chain is the ring "cut
   open", free vs periodic BC of the same transfer-SDP), both ends having density τ\*.
-  Hence the trans-chain gap is EXTENSIVE ≈ (τ\*−4/3)m ≈ 0.0434 m with an O(1) boundary
+  Hence the twisted-chain gap is EXTENSIVE ≈ (τ\*−4/3)m ≈ 0.0434 m with an O(1) boundary
   correction (the numerically observed ≈0.995) — and Case D's "rings beat chains" was
-  never about closure (the decaying chains were cis). One residual gap: a *structural*
+  never about closure (the decaying chains were direct). One residual gap: a *structural*
   proof of the ring bracket (currently verified, not proven). Small-m accident:
-  ϑ(trans-chain 5) = α = 8 exactly (see the realizability resonance note, §9).
+  ϑ(twisted-chain 5) = α = 8 exactly (see the realizability resonance note, §9).
   Durable tools in `lovasz_theta_sparse.py`: pentagon_chain_word, alpha_chain_word,
   word_density_transfer_sdp (exact position-space ϑ-density of any PERIODIC word).
   §6 mesh threads status: RIGOROUS — gap̄(w) ≤ Γ_k for all words (density bound)
-  and the bracket sup_w gap̄(w) ∈ [0.069898, 0.075309] (cct optimal to within
+  and the bracket sup_w gap̄(w) ∈ [0.069898, 0.075309] (ddt optimal to within
   ε=0.0054); periodic-orbit sufficiency for the CERTIFIED cocycle. STRONG
   EVIDENCE (key D3_globalOptimalityEvidence; strengthened 2026-07-12 by an
-  EXHAUSTIVE all-word census, `word_census.py`) — cct is a SHARP ISOLATED peak.
+  EXHAUSTIVE all-word census, `word_census.py`) — ddt is a SHARP ISOLATED peak.
   The prior evidence covered only balanced/Christoffel words of period ≤ 21; the
   new census computes gap̄(w) for **every binary necklace up to period 18**
-  (~29000+ words, not just balanced ones) and finds cct and its powers the
-  **unique** maximum, gap̄ = 0.0698975 — **no word beats cct**, runner-ups are
-  cct-perturbations (cctcctccttct …) ≈ 0.001 below. With the α-cis theorem (cct
+  (~29000+ words, not just balanced ones) and finds ddt and its powers the
+  **unique** maximum, gap̄ = 0.0698975 — **no word beats ddt**, runner-ups are
+  ddt-perturbations (ddtddtddttdt …) ≈ 0.001 below. With the α-direct theorem (ddt
   uniquely hits ᾱ=4/3) as the mechanism, an aperiodic (Sturmian) beat is now very
-  implausible. This is a rigorous LOWER bracket sup_w gap̄(w) ≥ gap(cct). GENUINELY
-  OPEN (not obstructed): exact global optimality of (cct)^∞ (sup = gap(cct)?),
-  whether lim_k Γ_k = gap(cct), and periodic-orbit sufficiency for the TRUE
+  implausible. This is a rigorous LOWER bracket sup_w gap̄(w) ≥ gap(ddt). GENUINELY
+  OPEN (not obstructed): exact global optimality of (ddt)^∞ (sup = gap(ddt)?),
+  whether lim_k Γ_k = gap(ddt), and periodic-orbit sufficiency for the TRUE
   functional θ̄−ᾱ. Tightening the UPPER bracket (Γ_9, Γ_10) as a *certified* bound
   needs the exact-rational windowed transfer-SDP certificate (EpsilonCertificate*.wl,
   Wolfram); a Python-only pass cannot reproduce it, so the rigorous upper bracket
   stands at Γ_8 = 0.0753086. This is ergodic optimization of the SAME genus as joint-spectral-radius
   optimization, where the finiteness property (periodic optimum) is FALSE in
   general (Bousch–Mairesse 2002, aperiodic Sturmian maximizers) — so the open
-  question is genuinely hard and cct optimality is plausible-but-not-guaranteed.
-  A proof would need ϑ̄(W) − ϑ̄(cct) ≤ ᾱ(W) − 4/3 for all W (⟺ gap(W) ≤ gap(cct)).
+  question is genuinely hard and ddt optimality is plausible-but-not-guaranteed.
+  A proof would need ϑ̄(W) − ϑ̄(ddt) ≤ ᾱ(W) − 4/3 for all W (⟺ gap(W) ≤ gap(ddt)).
   RIGOROUS REDUCTION of that inequality (key D3_inequalityReduction, NOT a full
   proof): two already-proven ingredients bracket it — (1) the α\*-cap
   ϑ̄(W) ≤ α\*-density = 3/2 (Lemma A) gives gap(W) ≤ 3/2 − ᾱ(W), so the inequality
-  holds EXACTLY whenever ᾱ(W) ≥ 3/2 − gap(cct) = 1.4301025; (2) the ε-certificate
-  gives gap(W) ≤ Γ_8 = 0.0753086, i.e. gap(W) ≤ gap(cct) + 0.00541 for all W.
+  holds EXACTLY whenever ᾱ(W) ≥ 3/2 − gap(ddt) = 1.4301025; (2) the ε-certificate
+  gives gap(W) ≤ Γ_8 = 0.0753086, i.e. gap(W) ≤ gap(ddt) + 0.00541 for all W.
   COMBINED: proven for every word with ᾱ(W) ≥ 1.4301025 and within 0.0054
   everywhere; it reduces to the single narrow window ᾱ(W) ∈ [4/3, 1.4301025) —
-  the low-classical-density "cct-like" words (equality at cct), exactly where an
-  aperiodic Sturmian competitor would live. Closing the window needs Γ_k → gap(cct)
-  (open; the certificate bottleneck migrates away from cct) or a new ϑ̄ bound
-  tighter than 3/2 there. The τ_cct height result bears only on single finite
+  the low-classical-density "ddt-like" words (equality at ddt), exactly where an
+  aperiodic Sturmian competitor would live. Closing the window needs Γ_k → gap(ddt)
+  (open; the certificate bottleneck migrates away from ddt) or a new ϑ̄ bound
+  tighter than 3/2 there. The τ_ddt height result bears only on single finite
   exact rational certificates.
 
   **12 July 2026 research push — still open, but the attack strategy changed.**
@@ -637,7 +639,7 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   hierarchies for the joint spectral radius (Ahmadi–Jungers–Parrilo–Roozbehani),
   and that literature has **no known convergence-rate theorem** — an
   arbitrarily long shrinking Γ_k sequence is evidence, never a proof, of
-  lim Γ_k = gap(cct). The one place in the sibling literature where an
+  lim Γ_k = gap(ddt). The one place in the sibling literature where an
   ε-bracket *does* convert to an exact, finite, zero-slack proof is the
   Guglielmi–Protasov invariant-polytope algorithm for JSR: seed a candidate
   certificate from the already-known exact optimum, then check in ONE finite
@@ -645,8 +647,8 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   and non-negative slack everywhere else. The concrete next step this project
   should actually take is therefore: attempt a **zero-slack** (not ε-slack)
   recalibration of the EXISTING k=7/k=8 windowed transfer-SDP certificate,
-  seeded from cct's own exact KKT solution, checking whether it holds with
-  exact equality on the cct cycle and ≥0 slack on every other de Bruijn-k
+  seeded from ddt's own exact KKT solution, checking whether it holds with
+  exact equality on the ddt cycle and ≥0 slack on every other de Bruijn-k
   edge — NOT extending to k=9 first. A from-scratch reconstruction of a k=9
   generator pipeline was written (`GenerateEpsilonCertificate9.wl`) since no
   generator script for the existing k=7/k=8 certificates exists anywhere in
@@ -655,19 +657,19 @@ flow through the cascade gate-by-gate — is closed by kcbs_wigner_flow.wl (see 
   converge correctly even at k=4 (reproduces ≈0.5, not the known Γ_4≈0.1020),
   so it is a validated-but-unfinished skeleton, not a working Γ_9. Two genuine
   new results came out of the push regardless: (i) a small NEW theorem
-  (α-side, exact, direct corollary of the existing Lemma B / trans-chain
-  proof technique): diluting any defect block D into a pure-cct background
-  gives ᾱ(D+(cct)^k) = (4k+c_D)/(3k+|D|) exactly, → 4/3 as Θ(1/k); (ii) an
+  (α-side, exact, direct corollary of the existing Lemma B / twisted-chain
+  proof technique): diluting any defect block D into a pure-ddt background
+  gives ᾱ(D+(ddt)^k) = (4k+c_D)/(3k+|D|) exactly, → 4/3 as Θ(1/k); (ii) an
   extensive NEW negative computational sweep — ~6000+ words never tested
   before (structurally-targeted defect-dilution words to period ~900, and
   genuine Christoffel/Sturmian words at slopes within 0.08%–1.5% of 2/3 to
   period ~2000, the literal finite-period proxy for a Bousch–Mairesse-style
-  aperiodic challenger) — found **zero beaters of cct anywhere**, with the
-  gap approaching gap(cct) linearly and asymmetrically from both sides of
+  aperiodic challenger) — found **zero beaters of ddt anywhere**, with the
+  gap approaching gap(ddt) linearly and asymmetrically from both sides of
   slope 2/3 (a "kink," not a smooth turning point) — consistent with, but not
-  proof of, cct being an isolated true global maximum. Net: the bracket width
-  (0.0054) has NOT moved; all three questions (global optimality of cct,
-  lim Γ_k = gap(cct), periodic-orbit sufficiency for the true θ̄−ᾱ functional,
+  proof of, ddt being an isolated true global maximum. Net: the bracket width
+  (0.0054) has NOT moved; all three questions (global optimality of ddt,
+  lim Γ_k = gap(ddt), periodic-orbit sufficiency for the true θ̄−ᾱ functional,
   as opposed to the already-proven certified surrogate) remain open. Do not
   read the widened empirical sweep as near-closure — Bousch–Mairesse (JAMS
   2002) is a real, executed counterexample in this exact problem genus where
@@ -701,10 +703,10 @@ kcbs_epilogue.wl) links one non-classicality currency to another through the cyc
 own constant 2α — a *published* structural fact this repo confirms, not originates.
 
 **The three boundaries.** (B1) **Composition is bond-dependent, not atom-determined.**
-The cis/trans discovery (§6): the same pentagon glued two ways gives an extensive
-quantum gap (trans) or *none* (cis saturates α\* classically). The atom under-determines
+The direct/twisted discovery (§6): the same pentagon glued two ways gives an extensive
+quantum gap (twisted) or *none* (direct saturates α\* classically). The atom under-determines
 the molecule; the bonds carry structure the atom doesn't — the gluing-word optimum
-(cct)^∞ makes that design space concrete. (B2) **The graph is a lossy projection of a
+(ddt)^∞ makes that design space concrete. (B2) **The graph is a lossy projection of a
 taller stack** — graph ↦ sheaf ↦ phase-space. α/ϑ/α\* capture bounds but are blind to
 the possibilistic/cohomological layer: certifying strong contextuality (Wright box) and
 separating models with identical supports needed the AB sheaf and the Čech obstruction
@@ -760,7 +762,7 @@ of a repeating graph motif by a transfer operator, and casting the optimal gluin
 ergodic-optimization / joint-spectral-radius problem, is a machine that applies to any clique-sum
 family of cycles (pentagons are only its first worked instance), riding on general large-graph ϑ
 solvers (LovaszThetaSparse, the Z_N-symmetry route, the ε-certificate) usable well beyond
-contextuality. The two exact combinatorial results it yields — ϑ(cis-ring N) = N + ϑ(C_N) and
+contextuality. The two exact combinatorial results it yields — ϑ(direct-ring N) = N + ϑ(C_N) and
 α = ⌊3N/2⌋/⌊4N/3⌋ — are self-contained equalities in a regime where the prior literature stops at
 inequalities (and where the recurring "ϑ subadditive under amalgam" phrasing is, on audit, a
 mis-attribution of Delorme–Poljak's *max-cut* eigenvalue bound φ, not ϑ). The constant
@@ -771,8 +773,8 @@ in — what is used is that the rate exceeds 1 and is certifiable at 10⁵–10�
 treatment is 2^(5N). For the atomic-GE / black-box-emulation program specifically, the payoff is
 therefore **structural, not numerical**: it makes the program's composition-and-scaling face (iii
 above) quantitative and certifiable, and it fixes boundary B1 with an exact witness — the same atom
-glued *cis* versus *trans* gives no advantage or an extensive one, so the **bond, not the atom, is the
-design variable**, with (cct)^∞ its optimum. It does *not* furnish a new primitive for emulating a
+glued *direct* versus *twisted* gives no advantage or an extensive one, so the **bond, not the atom, is the
+design variable**, with (ddt)^∞ its optimum. It does *not* furnish a new primitive for emulating a
 *single* black box, and — like everything in the GE layer — it is computable-bound theory, not
 empirical: whether a physical device realizes the extensive rate is untouched and remains the standing
 hardware open item (§9). Written up honestly, this is a graph-theory contribution the contextuality

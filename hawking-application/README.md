@@ -79,7 +79,7 @@ against Builder 1's engine). New public symbols: `PseudospinCorrMatrix`,
   matrix is `DiagonalMatrix[{Tanh[2r], -Tanh[2r], 1}]`, the Horodecki-optimal
   `CHSH(r) = 2 Sqrt[1+Tanh[2r]^2]`, and `Limit[CHSH(r), r->Infinity] = 2 Sqrt[2]`
   — at the ceiling the TMSV realizes the qubit Bell pair of
-  `cluster-state-realization/cct_mbqc_hawking_certification.wl` (`CF = Sqrt[2]-1`).
+  `cluster-state-realization/ddt_mbqc_hawking_certification.wl` (`CF = Sqrt[2]-1`).
   The literature value `B = 2.25` maps to effective squeezing
   `r_eff = 0.285020` (flagged as an idealized pure-TMSV identification). The gate
   is **non-circular**: the pseudospin correlation matrix and `CHSH(r)` are
@@ -125,7 +125,7 @@ that gap, on the covariance-matrix side.
 The two sectors **join at the `r -> Infinity` EPR limit**: the GKMR-pseudospin
 discretization of the two-mode-squeezed-vacuum Hawking pair converges to the
 qubit Bell pair (`CHSH -> 2 Sqrt[2]`, `CF -> Sqrt[2]-1`), the exact anchors of
-`cct_mbqc_hawking_certification.wl`. And both sectors sit on the **same
+`ddt_mbqc_hawking_certification.wl`. And both sectors sit on the **same
 (classically emulable) side** of the framework's two-lens boundary: the qubit
 sector by the Gottesman–Knill theorem (Clifford), the Gaussian sector by the CV
 Gottesman–Knill theorem (Gaussian states + symplectic ops + homodyne). The A8

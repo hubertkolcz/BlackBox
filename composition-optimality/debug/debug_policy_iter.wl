@@ -5,7 +5,7 @@
 SetDirectory[DirectoryName[$InputFileName]];
 K = 3;
 
-nodes = StringJoin /@ Tuples[{"c", "t"}, K];
+nodes = StringJoin /@ Tuples[{"d", "t"}, K];
 edges = Select[Tuples[nodes, 2], StringDrop[#[[1]], 1] === StringDrop[#[[2]], -1] &];
 Print["de Bruijn-", K, ": ", Length[nodes], " nodes, ", Length[edges], " edges"];
 
@@ -17,13 +17,13 @@ dpStates = {{0, 0}, {1, 0}, {0, 1}};
 dpTransfer[letter_] := Module[{T = ConstantArray[-Infinity, {3, 3}], out, j},
    Do[If[! (dpStates[[i, 1]] == 1 && s1 == 1) && ! (s1 == 1 && s2 == 1) &&
         ! (s2 == 1 && s3 == 1) && ! (s3 == 1 && dpStates[[i, 2]] == 1),
-      out = If[letter === "c", {s1, s2}, {s2, s1}];
+      out = If[letter === "d", {s1, s2}, {s2, s1}];
       j = Position[dpStates, out][[1, 1]];
       T[[i, j]] = Max[T[[i, j]], s1 + s2 + s3]],
      {i, 3}, {s1, 0, 1}, {s2, 0, 1}, {s3, 0, 1}];
    T];
-Tc = dpTransfer["c"]; Tt = dpTransfer["t"];
-Print["Tc = ", Tc // MatrixForm // ToString];
+Td = dpTransfer["d"]; Tt = dpTransfer["t"];
+Print["Td = ", Td // MatrixForm // ToString];
 Print["Tt = ", Tt // MatrixForm // ToString];
 
 Qs = Association[Table[w -> Table[Subscript[q, w, Min[i, j], Max[i, j]], {i, 5}, {j, 5}], {w, nodes}]];
@@ -52,12 +52,12 @@ nodeCons = Flatten[Table[
 edgeCons = Flatten[Table[
     Module[{w = e[[1]], x = e[[2]], b, rA, rB},
       b = StringTake[w, -1];
-      {rA, rB} = If[b === "c", {iu, iv}, {iv, iu}];
+      {rA, rB} = If[b === "d", {iu, iv}, {iv, iu}];
       {
        Qs[w][[ia, ia]] + Qs[x][[rA, rA]] + If[b === "t", Rs[x][[jv, jv]], 0] == 1,
-       Qs[w][[ib, ib]] + Rs[w][[jb, jb]] + Qs[x][[rB, rB]] + If[b === "c", Rs[x][[jv, jv]], 0] == 1,
+       Qs[w][[ib, ib]] + Rs[w][[jb, jb]] + Qs[x][[rB, rB]] + If[b === "d", Rs[x][[jv, jv]], 0] == 1,
        Qs[w][[ia, ip]] + Qs[x][[rA, ip]] + If[b === "t", Rs[x][[jv, jp]], 0] == 1,
-       Qs[w][[ib, ip]] + Rs[w][[jb, jp]] + Qs[x][[rB, ip]] + If[b === "c", Rs[x][[jv, jp]], 0] == 1
+       Qs[w][[ib, ip]] + Rs[w][[jb, jp]] + Qs[x][[rB, ip]] + If[b === "d", Rs[x][[jv, jp]], 0] == 1
       }],
     {e, edges}]];
 
@@ -81,7 +81,7 @@ SolveJoint[strategy_] := Module[{potCons},
    potCons = Join[
      Flatten[Table[
        Module[{w = e[[1]], x = e[[2]], sig, T},
-         T = If[edgeLetter[e] === "c", Tc, Tt];
+         T = If[edgeLetter[e] === "d", Td, Tt];
          sig = strategy[{s, e}];
          rVar[e] <= T[[s, sig]] + phiVar[sig - 1, x] - phiVar[s - 1, w]],
        {e, edges}, {s, 1, 3}]],
@@ -93,14 +93,14 @@ SolveJoint[strategy_] := Module[{potCons},
 
 Improve[strategy_, sol_] := Association[Flatten[Table[
     Module[{w = e[[1]], x = e[[2]], T, valid, vals},
-      T = If[edgeLetter[e] === "c", Tc, Tt];
+      T = If[edgeLetter[e] === "d", Td, Tt];
       valid = validSigs[T, s];
       vals = (T[[s, #]] + (phiVar[# - 1, x] /. sol)) & /@ valid;
       {s, e} -> valid[[First@Ordering[-vals, 1]]]],
     {e, edges}, {s, 1, 3}]]];
 
 strategy0 = Association[Table[
-   Module[{T = If[edgeLetter[e] === "c", Tc, Tt], valid},
+   Module[{T = If[edgeLetter[e] === "d", Td, Tt], valid},
      valid = validSigs[T, s];
      {s, e} -> If[MemberQ[valid, s], s, First[valid]]],
    {e, edges}, {s, 1, 3}]];
@@ -122,7 +122,7 @@ Do[
   (* independent recompute of r(e) from Phi (should match if SDP is behaving) *)
   rCheck = Association[Table[
      Module[{w = e[[1]], x = e[[2]], T},
-       T = If[edgeLetter[e] === "c", Tc, Tt];
+       T = If[edgeLetter[e] === "d", Td, Tt];
        e -> Min[Table[Module[{sig = strat[{s, e}]},
            T[[s, sig]] + (phiVar[sig - 1, x] /. sol) - (phiVar[s - 1, w] /. sol)], {s, 3}]]],
      {e, edges}]];

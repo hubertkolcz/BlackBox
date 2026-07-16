@@ -33,7 +33,7 @@
        PRA 65, 042304 (2002)). Therefore this ENTIRE Hawking sector sits on the
        EMULABLE side of the framework's two-lens boundary, exactly mirroring
        the Clifford status of the qubit Hawking module
-       (cluster-state-realization/cct_mbqc_hawking_certification.wl). The A8 audit
+       (cluster-state-realization/ddt_mbqc_hawking_certification.wl). The A8 audit
        adds the two-tier refinement: the GENERATOR set is still non-passive
        (genuine squeezing => active sp(4,R), not passive u(2)), so it is NOT
        emulable by linear/passive optics even though it IS Gaussian-classically
@@ -82,7 +82,7 @@ If[! MemberQ[$Packages, "HubertKolcz`BlackBox`"],
 GaussianOmega::usage = "GaussianOmega[n] gives the 2n x 2n symplectic form Omega = blockdiag[{{0,1},{-1,0}}] in ordering (x_1,p_1,...,x_n,p_n).";
 PseudospinCorrMatrix::usage = "PseudospinCorrMatrix[r] gives the 3x3 GKMR pseudospin correlation matrix T_ps[i,j] = <s1_i s2_j> of the two-mode squeezed vacuum with squeezing r: DiagonalMatrix[{Tanh[2r], -Tanh[2r], 1}] (Chen-Pan-Hou-Zhang PRL 88, 040406 (2002); the dichotomic observables of Ciliberto et al. 2404.16497).";
 CHSHofR::usage = "CHSHofR[r] gives the Horodecki-optimal CHSH value of the TMSV pseudospin pair at squeezing r: 2 Sqrt[1 + Tanh[2r]^2]. Limit r->Infinity is 2 Sqrt[2] (the qubit Bell-pair anchor).";
-CHSHCFofR::usage = "CHSHCFofR[r] gives the contextual-fraction scale value Max[0,(CHSHofR[r]-2)/2] of the TMSV pseudospin pair, on the same scale as the qubit module's CCTCFofS.";
+CHSHCFofR::usage = "CHSHCFofR[r] gives the contextual-fraction scale value Max[0,(CHSHofR[r]-2)/2] of the TMSV pseudospin pair, on the same scale as the qubit module's DDTCFofS.";
 BuschParentaniDelta::usage = "BuschParentaniDelta[state] gives the Busch-Parentani/Steinhauer nonseparability functional Delta = <bH^dag bH><bP^dag bP> - Abs[<bH bP>]^2 read from the two-mode Gaussian state's covariance. Delta < 0 certifies nonseparability of the Hawking (mode 1) / partner (mode 2) pair.";
 CauchySchwarzTheta::usage = "CauchySchwarzTheta[state] gives theta = Gamma_HP/Sqrt[Gamma_HH Gamma_PP], the density-density Cauchy-Schwarz ratio (de Nova-Sols-Zapata) of a two-mode Gaussian state, from the covariance via Wick. theta > 1 certifies CS violation. For the ideal TMSV, theta = 1 + 1/(2 nbar).";
 FactorialMomentsHP::usage = "FactorialMomentsHP[state] gives <|\"GammaHH\"->..., \"GammaPP\"->..., \"GammaHP\"->..., \"nH\"->..., \"nP\"->...|>: the Wick photon-number factorial moments Gamma_HH=<n_H(n_H-1)>, Gamma_PP=<n_P(n_P-1)>, Gamma_HP=<n_H n_P> of a two-mode zero-mean Gaussian state, from its covariance. Same-mode moments use the general bosonic-Wick form <n(n-1)> = |m|^2 + 2 nbar^2 (m = anomalous <a a>), valid for squeezed/thermal arms, not only the thermal-arm shortcut 2 nbar^2.";

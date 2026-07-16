@@ -15,7 +15,7 @@ MAXPOLICYROUNDS = 20;
 RATIONALTOL = 10^-9;
 Print["[HYBRID] K = ", K, " (reduced solves for round readouts, ORIGINAL solve once per seed at convergence)"];
 
-nodes = StringJoin /@ Tuples[{"c", "t"}, K];
+nodes = StringJoin /@ Tuples[{"d", "t"}, K];
 edges = Select[Tuples[nodes, 2], StringDrop[#[[1]], 1] === StringDrop[#[[2]], -1] &];
 iu = 1; iv = 2; ia = 3; ib = 4; ip = 5;
 jv = 1; jb = 2; jx = 3; jp = 4;
@@ -24,12 +24,12 @@ dpStates = {{0, 0}, {1, 0}, {0, 1}};
 dpTransfer[letter_] := Module[{T = ConstantArray[-Infinity, {3, 3}], out, j},
    Do[If[! (dpStates[[i, 1]] == 1 && s1 == 1) && ! (s1 == 1 && s2 == 1) &&
         ! (s2 == 1 && s3 == 1) && ! (s3 == 1 && dpStates[[i, 2]] == 1),
-      out = If[letter === "c", {s1, s2}, {s2, s1}];
+      out = If[letter === "d", {s1, s2}, {s2, s1}];
       j = Position[dpStates, out][[1, 1]];
       T[[i, j]] = Max[T[[i, j]], s1 + s2 + s3]],
      {i, 3}, {s1, 0, 1}, {s2, 0, 1}, {s3, 0, 1}];
    T];
-Tc = dpTransfer["c"]; Tt = dpTransfer["t"];
+Td = dpTransfer["d"]; Tt = dpTransfer["t"];
 
 Qs = Association[Table[w -> Table[Subscript[q, w, Min[i, j], Max[i, j]], {i, 5}, {j, 5}], {w, nodes}]];
 Rs = Association[Table[w -> Table[Subscript[rblk, w, Min[i, j], Max[i, j]], {i, 4}, {j, 4}], {w, nodes}]];
@@ -57,12 +57,12 @@ nodeCons = Flatten[Table[
 edgeCons = Flatten[Table[
     Module[{w = e[[1]], x = e[[2]], b, rA, rB},
       b = StringTake[w, -1];
-      {rA, rB} = If[b === "c", {iu, iv}, {iv, iu}];
+      {rA, rB} = If[b === "d", {iu, iv}, {iv, iu}];
       {
        Qs[w][[ia, ia]] + Qs[x][[rA, rA]] + If[b === "t", Rs[x][[jv, jv]], 0] == 1,
-       Qs[w][[ib, ib]] + Rs[w][[jb, jb]] + Qs[x][[rB, rB]] + If[b === "c", Rs[x][[jv, jv]], 0] == 1,
+       Qs[w][[ib, ib]] + Rs[w][[jb, jb]] + Qs[x][[rB, rB]] + If[b === "d", Rs[x][[jv, jv]], 0] == 1,
        Qs[w][[ia, ip]] + Qs[x][[rA, ip]] + If[b === "t", Rs[x][[jv, jp]], 0] == 1,
-       Qs[w][[ib, ip]] + Rs[w][[jb, jp]] + Qs[x][[rB, ip]] + If[b === "c", Rs[x][[jv, jp]], 0] == 1
+       Qs[w][[ib, ip]] + Rs[w][[jb, jp]] + Qs[x][[rB, ip]] + If[b === "d", Rs[x][[jv, jp]], 0] == 1
       }],
     {e, edges}]];
 PSDMARGIN = 10^-6;
@@ -75,7 +75,7 @@ refNode = First[nodes];
 CanonicalPhi[strategy_] := Module[{potCons, tVar},
    potCons = Flatten[Table[
       Module[{w = e[[1]], x = e[[2]], sig, T},
-        T = If[edgeLetter[e] === "c", Tc, Tt];
+        T = If[edgeLetter[e] === "d", Td, Tt];
         sig = strategy[{s, e}];
         tVar <= T[[s, sig]] + phiVar[sig - 1, x] - phiVar[s - 1, w]],
       {e, edges}, {s, 1, 3}]];
@@ -86,28 +86,28 @@ CanonicalPhi[strategy_] := Module[{potCons, tVar},
 
 (* ---- reduced-formulation machinery (see lever_sdp-decompose_bench.wl) ---- *)
 SSlist[x_] := Module[{b = StringTake[x, {K - 1}], rA, rB},
-   {rA, rB} = If[b === "c", {iu, iv}, {iv, iu}];
+   {rA, rB} = If[b === "d", {iu, iv}, {iv, iu}];
    {qv[x, rA, rA] + If[b === "t", rv[x, jv, jv], 0],
-    qv[x, rB, rB] + If[b === "c", rv[x, jv, jv], 0],
+    qv[x, rB, rB] + If[b === "d", rv[x, jv, jv], 0],
     qv[x, rA, ip] + If[b === "t", rv[x, jv, jp], 0],
-    qv[x, rB, ip] + If[b === "c", rv[x, jv, jp], 0]}];
+    qv[x, rB, ip] + If[b === "d", rv[x, jv, jp], 0]}];
 elimRules = Flatten[{
     Table[{rv[w, jx, jx] -> 1, rv[w, jx, jp] -> 1, qv[w, iv, ia] -> 0,
       qv[w, iu, ib] -> 0, qv[w, iv, ib] -> -rv[w, jv, jb]}, {w, nodes}],
-    Table[Module[{x1 = StringDrop[w, 1] <> "c", S},
+    Table[Module[{x1 = StringDrop[w, 1] <> "d", S},
       S = SSlist[x1];
       {qv[w, ia, ia] -> 1 - S[[1]],
        qv[w, ib, ib] -> 1 - S[[2]] - rv[w, jb, jb],
        qv[w, ia, ip] -> 1 - S[[3]],
        qv[w, ib, ip] -> 1 - S[[4]] - rv[w, jb, jp]}], {w, nodes}],
-    Table[Module[{x1 = StringDrop[x2, -1] <> "c", S1, b, rA, rB},
+    Table[Module[{x1 = StringDrop[x2, -1] <> "d", S1, b, rA, rB},
       S1 = SSlist[x1];
       b = StringTake[x2, {K - 1}];
-      {rA, rB} = If[b === "c", {iu, iv}, {iv, iu}];
+      {rA, rB} = If[b === "d", {iu, iv}, {iv, iu}];
       {qv[x2, rA, rA] -> S1[[1]] - If[b === "t", rv[x2, jv, jv], 0],
-       qv[x2, rB, rB] -> S1[[2]] - If[b === "c", rv[x2, jv, jv], 0],
+       qv[x2, rB, rB] -> S1[[2]] - If[b === "d", rv[x2, jv, jv], 0],
        qv[x2, rA, ip] -> S1[[3]] - If[b === "t", rv[x2, jv, jp], 0],
-       qv[x2, rB, ip] -> S1[[4]] - If[b === "c", rv[x2, jv, jp], 0]}],
+       qv[x2, rB, ip] -> S1[[4]] - If[b === "d", rv[x2, jv, jp], 0]}],
      {x2, Select[nodes, StringTake[#, -1] === "t" &]}]}];
 elimVars = First /@ elimRules;
 elimRHS = Last /@ elimRules;
@@ -131,7 +131,7 @@ varsRed2 = Join[freeQr, potVarsNoRvar];
 SolveJointReduced[strategy_] := Module[{potConsR2},
    potConsR2 = Flatten[Table[
       Module[{w = e[[1]], x = e[[2]], sig, T},
-        T = If[edgeLetter[e] === "c", Tc, Tt];
+        T = If[edgeLetter[e] === "d", Td, Tt];
         sig = strategy[{s, e}];
         dvar[x] + psiVar[x] - psiVar[w] -
           (T[[s, sig]] + phiVar[sig - 1, x] - phiVar[s - 1, w]) <= gammaVar],
@@ -144,7 +144,7 @@ SolveJointFull[strategy_] := Module[{potCons},
    potCons = Join[
      Flatten[Table[
        Module[{w = e[[1]], x = e[[2]], sig, T},
-         T = If[edgeLetter[e] === "c", Tc, Tt];
+         T = If[edgeLetter[e] === "d", Td, Tt];
          sig = strategy[{s, e}];
          rVar[e] <= T[[s, sig]] + phiVar[sig - 1, x] - phiVar[s - 1, w]],
        {e, edges}, {s, 1, 3}]],
@@ -156,23 +156,23 @@ SolveJointFull[strategy_] := Module[{potCons},
 
 Improve[strategy_, canonSol_] := Association[Flatten[Table[
     Module[{w = e[[1]], x = e[[2]], T, valid, vals},
-      T = If[edgeLetter[e] === "c", Tc, Tt];
+      T = If[edgeLetter[e] === "d", Td, Tt];
       valid = validSigs[T, s];
       vals = (T[[s, #]] + (phiVar[# - 1, x] /. canonSol)) & /@ valid;
       {s, e} -> valid[[First@Ordering[-vals, 1]]]],
     {e, edges}, {s, 1, 3}]]];
 seedA = Association[Table[
-   Module[{T = If[edgeLetter[e] === "c", Tc, Tt], valid},
+   Module[{T = If[edgeLetter[e] === "d", Td, Tt], valid},
      valid = validSigs[T, s];
      {s, e} -> If[MemberQ[valid, s], s, First[valid]]],
    {e, edges}, {s, 1, 3}]];
 seedB = Association[Table[
-   Module[{T = If[edgeLetter[e] === "c", Tc, Tt], valid}, valid = validSigs[T, s];
+   Module[{T = If[edgeLetter[e] === "d", Td, Tt], valid}, valid = validSigs[T, s];
      {s, e} -> First[valid]],
    {e, edges}, {s, 1, 3}]];
 randomSeed[seedNum_] := (SeedRandom[seedNum];
    Association[Table[
-     Module[{T = If[edgeLetter[e] === "c", Tc, Tt], valid}, valid = validSigs[T, s];
+     Module[{T = If[edgeLetter[e] === "d", Td, Tt], valid}, valid = validSigs[T, s];
        {s, e} -> RandomChoice[valid]],
      {e, edges}, {s, 1, 3}]]);
 
@@ -246,13 +246,13 @@ nodeEqOK = AllTrue[nodes, RsExact[#][[jx, jx]] == 1 && RsExact[#][[jx, jp]] == 1
      QsExact[#][[iv, ia]] == 0 && QsExact[#][[iu, ib]] == 0 &&
      QsExact[#][[iv, ib]] + RsExact[#][[jv, jb]] == 0 &];
 edgeEqOK = AllTrue[edges, Module[{w = #[[1]], x = #[[2]], b, rA, rB},
-      b = StringTake[w, -1]; {rA, rB} = If[b === "c", {iu, iv}, {iv, iu}];
+      b = StringTake[w, -1]; {rA, rB} = If[b === "d", {iu, iv}, {iv, iu}];
       QsExact[w][[ia, ia]] + QsExact[x][[rA, rA]] + If[b === "t", RsExact[x][[jv, jv]], 0] == 1 &&
        QsExact[w][[ib, ib]] + RsExact[w][[jb, jb]] + QsExact[x][[rB, rB]] +
-         If[b === "c", RsExact[x][[jv, jv]], 0] == 1 &&
+         If[b === "d", RsExact[x][[jv, jv]], 0] == 1 &&
        QsExact[w][[ia, ip]] + QsExact[x][[rA, ip]] + If[b === "t", RsExact[x][[jv, jp]], 0] == 1 &&
        QsExact[w][[ib, ip]] + RsExact[w][[jb, jp]] + QsExact[x][[rB, ip]] +
-         If[b === "c", RsExact[x][[jv, jp]], 0] == 1] &];
+         If[b === "d", RsExact[x][[jv, jp]], 0] == 1] &];
 psdOK = AllTrue[nodes, PositiveSemidefiniteMatrixQ[QsExact[#]] && PositiveSemidefiniteMatrixQ[RsExact[#]] &];
 Print["Stage 3: nodeEqOK = ", nodeEqOK, ", edgeEqOK = ", edgeEqOK, ", psdOK = ", psdOK];
 
@@ -264,7 +264,7 @@ StrategyExact = Association[Table[
     (ToString[s - 1] <> "|" <> e[[1]] <> ">" <> e[[2]]) -> finalStrategy[{s, e}],
     {e, edges}, {s, 1, 3}]];
 posSigma9[e_] := Module[{w = e[[1]], x = e[[2]], T, r},
-   T = If[edgeLetter[e] === "c", Tc, Tt];
+   T = If[edgeLetter[e] === "d", Td, Tt];
    r = Min[Table[Module[{sig = StrategyExact[ToString[s - 1] <> "|" <> w <> ">" <> x]},
        T[[s, sig]] + PhiExact[ToString[sig - 1] <> "|" <> x] - PhiExact[ToString[s - 1] <> "|" <> w]],
       {s, 3}]];

@@ -664,10 +664,10 @@ Cell["\<\
 Results at a glance (every number kernel-verified in a module):
 Classical 2 < quantum \[Sqrt]5 = 2.2360679775 < NCHV 5/2 (GE-001); contextual \
 fraction 2\[Sqrt]5 - 4 = 0.4721.
-Gluing limit densities: trans tau* = 1.3767177459, cis = 3/2; best word \
-(cct)^inf gap 0.0698975 per block, beating pure-trans by 61%.
+Gluing limit densities: twisted tau* = 1.3767177459, direct = 3/2; best word \
+(ddt)^inf gap 0.0698975 per block, beating pure-twisted by 61%.
 Epsilon-certificate ladder Gamma_7..Gamma_10 = 0.0770206, 0.0752664, \
-0.0720260, 0.0714575, bracketing gap(cct).
+0.0720260, 0.0714575, bracketing gap(ddt).
 Catalysis: \[Omega](C9^v3) = 8 proven; \[Omega](C9 v C9 v C9 v C5) \
 \[GreaterEqual] 17 (17-clique witness, family [1,3,5,5,3]).
 Geometric lens: single so(3) generator DLA = 1 (leaf) vs full cascade DLA = 3 \
@@ -4346,7 +4346,7 @@ iFb4q++vnVJyg4cPhffvSuuQS6NnLw6Oz6QmLqcnWtA+njAoEIUj7nQ6MAx7
 Dm2pCLDxhAQHYLkGVS6sVjZeaNHSQsdyZ/GAbzfSUEsT0s7G29i4jQXTKVtY
 OPhnKzv7guW/ImsFYtqkTeamWnUd0QdnN+hUdERLRzU5bAmWssnSyoYZ5oWA
 ZV5lSYiXhVQvYY46ywLOR7v4DLVMq7IRoR0wnCzSVJVo6vfo5bUWsmhpWbbT
-EiXHgovwDimcP94mgcctYhwcg2fMhEM8N4mdqHwWWLoUgZ+2culyCWHCzCI1
+EiXHgovwDimcP94mgddtYhwcg2fMhEM8N4mdqHwWWLoUgZ+2culyCWHCzCI1
 1q3AgsVHev7fb7v+ebvmmIwj69apvb62SNoXngzHASKS+ZbLFzGvJ5zzTG/W
 DUTGFnVHRwPxyVhfv82PHtFgx7URvevK9CRgy8unxwFeZlpUcUZplHfwvE34
 5sF3C9dRPnr58uVHSSXK1YLHkArApESJEqVPVh8xvjJX5G2rULB88+TBtbbm
@@ -9619,7 +9619,7 @@ kGjpkxNsaQ6rTErU9peH+r+3PztYvnMQjqx4+c3ygX+vdRhQVCfAktUvdZjE
 3dHYx9jXh+Olpafdkq0jpIbdrONWBbB9EfTwCFZX6CKboKZ0wYq03NMlRvp9
 WPIs5Rm8MZyrOs1rJM7QVy/JOBGlIb5RfNPXIUCK3f461EreJHLhyjyKZbFf
 JK96mbcffXFsSX//5IrQyCVf5z2A40/D6qawP8xiP/Nwys1IQzpYsjla3BUe
-YuwjwNLM7IIF0oUyorKQXCCTCGT/s8r7bVyxLGB6Odj/nfL+v6kI63ROQIlu
+YuwjwNLM7IIF0oUyorKQXDDTCGT/s8r7bVyxLGB6Odj/nfL+v6kI63ROQIlu
 ix2GXFoLCbm0OmYCKW5xou7QuNusFyn1IsWAxfDxuPvqmGvIrXIYRRMBHeFL
 IiZkMIcTtS6JpjwALJN1ifP6xNejkmXrwQu2spn+jitzzlfLK0+mpzYamzZa
 W198/DFcRzJWorwVlTOff/369eL6+JSsZCV7U/b555+vrKw8fPiQ/kuytxTH
@@ -9651,7 +9651,7 @@ XlZ9EGo4aGUx09RLY29PSNDQLyoPYmVhbH8MlrvMjpdJvx6MastQq3IuqfSg
 sTjkoF7046SRg3DeSOxiLrxMqIKMnAxJ9nEX+8XJhF/Qq2LFAl6U1Oky+2+d
 +NZZX/umQkYpdntetnwb8jj561N8dHo8CT9+mZYzeACrG8WqAFXOYj+fF/3K
 y2tW9fL0u7olVCyNvb1+AJZVewKM/WmKJVHNUo3JehA14MMMP3jkW/vC/9Qw
-ohy8dmHp3vXNR46pm/9v1yS4gE3DSzjDlEdahZ4+B2DLAkIuCbYcctuTPvHj
+ohy8dmHp3vXNR46pm/9v1yS4gE3DSzjDlEdahZ4+B2DLAkIuCbYddtuTPvHj
 uE/cLlfrULlTpbkw7Pho3LXLlnpszKclrvSJJryki31YdhhQJXhonQ5bHguu
 uBmALT8KtEwOIfNR/t3LJ15dvbbV07NeV/coFkuuI2TL7ibLYeCZS0tLhcZn
 lqxkJXsb9vnnn9+8eRMQJs3ng/M318n7IBxeq6y8LRG/vLHycKFv3V235a67
@@ -10940,7 +10940,7 @@ ZLwEjKr0feAWlxqtOzUwRe5xk5AkiYQ/JvginFt2JAGYRLiZUHwiwI746Gtu
 8rxTkiWlOOsiL7jJyx7qio/pC8WVEV4PjschTGJ0Ok4lWVykJJiMSzxJy8Gm
 43gSn8HValQR5IOAKsUshEnAlqzICelkKp9Nw2y4rGHms8U8wEuFlR7Q4bMe
 dn6hvHZjbmEhD+K42fD3sWUY/7h3WFjIrawcxKU3rleXVypulphGwzvZ8smt
-xhZbLr1+eP3VveZt/uoGfenZdRpe1t/BiscHT141YBpr9w0F0CCT/VSHOKRK
+xhZbLr1+eP3VveZt/uoGfenZdRpe1t/BiscHT141YBpr9w0F0DDT/VSHOKRK
 Sa5c2Hj89Pmb/6ybZmd1VmcdZb15+9fmg+cyBH6KbimnxYuLt7cdPXJJ58b9
 5+Aj5M96J+Xk1+/V8LKKqxs3Hy0+eLqxzZab95e3Zj7eRKOl7i5Soz6cLaUJ
 O8fnw8ZRR/kcHOUaVE1L1UZtcQmxMqpfLJM/GEMGMsEWuB2EyWIpCk3E8TQv
@@ -16164,7 +16164,7 @@ eNPoAWgyaMqQtk4seOPgZRcUF4B2fI+22tziNhYyRJuy88+qzEgtSkbTA5rY
 E7lZmQe5OPo52GKZqBUsMGIikoP9e+jbdCTPGF/Plw8fFL2JrclICXJ2ACbe
 lbPCPVxNHxinvQ56/wyI5k5VehL0EYUVDiJ42VpDf+HQEV5u/o52AU72HYV5
 0Dt95SxWQjTW5MdGeNhYglk/Dnrm0MMG+m+Ovb8/9v4VnZxrhvJiRK9BoL6/
-QE1iHW/WTDL0sI2Mtas19aGcdhYcctglrERMYMRZu1iVdhTDrIWnvHbydYIF
+QE1iHW/WTDL0sI2Mtas19aGcdhYddtglrERMYMRZu1iVdhTDrIWnvHbydYIF
 g3GzcKTexJKYnxAQ4//E7HFmOQUs3wifss5iHnoGo6cmp6S9CChBBWLBwtEC
 NVzeXYqq84/ywwLYAZmJOgxJCELMqsyErnxlb/bS5kVY8ut+IVlL8Ujvrh5E
 KPiOlqIaoiT1mflTNAdaKj43Fhh6YWMalhzq4GUfkxXlFugaFB94x9jAJ9yL
@@ -19320,7 +19320,7 @@ wynumq17zZcEM1MTpG6/b9ucIDmHAL+QNnY9/ZbAfraMi/jdeeedxxxzzK23
 3lpU/qabbnrvvfcIks9p06YNWtHKptQXXnjhggsuuPjiix9//PGmFd1f/epX
 H3/8cawH/K+//voLL7xQh6uuugqEBx988Pnnn0+VtmeffTY1S88+++wTTzxx
 +vTptW6Gjw888MBbb72l2xNPPJENOyDfcsstb7/9do5puOOOO84999wrrrjC
-lZTLPu+884zFiNHrX//61/fff7/rb7zxxkMPPUT977vvPh3cctlll/3mN7+B
+lZTLPu+884zFiNHrX//61/fff7/rb7zxxkMPPUT977vvPh3ddtlll/3mN7+B
 81133WW+YMbqvv766yeccMI555yTij19Kpm76yWoM+V0S9BY41/6x3vW/UuR
 cN+NCNt6rCnUMOmbznWamZ/uevPNN3feeeeVV17ZZMt+q5IA9kG5kam58sor
 MfGRRx6JCL344otPP/10WUaSjVFkALn6BJk5SZuoCqH3W5l7nUztu+++G2+8
@@ -20011,7 +20011,7 @@ zg3pFiebvY+u2ebyDM3b95q+21Jfy+3NIEN3Pb+n5d01tk+BGKdXKfKmzNDG
 p2Vi2OXhWAmpmWfo6dnHoPHYtL8+nnBdjWu5odt4je3XcuN241J55dJGZy03
 FH9sARgdcfE2RV5M1fxx3MZYbPNMUWwZJ7nx0dyyDN3/2ost766VZ4HyTmJm
 xft/uoGnNKwnYxIjpnKfz+dZgzO08sBMmmNWPlFNHfabLzdm3AyfKUqDqYdd
-ZQBzmqGxcctPvc/csKL9OwdgrsVvrKQHcXsf/W5LmpNWMnS6323JD+lNc046
+ZQBzmqGxddtPvc/csKL9OwdgrsVvrKQHcXsf/W5LmpNWMnS6323JD+lNc046
 cXKi/f/drLGHFCiNX6yId+94J2/8PktjOKbDB2do45dQ0nhSD6lZv2efKqWx
 23gh/X4ZaEznynPLs5uhdeGoGX635Wtbb2o8HIB+btu5ueU99vTa31joDQy1
 NP2JLyvRELsKhwwIx8EZWg+1fIaYeqh8BlrvuV6m+zcW+s1wG79aUmk2pxna
@@ -21992,7 +21992,7 @@ FP2wcOj8cPS9IPqn4ChAO21vn0QoOvTdj16G5MlB0UAyI4RiAUA0NyW9d2BQ
 Of9Wov+mODq+djQ7t/nozSr/9HIApUduVj1hd+gpFPnc85gAZwLaLKkW+qSU
 h2SCj6U8fWgUQOm+WM7lx3W9Gkw/A/SDcBTAJKZCK1tELgnc/fEcd3iHcMz9
 9ktlSS/qE55U+SWXBqayIjLZd4uaOkUyZI76ekzX31hfu9+Ktnsx2deUHk62
-OEW3jaXZZhjSHhiZ472elvWYf4etXDcct3TkxT9GHuEs+nLByOsFIzk4jr5c
+OEW3jaXZZhjSHhiZ472elvWYf4etXDddt3TkxT9GHuEs+nLByOsFIzk4jr5c
 NPLwv4ceWQz3IvjHcQJHCREiROjP0TiIChW6BqG6vE3pnlzhly7wYJYBEPVJ
 LPOIL910ssDxMmvnxZI1B16tPfR61YFXlkHPAZeuOfTGNuzVnqhinyR2Dq9N
 LkeEIulcIAoQVCiWgdsoEAUAUbA/K4hKRq2AnsKcytk9iqCjFCqRKVUoVlLd
@@ -22680,7 +22680,7 @@ QxAlBWIJITgIouDMfRpbKpPbWFTklEUnDJqfwKIi2EcPVlbYDi+UgEsegigi
 H3V7EJXAclBtYysvOp+yr5geX0iLK6TtL2EEZ5JLansBmUlhEaljFpUpdQCQ
 2tkygFsxBRBE9xbQYY4+j55X06vXG52D6JQsahzXnTQuhvkQRLUGOxadJZrq
 p+HTAVTw9AwGY1ldf0IJ8+j51kMVLcCPnG/ZX8a8QmAPWcyO5aHsQFSLZvlN
-JtubZrWY9fphMX+1Rn++ceBoZUtCCT2hmH7sAqu0tltltiZv3Rn010VHUGXR
+JtubZrWY9fphMX+1Rn++ceBoZUtDDT2hmH7sAqu0tltltiZv3Rn010VHUGXR
 bM81RT4bCtx8aoIileBDAnc4zKLjcFQNS1oh2Y5KdUlkGlTlyQAefqIAlJ1I
 /pOJowtcPjo/taNzio6CqwjFyIEyZnAWFbJoEfyT/DEFf76hx6BRSeCooxlr
 4INbqWFeWwZQ7WJDbxW5HyxrUChqGsM6pxMXBXfe3MqNyCLE5BLi84nx+eCU
@@ -25440,7 +25440,7 @@ SARCySBHePhSfVAGKbGQDJdTgGh4Vi2808cGfdqL0d15Ls92d57PF0ub65tC
 Pliy450pAVNmowr6mfNR1dJbU47+z7uXtmyF55IvI+pbvvVKl9VePKipsrIy
 Nzf3t99+O3DgACgUzGm1Fw/+TEpKgj9mZWWBV4VCoV6vNz2C+aPhA5jw3Xkr
 i7K58HWi5m5OXAEjMIMckkUJAotm1oRnVoVmVj1jdAOj2Hysv5MAR6kzi8I9
-UrG0s493s6rj5HVGUhE5Jp8aRCAlFDN2p5O+P1UTmkUJzqKEZpHCCTWRWbWB
+UrG0s493s6rj5HVGUhE5Jp8aRCAlFDN2p5O+P1UTmkUJzqKEZpHDDTWRWbWB
 aVVXy9ulltv0r7TRE6BXLpd1D/KPXKTB+/cUDKJwm1RM8U+tynvUrJDbbzc6
 8Tqm8aVGx91xdNwc9V41k0cJUmdzQj3jqNbDBKlu/Bw1GIZKy/vAonsK6iLy
 mRCA0rBcZtKFRpXWYBjdJnbMUfsWdcxRhxZFHNWjd6B1lbUh0+Ydm7e0eMna
@@ -25542,7 +25542,7 @@ Kb/8og3rC4ogmoKCsutMRdHjZq1SLsC6SFkNrBeJ8Ub6zjgql8ngkbWgM+Cs
 dIIcdWZRWCKJ7PjVOkBmTB45nEAMzayNzCbVd/I0WMlSH1d8+BIjpZSGW/QA
 lh0NzyJWNgxq1CqJTG6fo6MilcoUQzr1PUr/9nPEyHx6RC4NRBqRR/PPpJQ8
 78T7O73WkUxe4+gr2qx3zVFQig5YaRgaeYn6sLlVZW8YT2rU4+yo2yLV6dD7
-3MpbdwLfn/Hrhx8BRx+u3FS/9ivgaD/Ep9v6Vm0W510YxpuO4kNChyfEUcct
+3MpbdwLfn/Hrhx8BRx+u3FS/9ivgaD/Ep9v6Vm0W510YxpuO4kNChyfEUddt
 Q80ahzr9mf+iFlWjwOVpsqhiLMZjURkKM4vKLcKRRS0hqjBCFJ0CRSFyBFEI
 sX2LOsuIWuZFUcBVTCbrYwnKqD0tPVwZqj+1rlrimidF7Vl0EGtu//zP27vf
 m+4/ZTZANGASOikaPXdR0rR5B//7nbR5S+Us9kv8jY1v+ZZvub1wRtJoNFM7
@@ -25804,7 +25804,7 @@ K8cGzXvNohK5RYjlKplC1cuVnrvbCgr1z6DsTqfAs7L0eZdUhve9V5pbVGwJ
 0XFY1KFCbSzqLBfqAKJ4r2m4/qMDojhEOXyRXEV8/Cxi5vygSTNNEN09ZWbg
 zPlh2O581LQPHheUcoXigQG2RqN9gy92vuVbvvVXXkPYwOiyOu7GY9UL9pYt
 jL6zOPbO5qNPyihdYEi2ZdN7uCIB1/gCVDaUeqtu87GyTYcff360bP3+hwDR
-xTF3t/32vJfFBwqaLAoPIpeKSc2DwVlwKSaHZFHCCTVB6ZV+5yru1HYo5DLb
+xTF3t/32vJfFBwqaLAoPIpeKSc2DwVlwKSaHZFHDDTVB6ZV+5yru1HYo5DLb
 zfqx7KhQrFLI2no54YTqPTm1+4pIsTm1YNGdp8uz7zXIJBLReEeF/iXL6sfJ
 UVykaJtermTxJFH59J/OkvHdwN0Z6LWvqomNd3lyMrbeOxx1lhr1fnb09bch
 tcdRz0TqpXOkFoH97ZBWP4RudRNJkzod5wQCxI6P1lXXJH/5rd+/Jx2ZuyR9
@@ -25972,7 +25972,7 @@ PDwAXsrYxvj4qj3ALXjWY1pPXGH1qdtAknUAooCRsYU1r6s4cAOqwrhu+WrN
 +K+j7B/Cea8x0EG0X/8CvYHNoqMWHT/iE05WksjmaqySfouO96duGmlRHX+O
 5ghEDVtUrE0cosRwTz0K5fC5AjH4Kcy3Zcd2hv64ZNumtbt3uKzdv8Byt4Xt
 HwttQO6ydvICCnX08FrgkOAdxOEJ+QiEKMAnkb19vO5ebh+bBz7+TNCnWaPm
-MIc5ZhBD+LF6Tf/g5ccte5IZobk1Qamk3069Wh71dG3s05A02PQ+LL3SL7E8
+MIc5ZhBD+LF6Tf/g5ddte5IZobk1Qamk3069Wh71dG3s05A02PQ+LL3SL7E8
 Po/a3gP4KeLpO8HEg8ed4Mj4pk5edQt7dDPnVBAVTOw4yh/5pRA2wxcCl7Ga
 euMARPPgePpoPEPTSfuuliY/qkH1nqCfi+ooXtiUNHXxAiFEaQE4RwMzGfuT
 qfEF9G6OEMNQ0aROpMRXmrv498pb4vPphwrod8taGjt5hD/HKqJiiUohe1vV
@@ -29768,7 +29768,7 @@ zyD+ttiGPum1T8480Vxw67GOVdZ1Zq3dypOoY5KWldd2WFw3gC/H8F04ddaB
 W1ge3yR0Y62msScqIZ0jVKl0IWHh0SfOls+DtbEZWGtqt65cnYfuQiyR07Qw
 LCKm4krbrAfqvffW3Lf4ImOTPT/BSq/K2eB+JYgnLDU5xrrNriOrN2a8/ov8
 Be9cCw7+3Gh83qZKRPSNBKYNDg5u2rTp4MFDiYmL/VgUi/XoUQKhWELxZT7u
-YQJKJJafPHvJ2j9mcY4yo5wzmWYdRl+/cctOoVDAoXhsrojD43OZn1Di8ZMX
+YQJKJJafPHvJ2j9mcY4yo5wzmWYdRl+/ddtOoVDAoXhsrojD43OZn1Di8ZMX
 L3cO3fa8pfbR00/rNxf4cqUcHs0TyVau3WobuOXF2pX6rnRVSMCP3/B/+/eG
 kEUcWhwWk1ha2YwgtNs8Wl7Tujl/X0Orpay6ZUnmaoFEQUvUvjwli3Z7bskZ
 a53D96dh7RHcjM7rvfbrjR2Oq2020AxwM7tulV/p9KO1YBqQqA6Mq6zvwcbH
@@ -31213,7 +31213,7 @@ YNGUu67CpioZr5nmWa/0XzONOl8Ym9rILXyQW1AB74BFBdSUPmiqb+5ao/JG
 rr6LNQPdU3F50/SwuSM8Iqaytmlj3wk2kM71pb5kddtSdLcKw1C+UCxX+iWl
 5oCfvd3Be9455hsEbs4/v7SGOub4Og/km5L8r7H2zaJbc0wv7YNJREklOFCZ
 OvJp+4jZeQVMW1jTg2KMTcolBEoWwpergirqnnX2TYGLBM/YOzi3uKaPjs/G
-+Eqe2A9QBqRCCTmY8ai4zPHpdbv7ymg7X1jZT8/Kk0jlGr/AyprGw7MP49Nr
++Eqe2A9QBqRDDTmY8ai4zPHpdbv7ymg7X1jZT8/Kk0jlGr/AyprGw7MP49Nr
 vgFRpEAmkcpUKt+uvsk9vftuxUMOF+MgVCNiqmEmimTnFbuO38JLlc50srFj
 eVDTEpOQKVH4czCBr1+oUhPKYmMIdcyEBAUFwZXzo69fb3jj+/HLL79UVlbC
 TU2NSSZ4LBbyNybuQ+2tcXwAayyUiwoQTMAEO6QMQEkx3BpsNpqVXWS2n73s
@@ -33489,7 +33489,7 @@ Ekpv2/jAx9/Nnehpk501a5Y4OWRmZvZee/oCYmsA27znnnsOPvjgq666Cn3p
 hWvip8jbid4JiAi9BV0IS+PBgwe//PLL06dPnzx58pQpU4YOHXrIIYfcdNNN
 eL6YoSKyxyiFouegXDRgmP5UnOupyDJD6XNzc63OB6impibbFjkY6iVtMsb/
 CM6XQrR6UFxc/Nhjj4E53H777fPnz58wYcLbb789ceJEsPrrr7/+0EMP/c9/
-/sNkrRE/1NPE7MxUL4os3959ki0ffc8MoqeTQ0RuE2CCTQNBAg8fMGAAVjfM
+/sNkrRE/1NPE7MxUL4os3959ki0ffc8MoqeTQ0RuE2DDTQNBAg8fMGAAVjfM
 yfDuu++Cf6JroSMdddRRV155JX25I1gUAslUL6H0kINkqu/MA1lCCyWy0pYt
 P7KzEJhAG8EzQTsPP/zwp556CtL73//+98477+DBnDZt2gUXXHDssceCmkZq
 whOFonegXDRgmHGmHLG58yA4gC2UvrMRG0O9EA/nLqLfhqhMNrCuru6GG27o
@@ -34370,7 +34370,7 @@ AAAAAAAAAAAAAAAAAAAAAADwBfx/bZnFMg==
 
 Cell["\<\
 Import[FileNameJoin[{NotebookDirectory[], \"optical-synthesis\", \"schematics\
-\", \"demo3_cct_mesh_reps2.png\"}]]\
+\", \"demo3_ddt_mesh_reps2.png\"}]]\
 \>", "Input",
  Evaluatable->False,ExpressionUUID->"0c9d1eff-3040-ce43-a775-850322327add"],
 
@@ -34483,7 +34483,7 @@ KA15Qhy+hIWFoVrecsstcDNROcHk3b+yMld5eXnPP/88MkahGkxEGQwGg3Hh
 IHPRX/3qVykpKTQOKwdPKs8BAwEfkEf9CCAkREQFae6Sey4KygQLK8+h/tnP
 fgYKqlxraOjQoeBgtH7Ovffe+8QTTwj2dXJgCkHtYBxpugpNFKKxVPxLj8M9
 wTZXr14tSOPILrkohVnSaxpcgcL2fOWiX3/9NfJG/XIy8CIUK4vMy6F9gsTW
-wC5AFPv37y9I1OJ8uChOAMWisqKeVboJeAjNTsIb4VnUfygv1vTcc8/dcccd
+wC5AFPv37y9I1OJ8uChOAMWisqKeVboJeAjNTsIb4VnUfygv1vTcc8/ddddd
 MhfFy6LcnMfo2+OiOAEcG497WIJSTImJiWCV1L3snovSv6gSeERUVBT4EuoS
 bgL69NFHHw0ZMqRPnz70LuDJKHyQNHoFEuiRI0fwoKVLlwptuSj9+/HHH192
 2WXKMXq1Wo1Spcl0guQCvPTSS/g5RAH8xEHq58cXuFdyqVqlpbHw7qDECQkJ
@@ -36962,7 +36962,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsB/8P/WrVQo=
 Cell["\<\
 Left to right: the Lapkiewicz KCBS pentagon as a Layer-1 Givens / \
 beamsplitter cascade (cos(theta) = 1/GoldenRatio, genuine, so(3) DLA = 3); \
-the C7 heptagon Layer-1 cascade (identity S = 7 - 4 \[Theta](C7)); the cct \
+the C7 heptagon Layer-1 cascade (identity S = 7 - 4 \[Theta](C7)); the ddt \
 pentagon-mesh chain at reps = 2 (18 modes, block-local routing); and a pure \
 no-disturbance table at V = 977/1000 realized Layer-2-only (leaf-confined, \
 divided-beam intensity schedule).\
@@ -37097,8 +37097,8 @@ Cell["Part II \[LongDash] The Composition Theory: the Pentagon-Mesh Algebra", \
 "Chapter",ExpressionUUID->"c7d5599c-6581-2447-8301-01b4a3f44b83"],
 
 Cell["\<\
-Scaling the atom by gluing. The cis/trans laws, the (cct)^\[Infinity] optimal \
-word with gap(cct) = 0.0698975 and its \[CapitalGamma]_k certificate ladder, \
+Scaling the atom by gluing. The direct/twisted laws, the (ddt)^\[Infinity] optimal \
+word with gap(ddt) = 0.0698975 and its \[CapitalGamma]_k certificate ladder, \
 and the physical realization of the winning necklace as a cluster state. \
 Modules: Stages 7-9 and the Interlude. Tracks MESH, CERT, MBQC.\
 \>", "Text",ExpressionUUID->"d085eb2c-e6bc-8045-b601-1f9009dbad54"],
@@ -37123,14 +37123,14 @@ board2 = Manipulate[
      cG = {0., 0., 0.236068, 0., 0.317667, 0., 0.360090, 0., 0.386303};
      idx = nblocks - 2;
      tVal = tG[[idx]]; cVal = cG[[idx]];
-     letter = If[orientation == \"trans\", \"Z\", \"C\"];
+     letter = If[orientation == \"twisted\", \"Z\", \"C\"];
      Column[{
        Style[\"gluing word: \" <> letter <> \"-\" <> letter <> \"- ... (\" <> \
 ToString[nblocks] <> \" blocks)\", 12],
        ListLinePlot[{Transpose[{nR, tG}], Transpose[{nR, cG}]},
-        PlotMarkers -> Automatic, PlotLegends -> {\"trans\", \"cis\"},
+        PlotMarkers -> Automatic, PlotLegends -> {\"twisted\", \"direct\"},
         Epilog -> {PointSize[0.02], Red, Point[{nblocks, If[orientation == \
-\"trans\", tVal, cVal]}]},
+\"twisted\", tVal, cVal]}]},
         AxesLabel -> {\"blocks glued\", \"gap (\[Theta]-\[Alpha])\"}, \
 ImageSize -> 380,
         PlotLabel -> \"orientation: \" <> orientation <> \",  blocks: \" <> \
@@ -37138,7 +37138,7 @@ ToString[nblocks]]
        }]
      ],
    {{nblocks, 5, \"blocks glued\"}, 3, 11, 1},
-   {{orientation, \"trans\", \"gluing orientation\"}, {\"trans\", \"cis\"}}
+   {{orientation, \"twisted\", \"gluing orientation\"}, {\"twisted\", \"direct\"}}
    ]\
 \>", "Input",
  Evaluatable->False,ExpressionUUID->"13b38d5c-75c9-5846-a9c9-55055d624251"],
@@ -37149,7 +37149,7 @@ Cell[BoxData[
    TagBox[
     GridBox[{{
        StyleBox[
-       "\"nblocks = 5, orientation = \\\"trans\\\"\"", Bold, 13, StripOnInput -> 
+       "\"nblocks = 5, orientation = \\\"twisted\\\"\"", Bold, 13, StripOnInput -> 
         False]}, {
        GraphicsBox[
         TagBox[
@@ -37497,7 +37497,7 @@ Q5sKyIUAwACS7DepTRAPRddtkR4Q0yvY6rmJXiOHHAAtJFmbCrcPzdBti05k
    TagBox[
     GridBox[{{
        StyleBox[
-       "\"nblocks = 8, orientation = \\\"cis\\\"\"", Bold, 13, StripOnInput -> 
+       "\"nblocks = 8, orientation = \\\"direct\\\"\"", Bold, 13, StripOnInput -> 
         False]}, {
        GraphicsBox[
         TagBox[
@@ -37849,7 +37849,7 @@ ACCp/H9VPOi8
 Cell["\<\
 If one pentagon shows the gap, what happens if you chain many together, \
 sharing detectors at the joints, like linking pentagon-shaped beads into a \
-necklace? Each joint can be made two ways \[LongDash] 'cis' or 'trans', two \
+necklace? Each joint can be made two ways \[LongDash] 'direct' or 'twisted', two \
 ways to attach a bead. The composition itself is pure graph theory: \
 independent copies combine by a co-normal (OR) product, and shared-joint \
 meshes are built by literal graph surgery on the exclusivity graph. The \
@@ -37858,7 +37858,7 @@ pentagons you use.\
 \>", "Text",ExpressionUUID->"635698f2-cd2a-8f40-b0a7-94a8266b46e4"],
 
 Cell["\<\
-Two pentagon blocks glued at a shared detector \[LongDash] cis and trans are \
+Two pentagon blocks glued at a shared detector \[LongDash] direct and twisted are \
 the two ways to attach:\
 \>", "CodeText",ExpressionUUID->"927f0d51-399d-8f41-b6b2-88d2de0e2d27"],
 
@@ -37878,10 +37878,10 @@ Line[Append[b, First[b]]]},
      {RGBColor[.9, .42, .15], Disk[ja, 0.11], Disk[jb, 0.11], \
 Thickness[0.007], Dashed, Line[{ja, jb}]},
      Black, Text[Style[lbl, 11, Bold], {x0 + 0.64, -1.2}]}]];
- Graphics[{drawPair[0, 0, \"cis\"], drawPair[4, Pi, \"trans\"]},
+ Graphics[{drawPair[0, 0, \"direct\"], drawPair[4, Pi, \"twisted\"]},
    ImageSize -> 560, PlotRange -> {{-1, 9}, {-1.55, 1.2}}, PlotRangePadding \
 -> 0.1,
-   PlotLabel -> \"two pentagon blocks share a detector (orange); cis vs trans \
+   PlotLabel -> \"two pentagon blocks share a detector (orange); direct vs twisted \
 = the two ways to attach the next block\"]]\
 \>", "Input",
  CellOpen->False,
@@ -37916,7 +37916,7 @@ Cell[BoxData[
       LineBox[{{0.6847606917325105, 0.22249223594996215`}, {
        0.5952393082674895, 0.22249223594996215`}}]}}, 
     {GrayLevel[0], InsetBox[
-      StyleBox["\<\"cis\"\>",
+      StyleBox["\<\"direct\"\>",
        StripOnInput->False,
        FontSize->11,
        FontWeight->Bold], {0.64, -1.2}]}}, {
@@ -37946,13 +37946,13 @@ Cell[BoxData[
       LineBox[{{4.68476069173251, 0.22249223594996215`}, {
        4.59523930826749, -0.22249223594996215`}}]}}, 
     {GrayLevel[0], InsetBox[
-      StyleBox["\<\"trans\"\>",
+      StyleBox["\<\"twisted\"\>",
        StripOnInput->False,
        FontSize->11,
        FontWeight->Bold], {4.64, -1.2}]}}},
   ImageSize->560,
   PlotLabel->FormBox[
-   "\"two pentagon blocks share a detector (orange); cis vs trans = the two \
+   "\"two pentagon blocks share a detector (orange); direct vs twisted = the two \
 ways to attach the next block\"", TraditionalForm],
   PlotRange->{{-1, 9}, {-1.55, 1.2}},
   PlotRangePadding->0.1]], "Output",
@@ -37962,7 +37962,7 @@ ways to attach the next block\"", TraditionalForm],
 }, Open  ]],
 
 Cell["\<\
-The same gluing at scale \[LongDash] a cct mesh of many blocks (51 blocks = \
+The same gluing at scale \[LongDash] a ddt mesh of many blocks (51 blocks = \
 153 detectors, 204 exclusivities):\
 \>", "CodeText",ExpressionUUID->"316aa0d6-c41b-6f4d-a439-5086cd4bb90a"],
 
@@ -37970,13 +37970,13 @@ Cell[CellGroupData[{
 
 Cell["\<\
 Module[{letters, np, rad, penta, flipSeq, centers, pentagons, joints},
- letters = Characters[StringRepeat[\"cct\", 17]];
+ letters = Characters[StringRepeat[\"ddt\", 17]];
  np = Length[letters];
  rad = 0.62 np/(2 Pi);
  penta = Function[{cx, cy, rot}, Table[{cx, cy} + 0.4 {Cos[2 Pi j/5 + rot], \
 Sin[2 Pi j/5 + rot]}, {j, 0, 4}]];
- (* cumulative cis/trans flip, same device as the two-block illustration \
-above: \"c\" keeps the running
+ (* cumulative direct/twisted flip, same device as the two-block illustration \
+above: \"d\" keeps the running
     orientation, \"t\" flips it by Pi -- so the picture literally traces the \
 real c-c-t word, not a decorative tint *)
  flipSeq = FoldList[If[letters[[#2]] == \"t\", Mod[#1 + Pi, 2 Pi], #1] &, 0, \
@@ -37994,7 +37994,7 @@ jb},
      {ja, jb}],
    {k, 0, np - 1}];
  Graphics[{
-   Table[{RGBColor[.2, .45, .85, If[letters[[k + 1]] == \"c\", 0.75, 0.5]], \
+   Table[{RGBColor[.2, .45, .85, If[letters[[k + 1]] == \"d\", 0.75, 0.5]], \
 EdgeForm[GrayLevel[0.35]],
       Polygon[pentagons[[k + 1]]]}, {k, 0, np - 1}],
    {RGBColor[.9, .42, .15], Opacity[0.85], Thickness[0.0035], Dashed, Line /@ \
@@ -38002,7 +38002,7 @@ joints},
    {RGBColor[.9, .42, .15], PointSize[0.0035], Point[Flatten[joints, 1]]}
    },
   ImageSize -> 640, PlotRange -> All, AspectRatio -> Automatic,
-  PlotLabel -> \"a cct necklace at scale: 51 pentagon blocks (c-c-t \
+  PlotLabel -> \"a ddt necklace at scale: 51 pentagon blocks (c-c-t \
 repeating) glued into a closed ring (153 detectors, 204 exclusivities)\"]
 ]\
 \>", "Input",
@@ -38431,7 +38431,7 @@ o9dae+nDOuZ/rkP/pw==
   AspectRatio->Automatic,
   ImageSize->640,
   PlotLabel->FormBox[
-   "\"a cct necklace at scale: 51 pentagon blocks (c-c-t repeating) glued \
+   "\"a ddt necklace at scale: 51 pentagon blocks (c-c-t repeating) glued \
 into a closed ring (153 detectors, 204 exclusivities)\"", TraditionalForm],
   PlotRange->All]], "Output",
  CellLabel->
@@ -38439,8 +38439,8 @@ into a closed ring (153 detectors, 204 exclusivities)\"", TraditionalForm],
 }, Open  ]],
 
 Cell["\<\
-Gluing a ring one way ('trans') keeps a substantial gap open at essentially \
-every size; gluing it the opposite way ('cis') collapses the gap to exactly \
+Gluing a ring one way ('twisted') keeps a substantial gap open at essentially \
+every size; gluing it the opposite way ('direct') collapses the gap to exactly \
 zero at almost every size \[LongDash] the composed graph becomes as good for \
 a classical hidden-variable model as for a quantum one. Same block count, \
 opposite fate:\
@@ -38460,12 +38460,12 @@ transGap = {0., 0.5014, 0.7702, 0.0979, 0.6037, 1.0028, 0.3097, 0.6792, \
 cisGap = {0., 0., 0.2361, 0., 0.3177, 0., 0.3601, 0., 0.3863, 0., 0.4042, 0., \
 0.4171, 0., 0.4270};
 ListLinePlot[{Transpose[{nRange, transGap}], Transpose[{nRange, cisGap}]},
- PlotMarkers -> Automatic, PlotLegends -> {\"trans-ring\", \"cis-ring\"},
+ PlotMarkers -> Automatic, PlotLegends -> {\"twisted-ring\", \"direct-ring\"},
  AxesLabel -> {\"N (pentagons in the ring)\", \"quantum advantage \[Theta]-\
 \[Alpha]\"},
  PlotRange -> {{2.5, 17.5}, {-0.1, 1.5}}, ImageSize -> 480, ImagePadding -> \
 {{45, 15}, {40, 28}},
- PlotLabel -> \"trans grows with size (extensive); cis stays bounded \
+ PlotLabel -> \"twisted grows with size (extensive); direct stays bounded \
 \[LongDash] orientation, not count, decides\"]\
 \>", "Input",
  CellOpen->False,
@@ -38880,14 +38880,14 @@ Cell[BoxData[
            Part[#, 1]], 
           (Identity[#]& )[
            Part[#, 2]]}& )}}, PlotInteractivity :> True, PlotLabel -> 
-    FormBox["\"trans grows with size (extensive); cis stays bounded \
+    FormBox["\"twisted grows with size (extensive); direct stays bounded \
 \[LongDash] orientation, not count, decides\"", TraditionalForm], 
     PlotRange -> {{2.5, 17.5}, {-0.1, 1.5}}, PlotRangeClipping -> True, 
     PlotRangePadding -> {{None, None}, {None, None}}, 
     Ticks -> {Automatic, Automatic}], 
    FormBox[
     FormBox[
-     TemplateBox[{"\"trans-ring\"", "\"cis-ring\""}, "LineLegend", 
+     TemplateBox[{"\"twisted-ring\"", "\"direct-ring\""}, "LineLegend", 
       DisplayFunction -> (FormBox[
         StyleBox[
          StyleBox[
@@ -39072,11 +39072,11 @@ Cell[BoxData[
 Cell["\<\
 Read the plot this way: the vertical distance between the two curves at each \
 N is how much quantum advantage the gluing orientation alone costs or keeps. \
-The trans curve grows with N \[LongDash] the advantage is extensive, \
-accumulating as the mesh lengthens \[LongDash] while the cis curve stays \
+The twisted curve grows with N \[LongDash] the advantage is extensive, \
+accumulating as the mesh lengthens \[LongDash] while the direct curve stays \
 bounded and sits at zero for every even N. So orientation, not block count, \
 is the design knob. And neither pure orientation is actually optimal: an \
-explicit alternating gluing pattern \[LongDash] 'cct' repeated forever \
+explicit alternating gluing pattern \[LongDash] 'ddt' repeated forever \
 \[LongDash] was found, by testing tens of thousands of patterns by computer, \
 to preserve the most advantage per pentagon of any pattern tried, beating the \
 best pure orientation by 61%. Measured as the quantum advantage contributed \
@@ -39084,20 +39084,20 @@ per block:\
 \>", "Text",ExpressionUUID->"370c1810-ea16-c74a-8d1f-471c8b528247"],
 
 Cell["\<\
-Quantum advantage per block (gap density): the cct pattern wins:\
+Quantum advantage per block (gap density): the ddt pattern wins:\
 \>", "CodeText",ExpressionUUID->"b47a046f-435c-604f-8265-bea63c711125"],
 
 Cell[CellGroupData[{
 
 Cell["\<\
 BarChart[{0.0, 0.0433844, 0.0698975},
- ChartLabels -> {\"cis-ring\", \"trans-ring\", \"cct (optimum)\"},
+ ChartLabels -> {\"direct-ring\", \"twisted-ring\", \"ddt (optimum)\"},
  ChartStyle -> {GrayLevel[.72], RGBColor[.85, .55, .2], RGBColor[.2, .45, \
 .85]},
  PlotRange -> {0, 0.082}, ImageSize -> 440, ImagePadding -> {{48, 20}, {46, \
 36}},
  LabelingFunction -> (Placed[NumberForm[#, 3], Above] &),
- PlotLabel -> \"gap per block: cct beats trans by 61%; cis contributes \
+ PlotLabel -> \"gap per block: ddt beats twisted by 61%; direct contributes \
 nothing\"]\
 \>", "Input",
  CellOpen->False,
@@ -39202,13 +39202,13 @@ Cell[BoxData[
              0.}]}]}, {}}}, 
        StyleBox[
         {Thickness[Tiny], 
-         InsetBox["\<\"cis-ring\"\>", Offset[{0, -2}, {1., 0.}], NCache[
+         InsetBox["\<\"direct-ring\"\>", Offset[{0, -2}, {1., 0.}], NCache[
           ImageScaled[{Rational[1, 2], 1}], ImageScaled[{0.5, 1}]], 
           Automatic, {1, 0}], 
-         InsetBox["\<\"trans-ring\"\>", Offset[{0, -2}, {2., 0.}], NCache[
+         InsetBox["\<\"twisted-ring\"\>", Offset[{0, -2}, {2., 0.}], NCache[
           ImageScaled[{Rational[1, 2], 1}], ImageScaled[{0.5, 1}]], 
           Automatic, {1, 0}], 
-         InsetBox["\<\"cct (optimum)\"\>", Offset[{0, -2}, {3., 0.}], NCache[
+         InsetBox["\<\"ddt (optimum)\"\>", Offset[{0, -2}, {3., 0.}], NCache[
           ImageScaled[{Rational[1, 2], 1}], ImageScaled[{0.5, 1}]], 
           Automatic, {1, 0}]}, "GraphicsLabel",
         StripOnInput->False]}, "GraphicsTicks",
@@ -39239,7 +39239,7 @@ Cell[BoxData[
   ImageSize->440,
   PlotInteractivity:>True,
   PlotLabel->FormBox[
-   "\"gap per block: cct beats trans by 61%; cis contributes nothing\"", 
+   "\"gap per block: ddt beats twisted by 61%; direct contributes nothing\"", 
     TraditionalForm],
   PlotRange->{{All, All}, {0, 0.082}},
   PlotRangePadding->{{
@@ -39258,7 +39258,7 @@ Note also what did not happen here: this whole composition law lives in graph \
 combinatorics, and the geometric Lie-Poisson lens of Stage 5 is applied \
 separately, to the mesh's physical realization. By the project's own result \
 the two do not track each other. That leaves one uncomfortable question: a \
-computer can only test patterns that repeat, so how can 'cct' be called best \
+computer can only test patterns that repeat, so how can 'ddt' be called best \
 against the infinitely many patterns that never repeat?\
 \>", "Text",ExpressionUUID->"7c791767-2ab9-f843-9437-d22ea3c3bda3"]
 }, Open  ]],
@@ -39266,7 +39266,7 @@ against the infinitely many patterns that never repeat?\
 Cell[CellGroupData[{
 
 Cell["\<\
-Stage 8 \[LongDash] Optimization: (cct)^\[Infinity] Is Best (Ergodic \
+Stage 8 \[LongDash] Optimization: (ddt)^\[Infinity] Is Best (Ergodic \
 Optimization)\
 \>", "Section",ExpressionUUID->"28935ab9-9b6c-a542-8e71-bfa7cc7a61b9"],
 
@@ -41297,11 +41297,11 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgGnO/wdiQgSf
 e78f-4944-a864-c26b9fa89869"],
 
 Cell["\<\
-Figure (Stage 8). Why cct is special. (A) The periodic-orbit density spectrum \
-from trans tau* = 1.3767 up to cis 3/2, with mixed orbits 16/11, 19/13, 25/17 \
+Figure (Stage 8). Why ddt is special. (A) The periodic-orbit density spectrum \
+from twisted tau* = 1.3767 up to direct 3/2, with mixed orbits 16/11, 19/13, 25/17 \
 crowding a narrow band. (B) Seed value against density: spurious \
 strategy-iteration seeds fall on value = density - 1, while the true optimum \
-cct alone drops to density - 4/3 \[LongDash] the gap 0.0698975 \
+ddt alone drops to density - 4/3 \[LongDash] the gap 0.0698975 \
 (composition-optimality).\
 \>", "Text",ExpressionUUID->"d3a9dcf8-89e2-7543-bf4a-969ec0dce4d4"],
 
@@ -41323,7 +41323,7 @@ The Birkhoff theorem then converts an intractable search over individual \
 infinite words into a search over shift-invariant probability measures \
 \[LongDash] a compact, convex space that ergodic-optimization theory (Bousch, \
 Ma\[NTilde]\[EAcute], Jenkinson) is built to handle. A periodic word like \
-(cct) repeated forever is just one easy candidate, with a natural measure and \
+(ddt) repeated forever is just one easy candidate, with a natural measure and \
 a computable average; the honest open question (hypothesis H1) is whether \
 some non-periodic invariant measure could beat every periodic one, a known \
 kind of pathology in this field. The repo's tooling \[LongDash] de Bruijn \
@@ -41332,7 +41332,7 @@ of certified upper bounds \[CapitalGamma]_k that squeeze the optimum from \
 above.\
 \>", "Text",ExpressionUUID->"fb4b238b-14ef-3143-9fca-ab1da440bc74"],
 
-Cell["The certificate ladder \[CapitalGamma]_k closing on gap(cct) from \
+Cell["The certificate ladder \[CapitalGamma]_k closing on gap(ddt) from \
 above:", "CodeText",ExpressionUUID->"0d9502b5-08c9-da45-ae13-b6e887153e9f"],
 
 Cell[CellGroupData[{
@@ -41340,7 +41340,7 @@ Cell[CellGroupData[{
 Cell["\<\
 gammaData = {{7, 0.07702057}, {8, 0.07526640}, {9, 0.07202651}, {10, \
 0.07145754}};
-gapcct = 0.0698975;
+gapddt = 0.0698975;
 Show[
  ListLinePlot[gammaData, PlotMarkers -> Automatic, PlotStyle -> RGBColor[.85, \
 .45, .2],
@@ -41348,10 +41348,10 @@ Show[
   AxesLabel -> {\"certificate depth k\", \"upper bound \[CapitalGamma]_k\"}, \
 ImageSize -> 470],
  Graphics[{
-   {RGBColor[.2, .45, .85, 0.12], Rectangle[{6.5, gapcct}, {10.5, \
+   {RGBColor[.2, .45, .85, 0.12], Rectangle[{6.5, gapddt}, {10.5, \
 0.07202651}]},
-   {RGBColor[.2, .45, .85], Dashed, Line[{{6.5, gapcct}, {10.5, gapcct}}]},
-   Text[Style[\"gap(cct) = 0.0698975  (achieved lower bound)\", 8, \
+   {RGBColor[.2, .45, .85], Dashed, Line[{{6.5, gapddt}, {10.5, gapddt}}]},
+   Text[Style[\"gap(ddt) = 0.0698975  (achieved lower bound)\", 8, \
 RGBColor[.2, .45, .85]], {8.7, 0.0692}],
    Text[Style[\"open window H1 : width \[TildeEqual] 0.00156\", 8], {8.7, \
 0.0710}]}],
@@ -41546,7 +41546,7 @@ Cell[BoxData[
      RectangleBox[{6.5, 0.0698975}, {10.5, 0.07202651}]}, 
     {RGBColor[0.2, 0.45, 0.85], Dashing[{Small, Small}], 
      LineBox[{{6.5, 0.0698975}, {10.5, 0.0698975}}]}, InsetBox[
-     StyleBox["\<\"gap(cct) = 0.0698975  (achieved lower bound)\"\>",
+     StyleBox["\<\"gap(ddt) = 0.0698975  (achieved lower bound)\"\>",
       StripOnInput->False,
       LineColor->RGBColor[0.2, 0.45, 0.85],
       FrontFaceColor->RGBColor[0.2, 0.45, 0.85],
@@ -41659,7 +41659,7 @@ Cell[BoxData[
 
 Cell["\<\
 By depth ten the certified gap between the best provable upper bound and the \
-value cct actually achieves is down to 0.00156. It is not fully closed \
+value ddt actually achieves is down to 0.00156. It is not fully closed \
 \[LongDash] H1 remains an open hypothesis \[LongDash] but it is boxed in \
 extremely tightly. The mechanism the certificate rests on is just the sliding \
 window: run it along the infinite word and average the local gap, and the \
@@ -41667,7 +41667,7 @@ running mean settles onto the per-block value.\
 \>", "Text",ExpressionUUID->"80c51484-8bb5-9b4c-bf38-43c1d6905913"],
 
 Cell["\<\
-The Birkhoff average made concrete \[LongDash] slide a window along (cct) \
+The Birkhoff average made concrete \[LongDash] slide a window along (ddt) \
 repeated and watch the running gap settle:\
 \>", "CodeText",ExpressionUUID->"f774e6b1-4b6b-d440-8eab-e48da3611f1e"],
 
@@ -41676,11 +41676,11 @@ Cell[CellGroupData[{
 Cell["\<\
 Manipulate[
  Module[{seq, phi, run, lim = 0.0698975},
-  seq = Flatten[ConstantArray[{\"c\", \"c\", \"t\"}, 40]];
-  phi = seq /. {\"c\" -> 0.093, \"t\" -> 0.023695};
+  seq = Flatten[ConstantArray[{\"d\", \"d\", \"t\"}, 40]];
+  phi = seq /. {\"d\" -> 0.093, \"t\" -> 0.023695};
   run = Accumulate[Take[phi, n]]/Range[n];
   Column[{
-    Row[Take[seq, Min[n, 15]] /. {\"c\" -> Style[\"c\", RGBColor[.2, .45, \
+    Row[Take[seq, Min[n, 15]] /. {\"d\" -> Style[\"d\", RGBColor[.2, .45, \
 .85], Bold],
         \"t\" -> Style[\"t\", RGBColor[.85, .55, .2], Bold]}, Spacer[2]],
     Show[
@@ -41693,7 +41693,7 @@ block\"},
 NumberForm[Last[run], {4, 4}], \"   (moving \[RightArrow] fixed target)\"}]],
      Graphics[{{RGBColor[.85, .55, .2], Dashed, Line[{{0, lim}, {120, \
 lim}}]},
-       {RGBColor[.85, .55, .2], Text[Style[\"fixed target: gap(cct) = 0.0699  \
+       {RGBColor[.85, .55, .2], Text[Style[\"fixed target: gap(ddt) = 0.0699  \
 (the n \[RightArrow] \[Infinity] limit)\", 9], {58, lim + 0.012}]},
        {RGBColor[.2, .45, .85], PointSize[0.02], Point[{Min[n, 120], \
 Last[run]}]}}]]
@@ -42166,7 +42166,7 @@ CeImmKyvUspKVTblitIGrdRkDgY9MNaCK1shNtkgjHTIYAuWnfTvRd2qulbj
 OjaYTjJY5b++1W+zq1OZ+GapidM/7hyLq/R4draefe4XrroOzhtqQulkfRDo
 lEfKwaB4cS3tF00LECyjXxw/es91MvgctKWzPTPoDag4X5w0M5D8qiwHbc+0
 8lQcnASHCj4uPT/9+MInn4N+lOSU479ZGzI+zhnnsA3tUhZ8wX/js07636Ca
-9f8N+kXjcctq2mQ5fW3pGybBLHxXnldElY/ynSfVpaqYciwYONlzmOzn8aNU
+9f8N+kXjddtq2mQ5fW3pGybBLHxXnldElY/ynSfVpaqYciwYONlzmOzn8aNU
 hEi8LFbs+u1Bv6qtavLTSeZOcjUWyzeQ/9z6tca8snH89mB8sOEraqX1pA3p
 Cz9Sv2i8M/cqczDZeesnEkSerZP4wyLVSE8Ww/h+wlhyqctysFh+LFEs7+k1
 dnDiC1P//KDvlk9WUGVTrjjoinOwrC8d3bP2c9B2Xf1v0Cmnk7JyllX7RUld
@@ -42699,10 +42699,10 @@ word. Only the n \[Rule] \[Infinity] limit is a property of the pattern \
 itself rather than of an arbitrary cutoff \[LongDash] and a larger limit \
 means more quantum advantage kept per pentagon, forever, as the mesh grows \
 without bound. That single number is exactly what Stage 8 optimizes across \
-all gluing patterns, which is why cct's limit of 0.0699 is the value to beat. \
+all gluing patterns, which is why ddt's limit of 0.0699 is the value to beat. \
 (The per-junction values here are a toy potential chosen only so the period \
-average lands on gap(cct); the point is the convergence, not the \
-decomposition.) With cct established as the best repeating blueprint, the \
+average lands on gap(ddt); the point is the convergence, not the \
+decomposition.) With ddt established as the best repeating blueprint, the \
 next move is to build it as something physical.\
 \>", "Text",ExpressionUUID->"75015026-3b2e-564e-a860-e2c96aedd024"]
 }, Open  ]],
@@ -42717,7 +42717,7 @@ Cell["\<\
 A note on method, since the question naturally comes up: where do ruliology \
 and multiway systems fit here? Exactly one layer of the story is genuinely a \
 symbolic dynamical system, and it is this one. The gluing words over the \
-alphabet {c, t}, the shift that shows the mesh growing one block at a time, \
+alphabet {d,t}, the shift that shows the mesh growing one block at a time, \
 and the de Bruijn graphs behind the \[CapitalGamma]_k certificates of Stage 8 \
 form a multiway/substitution system in the literal sense \[LongDash] not by \
 analogy. Treating it that way is honest bookkeeping; it is not a claim that \
@@ -42726,26 +42726,26 @@ interlude is careful to say.\
 \>", "Text",ExpressionUUID->"dd3988eb-a619-c04d-b95b-1903dc7f2838"],
 
 Cell["\<\
-The gluing alphabet as a de Bruijn multiway graph; the cct optimum is a \
+The gluing alphabet as a de Bruijn multiway graph; the ddt optimum is a \
 periodic orbit:\
 \>", "CodeText",ExpressionUUID->"09e5d8e4-2ed7-f14d-997c-689981487fa3"],
 
 Cell[CellGroupData[{
 
 Cell["\<\
-alph = {\"c\", \"t\"};
+alph = {\"d\", \"t\"};
 words = StringJoin /@ Tuples[alph, 3];
 shift = Function[{w, a}, StringTake[w, -2] <> a];
 dbEdges = DeleteDuplicates[Flatten[Table[DirectedEdge[w, shift[w, a]], {w, \
 words}, {a, alph}]]];
-orbit = {\"cct\", \"ctc\", \"tcc\"};
+orbit = {\"ddt\", \"dtd\", \"tdd\"};
 orbitEdges = DirectedEdge @@@ Partition[Append[orbit, First[orbit]], 2, 1];
 Graph[words, dbEdges, VertexLabels -> \"Name\", VertexSize -> 0.45,
  VertexStyle -> GrayLevel[0.85], EdgeStyle -> GrayLevel[0.8],
  GraphHighlight -> Join[orbit, orbitEdges], GraphHighlightStyle -> \"Thick\",
  GraphLayout -> \"CircularEmbedding\", ImageSize -> 480,
  ImagePadding -> {{55, 25}, {25, 55}}, PlotRangePadding -> Scaled[0.08],
- PlotLabel -> Style[\"de Bruijn-3 graph over {c,t}: sliding (cct) traces the \
+ PlotLabel -> Style[\"de Bruijn-3 graph over {d,t}: sliding (ddt) traces the \
 highlighted cycle\", 12]]\
 \>", "Input",
  CellOpen->False,
@@ -43444,7 +43444,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABjxv6WttHw=
 
 Cell["\<\
 Each edge is one step of the shift: drop the oldest letter, read the next. \
-The word (cct) repeated forever is the highlighted three-cycle, and Stage 8's \
+The word (ddt) repeated forever is the highlighted three-cycle, and Stage 8's \
 ergodic optimization is precisely optimization over shift-invariant measures \
 on this graph. A periodic word is a measure supported on one cycle; the open \
 part of H1 is whether some non-periodic invariant measure \[LongDash] an \
@@ -43475,7 +43475,7 @@ Graphics[{
    Arrowheads[0.028], GrayLevel[0.3],
    Text[Style[\"state at N\", 9], {0, 2}], Text[Style[\"state at N+1\", 9], \
 {4, 2}],
-   Arrow[{{0.9, 2}, {3.1, 2}}], Text[Style[\"glue one block (cis / trans)\", \
+   Arrow[{{0.9, 2}, {3.1, 2}}], Text[Style[\"glue one block (direct / twisted)\", \
 8], {2, 2.3}],
    RGBColor[.85, .45, .2], Arrow[{{-0.1, 1.8}, {-0.9, 0.5}}], Arrow[{{3.9, \
 1.8}, {3.1, 0.5}}],
@@ -43500,7 +43500,7 @@ Cell[BoxData[
     StyleBox["\<\"state at N+1\"\>",
      StripOnInput->False,
      FontSize->9], {4, 2}], ArrowBox[{{0.9, 2}, {3.1, 2}}], InsetBox[
-    StyleBox["\<\"glue one block (cis / trans)\"\>",
+    StyleBox["\<\"glue one block (direct / twisted)\"\>",
      StripOnInput->False,
      FontSize->8], {2, 2.3}], 
    {RGBColor[0.85, 0.45, 0.2], ArrowBox[{{-0.1, 1.8}, {-0.9, 0.5}}], 
@@ -44072,14 +44072,14 @@ Resource\
 \>", "Section",ExpressionUUID->"87caabfd-c0a3-e643-ae17-438e1fa694ce"],
 
 Cell["\<\
-Since 'cct forever' is the best blueprint, the next step is to build it as a \
+Since 'ddt forever' is the best blueprint, the next step is to build it as a \
 real entangled quantum resource: a cluster state, the kind of resource used \
 in measurement-based quantum computing, and then verify its structure holds \
 up even at millions of components. The connectivity is the glued-mesh graph \
 itself, now read as a pattern of controlled-Z entangling bonds.\
 \>", "Text",ExpressionUUID->"5d2a2238-edb7-3446-822a-b2b4a2d8ba5a"],
 
-Cell["The cct cluster state as a CZ-entangled pentagon chain:", "CodeText",ExpressionUUID->"050bafcf-a5f5-a648-af1d-0d1b12e504fc"],
+Cell["The ddt cluster state as a CZ-entangled pentagon chain:", "CodeText",ExpressionUUID->"050bafcf-a5f5-a648-af1d-0d1b12e504fc"],
 
 Cell[CellGroupData[{
 
@@ -44088,17 +44088,17 @@ wordRing = Function[{word, reps}, Module[{w = Characters[StringRepeat[word, \
 reps]], L, edges = {}, u, v, km},
    L = Length[w];
    Do[km = Mod[k - 1, L];
-     {u, v} = If[w[[km + 1]] === \"c\", {3 km + 1, 3 km + 2}, {3 km + 2, 3 km \
+     {u, v} = If[w[[km + 1]] === \"d\", {3 km + 1, 3 km + 2}, {3 km + 2, 3 km \
 + 1}];
      edges = Join[edges, {{u, v}, {u, 3 k + 1}, {3 k + 1, 3 k + 2}, {3 k + 2, \
 3 k + 3}, {3 k + 3, v}}],
      {k, 0, L - 1}];
    Graph[Range[3 L], UndirectedEdge @@@ DeleteDuplicates[Sort /@ edges]]]];
-Graph[wordRing[\"cct\", 4], VertexSize -> 0.6, VertexStyle -> RGBColor[.2, \
+Graph[wordRing[\"ddt\", 4], VertexSize -> 0.6, VertexStyle -> RGBColor[.2, \
 .45, .85],
  EdgeStyle -> GrayLevel[0.6], GraphLayout -> \"SpringElectricalEmbedding\", \
 ImageSize -> 430,
- PlotLabel -> \"cct cluster connectivity (CZ bonds), (cct) repeated four \
+ PlotLabel -> \"ddt cluster connectivity (CZ bonds), (ddt) repeated four \
 times\"]\
 \>", "Input",
  CellOpen->False,
@@ -63608,7 +63608,7 @@ JooHo4uM+E8YzrgouDxja72VeZgYCmRlMYBLgIaMuAYFlu22bdv+C2ID5pbN
 EnSGUwKa+7WpUCmj0tktzjwcr/1sb433ZtYqzKARyyl9kBqd5dg2K/8ey61z
 HLmJqiDWMXQ7jgbXor59Kdx06p6bKoRHbic6yu6cdKYmjL7kNvtsGflCVQGN
 pjLScvOBpn5zopPWJdWXqG4GZyY6QGGb6ZtqJUWPJLyFlITeC70an+LlCRD5
-xdnJf44JPT+t7L8LKrcctHuyVI6WmC+C2YqY/o7EgQ1rKc69u8fYG+LAdv7P
+xdnJf44JPT+t7L8LKrddtHuyVI6WmC+C2YqY/o7EgQ1rKc69u8fYG+LAdv7P
 rChUC/EKSg0ilVAD6OyRllCjM8u4cZkN43cYO46bWavltewEchUzwNWks6Zp
 F7z62HF+zfIU64G+7Q3vKSqre+ICM/ra7awth07TG+Y9Q61WogpoDD540VDJ
 TpQnBn0Sh6hVxxPNm63Gf+I7XdlqV7Ejoxo7xN9VvBxK+Gkc+fpIa79ZVTR+
@@ -64998,7 +64998,7 @@ NHVhi0oVFfuYcabFC0sbXq2TwBZy4NhFerUs7PRduMmr47ZqLIVtTzdQdbow
 jHskSa/kwshk4hQhR0rzRzZMQUbSl2SEYxQ86iw7SSZAdG51cFRR+6QV32QW
 No8rOD195dcuj89l9SSS2Q/Kl8Ft6mtdZ1268vOjGyLUZazwlEtiSTODV5yV
 LECTHmf+F8CRWLQcARtwoWAFJhnMcq2+yIThfapmXCHLWSW1JNzgMubDFiLj
-J5Nrw2yldFscaMkAOFhL22DZyGAlRQJrwMpDRW7w7sWcct+ksqbxK8+MXOkD
+J5Nrw2yldFscaMkAOFhL22DZyGAlRQJrwMpDRW7w7sWddt+ksqbxK8+MXOkD
 DD9t+rdKKlmqefOhHz5vvYGnXdfXgmtpaaSrq3umwJGYx7R4sYsoNamjZmkW
 ttEbKKIWBZnLYi3LtdQ0VDOuwWWxFhw+ec0WDNRVs5M/RJqteGRnSQkuZlJt
 eGRxINcaqcmbSojBQVnawzfwMfUSbWRY5e64S0MOdzPywz5Ea455kJ6mkGYD
@@ -66752,7 +66752,7 @@ lBuTNtjT91eanE1U9I8NTOayPgLkWbAZR0ywb06P5RQoRnROXmXCHrv+gQ3B
 K4YUOdO3cgeB8HnrCn9LiO5uf8tTqhgZoaSbXkxzWVro1bsvNZIfCZY1JVvF
 BLMdp+V6P1vlGppoH7QMJLWNWeFIKvBSCAo05y1nGr9e6xy3yjIiyfpxchmY
 DvOcyvXAcC5z9lBYkvMlyUlFZfYDoeLDWCXyzzkS9lTRvtuIZOsHy8q+SLjy
-cfwd6PwBoU4mKQlefw9KC2Vukmgm8OaX/tlgCCTnV4jObdwr3H6uqBv3c4tZ
+cfwd6PwBoU4mKQlefw9KC2Vukmgm8OaX/tlgDDTnV4jObdwr3H6uqBv3c4tZ
 2ctvLaLfwBIvEUkNC5q8ZHh9l2k7eFnrTr4gX0uf/Gylc9I6+8zVdwbFaWr2
 +/G20csdd0x+SiGcutEExZtabg2OqxqVWPJdpj0my8LiOPIOCx6jrrFDKxh+
 W+sqteu8F5IXmi3U7Nl51ul51RTHNS3HNWvLw5gc+49bPN9vdA9f9sfnCcUj
@@ -68224,7 +68224,7 @@ yhf6E0OdreK5FrfrIwM9DbZozYfrmq6Bk/MJmuUYiGg7hH3bvyTiZdBtEIJt
 s7sNay2PZuX8q/4ccNBtTEXwsNYnknfW/EHt+YIPZ4C027BW8n9QYtudFaAK
 7XhDZLkNQlCZVq49zfEq2cEEBiHsakfOKiTfCXj13FtY65pIa5dhrVdg5lq9
 gwsSrNo27tUDtm/7LAq2jyfSW6uqqDMqsBVHkIupT1hra9fOMDLgjYNzzSfa
-l7v1QQj+Ya3tVBwkrC3YPhxXD2tdC9o2CEHvnyn4cRCCT1hr7RTO+dwwOsPa
+l7v1QQj+Ya3tVBwkrC3YPhxXD2tdC9o2CEHvnyn4cRDDT1hr7RTO+dwwOsPa
 J9pAytimgFe3xLmGtV4tV7HdFOxYPfRqYDu/BTm3OK/CQcLagu1Pn70S6X8Z
 Hdx8QKxOsPqaqQ5r9Xzo3D6ZmBU4rG3QBhN62e3VxGunqoHrKdczzT+sVa1e
 LyzXqEylx+vUZHuKYcuH2PavjMmP6K/1G1K1d/Xm4I9jBvQHEM77EbUFlQn6
@@ -68656,7 +68656,7 @@ numbers \[LongDash] Sqrt[5], and especially the 5/2 overhang above it \
 thing being certified (Stages 1 to 3). Then the overhang is the exact room a \
 classical light source needs to hide (Stage 4), and the pentagon's own 2-to-3 \
 twist is what exposes it (Stages 5 and 6). Then the same numbers are what \
-erode or survive under gluing, down to the cct pattern that preserves the \
+erode or survive under gluing, down to the ddt pattern that preserves the \
 most of them per block (Stages 7 and 8) and the physical resource that \
 realizes it (Stage 9). And finally the pentagon is what catalyzes a brand new \
 effect in objects far larger than itself (Stages 10 and 11).\
@@ -68672,7 +68672,7 @@ the two lenses' own resource requirements do not move together under \
 composition, demonstrated rather than merely argued; and that the correlation \
 lens has a structural, provable limit when the underlying physics offers only \
 one measurement context, as Hawking-pair correlations do. What stays open is \
-stated as open: the exact optimality of cct (H1, boxed to 0.00156), whether \
+stated as open: the exact optimality of ddt (H1, boxed to 0.00156), whether \
 the clique number reaches eighteen, and whether the sheaf machinery can \
 derive rather than merely house the composed bound. The instrument is two \
 lenses because one is provably not enough \[LongDash] and the pentagon is the \
@@ -68689,8 +68689,8 @@ Cell["\<\
 The abstract promised that analogue Hawking radiation would supply the \
 application; the Through-Line named Hawking-pair correlations only as an \
 example of the correlation lens's one-context limit. This closing section \
-builds the actual example. Reusing the exact cct pentagon-mesh graph state of \
-Stages 7 to 9 \[LongDash] the same wordRingEdgesFast[\"cct\",reps] edge list, \
+builds the actual example. Reusing the exact ddt pentagon-mesh graph state of \
+Stages 7 to 9 \[LongDash] the same wordRingEdgesFast[\"ddt\",reps] edge list, \
 unmodified \[LongDash] one Z-measurement carve isolates a genuine \
 analogue-Hawking Bell pair, and a second carve on the same mesh yields the \
 GHZ triple that powers a non-trivial Clifford computation: Anders and \
@@ -68714,7 +68714,7 @@ wordRingEdgesFast[word_String, reps_Integer] := Module[{w, L, edgeBlocks},
   L = Length[w];
   edgeBlocks = Table[
     Module[{km = Mod[k - 1, L], u, v},
-      {u, v} = If[w[[km + 1]] === \"c\", {3 km + 1, 3 km + 2}, {3 km + 2, 3 \
+      {u, v} = If[w[[km + 1]] === \"d\", {3 km + 1, 3 km + 2}, {3 km + 2, 3 \
 km + 1}];
       {{u, v}, {u, 3 k + 1}, {3 k + 1, 3 k + 2}, {3 k + 2, 3 k + 3}, {3 k + \
 3, v}}],
@@ -68723,7 +68723,7 @@ km + 1}];
 nbrsOf[edges_, v_] := Union[Join[Cases[edges, {v, u_} :> u], Cases[edges, \
 {u_, v} :> u]]];
 
-edges1 = wordRingEdgesFast[\"cct\", 1]; nQ = 9;
+edges1 = wordRingEdgesFast[\"ddt\", 1]; nQ = 9;
 gsGates = Join[Table[QuantumOperator[\"H\", {q}], {q, 1, nQ}], \
 Table[QuantumOperator[\"CZ\", e], {e, edges1}]];
 gsOp = QuantumCircuitOperator[gsGates];
@@ -69584,7 +69584,7 @@ Cell[BoxData[
 }, Open  ]],
 
 Cell["\<\
-cct_mbqc_hawking_certification.wl (built earlier in this project on this \
+ddt_mbqc_hawking_certification.wl (built earlier in this project on this \
 exact mesh) designates the adjacent pair {3k+2, 3k+3} the Hawking mode \
 (exterior, the tip) and partner mode (interior); at k=0 that is qubits 2 and \
 3. Z-measuring every other qubit to a fixed outcome deletes it from the graph \
@@ -69599,7 +69599,7 @@ I2 = IdentityMatrix[2];
 PX = {{0, 1}, {1, 0}}; PZ = {{1, 0}, {0, -1}}; PY = {{0, -I}, {I, 0}};
 projPlus[op_] := (I2 + op)/2; projMinus[op_] := (I2 - op)/2;
 
-(* cct_mbqc_hawking_certification.wl designates {3k+2,3k+3} the \
+(* ddt_mbqc_hawking_certification.wl designates {3k+2,3k+3} the \
 Hawking/partner pair; k=0 -> qubits {2,3} *)
 measuredA = Complement[Range[nQ], {2, 3}];
 forceGatesA = Table[QuantumOperator[projPlus[PZ], {q}], {q, measuredA}];
@@ -69718,7 +69718,7 @@ Cell[BoxData[
 
 Cell["\<\
 S = 2\[Sqrt]2 and CF = \[Sqrt]2-1 exactly \[LongDash] the same two numbers \
-cct_mbqc_hawking_certification.wl pins as its ground truth for an ideal \
+ddt_mbqc_hawking_certification.wl pins as its ground truth for an ideal \
 carved pair. The mesh really does carry a genuine analogue-Hawking \
 correlation, and the geometric lens really does certify it, live, from this \
 notebook's own kernel.\
@@ -69915,7 +69915,7 @@ Cell[BoxData[
     {RGBColor[0.537254, 0.537254, 0.537254], Opacity[0.3], 
      LineBox[{{0.375, -0.0234375}, {17.625, -0.0234375}}], 
      LineBox[{{0.375, 0.0234375}, {17.625, 0.0234375}}]}, InsetBox[
-     StyleBox["\<\"c\"\>",
+     StyleBox["\<\"d\"\>",
       StripOnInput->False,
       FontSize->10,
       FontSlant->Italic,
@@ -71220,7 +71220,7 @@ Cell["\<\
 Zero of eight. No affine function of (a,b) equals OR \[LongDash] the \
 nonlinearity is bought by the carved GHZ correlations, not by classical \
 post-processing, exactly the Mermin all-versus-nothing argument \
-cct_mbqc_contextual_nand.wl proves as matrices. It is the same verdict Stage \
+ddt_mbqc_contextual_nand.wl proves as matrices. It is the same verdict Stage \
 4's classical cheater could never escape for the bare pentagon, now reached \
 for a genuine two-input Boolean computation built on top of it.\
 \>", "Text",ExpressionUUID->"5cd61308-3c51-47fd-ae9b-965dad844eb8"],
@@ -71231,10 +71231,10 @@ grow past a few tens of qubits \[LongDash] that is a simulator limit, not a \
 physics one. What does scale is the argument: isolating an edge by \
 Z-measuring only its own other neighbours \[LongDash] not the rest of the \
 mesh \[LongDash] disconnects it as its own graph-state component (Hein et \
-al.), so the S=2\[Sqrt]2 result above holds at every edge of every cct mesh, \
+al.), so the S=2\[Sqrt]2 result above holds at every edge of every ddt mesh, \
 at any size. Checked live, at the scale this project's own \
 Hawking-evaporation stack already runs its full certification stack \
-(reps=1000, matching cct_mbqc_hawking_certification_tests.wl's M=100 \
+(reps=1000, matching ddt_mbqc_hawking_certification_tests.wl's M=100 \
 configuration):\
 \>", "Text",ExpressionUUID->"94bdc74d-e788-4f8b-83fb-08691c34b2be"],
 
@@ -71246,9 +71246,9 @@ it as its own
    graph-state component (Hein et al.) -- checked live at the scale this \
 project's own
    Hawking-evaporation stack already runs (reps=1000, \
-cct_mbqc_hawking_certification_tests.wl) *)
+ddt_mbqc_hawking_certification_tests.wl) *)
 repsScale = 1000;
-edgesScale = wordRingEdgesFast[\"cct\", repsScale];
+edgesScale = wordRingEdgesFast[\"ddt\", repsScale];
 footprint[k_] := Module[{a = 3 k + 2, b = 3 k + 3, nA, nB},
    nA = Complement[nbrsOf[edgesScale, a], {b}]; nB = \
 Complement[nbrsOf[edgesScale, b], {a}];

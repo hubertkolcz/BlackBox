@@ -198,8 +198,8 @@ def is_partition_type(X, M):
         if x not in seen:
             cls = frozenset(y for y in X if (x, y) in R)
             blocks.append(sorted(cls)); seen |= cls
-    trans = {frozenset(t) for t in iproduct(*blocks)}                # ALL transversals
-    return Ms == trans                                               # both inclusions (Prop 9.3)
+    twisted = {frozenset(t) for t in iproduct(*blocks)}                # ALL transversals
+    return Ms == twisted                                               # both inclusions (Prop 9.3)
 ```
 
 Both inclusions in the last line matter: a cover whose compatibility graph is complete

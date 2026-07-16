@@ -51,7 +51,7 @@ Score any invariant against **this** table. "Γ_3 = 0.125", not 0.1020.
 
 ## 1. The certificate, read as raw data (established in project)
 
-De Bruijn-k graph `X`: vertices `V` = length-`k` words over `{c,t}`; a directed edge
+De Bruijn-k graph `X`: vertices `V` = length-`k` words over `{d,t}`; a directed edge
 `e = (w → x)` whenever `drop-first(w) = drop-last(x)` (overlap of `k−1`). `|V| = 2^k`,
 `|E| = 2^{k+1}`. `X` is strongly connected and every vertex has in/out-degree 2.
 

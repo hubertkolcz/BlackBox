@@ -106,22 +106,22 @@ Print[">>> A2 PASS : ", A2];
 
 Print[];
 Print["=================================================================="];
-Print["  A4 -- mesh routing EdgeList == wordRingEdgesFast (word=cct)"];
+Print["  A4 -- mesh routing EdgeList == wordRingEdgesFast (word=ddt)"];
 Print["=================================================================="];
 
 (* independent reference copy of wordRingEdgesFast for the comparison *)
 refEdges[word_, reps_] := Module[{w = Characters[StringRepeat[word, reps]], L, blocks},
   L = Length[w];
   blocks = Table[Module[{km = Mod[k - 1, L], u, v},
-     {u, v} = If[w[[km + 1]] === "c", {3 km + 1, 3 km + 2}, {3 km + 2, 3 km + 1}];
+     {u, v} = If[w[[km + 1]] === "d", {3 km + 1, 3 km + 2}, {3 km + 2, 3 km + 1}];
      {{u, v}, {u, 3 k + 1}, {3 k + 1, 3 k + 2}, {3 k + 2, 3 k + 3}, {3 k + 3, v}}],
     {k, 0, L - 1}];
   DeleteDuplicates[Sort /@ Flatten[blocks, 1]]];
 
 a4Rows = Table[
-  Module[{m = CompileMeshRouting["cct", reps], ref = refEdges["cct", reps], match, modeOk, orient},
+  Module[{m = CompileMeshRouting["ddt", reps], ref = refEdges["ddt", reps], match, modeOk, orient},
    match = (Sort[m["EdgeList"]] === Sort[ref]);
-   modeOk = (m["ModeCount"] === 3 StringLength[StringRepeat["cct", reps]]);
+   modeOk = (m["ModeCount"] === 3 StringLength[StringRepeat["ddt", reps]]);
    orient = #["Orientation"] & /@ m["Routing"];
    <|"reps" -> reps, "L" -> m["L"], "modes" -> m["ModeCount"],
      "nEdges" -> Length[m["EdgeList"]], "EXACT" -> (match && modeOk),

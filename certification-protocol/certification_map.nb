@@ -623,7 +623,7 @@ exact-validated); same trust assumption as G7.
 efficient emulation only for algebra-supported observables; it does NOT \
 preclude sampling hardness (Aaronson-Arkhipov). A distinct axis the map does \
 not yet resolve.
-\[Bullet]  cct-optimality sits INSIDE the mesh testbed for the resource axis \
+\[Bullet]  ddt-optimality sits INSIDE the mesh testbed for the resource axis \
 \[LongDash] it is off this map (a cell-interior detail, not a boundary).\
 \>",ExpressionUUID->"bf158912-ba58-c149-932f-2c8b44205b95"],
        TextCell[
@@ -637,7 +637,7 @@ leaf-confinement audit (passive u(n) vs active sp(2n,R); exact-validated); \
 same trust assumption as G7.\n\[Bullet]  SAMPLING-HARDNESS caveat: poly-DLA \
 \[DoubleLongRightArrow] efficient emulation only for algebra-supported \
 observables; it does NOT preclude sampling hardness (Aaronson-Arkhipov). A \
-distinct axis the map does not yet resolve.\n\[Bullet]  cct-optimality sits \
+distinct axis the map does not yet resolve.\n\[Bullet]  ddt-optimality sits \
 INSIDE the mesh testbed for the resource axis \[LongDash] it is off this map \
 (a cell-interior detail, not a boundary)."]],
       ImageMargins -> 8,

@@ -37,9 +37,9 @@
 
    NOTE on scope: this figure visualizes the so(3) KCBS-cascade DLA (the G7
    gate). It is NOT the su(2^n) qubit cluster-state DLA computed in
-   cluster-state-realization/cct_cluster_dla.wl (a different object, generic
+   cluster-state-realization/ddt_cluster_dla.wl (a different object, generic
    exponential 4^n-1 scaling) -- the two must not be conflated. It also does
-   NOT depend on any claim about "unrotated standard axes" for cct-word
+   NOT depend on any claim about "unrotated standard axes" for ddt-word
    mesh blueprints; that claim was checked against the repo during this
    session and could not be substantiated, so it is deliberately not used
    here or anywhere in this module.

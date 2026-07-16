@@ -1,15 +1,15 @@
 """
 ZeroSlackDiagnostic.py -- exact-rational diagnostic for the "zero-slack
-recalibration on cct" question posed in QUANTUM_CONTEXTUALITY.md section 9
+recalibration on ddt" question posed in QUANTUM_CONTEXTUALITY.md section 9
 (the "12 July 2026 research push" note), attempting the Guglielmi-Protasov
 invariant-polytope-style recipe against the EXISTING EpsilonCertificate.wl
 (k=7) and EpsilonCertificate8.wl (k=8) windowed transfer-SDP certificates.
 
-RECIPE ATTEMPTED (per the task): seed a candidate from cct's own exact
+RECIPE ATTEMPTED (per the task): seed a candidate from ddt's own exact
 optimum, and check whether the certificate can be recalibrated to hold with
-EXACT EQUALITY on cct's own 3-cycle and non-negative slack (sigma(e) <=
+EXACT EQUALITY on ddt's own 3-cycle and non-negative slack (sigma(e) <=
 Gamma) on every other de Bruijn-k edge -- which, if achieved with the
-right target value, would be a complete, finite, exact proof that (cct)^inf
+right target value, would be a complete, finite, exact proof that (ddt)^inf
 is the true global maximizer of gap(w) = theta-bar(w) - alpha-bar(w).
 
 METHOD. This reimplements CaseStudies.wl's posSigma / posCycleMean /
@@ -27,7 +27,7 @@ existing Q,R,Phi,Strategy fixed), plus a structural argument about why the
 recipe, done in full, reduces to the SAME open problem it was hoped to route
 around. Full details in the module docstring below and in the final report
 this file accompanies. NOT achieved: a full re-derivation of Q,R,Phi,Strategy
-at k=7/k=8 with cct forced tight (infeasible at that scale within this
+at k=7/k=8 with ddt forced tight (infeasible at that scale within this
 session's compute -- see "WHAT WAS NOT ATTEMPTED AND WHY" below).
 
 ======================================================================
@@ -40,9 +40,9 @@ mention Psi at all -- see nodeCons/edgeCons/psdCons in CaseStudies.wl and
 GenerateEpsilonCertificate9.wl). So the cheapest possible "recalibration" is:
 keep the EXISTING, already-verified-valid Q, R, Phi, Strategy from
 EpsilonCertificate.wl / EpsilonCertificate8.wl exactly as committed, and
-choose a DIFFERENT Psi to force sigma(e) = mu_cct exactly on cct's 3 edges
+choose a DIFFERENT Psi to force sigma(e) = mu_ddt exactly on ddt's 3 edges
 (always achievable for a single simple cycle by a local telescoping
-construction), then check whether sigma(e) <= mu_cct still holds everywhere
+construction), then check whether sigma(e) <= mu_ddt still holds everywhere
 else.
 
 It does not. The reason is elementary and needs no SDP re-solve: around ANY
@@ -52,43 +52,43 @@ a quantity that is completely Psi-INDEPENDENT (verified computationally
 below too, by perturbing Psi at random and confirming the cycle mean is
 unchanged). Consequently:
 
-  mu_cct      := mean of c(e) around cct's own 3-edge cycle       (INTRINSIC)
+  mu_ddt      := mean of c(e) around ddt's own 3-edge cycle       (INTRINSIC)
   mu_bottleneck := mean of c(e) around the documented bottleneck
-                   cycle ((cttt)^inf at k=7, (ctt)^inf at k=8)      (INTRINSIC)
+                   cycle ((dttt)^inf at k=7, (dtt)^inf at k=8)      (INTRINSIC)
 
 are both fixed facts about the EXISTING Q,R,Phi,Strategy, independent of
 Psi. Exact computation (this script) gives, using the certificates exactly
 as committed:
 
-  k=7: mu_cct = 3783027/50000000 = 0.07566054
+  k=7: mu_ddt = 3783027/50000000 = 0.07566054
        mu_bottleneck = 30824939/400000000 = 0.0770623475  (= Gamma_7 to a
-         2.5e-9 "rationalization sliver", confirming (cttt)^inf really is
+         2.5e-9 "rationalization sliver", confirming (dttt)^inf really is
          the Karp-exact bottleneck of THIS certificate)
-       mu_bottleneck - mu_cct = 560723/400000000 = 0.0014018075 (EXACT)
+       mu_bottleneck - mu_ddt = 560723/400000000 = 0.0014018075 (EXACT)
 
-  k=8: mu_cct = 22397449/300000000 = 0.0746581633...
+  k=8: mu_ddt = 22397449/300000000 = 0.0746581633...
        mu_bottleneck = 5648141/75000000 = 0.0753085467  (= Gamma_8 to a
          1.33e-8 sliver)
-       mu_bottleneck - mu_cct = 39023/60000000 = 0.0006503833... (EXACT)
+       mu_bottleneck - mu_ddt = 39023/60000000 = 0.0006503833... (EXACT)
 
-Since mu_bottleneck > mu_cct strictly at BOTH k, forcing sigma(e) = mu_cct on
-cct's edges (via ANY choice of Psi whatsoever) FORCES at least one edge of
-the bottleneck cycle to sigma(e) >= mu_bottleneck > mu_cct -- i.e. negative
-slack of EXACTLY mu_bottleneck - mu_cct, no numerical search needed to see
+Since mu_bottleneck > mu_ddt strictly at BOTH k, forcing sigma(e) = mu_ddt on
+ddt's edges (via ANY choice of Psi whatsoever) FORCES at least one edge of
+the bottleneck cycle to sigma(e) >= mu_bottleneck > mu_ddt -- i.e. negative
+slack of EXACTLY mu_bottleneck - mu_ddt, no numerical search needed to see
 this fails. The competing cycle that "absorbs" the negative slack is
-therefore, exactly as documented, (cttt)^inf at k=7 and (ctt)^inf at k=8 --
+therefore, exactly as documented, (dttt)^inf at k=7 and (dtt)^inf at k=8 --
 now derived directly rather than just cited.
 
 FINDING 2 (structural clarification of the recipe itself) -- "equality on
-cct with non-negative slack elsewhere," if achieved by a FULL re-derivation
+ddt with non-negative slack elsewhere," if achieved by a FULL re-derivation
 (changing Q,R,Phi,Strategy, not just Psi), constitutes a complete proof of
-cct's global optimality ONLY IF the resulting common value G equals
-gap(cct) = cctDensity - 4/3 = 0.0698975... EXACTLY -- not merely "some
-value where cct happens to be a tight cycle of that particular certificate."
-A recalibrated certificate whose forced value G is larger than gap(cct) is
-just a differently-shaped epsilon-certificate (bottleneck relocated to cct)
--- it does not upgrade the bracket. And G = gap(cct) exactly, at finite
-k=7/8, is precisely the open "does lim Gamma_k = gap(cct)?" question that
+ddt's global optimality ONLY IF the resulting common value G equals
+gap(ddt) = ddtDensity - 4/3 = 0.0698975... EXACTLY -- not merely "some
+value where ddt happens to be a tight cycle of that particular certificate."
+A recalibrated certificate whose forced value G is larger than gap(ddt) is
+just a differently-shaped epsilon-certificate (bottleneck relocated to ddt)
+-- it does not upgrade the bracket. And G = gap(ddt) exactly, at finite
+k=7/8, is precisely the open "does lim Gamma_k = gap(ddt)?" question that
 the 12 July push already found has no known convergence-rate route. So the
 recipe, done properly, does not sidestep the open problem's real difficulty;
 it re-poses it as a constrained search for the same target value.
@@ -96,17 +96,17 @@ it re-poses it as a constrained search for the same target value.
 FINDING 3 (small-scale, k=3, hands-on exploration; see the session notes
 for the exact Wolfram calls) -- attempting the FULL recipe (re-deriving
 Q,R,Phi,Strategy, not just Psi) at a small, tractable scale surfaced two
-things: (a) restricting the windowed transfer-SDP to JUST cct's own 3-node
+things: (a) restricting the windowed transfer-SDP to JUST ddt's own 3-node
 cycle in isolation (dropping the de Bruijn branching, i.e. only ever
-offering the one out-edge that continues the cct pattern) reproduces
-theta-bar(cct) = 1.40323087 correctly via the Q,R/Schur-complement part
+offering the one out-edge that continues the ddt pattern) reproduces
+theta-bar(ddt) = 1.40323087 correctly via the Q,R/Schur-complement part
 (to ~9 significant digits, an independent cross-check of the documented
 320-digit DFT-symbol value via a completely different, position-space
 method) but does NOT reproduce the correct alpha-density 4/3 via the Phi/
 Strategy mean-payoff-game part (it converges instead to rate 1, regardless
 of which of 3 different strategy seeds was tried) -- because Lemma B's
 alpha-density>=4/3 guarantee is inherently a statement requiring the FULL
-BRANCHING graph (both "c" and "t" options at every DP phase), which a
+BRANCHING graph (both "d" and "t" options at every DP phase), which a
 3-edge-only reduction structurally cannot express; and (b) reproducing the
 FULL de Bruijn-3 graph's joint SDP + policy-iteration (8 nodes, 16 edges,
 matching GenerateEpsilonCertificate9.wl's own approach) hit the EXACT SAME
@@ -120,7 +120,7 @@ out of the requested focus).
 
 WHAT WAS NOT ATTEMPTED AND WHY -- a genuine re-derivation of Q,R,Phi,Strategy
 at the ACTUAL k=7 (128 nodes/256 edges) or k=8 (256 nodes/512 edges) scale,
-with cct's cycle forced tight, was not attempted, for three compounding
+with ddt's cycle forced tight, was not attempted, for three compounding
 reasons: (1) the only live Wolfram execution channel available in this
 session was a disconnected, stateless sandboxed cloud kernel (confirmed via
 $CloudConnected/$MachineName/FileNames checks) with a hard ~25-27s wall-clock
@@ -149,11 +149,11 @@ MOST PROMISING NEXT STEP: fix GenerateEpsilonCertificate9.wl's policy-
 iteration convergence bug first (now confirmed to bite at k=3 as well as
 k=4 -- see the "reproduce the k=3 bug" note in the accompanying session
 report), validate it reproduces the KNOWN Gamma_2..Gamma_8 sequence exactly,
-THEN attempt the zero-slack-on-cct recalibration (as an ADDED equality
+THEN attempt the zero-slack-on-ddt recalibration (as an ADDED equality
 constraint on the joint SDP, not a post-hoc Psi patch) at increasing k on a
 machine/session with enough sustained compute to run a real k=7/8 solve in
 one sitting -- and, per Finding 2, evaluate success only by checking whether
-the resulting forced value equals gap(cct) exactly, not merely by checking
+the resulting forced value equals gap(ddt) exactly, not merely by checking
 that a fixed point was reached.
 """
 import os
@@ -176,7 +176,7 @@ def dpTransfer(letter):
                             and not (s1 == 1 and s2 == 1)
                             and not (s2 == 1 and s3 == 1)
                             and not (s3 == 1 and dpStates[i][1] == 1)):
-                        out = (s1, s2) if letter == "c" else (s2, s1)
+                        out = (s1, s2) if letter == "d" else (s2, s1)
                         j = dpStates.index(out)
                         val = s1 + s2 + s3
                         if T[i][j] is None or val > T[i][j]:
@@ -184,7 +184,7 @@ def dpTransfer(letter):
     return T
 
 
-Tc = dpTransfer("c")
+Td = dpTransfer("d")
 Tt = dpTransfer("t")
 
 
@@ -197,7 +197,7 @@ def posSigma(CE, e):
     """Verbatim (Python) port of CaseStudies.wl's posSigma[CE_][e_]:
     sigma(e) = d(x) - r(e) + Psi(x) - Psi(w), all EXACT Fraction arithmetic."""
     w, x = e
-    T = Tc if w[-1] == "c" else Tt
+    T = Td if w[-1] == "d" else Tt
     strat = CE["Strategy"]
     phi = CE["Phi"]
     vals = []
@@ -252,21 +252,21 @@ def full_report(CE, name, bottleneck_word):
     print("  max sigma(e) =", worst_val, "=", float(worst_val), "at", worst_e,
           " (== Gamma exactly:", worst_val == gamma, ", <= Gamma everywhere:", all_ok, ")")
 
-    mu_cct, cct_sigmas, cct_edges = cycle_mean(CE, "cct")
-    print("  cct cycle", cct_edges, "sigma values", [float(v) for v in cct_sigmas])
-    print("  mu_cct =", mu_cct, "=", float(mu_cct), " Gamma - mu_cct (slack) =",
-          gamma - mu_cct, "=", float(gamma - mu_cct))
+    mu_ddt, ddt_sigmas, ddt_edges = cycle_mean(CE, "ddt")
+    print("  ddt cycle", ddt_edges, "sigma values", [float(v) for v in ddt_sigmas])
+    print("  mu_ddt =", mu_ddt, "=", float(mu_ddt), " Gamma - mu_ddt (slack) =",
+          gamma - mu_ddt, "=", float(gamma - mu_ddt))
 
     mu_bot, bot_sigmas, bot_edges = cycle_mean(CE, bottleneck_word)
     print("  bottleneck", repr(bottleneck_word), "sigma values", [float(v) for v in bot_sigmas])
     print("  mu_bottleneck =", mu_bot, "=", float(mu_bot), " Gamma - mu_bottleneck =",
           gamma - mu_bot, "=", float(gamma - mu_bot), "(rationalization sliver)")
 
-    forced_violation = mu_bot - mu_cct
-    print("  ==> forcing sigma=mu_cct on cct via Psi alone forces >=",
+    forced_violation = mu_bot - mu_ddt
+    print("  ==> forcing sigma=mu_ddt on ddt via Psi alone forces >=",
           float(forced_violation), "negative slack on", repr(bottleneck_word), "(EXACT:",
           forced_violation, ")")
-    return dict(gamma=gamma, mu_cct=mu_cct, mu_bot=mu_bot, all_ok=all_ok,
+    return dict(gamma=gamma, mu_ddt=mu_ddt, mu_bot=mu_bot, all_ok=all_ok,
                 forced_violation=forced_violation)
 
 
@@ -275,19 +275,19 @@ if __name__ == "__main__":
     CE7 = load_certificate(os.path.join(here, "..", "EpsilonCertificate.wl"))
     CE8 = load_certificate(os.path.join(here, "..", "EpsilonCertificate8.wl"))
 
-    r7 = full_report(CE7, "EpsilonCertificate (k=7)", "cttt")
-    r8 = full_report(CE8, "EpsilonCertificate8 (k=8)", "ctt")
+    r7 = full_report(CE7, "EpsilonCertificate (k=7)", "dttt")
+    r8 = full_report(CE8, "EpsilonCertificate8 (k=8)", "dtt")
 
     print("=" * 70, "\nPsi-independence check (telescoping sanity check):")
-    for CE, name, word in [(CE7, "k=7", "cct"), (CE7, "k=7", "cttt"),
-                            (CE8, "k=8", "cct"), (CE8, "k=8", "ctt")]:
+    for CE, name, word in [(CE7, "k=7", "ddt"), (CE7, "k=7", "dttt"),
+                            (CE8, "k=8", "ddt"), (CE8, "k=8", "dtt")]:
         ok, mu0, mu1 = psi_independence_check(CE, word, seed=hash((name, word)) & 0xffff)
         print(f"  {name} {word!r}: mu={float(mu0):.10f} (unperturbed) vs "
               f"{float(mu1):.10f} (Psi randomly perturbed) -- identical={ok}")
 
     print("=" * 70, "\nComparison to the true continuum value (320-digit numeric, NOT")
     print("known exactly rational/algebraic -- see QUANTUM_CONTEXTUALITY.md sec.6):")
-    gap_cct = Fraction(140323086923899745105894248, 10 ** 26) - Fraction(4, 3)
+    gap_ddt = Fraction(140323086923899745105894248, 10 ** 26) - Fraction(4, 3)
     for r, name in [(r7, "k=7"), (r8, "k=8")]:
-        print(f"  {name}: Gamma-gap(cct)={float(r['gamma']-gap_cct):.8f}  "
-              f"mu_cct-gap(cct)={float(r['mu_cct']-gap_cct):.8f}")
+        print(f"  {name}: Gamma-gap(ddt)={float(r['gamma']-gap_ddt):.8f}  "
+              f"mu_ddt-gap(ddt)={float(r['mu_ddt']-gap_ddt):.8f}")

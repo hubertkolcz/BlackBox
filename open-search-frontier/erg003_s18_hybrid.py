@@ -227,7 +227,7 @@ def _run_ranged_worker(args):
     try:
         prev = load_chunk_checkpoint(i, c)
         if prev is not None and prev.get("status") in ("NO", "YES"):
-            return {"i": i, "c": c, **prev, "already_terminal": True}
+            return {"i": i, "d": c, **prev, "already_terminal": True}
         i_hi = prev.get("resume_i_hi", i_hi_init) if prev else i_hi_init
         prev_wall = prev.get("wall_seconds", 0) if prev else 0
         prev_nodes = prev.get("nodes", 0) if prev else 0
@@ -239,7 +239,7 @@ def _run_ranged_worker(args):
         r = sol.decide_ranged(vec, maxsec=maxsec, i_lo=i_lo, i_hi=i_hi, order=order, colornum=colornum)
         dt = time.time() - t0
         nodes_this_stage = r["nodes"]
-        out = {"i": i, "c": c, "family": list(vec), "status": r["status"],
+        out = {"i": i, "d": c, "family": list(vec), "status": r["status"],
                "nodes": nodes_this_stage + prev_nodes, "i_lo": i_lo, "i_hi_orig": i_hi_init,
                "chunk_exhausted": r.get("chunk_exhausted"), "resume_i_hi": r.get("resume_i_hi"),
                "wall_seconds": round(dt + prev_wall, 1)}
@@ -262,7 +262,7 @@ def _run_ranged_worker(args):
     except Exception as ex:
         _append_telemetry(label, {"ts": now_iso(), "family": i, "chunk": c, "status": "ERROR",
                                    "err": repr(ex), "stage_seconds": round(time.time() - t_stage0, 2)})
-        return {"i": i, "c": c, "status": "ERROR", "err": repr(ex)}
+        return {"i": i, "d": c, "status": "ERROR", "err": repr(ex)}
 
 
 def build_dashboard(t_run_start):

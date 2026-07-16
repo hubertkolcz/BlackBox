@@ -30,9 +30,9 @@ SQRT5 = math.sqrt(5.0)
 Q5 = 1.0 / SQRT5                       # per-event probability, KCBS maximum
 CF_C5 = 2.0 * SQRT5 - 4.0              # exact CF of the quantum pentagon table
 VCRIT_C5 = (5.0 + 3.0 * SQRT5) / 20.0  # single-block visibility threshold
-TAU_STAR = 1.3767177459158590          # Root[49x^3-128x^2-75x+218, 2] (trans)
-CCT_DENSITY = 1.40323086923899745      # certified continuum optimum (cct)
-ALPHA_DENS_T = 4.0 / 3.0               # alpha density, trans & cct families
+TAU_STAR = 1.3767177459158590          # Root[49x^3-128x^2-75x+218, 2] (twisted)
+DDT_DENSITY = 1.40323086923899745      # certified continuum optimum (ddt)
+ALPHA_DENS_T = 4.0 / 3.0               # alpha density, twisted & ddt families
 
 RESULTS = {}
 
@@ -308,14 +308,14 @@ def glued_pentagram(u, v):
 def mesh_geometry(word):
     """Common-frame (single-R^3, leaf-confined) compilation of the mesh with
     gluing word: block k+1 shares block k's exit edge (cycle positions q2,q3),
-    entry order per letter ('c' straight / 't' swapped), mirroring
+    entry order per letter ('d' straight / 't' swapped), mirroring
     pentagon_ring_word. Returns (blocks, holonomy rotation G_L that the ring
     closure would demand to equal the identity)."""
     blocks = [[p.copy() for p in P_STD]]
     G = np.eye(3)
     for letter in word:
         q = blocks[-1]
-        u, v = (q[1], q[2]) if letter == "c" else (q[2], q[1])
+        u, v = (q[1], q[2]) if letter == "d" else (q[2], q[1])
         verts, G = glued_pentagram(u, v)
         blocks.append(verts)
     return blocks[:-1] if word else blocks, G
@@ -383,16 +383,16 @@ def stage_sanity(quick=False):
             checks.append(abs(r["Theta"] - 8.101) < 5e-3)
     out["chain_theta_1_5"] = chain_theta
     # alpha laws
-    a_trans = all(lts.alpha_ring_word("t", N) == 4 * N // 3
+    a_twisted = all(lts.alpha_ring_word("t", N) == 4 * N // 3
                   for N in (3, 6, 9, 12, 30))
-    a_cis = all(lts.alpha_ring_word("c", N) == 3 * N // 2
+    a_direct = all(lts.alpha_ring_word("d", N) == 3 * N // 2
                 for N in (4, 6, 8, 10, 30))
-    checks += [a_trans, a_cis]
-    log(f"  alpha(trans ring)=floor(4N/3): {a_trans}   "
-        f"alpha(cis ring)=floor(3N/2): {a_cis}")
-    # trans density limit
-    rs = lts.ring_theta_symmetric(1000, family="trans")
-    anchor("theta(trans 1000)/1000", rs["Theta"] / 1000, TAU_STAR, 1e-4)
+    checks += [a_twisted, a_direct]
+    log(f"  alpha(twisted ring)=floor(4N/3): {a_twisted}   "
+        f"alpha(direct ring)=floor(3N/2): {a_direct}")
+    # twisted density limit
+    rs = lts.ring_theta_symmetric(1000, family="twisted")
+    anchor("theta(twisted 1000)/1000", rs["Theta"] / 1000, TAU_STAR, 1e-4)
     # CF and V_crit of the single block (validates the LP machinery)
     n5, e5 = lts.cycle_graph(5)
     ncf, m = ncf_lp(n5, e5)
@@ -436,10 +436,10 @@ def stage_sanity(quick=False):
 def stage_h1(quad_edges, quick=False):
     log("\n== H1: extensivity (theta/N convergence; CF density) ==")
     out = {"theta_density": {}, "cf": {}}
-    # theta densities: trans & cis via the exact Z_N symmetry route,
-    # cct via the certified chordal route
+    # theta densities: twisted & direct via the exact Z_N symmetry route,
+    # ddt via the certified chordal route
     sizes_sym = [100, 1000, 10000] if quick else [100, 1000, 10000, 100000]
-    for fam in ("trans", "cis"):
+    for fam in ("twisted", "direct"):
         rows = []
         for N in sizes_sym:
             r = lts.ring_theta_symmetric(N, family=fam)
@@ -448,25 +448,25 @@ def stage_h1(quad_edges, quick=False):
             log(f"  {fam:5s} N={N:6d}  theta/N={r['Theta']/N:.9f}  "
                 f"certgap={r['CertGap']:.1e}  {r['Time']:.1f}s")
         out["theta_density"][fam] = rows
-    cct_sizes = [99, 300] if quick else [99, 300, 999]
+    ddt_sizes = [99, 300] if quick else [99, 300, 999]
     rows = []
-    for L in cct_sizes:
-        n, edges = lts.pentagon_ring_word("cct", L // 3)
+    for L in ddt_sizes:
+        n, edges = lts.pentagon_ring_word("ddt", L // 3)
         t0 = time.perf_counter()
         r = lts.chordal_theta(n, edges)
         rows.append({"N": L, "theta": r["Theta"], "density": r["Theta"] / L,
                      "certgap": r["CertGap"],
                      "time": time.perf_counter() - t0})
-        log(f"  cct   N={L:6d}  theta/N={r['Theta']/L:.9f}  "
+        log(f"  ddt   N={L:6d}  theta/N={r['Theta']/L:.9f}  "
             f"certgap={r['CertGap']:.1e}  {rows[-1]['time']:.1f}s")
-    out["theta_density"]["cct"] = rows
-    out["limits"] = {"trans": TAU_STAR, "cis": 1.5, "cct": CCT_DENSITY}
-    dev_t = abs(out["theta_density"]["trans"][-1]["density"] - TAU_STAR)
-    dev_c = abs(out["theta_density"]["cis"][-1]["density"] - 1.5)
-    dev_w = abs(rows[-1]["density"] - CCT_DENSITY)
-    log(f"  deviations from limits: trans {dev_t:.2e} (tau*), "
-        f"cis {dev_c:.2e} (3/2), cct {dev_w:.2e} (1.40323087)")
-    out["limit_deviations"] = {"trans": dev_t, "cis": dev_c, "cct": dev_w}
+    out["theta_density"]["ddt"] = rows
+    out["limits"] = {"twisted": TAU_STAR, "direct": 1.5, "ddt": DDT_DENSITY}
+    dev_t = abs(out["theta_density"]["twisted"][-1]["density"] - TAU_STAR)
+    dev_c = abs(out["theta_density"]["direct"][-1]["density"] - 1.5)
+    dev_w = abs(rows[-1]["density"] - DDT_DENSITY)
+    log(f"  deviations from limits: twisted {dev_t:.2e} (tau*), "
+        f"direct {dev_c:.2e} (3/2), ddt {dev_w:.2e} (1.40323087)")
+    out["limit_deviations"] = {"twisted": dev_t, "direct": dev_c, "ddt": dev_w}
 
     # CF part: exact AB LP over independent-set columns at 1-6 blocks.
     # NOTE (definitional): CF is a fraction, CF <= 1 by definition, so the
@@ -474,9 +474,9 @@ def stage_h1(quad_edges, quick=False):
     # extensive certificate is -ln NCF, whose per-block density we report.
     log("  CF of the glued block-local quantum table (exact LP):")
     meshes = [("chain", nb, lts.pentagon_chain(nb)) for nb in range(1, 6)]
-    meshes += [("trans-ring", N, lts.pentagon_ring(N)) for N in (3, 4, 5)]
-    meshes += [("cis-ring", N, lts.pentagon_ring_cis(N)) for N in (3, 4, 5)]
-    meshes += [("cct-ring", L, lts.pentagon_ring_word("cct", L // 3))
+    meshes += [("twisted-ring", N, lts.pentagon_ring(N)) for N in (3, 4, 5)]
+    meshes += [("direct-ring", N, lts.pentagon_ring_direct(N)) for N in (3, 4, 5)]
+    meshes += [("ddt-ring", L, lts.pentagon_ring_word("ddt", L // 3))
                for L in (3, 6)]
     meshes += [("quad", 4, (8, quad_edges))]
     cf_rows = []
@@ -498,7 +498,7 @@ def stage_h1(quad_edges, quick=False):
 
 # ---------------------------------------------------------------------------
 # stage H2: mesh-design -- gap density maximized by two-fold covers,
-# vanishes on even single-edge (cis) chains
+# vanishes on even single-edge (direct) chains
 # ---------------------------------------------------------------------------
 
 def stage_h2(quad_edges, quick=False):
@@ -506,13 +506,13 @@ def stage_h2(quad_edges, quick=False):
     out = {}
     checks = []
 
-    log("  cis-ring pinch check (design-doc claim: 'even N' pinches -- tested finer below):")
+    log("  direct-ring pinch check (design-doc claim: 'even N' pinches -- tested finer below):")
     pinch_rows = []
     for N in (3, 4, 5, 6, 7, 8, 9, 10):
-        n, edges = lts.pentagon_ring_cis(N)
+        n, edges = lts.pentagon_ring_direct(N)
         r = lts.chordal_theta(n, edges)
         a = alpha_exact(n, edges)
-        # alpha_star_lp assumes a triangle-free graph; N=3 cis-ring has a short chord
+        # alpha_star_lp assumes a triangle-free graph; N=3 direct-ring has a short chord
         # that closes a triangle, so alpha* is not defined by this LP there -- skip
         # cleanly rather than let an internal assertion abort the whole stage.
         if triangle_free(n, edges):
@@ -525,7 +525,7 @@ def stage_h2(quad_edges, quick=False):
         pinches = abs(gap) < 1e-4
         pinch_rows.append({"N": N, "n": n, "alpha": a, "theta": r["Theta"],
                             "alphaStar": astar, "gap": gap, "pinches": pinches})
-        log(f"    cis-ring N={N:3d}  alpha={a}  theta={r['Theta']:.6f}  "
+        log(f"    direct-ring N={N:3d}  alpha={a}  theta={r['Theta']:.6f}  "
             f"alpha*={astar_str}  gap={gap:+.6f}  {'PINCH' if pinches else 'gap'}")
     # Refinement over the design doc's own wording: the data shows pinch at N=3 and
     # every even N>=4, but a NON-zero (slowly growing) gap at every odd N>=5 -- i.e.
@@ -535,31 +535,31 @@ def stage_h2(quad_edges, quick=False):
     for row in pinch_rows:
         expected_pinch = (row["N"] == 3) or (row["N"] % 2 == 0)
         checks.append(row["pinches"] == expected_pinch)
-    out["cis_pinch"] = pinch_rows
-    out["cis_pinch_rule"] = (
+    out["direct_pinch"] = pinch_rows
+    out["direct_pinch_rule"] = (
         "pinches at N=3 and all even N>=4; carries a small, slowly-growing gap at "
         "every odd N>=5 -- a refinement of the design doc's 'even N' wording, found "
         "empirically here, not previously documented in QUANTUM_CONTEXTUALITY.md."
     )
 
-    log("  trans-ring contrast (extensive gap, does NOT pinch):")
-    trans_rows = []
+    log("  twisted-ring contrast (extensive gap, does NOT pinch):")
+    twisted_rows = []
     for N in (4, 6, 8):
         n, edges = lts.pentagon_ring(N)
         r = lts.chordal_theta(n, edges)
         a = alpha_exact(n, edges)
         gap = r["Theta"] - a
-        trans_rows.append({"N": N, "n": n, "alpha": a, "theta": r["Theta"], "gap": gap})
-        log(f"    trans-ring N={N:3d}  alpha={a}  theta={r['Theta']:.6f}  "
+        twisted_rows.append({"N": N, "n": n, "alpha": a, "theta": r["Theta"], "gap": gap})
+        log(f"    twisted-ring N={N:3d}  alpha={a}  theta={r['Theta']:.6f}  "
             f"gap={gap:.4f}  (density {gap / N:.6f})")
         # threshold set at 0.01, not 0.1: N=6's gap (0.0979) is real (not a pinch --
-        # compare cis-ring pinches at ~1e-8) but noticeably smaller than N=4,8's,
+        # compare direct-ring pinches at ~1e-8) but noticeably smaller than N=4,8's,
         # because N=6 hits the alpha=floor(4N/3) formula's exact (no-remainder) case
-        # -- a genuine N mod 3 modulation of the trans-ring gap magnitude, distinct
-        # from the cis-ring pinch/no-pinch split in H2's other check. Not chased
+        # -- a genuine N mod 3 modulation of the twisted-ring gap magnitude, distinct
+        # from the direct-ring pinch/no-pinch split in H2's other check. Not chased
         # further here; flagged as an observation, not a falsification-relevant claim.
         checks.append(gap > 0.01)
-    out["trans_contrast"] = trans_rows
+    out["twisted_contrast"] = twisted_rows
 
     n, edges = 8, quad_edges
     r = lts.chordal_theta(n, edges)
@@ -571,23 +571,26 @@ def stage_h2(quad_edges, quick=False):
 
     out["conclusion"] = (
         "H2 CONFIRMED, with two refinements the original design doc did not anticipate. "
-        "(i) Gap density is controlled by the gluing ORIENTATION (cis vs. trans), not "
-        "simply by 'two-fold covers vs. single-edge chains'. (ii) Even that cis/trans "
+        "(i) Gap density is controlled by the gluing ORIENTATION (direct vs. twisted), not "
+        "simply by 'two-fold covers vs. single-edge chains'. (ii) Even that direct/twisted "
         "split needs a finer statement than 'even N pinches': the data above shows exact "
         "pinch (alpha=theta=alpha* to <1e-4) at N=3 and every even N>=4, but a small, "
         "slowly-growing residual gap at every odd N>=5 (0.236, 0.318, 0.360, 0.386 for "
         "N=5,7,9,11) -- N=3 is a genuine small-ring exception, not an instance of the "
-        "'even N' rule. Trans rings carry the real extensive gap (density "
+        "'even N' rule. Twisted rings carry the real extensive gap (density "
         "tau*=1.3767177459, a proven closed form, cf. Root[49x^3-128x^2-75x+218]); Quad-C5's "
         "two-fold cover concentrates the gap on 8 vertices, matching the published benchmark "
         "arXiv:2605.12828. The fully optimal periodic motif is neither pure family: the "
-        "binary word (cct)^inf beats pure-trans by 61% (gap 0.0698975/block), proven optimal "
-        "among periods <=12 with a universal epsilon-optimality certificate "
-        "gap(w) <= 0.07706235 for EVERY gluing word. That result is already established "
+        "binary word (ddt)^inf beats pure-twisted by 61% (gap 0.0698975/block), proven optimal "
+        "among all binary necklaces up to period 18 (~29,000 words; word_census.py Pmax=18) "
+        "with a universal epsilon-optimality certificate gap(w) <= Gamma_10 = 0.0714575 for "
+        "EVERY gluing word (2026-07-13 K10 strategy-iteration run, "
+        "CONVERGENCE-ANALYSIS-2026-07-13.md, superseding the original Gamma_7 = 0.07706235). "
+        "That result is already established "
         "independently in this project's black-box repo (CaseStudies.wl Sec. D3, "
-        "EpsilonCertificate.wl, kcbs_epilogue.wl) via a 320-digit KKT computation + LLL "
-        "integer-relation exclusion -- not re-derived here, only cross-checked against the "
-        "cheaper claims (pinch rule, trans contrast, Quad-C5 gap) above. The odd-N residual "
+        "EpsilonCertificate*.wl, kcbs_epilogue.wl; the period-<=12 core via a 320-digit KKT "
+        "computation + LLL integer-relation exclusion) -- not re-derived here, only cross-checked against the "
+        "cheaper claims (pinch rule, twisted contrast, Quad-C5 gap) above. The odd-N residual "
         "is a new observation of this session, not previously in QUANTUM_CONTEXTUALITY.md; "
         "flagged as a small open loose end, not chased further here."
     )
@@ -659,14 +662,14 @@ def stage_h3(quick=False):
 def stage_h4(quick=False):
     log("\n== H4: noise threshold at mesh scale ==")
     out = {"vcrit": [], "single_block_anchor": VCRIT_C5}
-    families = [("chain", lts.pentagon_chain), ("trans-ring", lts.pentagon_ring),
-                ("cis-ring", lts.pentagon_ring_cis)]
+    families = [("chain", lts.pentagon_chain), ("twisted-ring", lts.pentagon_ring),
+                ("direct-ring", lts.pentagon_ring_direct)]
     sizes = [1, 2, 3] if quick else [1, 2, 3, 4, 5]
-    # cis-ring additionally gets one odd N (5) even in --quick, to show the H2
+    # direct-ring additionally gets one odd N (5) even in --quick, to show the H2
     # pinch/no-pinch split (N=3,4 pinch; N=5 does not) directly in V_crit terms.
-    cis_sizes = sorted(set(sizes) | {5})
+    direct_sizes = sorted(set(sizes) | {5})
     for fam_name, builder in families:
-        use_sizes = cis_sizes if fam_name == "cis-ring" else sizes
+        use_sizes = direct_sizes if fam_name == "direct-ring" else sizes
         for N in use_sizes:
             if fam_name != "chain" and N < 3:
                 continue
@@ -675,17 +678,17 @@ def stage_h4(quick=False):
             out["vcrit"].append({"family": fam_name, "N": N, "n_vertices": n, "V_crit": vc})
             log(f"    {fam_name:10s} N={N}  n={n:3d}  V_crit={vc:.7f}  "
                 f"(single-block anchor {VCRIT_C5:.7f}, diff {vc - VCRIT_C5:+.2e})")
-    log("  reading: chain/trans-ring V_crit is exactly the single-block anchor at every N "
+    log("  reading: chain/twisted-ring V_crit is exactly the single-block anchor at every N "
         "tested (composition adds no tighter cross-block constraint than a single pentagon's "
-        "own). cis-ring V_crit collapses to ~0 at N=3, exactly where H2 found alpha=theta "
+        "own). direct-ring V_crit collapses to ~0 at N=3, exactly where H2 found alpha=theta "
         "(already classically saturated there, so there is no quantum-only region left to "
         "protect from noise), and recovers the full single-block value at N=5, exactly where "
         "H2 found a nonzero residual gap. H4 and H2 are thus the same underlying fact seen "
         "from two angles at the tested points, not two independent confirmations -- noted "
         "honestly rather than double-counted.")
     out["conclusion"] = (
-        "H4 CONFIRMED for chain/trans-ring (V_crit invariant under composition, matching "
-        "the single-block anchor to machine precision); cis-ring's V_crit tracks H2's "
+        "H4 CONFIRMED for chain/twisted-ring (V_crit invariant under composition, matching "
+        "the single-block anchor to machine precision); direct-ring's V_crit tracks H2's "
         "pinch/no-pinch pattern exactly (zero exactly when alpha=theta, positive exactly "
         "when there is a residual gap), which is a consistency check between H2 and H4 "
         "rather than an independent new result for the pinching cases."
@@ -707,9 +710,9 @@ def _mesh_block_edges(motif, nb):
     order used by the compilation-gauge sweep below)."""
     if motif == "chain":
         return [(i, i + 1) for i in range(nb - 1)]
-    if motif in ("trans-ring", "cis-ring"):
-        # cis-ring and trans-ring are glued on the SAME block topology (an
-        # N-cycle): pentagon_ring/pentagon_ring_cis differ only in gluing
+    if motif in ("twisted-ring", "direct-ring"):
+        # direct-ring and twisted-ring are glued on the SAME block topology (an
+        # N-cycle): pentagon_ring/pentagon_ring_direct differ only in gluing
         # ORIENTATION (glued_pentagram's entry order), not which blocks are
         # adjacent -- this model sees only block-adjacency, so it cannot
         # distinguish them by construction (structural test A below).
@@ -829,7 +832,7 @@ def stage_h5(quick=False):
         "(dla_common) nor zero cross-talk (dla_blockdiag). theta_c = k, the "
         "number of the mesh's own gluing-point couplers 'installed' so far, "
         "in the mesh's natural sequential assembly order (chain: 0-1,1-2,..; "
-        "ring: same, closing edge last -- cis/trans share this block graph, "
+        "ring: same, closing edge last -- direct/twisted share this block graph, "
         "differing only in gluing angle, which this model cannot see by "
         "construction). Fusing edge (i,j) merges i,j into one shared "
         "collective so(3) frame. DLA(k) is the REAL numerical iterated-"
@@ -855,7 +858,7 @@ def stage_h5(quick=False):
     log("\n  -- gate: exact endpoint recovery (theta_c=0 -> dla_blockdiag; "
         "theta_c=max -> dla_common) --")
     curves = {}
-    for mname in ("chain", "trans-ring", "cis-ring"):
+    for mname in ("chain", "twisted-ring", "direct-ring"):
         for N in sizes:
             edges = _mesh_block_edges(mname, N)
             nE = len(edges)
@@ -872,23 +875,23 @@ def stage_h5(quick=False):
                 f"DLA(end)==common({common_dla}):{okend}  monotone={mono}")
     out["dla_curves"] = {f"{m}_N{n}": v for (m, n), v in curves.items()}
 
-    log("\n  -- structural test A: cis-ring vs trans-ring (identical block "
+    log("\n  -- structural test A: direct-ring vs twisted-ring (identical block "
         "topology, different gluing angle) -- predict IDENTICAL "
         "DLA(theta_c) curves despite CF density differing (H2) --")
     testA = {}
     for N in sizes:
-        same = curves[("trans-ring", N)] == curves[("cis-ring", N)]
+        same = curves[("twisted-ring", N)] == curves[("direct-ring", N)]
         checks.append(same)
         testA[N] = same
-        log(f"    N={N}  trans={curves[('trans-ring', N)]}  "
-            f"cis={curves[('cis-ring', N)]}  identical={same}")
-    out["structural_test_A_cis_trans_identical"] = testA
+        log(f"    N={N}  twisted={curves[('twisted-ring', N)]}  "
+            f"direct={curves[('direct-ring', N)]}  identical={same}")
+    out["structural_test_A_direct_twisted_identical"] = testA
 
     log("\n  -- structural test B: ring saturates at a SMALLER edge-fraction "
         "than chain (chain is a tree -- every edge essential; ring carries "
         "one redundant, cycle-closing edge) --")
     satfrac = {}
-    for mname in ("chain", "trans-ring", "cis-ring"):
+    for mname in ("chain", "twisted-ring", "direct-ring"):
         for N in sizes:
             dims = curves[(mname, N)]
             nE = len(dims) - 1
@@ -896,20 +899,20 @@ def stage_h5(quick=False):
             satfrac[(mname, N)] = k_star / nE
     testB = {}
     for N in sizes:
-        ok = satfrac[("trans-ring", N)] < satfrac[("chain", N)]
+        ok = satfrac[("twisted-ring", N)] < satfrac[("chain", N)]
         checks.append(ok)
         testB[N] = {"chain_frac": satfrac[("chain", N)],
-                    "ring_frac": satfrac[("trans-ring", N)],
+                    "ring_frac": satfrac[("twisted-ring", N)],
                     "ring_lt_chain": ok}
         log(f"    N={N}  chain_frac={satfrac[('chain', N)]:.4f}  "
-            f"ring_frac={satfrac[('trans-ring', N)]:.4f}  ring<chain:{ok}")
+            f"ring_frac={satfrac[('twisted-ring', N)]:.4f}  ring<chain:{ok}")
     out["structural_test_B_saturation_fraction"] = testB
 
     log("\n  -- CF density (existing ncf_lp machinery, H1's own convention: "
         "-ln(NCF)/N -- reused as-is, not a new computation) --")
     cf_density = {}
-    mesh_builders = {"chain": lts.pentagon_chain, "trans-ring": lts.pentagon_ring,
-                     "cis-ring": lts.pentagon_ring_cis}
+    mesh_builders = {"chain": lts.pentagon_chain, "twisted-ring": lts.pentagon_ring,
+                     "direct-ring": lts.pentagon_ring_direct}
     for mname, builder in mesh_builders.items():
         for N in sizes:
             n, edges = builder(N)
@@ -921,19 +924,19 @@ def stage_h5(quick=False):
     out["cf_density"] = {f"{m}_N{n}": v for (m, n), v in cf_density.items()}
     log("  Observation (pre-existing fact, already visible in stage_h1's own "
         "unmodified output -- not new here): NCF is EXACTLY the single-block "
-        "value for chain and trans-ring at every N tested, so their "
+        "value for chain and twisted-ring at every N tested, so their "
         "-ln(NCF)/N density decays as ~1/N here rather than converging to a "
         "positive limit in this small-N window -- a further, independent "
         "reason (besides the compilation-gauge summary's own N-dependence) "
-        "that a raw cross-N correlation is confounded. cis-ring N=3 differs "
+        "that a raw cross-N correlation is confounded. direct-ring N=3 differs "
         "(contains a triangle -- already flagged in stage_h2).")
 
     log("\n  -- main correlation test: theta_c* = (edges needed to fully "
-        "fuse)/|E| vs CF density, across {chain,trans-ring,cis-ring} x "
+        "fuse)/|E| vs CF density, across {chain,twisted-ring,direct-ring} x "
         "N in {3,4,5} (9 points) --")
-    labels = [f"{m}-N{n}" for m in ("chain", "trans-ring", "cis-ring") for n in sizes]
-    xs = np.array([satfrac[(m, n)] for m in ("chain", "trans-ring", "cis-ring") for n in sizes])
-    ys = np.array([cf_density[(m, n)] for m in ("chain", "trans-ring", "cis-ring") for n in sizes])
+    labels = [f"{m}-N{n}" for m in ("chain", "twisted-ring", "direct-ring") for n in sizes]
+    xs = np.array([satfrac[(m, n)] for m in ("chain", "twisted-ring", "direct-ring") for n in sizes])
+    ys = np.array([cf_density[(m, n)] for m in ("chain", "twisted-ring", "direct-ring") for n in sizes])
     pear = float(np.corrcoef(xs, ys)[0, 1])
 
     def _spearman(a, b):
@@ -946,7 +949,7 @@ def stage_h5(quick=False):
     def _auc(dims):
         return sum(dims) / len(dims) / dims[0]
 
-    xs2 = np.array([_auc(curves[(m, n)]) for m in ("chain", "trans-ring", "cis-ring") for n in sizes])
+    xs2 = np.array([_auc(curves[(m, n)]) for m in ("chain", "twisted-ring", "direct-ring") for n in sizes])
     pear2 = float(np.corrcoef(xs2, ys)[0, 1])
     spear2 = _spearman(xs2, ys)
 
@@ -969,7 +972,7 @@ def stage_h5(quick=False):
         "glued multi-block meshes (mesh_geometry) -- ties to H5's "
         "'leaf-confined must show CF-certificate loss' clause --")
     leafcheck = []
-    for word in ("", "c", "t", "cc", "ct", "tt", "ccc", "ctc"):
+    for word in ("", "d", "t", "dd", "dt", "tt", "ddd", "dtd"):
         blocks, _ = mesh_geometry(word)
         span, dla = dla_common(blocks)
         leafcheck.append({"word": word, "nblocks": len(blocks),
@@ -1004,15 +1007,15 @@ def stage_h5(quick=False):
         f"DLA(k) steps monotonically from 3N (k=0, exactly dla_blockdiag, "
         f"verified exactly) down to 3 (k=|E|, exactly dla_common's own "
         f"dimension on N copies of the same block, verified exactly), for "
-        f"chain/trans-ring/cis-ring at N=3,4,5. Correlation test: at fixed "
-        f"block-adjacency topology, cis-ring and trans-ring give IDENTICAL "
+        f"chain/twisted-ring/direct-ring at N=3,4,5. Correlation test: at fixed "
+        f"block-adjacency topology, direct-ring and twisted-ring give IDENTICAL "
         f"DLA(theta_c) curves (this model sees only which blocks are "
         f"physically adjacent, not gluing angle) while their CF density "
         f"differs sharply at N=3 (0.383 vs 0.213) -- a direct, mechanistic "
         f"demonstration that DLA growth under a natural compilation model "
         f"and CF density answer DIFFERENT questions (coupling topology vs. "
         f"gluing geometry), not a coincidental non-result. Conversely, "
-        f"chain and trans-ring have PROVABLY DIFFERENT DLA(theta_c) curves "
+        f"chain and twisted-ring have PROVABLY DIFFERENT DLA(theta_c) curves "
         f"(ring saturates at a strictly smaller edge-fraction than chain "
         f"at every N tested, (N-1)/N vs 1.0, because a ring carries one "
         f"redundant cycle-closing edge a tree does not) YET IDENTICAL CF "

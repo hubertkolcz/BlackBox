@@ -85,7 +85,7 @@ openGrid = Grid[{
       "\[Bullet]  SAMPLING-HARDNESS caveat: poly-DLA \[DoubleLongRightArrow] efficient emulation "<>
       "only for algebra-supported observables; it does NOT preclude sampling hardness "<>
       "(Aaronson-Arkhipov). A distinct axis the map does not yet resolve.\n"<>
-      "\[Bullet]  cct-optimality sits INSIDE the mesh testbed for the resource axis \[LongDash] "<>
+      "\[Bullet]  ddt-optimality sits INSIDE the mesh testbed for the resource axis \[LongDash] "<>
       "it is off this map (a cell-interior detail, not a boundary)."],
       Background -> GrayLevel[0.965], FrameStyle -> None, RoundingRadius -> 6, FrameMargins -> 10],
       Alignment -> Left]}

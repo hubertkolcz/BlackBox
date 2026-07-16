@@ -61,7 +61,7 @@ RATIONALTOL = 10^-9;
 
 stamp["STAGE 0 start"];
 {tGraph, Null} = AbsoluteTiming[
-   nodes = StringJoin /@ Tuples[{"c", "t"}, K];
+   nodes = StringJoin /@ Tuples[{"d", "t"}, K];
    edges = Select[Tuples[nodes, 2], StringDrop[#[[1]], 1] === StringDrop[#[[2]], -1] &];];
 Print["[PROFILE] stage0 graph build : ", NumberForm[tGraph, {10, 3}], " s"];
 Print["de Bruijn-", K, ": ", Length[nodes], " nodes, ", Length[edges], " edges"];
@@ -74,12 +74,12 @@ dpStates = {{0, 0}, {1, 0}, {0, 1}};
 dpTransfer[letter_] := Module[{T = ConstantArray[-Infinity, {3, 3}], out, j},
    Do[If[! (dpStates[[i, 1]] == 1 && s1 == 1) && ! (s1 == 1 && s2 == 1) &&
         ! (s2 == 1 && s3 == 1) && ! (s3 == 1 && dpStates[[i, 2]] == 1),
-      out = If[letter === "c", {s1, s2}, {s2, s1}];
+      out = If[letter === "d", {s1, s2}, {s2, s1}];
       j = Position[dpStates, out][[1, 1]];
       T[[i, j]] = Max[T[[i, j]], s1 + s2 + s3]],
      {i, 3}, {s1, 0, 1}, {s2, 0, 1}, {s3, 0, 1}];
    T];
-Tc = dpTransfer["c"]; Tt = dpTransfer["t"];
+Td = dpTransfer["d"]; Tt = dpTransfer["t"];
 
 (* ------------------------------------------------------------------------- *)
 (* STAGE 1 setup: variables + static constraints (timed) *)
@@ -112,12 +112,12 @@ Print["[PROFILE] stage1 symbolic variable build : ", NumberForm[tVars, {10, 3}],
    edgeCons = Flatten[Table[
       Module[{w = e[[1]], x = e[[2]], b, rA, rB},
         b = StringTake[w, -1];
-        {rA, rB} = If[b === "c", {iu, iv}, {iv, iu}];
+        {rA, rB} = If[b === "d", {iu, iv}, {iv, iu}];
         {
          Qs[w][[ia, ia]] + Qs[x][[rA, rA]] + If[b === "t", Rs[x][[jv, jv]], 0] == 1,
-         Qs[w][[ib, ib]] + Rs[w][[jb, jb]] + Qs[x][[rB, rB]] + If[b === "c", Rs[x][[jv, jv]], 0] == 1,
+         Qs[w][[ib, ib]] + Rs[w][[jb, jb]] + Qs[x][[rB, rB]] + If[b === "d", Rs[x][[jv, jv]], 0] == 1,
          Qs[w][[ia, ip]] + Qs[x][[rA, ip]] + If[b === "t", Rs[x][[jv, jp]], 0] == 1,
-         Qs[w][[ib, ip]] + Rs[w][[jb, jp]] + Qs[x][[rB, ip]] + If[b === "c", Rs[x][[jv, jp]], 0] == 1
+         Qs[w][[ib, ip]] + Rs[w][[jb, jp]] + Qs[x][[rB, ip]] + If[b === "d", Rs[x][[jv, jp]], 0] == 1
         }],
       {e, edges}]];
    PSDMARGIN = 10^-6;
@@ -138,7 +138,7 @@ refNode = First[nodes];
 CanonicalPhi[strategy_] := Module[{potCons, tVar, tB, tS, sol},
    {tB, potCons} = AbsoluteTiming[Flatten[Table[
        Module[{w = e[[1]], x = e[[2]], sig, T},
-         T = If[edgeLetter[e] === "c", Tc, Tt];
+         T = If[edgeLetter[e] === "d", Td, Tt];
          sig = strategy[{s, e}];
          tVar <= T[[s, sig]] + phiVar[sig - 1, x] - phiVar[s - 1, w]],
        {e, edges}, {s, 1, 3}]]];
@@ -156,7 +156,7 @@ CanonicalPhi[strategy_] := Module[{potCons, tVar, tB, tS, sol},
 buildPotCons[strategy_] := Join[
    Flatten[Table[
      Module[{w = e[[1]], x = e[[2]], sig, T},
-       T = If[edgeLetter[e] === "c", Tc, Tt];
+       T = If[edgeLetter[e] === "d", Td, Tt];
        sig = strategy[{s, e}];
        rVar[e] <= T[[s, sig]] + phiVar[sig - 1, x] - phiVar[s - 1, w]],
      {e, edges}, {s, 1, 3}]],
@@ -177,24 +177,24 @@ SolveJoint[strategy_] := Module[{potCons, tB, tS, sol},
 
 Improve[strategy_, canonSol_] := Association[Flatten[Table[
     Module[{w = e[[1]], x = e[[2]], T, valid, vals},
-      T = If[edgeLetter[e] === "c", Tc, Tt];
+      T = If[edgeLetter[e] === "d", Td, Tt];
       valid = validSigs[T, s];
       vals = (T[[s, #]] + (phiVar[# - 1, x] /. canonSol)) & /@ valid;
       {s, e} -> valid[[First@Ordering[-vals, 1]]]],
     {e, edges}, {s, 1, 3}]]];
 
 seedA = Association[Table[
-   Module[{T = If[edgeLetter[e] === "c", Tc, Tt], valid},
+   Module[{T = If[edgeLetter[e] === "d", Td, Tt], valid},
      valid = validSigs[T, s];
      {s, e} -> If[MemberQ[valid, s], s, First[valid]]],
    {e, edges}, {s, 1, 3}]];
 seedB = Association[Table[
-   Module[{T = If[edgeLetter[e] === "c", Tc, Tt], valid}, valid = validSigs[T, s];
+   Module[{T = If[edgeLetter[e] === "d", Td, Tt], valid}, valid = validSigs[T, s];
      {s, e} -> First[valid]],
    {e, edges}, {s, 1, 3}]];
 randomSeed[seedNum_] := (SeedRandom[seedNum];
    Association[Table[
-     Module[{T = If[edgeLetter[e] === "c", Tc, Tt], valid}, valid = validSigs[T, s];
+     Module[{T = If[edgeLetter[e] === "d", Td, Tt], valid}, valid = validSigs[T, s];
        {s, e} -> RandomChoice[valid]],
      {e, edges}, {s, 1, 3}]]);
 
@@ -312,13 +312,13 @@ nodeEqOK = tim["stage3 nodeEqOK exact check",
 
 edgeEqOK = tim["stage3 edgeEqOK exact check",
    AllTrue[edges, Module[{w = #[[1]], x = #[[2]], b, rA, rB},
-       b = StringTake[w, -1]; {rA, rB} = If[b === "c", {iu, iv}, {iv, iu}];
+       b = StringTake[w, -1]; {rA, rB} = If[b === "d", {iu, iv}, {iv, iu}];
        QsExact[w][[ia, ia]] + QsExact[x][[rA, rA]] + If[b === "t", RsExact[x][[jv, jv]], 0] == 1 &&
         QsExact[w][[ib, ib]] + RsExact[w][[jb, jb]] + QsExact[x][[rB, rB]] +
-          If[b === "c", RsExact[x][[jv, jv]], 0] == 1 &&
+          If[b === "d", RsExact[x][[jv, jv]], 0] == 1 &&
         QsExact[w][[ia, ip]] + QsExact[x][[rA, ip]] + If[b === "t", RsExact[x][[jv, jp]], 0] == 1 &&
         QsExact[w][[ib, ip]] + RsExact[w][[jb, jp]] + QsExact[x][[rB, ip]] +
-          If[b === "c", RsExact[x][[jv, jp]], 0] == 1] &]];
+          If[b === "d", RsExact[x][[jv, jp]], 0] == 1] &]];
 
 psdOK = tim["stage3 psdOK exact PositiveSemidefiniteMatrixQ (all 2*2^K blocks)",
    AllTrue[nodes, PositiveSemidefiniteMatrixQ[QsExact[#]] && PositiveSemidefiniteMatrixQ[RsExact[#]] &]];
@@ -336,7 +336,7 @@ Print["Stage 3: nodeEqOK = ", nodeEqOK, ", edgeEqOK = ", edgeEqOK, ", psdOK = ",
 Print["[PROFILE] stage3 Psi/Phi/Strategy exactification : ", NumberForm[tPsiPhi, {10, 3}], " s"];
 
 posSigma9[e_] := Module[{w = e[[1]], x = e[[2]], T, r},
-   T = If[edgeLetter[e] === "c", Tc, Tt];
+   T = If[edgeLetter[e] === "d", Td, Tt];
    r = Min[Table[Module[{sig = StrategyExact[ToString[s - 1] <> "|" <> w <> ">" <> x]},
        T[[s, sig]] + PhiExact[ToString[sig - 1] <> "|" <> x] - PhiExact[ToString[s - 1] <> "|" <> w]],
       {s, 3}]];

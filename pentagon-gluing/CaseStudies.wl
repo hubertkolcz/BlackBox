@@ -180,7 +180,7 @@ chainGaps = Table[{n, LovaszTheta[PentagonChain[n]] - IndependenceNumber[Pentago
 (*Case D3. Exact \[CurlyTheta] at 10^5 Blocks: Chordal Decomposition \[LongDash] and a Correction, the Two Ring Families*)
 
 (* ::Text:: *)
-(*Problem: certify \[CurlyTheta] for pentagon meshes of 10^4-10^5 blocks. The dense primal SDP behind LovaszTheta carries n(n+1)/2 variables and saturates near 150 vertices \[LongDash] the tables above stop at N = 15 for that reason. BlackBox resolution: LovaszThetaSparse rewrites \[CurlyTheta] as the Lov\[AAcute]sz dual min \[Lambda]max(J - B) with B supported on the edges, absorbs the rank-one J = ee^T into one Schur border row, and splits the single (n+1)-cone along the maximal cliques of a chordal extension (Grone-Johnson-S\[AAcute]-Wolkowicz completion / Agler-Helton-McCullough-Rodman decomposition): one PSD block of size treewidth+2 per clique, linear cost in blocks for any bounded-treewidth mesh, plus a self-certificate \[CurlyTheta] <= \[Lambda]max(J - B) from the recovered witness. The Python companion lovasz_theta_sparse.py carries the identical decomposition to 10^5 blocks (Clarabel interior point) and adds a second, fully independent route for rings: the Z_N symmetry reduction, which block-diagonalises the block-circulant dual under the DFT into 3x3 Hermitian symbols with FOUR real parameters in total, exactly solvable by frequency cutting-planes at any N, with the all-frequency eigenvalue maximum as an unconditional certificate. NEITHER of these is a new method (adversarial novelty audit, 11-12 July 2026): chordal SDP decomposition is Fukuda-Kojima-Murota-Nakata (2000/2001), already demonstrated on theta at n=13659 by R. Zhang (arXiv:2306.15288, Math. Programming 2024); DFT block-diagonalization for cyclic-symmetric graphs is Brimkov-Codenotti-Crespi-Leoncini (2000) and Brimkov et al. (2003), subsumed by de Klerk-Pasechnik-Schrijver's representation-theoretic framework (2007). What is new is only their application to the pentagon-chain/ring mesh family below, which is itself adjacent to (but distinct from) two other literatures: chemical graph theory studies edge-glued C5 "pentagonal chains" with the identical binary cis/trans gluing choice for OTHER invariants (Merrifield-Simmons, Hosoya, Schultz indices - not independence number or theta; see e.g. PMC9898681), and a contemporaneous contextuality paper, Tamer-M\[UDoubleDot]stecaplioglu-Dizdar-Gedik, "The Quad-C5 Graph" (arXiv:2605.12828, 2026), studies a single fused 8-vertex four-pentagon graph rather than an infinite periodic family. The closed-form theta = N + theta(C_N) identity, the cubic-root density constant, the alpha = Floor[3N/2]/Floor[4N/3] theorems, and the ergodic-optimization connection below appear to be genuinely new against all three adjacent literatures.*)
+(*Problem: certify \[CurlyTheta] for pentagon meshes of 10^4-10^5 blocks. The dense primal SDP behind LovaszTheta carries n(n+1)/2 variables and saturates near 150 vertices \[LongDash] the tables above stop at N = 15 for that reason. BlackBox resolution: LovaszThetaSparse rewrites \[CurlyTheta] as the Lov\[AAcute]sz dual min \[Lambda]max(J - B) with B supported on the edges, absorbs the rank-one J = ee^T into one Schur border row, and splits the single (n+1)-cone along the maximal cliques of a chordal extension (Grone-Johnson-S\[AAcute]-Wolkowicz completion / Agler-Helton-McCullough-Rodman decomposition): one PSD block of size treewidth+2 per clique, linear cost in blocks for any bounded-treewidth mesh, plus a self-certificate \[CurlyTheta] <= \[Lambda]max(J - B) from the recovered witness. The Python companion lovasz_theta_sparse.py carries the identical decomposition to 10^5 blocks (Clarabel interior point) and adds a second, fully independent route for rings: the Z_N symmetry reduction, which block-diagonalises the block-circulant dual under the DFT into 3x3 Hermitian symbols with FOUR real parameters in total, exactly solvable by frequency cutting-planes at any N, with the all-frequency eigenvalue maximum as an unconditional certificate. NEITHER of these is a new method (adversarial novelty audit, 11-12 July 2026): chordal SDP decomposition is Fukuda-Kojima-Murota-Nakata (2000/2001), already demonstrated on theta at n=13659 by R. Zhang (arXiv:2306.15288, Math. Programming 2024); DFT block-diagonalization for cyclic-symmetric graphs is Brimkov-Codenotti-Crespi-Leoncini (2000) and Brimkov et al. (2003), subsumed by de Klerk-Pasechnik-Schrijver's representation-theoretic framework (2007). What is new is only their application to the pentagon-chain/ring mesh family below, which is itself adjacent to (but distinct from) two other literatures: chemical graph theory studies edge-glued C5 "pentagonal chains" with the identical binary direct/twisted gluing choice for OTHER invariants (Merrifield-Simmons, Hosoya, Schultz indices - not independence number or theta; see e.g. PMC9898681), and a contemporaneous contextuality paper, Tamer-M\[UDoubleDot]stecaplioglu-Dizdar-Gedik, "The Quad-C5 Graph" (arXiv:2605.12828, 2026), studies a single fused 8-vertex four-pentagon graph rather than an infinite periodic family. The closed-form theta = N + theta(C_N) identity, the cubic-root density constant, the alpha = Floor[3N/2]/Floor[4N/3] theorems, and the ergodic-optimization connection below appear to be genuinely new against all three adjacent literatures.*)
 
 (* ::CodeText:: *)
 (*The sparse solver agrees with the dense one on every mesh of the tables above (and on C5, C7, Petersen, Mycielskians, ... \[LongDash] see Tests/BlackBoxTests.wl):*)
@@ -192,37 +192,37 @@ sparseAgreement = Max[Join[
 sparseAgreement
 
 (* ::Text:: *)
-(*THE CORRECTION. Scaling exposed a hidden binary design parameter that N <= 15 never showed: the gluing ORIENTATION. Every pentagon meets its glue edge {u,v} with a one-edge side (u\[Dash]c1) and a two-edge side (v\[Dash]c3\[Dash]c2). Attaching each next short side to the SAME endpoint of the running glue edge (call it cis) chains the c1-vertices into a rail \[LongDash] that is what PentagonChain builds. ALTERNATING the endpoint (trans) is what pentagonRing above builds. The two closures are NOT isomorphic, so pentagonRing is not "PentagonChain closed up", and chain-anchored bounds do not transfer to it: a lower bound \[CurlyTheta](ring 10^5) >= \[LeftFloor]N/33\[RightFloor] \[CenterDot] \[CurlyTheta](chain 31) = 142491 obtained that way is INVALID even though its anchor \[CurlyTheta](chain 31) = 47.0268 is correct. The dense solver itself arbitrates at a size it still reaches: \[CurlyTheta](trans-ring 21) < \[CurlyTheta](cis-chain 19), and \[CurlyTheta] is monotone under induced subgraphs, so no 19-block cis-chain embeds in the 21-block trans-ring.*)
+(*THE CORRECTION. Scaling exposed a hidden binary design parameter that N <= 15 never showed: the gluing ORIENTATION. Every pentagon meets its glue edge {u,v} with a one-edge side (u\[Dash]c1) and a two-edge side (v\[Dash]c3\[Dash]c2). Attaching each next short side to the SAME endpoint of the running glue edge (call it direct) chains the c1-vertices into a rail \[LongDash] that is what PentagonChain builds. ALTERNATING the endpoint (twisted) is what pentagonRing above builds. The two closures are NOT isomorphic, so pentagonRing is not "PentagonChain closed up", and chain-anchored bounds do not transfer to it: a lower bound \[CurlyTheta](ring 10^5) >= \[LeftFloor]N/33\[RightFloor] \[CenterDot] \[CurlyTheta](chain 31) = 142491 obtained that way is INVALID even though its anchor \[CurlyTheta](chain 31) = 47.0268 is correct. The dense solver itself arbitrates at a size it still reaches: \[CurlyTheta](twisted-ring 21) < \[CurlyTheta](direct-chain 19), and \[CurlyTheta] is monotone under induced subgraphs, so no 19-block direct-chain embeds in the 21-block twisted-ring.*)
 
 (* ::Input:: *)
 gluingArbitration = {LovaszTheta[pentagonRing[21]], LovaszTheta[PentagonChain[19]]};
 gluingArbitration
 
 (* ::CodeText:: *)
-(*The cis ring (PentagonChain closed cyclically; the c1-rail becomes an N-cycle):*)
+(*The direct ring (PentagonChain closed cyclically; the c1-rail becomes an N-cycle):*)
 
 (* ::Input:: *)
-cisRing[nb_ /; nb >= 3] := Module[{c1, c2, c3, edges},
+directRing[nb_ /; nb >= 3] := Module[{c1, c2, c3, edges},
   edges = Flatten[Table[{{c1[Mod[k - 1, nb]], c1[k]}, {c1[k], c2[k]}, {c2[k], c3[k]},
       {c3[k], c2[Mod[k - 1, nb]]}, {c2[Mod[k - 1, nb]], c1[Mod[k - 1, nb]]}}, {k, 0, nb - 1}], 1];
   Graph[DeleteDuplicates[Flatten[edges]], UndirectedEdge @@@ DeleteDuplicates[Sort /@ edges]]];
 
 (* ::CodeText:: *)
-(*The cis family collapses onto exact laws \[LongDash] \[CurlyTheta](cis-ring N) = N + \[CurlyTheta](C_N) and \[Alpha] = \[LeftFloor]3N/2\[RightFloor] \[LongDash] verified against the dense SDP and PROVED below:*)
+(*The direct family collapses onto exact laws \[LongDash] \[CurlyTheta](direct-ring N) = N + \[CurlyTheta](C_N) and \[Alpha] = \[LeftFloor]3N/2\[RightFloor] \[LongDash] verified against the dense SDP and PROVED below:*)
 
 (* ::Input:: *)
-cisLawTable = Table[{n, LovaszTheta[cisRing[n]], n + LovaszTheta[CycleGraph[n]],
-    IndependenceNumber[cisRing[n]]}, {n, 4, 8}];
-TableForm[cisLawTable, TableHeadings -> {None, {"N", "\[CurlyTheta](cis ring)", "N+\[CurlyTheta](C_N)", "\[Alpha]"}}]
+directLawTable = Table[{n, LovaszTheta[directRing[n]], n + LovaszTheta[CycleGraph[n]],
+    IndependenceNumber[directRing[n]]}, {n, 4, 8}];
+TableForm[directLawTable, TableHeadings -> {None, {"N", "\[CurlyTheta](direct ring)", "N+\[CurlyTheta](C_N)", "\[Alpha]"}}]
 
 (* ::Text:: *)
-(*THEOREM. \[CurlyTheta](cis-ring N) = N + \[CurlyTheta](C_N) and \[Alpha](cis-ring N) = \[LeftFloor]3N/2\[RightFloor] for every N >= 3. Upper bound for \[CurlyTheta]: deleting the N glue edges (c1_k, c2_k) leaves the disjoint union C_N \[SquareUnion] C_2N (the c1 rail plus the outer c2/c3 cycle); \[CurlyTheta] never decreases under edge deletion, is additive on disjoint unions (Lov\[AAcute]sz 1979), and \[CurlyTheta](C_2N) = N since even cycles are perfect. Lower bound: in the value formulation \[CurlyTheta](G) = max \[Sum] (c.u_i)^2 over unit vectors orthogonal across every edge (Lov\[AAcute]sz 1979, Thm. 5), take an optimal representation {u_k} of the rail C_N in R^d with handle c, append one dimension, and give EVERY c3 vertex the handle itself and EVERY c2 vertex the new basis vector e_(d+1). Every edge pairs something with e_(d+1) or repeats a rail orthogonality, so the assignment is feasible, and its value is \[CurlyTheta](C_N) + N \[CenterDot] 0 + N \[CenterDot] 1. The glue edges are free because the c2 layer is sacrificed to a fresh dimension while the independent c3 layer rides at weight 1 \[LongDash] this is exactly why cis closure produces no quantum gap. The \[Alpha] law: all N c3 vertices plus alternate rail vertices are independent, so \[Alpha] >= N + \[LeftFloor]N/2\[RightFloor]; conversely each of the N pentagons induces exactly C5 (independence 2), and summing the window bound over all pentagons counts c1's and c2's twice and c3's once, so 2(s1 + s2) + s3 <= 2N and |S| <= N + s3/2 <= 3N/2. For even N the sandwich already forces \[CurlyTheta]: \[Alpha] = \[Alpha]\[Star] = 3N/2, so the representation is only needed at odd N.*)
+(*THEOREM. \[CurlyTheta](direct-ring N) = N + \[CurlyTheta](C_N) and \[Alpha](direct-ring N) = \[LeftFloor]3N/2\[RightFloor] for every N >= 3. Upper bound for \[CurlyTheta]: deleting the N glue edges (c1_k, c2_k) leaves the disjoint union C_N \[SquareUnion] C_2N (the c1 rail plus the outer c2/c3 cycle); \[CurlyTheta] never decreases under edge deletion, is additive on disjoint unions (Lov\[AAcute]sz 1979), and \[CurlyTheta](C_2N) = N since even cycles are perfect. Lower bound: in the value formulation \[CurlyTheta](G) = max \[Sum] (c.u_i)^2 over unit vectors orthogonal across every edge (Lov\[AAcute]sz 1979, Thm. 5), take an optimal representation {u_k} of the rail C_N in R^d with handle c, append one dimension, and give EVERY c3 vertex the handle itself and EVERY c2 vertex the new basis vector e_(d+1). Every edge pairs something with e_(d+1) or repeats a rail orthogonality, so the assignment is feasible, and its value is \[CurlyTheta](C_N) + N \[CenterDot] 0 + N \[CenterDot] 1. The glue edges are free because the c2 layer is sacrificed to a fresh dimension while the independent c3 layer rides at weight 1 \[LongDash] this is exactly why direct closure produces no quantum gap. The \[Alpha] law: all N c3 vertices plus alternate rail vertices are independent, so \[Alpha] >= N + \[LeftFloor]N/2\[RightFloor]; conversely each of the N pentagons induces exactly C5 (independence 2), and summing the window bound over all pentagons counts c1's and c2's twice and c3's once, so 2(s1 + s2) + s3 <= 2N and |S| <= N + s3/2 <= 3N/2. For even N the sandwich already forces \[CurlyTheta]: \[Alpha] = \[Alpha]\[Star] = 3N/2, so the representation is only needed at odd N.*)
 
 (* ::CodeText:: *)
-(*The all-N result is a THEOREM by the analytic argument above (edge-deletion upper bound + existence-based one-extra-dimension representation + pentagon-window \[Alpha] bound); the cell below is a WITNESS SPOT-CHECK, not the proof. It machine-checks the EXPLICIT rail-umbrella witness at four odd N \[LongDash] rail = Lov\[AAcute]sz umbrella of C_N with step \[Pi](N-1)/N padded by a zero component, c3 = handle, c2 = appended axis \[LongDash] verifying the nontrivial parts (cyclic rail orthogonality including wrap-around closure, unit norms, value identity). The full-construction feasibility on the actual cis-ring (the c2 = e4 / c3 = handle assignment and glue/spoke/outer-cycle orthogonalities) is ARGUED structurally above, not computed here; nothing is checked at N >= 13:*)
+(*The all-N result is a THEOREM by the analytic argument above (edge-deletion upper bound + existence-based one-extra-dimension representation + pentagon-window \[Alpha] bound); the cell below is a WITNESS SPOT-CHECK, not the proof. It machine-checks the EXPLICIT rail-umbrella witness at four odd N \[LongDash] rail = Lov\[AAcute]sz umbrella of C_N with step \[Pi](N-1)/N padded by a zero component, c3 = handle, c2 = appended axis \[LongDash] verifying the nontrivial parts (cyclic rail orthogonality including wrap-around closure, unit norms, value identity). The full-construction feasibility on the actual direct-ring (the c2 = e4 / c3 = handle assignment and glue/spoke/outer-cycle orthogonalities) is ARGUED structurally above, not computed here; nothing is checked at N >= 13:*)
 
 (* ::Input:: *)
-cisORCheck[n_ /; OddQ[n] && n >= 3] := Module[{w = Pi (n - 1)/n, ca2, u, handle},
+directORCheck[n_ /; OddQ[n] && n >= 3] := Module[{w = Pi (n - 1)/n, ca2, u, handle},
   ca2 = Cos[Pi/n]/(1 + Cos[Pi/n]);
   u[k_] := {Sqrt[ca2], Sqrt[1 - ca2] Cos[k w], Sqrt[1 - ca2] Sin[k w], 0};
   handle = {1, 0, 0, 0};
@@ -230,15 +230,15 @@ cisORCheck[n_ /; OddQ[n] && n >= 3] := Module[{w = Pi (n - 1)/n, ca2, u, handle}
    AllTrue[Range[0, n - 1], FullSimplify[u[#].u[#]] === 1 &] &&
    FullSimplify[Sum[(handle.u[k])^2, {k, 0, n - 1}] +
       n - (n + n Cos[Pi/n]/(1 + Cos[Pi/n]))] === 0];
-{cisORCheck[5], cisORCheck[7], cisORCheck[9], cisORCheck[11]}
+{directORCheck[5], directORCheck[7], directORCheck[9], directORCheck[11]}
 
 (* ::Input:: *)
 chain31 = LovaszThetaSparse[PentagonChain[31]];
-cisRing33 = LovaszThetaSparse[cisRing[33]];
-{chain31, cisRing33, 33 + LovaszTheta[CycleGraph[33]]}
+directRing33 = LovaszThetaSparse[directRing[33]];
+{chain31, directRing33, 33 + LovaszTheta[CycleGraph[33]]}
 
 (* ::Text:: *)
-(*So even-N cis rings saturate the exclusivity cap on BOTH sides \[LongDash] \[Alpha] = \[CurlyTheta] = \[Alpha]* = 3N/2, no quantum gap at all \[LongDash] and odd ones approach it with deficit \[Pi]^2/8N and a BOUNDED gap \[CurlyTheta] - \[Alpha] -> 1/2. The extensive quantum advantage of Section D2 is therefore purely a TRANS phenomenon. Exact scaling of the trans ring, computed by the two independent Python routes (agreement 6\[CenterDot]10^-8 relative at N = 100 and 2\[CenterDot]10^-7 at N = 1000; the chordal route stays certified to 1.3\[CenterDot]10^-5 relative at N = 10^4 in ~1 minute and 3\[CenterDot]10^-5 at N = 10^5 in ~6 minutes / 10 GB; the symmetry route is exact past 10^6 in seconds, certgap 7\[CenterDot]10^-5 at 10^5):*)
+(*So even-N direct rings saturate the exclusivity cap on BOTH sides \[LongDash] \[Alpha] = \[CurlyTheta] = \[Alpha]* = 3N/2, no quantum gap at all \[LongDash] and odd ones approach it with deficit \[Pi]^2/8N and a BOUNDED gap \[CurlyTheta] - \[Alpha] -> 1/2. The extensive quantum advantage of Section D2 is therefore purely a TWISTED phenomenon. Exact scaling of the twisted ring, computed by the two independent Python routes (agreement 6\[CenterDot]10^-8 relative at N = 100 and 2\[CenterDot]10^-7 at N = 1000; the chordal route stays certified to 1.3\[CenterDot]10^-5 relative at N = 10^4 in ~1 minute and 3\[CenterDot]10^-5 at N = 10^5 in ~6 minutes / 10 GB; the symmetry route is exact past 10^6 in seconds, certgap 7\[CenterDot]10^-5 at 10^5):*)
 
 (* ::Input:: *)
 ringScalingRecord = {(* {N, exact theta (Z_N symmetry route), density} *)
@@ -247,10 +247,10 @@ ringScalingRecord = {(* {N, exact theta (Z_N symmetry route), density} *)
    {10000, 13767.177609, 1.3767178},
    {100000, 137671.775134, 1.3767178}};
 tauStar = Root[49 #^3 - 128 #^2 - 75 # + 218 &, 2]; (* N->Infinity density limit: EXACT, see below *)
-transDensityLimit = N[tauStar];
+twistedDensityLimit = N[tauStar];
 
 (* ::Text:: *)
-(*The corrected picture at N = 10^5 blocks (3\[CenterDot]10^5 vertices): \[CurlyTheta] = 137671.775 (solver value; rigorously \[CurlyTheta] <= 10^5 \[CenterDot] \[Tau]* = 137671.7746) \[LongDash] BELOW the previously recorded "certified" bracket [142491, 150000], whose lower end is hereby withdrawn. The density curve is essentially FLAT: 1.37656 (N = 15, 30) -> 1.37667 (10^2) -> 1.376717 (10^3) -> 1.3767178 (10^4, 10^5; unchanged at 10^6, converging to the N -> Infinity symbol limit \[Tau]*, an ALGEBRAIC NUMBER computed in closed form below) \[LongDash] it never rises toward 3/2. The theorem \[Alpha](trans-ring N) = \[LeftFloor]4N/3\[RightFloor] is untouched, so the extensive gap survives with the corrected slope: \[CapitalDelta] = \[CurlyTheta] - \[Alpha] = (\[Tau]* - 4/3) N \[TildeTilde] 0.0433844 N \[LongDash] 4338.8 at N = 10^5, certified exact instead of bracketed. (Numerical caveat that produced an earlier +0.05 bias at 10^5: both solvers need O(1)-conditioned data \[LongDash] the chordal border is rescaled by 1/Sqrt[n], the symbol program is solved in density units.) Design rule, restated honestly: the bulk quantum advantage of pentagon meshes is set by the gluing orientation (trans: 0.0434 per block, extensive) \[LongDash] closure and block parity only modulate it; the cis family instead saturates \[Alpha]* classically and carries no bulk gap.*)
+(*The corrected picture at N = 10^5 blocks (3\[CenterDot]10^5 vertices): \[CurlyTheta] = 137671.775 (solver value; rigorously \[CurlyTheta] <= 10^5 \[CenterDot] \[Tau]* = 137671.7746) \[LongDash] BELOW the previously recorded "certified" bracket [142491, 150000], whose lower end is hereby withdrawn. The density curve is essentially FLAT: 1.37656 (N = 15, 30) -> 1.37667 (10^2) -> 1.376717 (10^3) -> 1.3767178 (10^4, 10^5; unchanged at 10^6, converging to the N -> Infinity symbol limit \[Tau]*, an ALGEBRAIC NUMBER computed in closed form below) \[LongDash] it never rises toward 3/2. The theorem \[Alpha](twisted-ring N) = \[LeftFloor]4N/3\[RightFloor] is untouched, so the extensive gap survives with the corrected slope: \[CapitalDelta] = \[CurlyTheta] - \[Alpha] = (\[Tau]* - 4/3) N \[TildeTilde] 0.0433844 N \[LongDash] 4338.8 at N = 10^5, certified exact instead of bracketed. (Numerical caveat that produced an earlier +0.05 bias at 10^5: both solvers need O(1)-conditioned data \[LongDash] the chordal border is rescaled by 1/Sqrt[n], the symbol program is solved in density units.) Design rule, restated honestly: the bulk quantum advantage of pentagon meshes is set by the gluing orientation (twisted: 0.0434 per block, extensive) \[LongDash] closure and block parity only modulate it; the direct family instead saturates \[Alpha]* classically and carries no bulk gap.*)
 
 (* ::CodeText:: *)
 (*The density limit in CLOSED FORM. The continuum symbol minimax is exactly solvable: the ring's reflection automorphism forces \[Beta]bx = \[Gamma]ax, KKT stationarity factors as (u - 2g)(u + 2gc) = 0 giving \[Beta]ab = 2\[Gamma]ba, and Groebner elimination of the remaining polynomial system leaves a single cubic \[LongDash] \[Tau]* = Root[49x^3 - 128x^2 - 75x + 218, middle root] = 1.3767177459158590533. The dual witness lives in the cubic field \[DoubleStruckCapitalQ] of \[Tau]*, and feasibility on the WHOLE frequency circle reduces to a perfect square (the quadratic coefficient cancels identically, so four exact zeros remain), certifying global optimality \[LongDash] the minimax is convex and both KKT multipliers are positive:*)
@@ -266,38 +266,38 @@ closedFormCertificate = RootReduce[Flatten[{
 {closedFormCertificate, N[tauStar, 25]}
 
 (* ::Text:: *)
-(*Trigonometric form: \[Tau]* = 128/147 + (2 Sqrt[27409]/147) cos((1/3) arccos(-2852191/(27409 Sqrt[27409])) - 2\[Pi]/3), with 27409 = 128^2 + 3\[CenterDot]49\[CenterDot]75. Minimal polynomials of the witness: 2401g^3 - 4518g^2 + 2549g - 436, 343h^3 - 689h^2 + 173h + 109, and 2c^3 - 15c^2 - 14c - 1 for c = cos \[Theta]* (active frequency \[Theta]* \[TildeTilde] 0.5248591600 \[Pi]). The extensive per-block gap of the trans family is therefore itself algebraic: \[Tau]* - 4/3 = 0.0433844126.*)
+(*Trigonometric form: \[Tau]* = 128/147 + (2 Sqrt[27409]/147) cos((1/3) arccos(-2852191/(27409 Sqrt[27409])) - 2\[Pi]/3), with 27409 = 128^2 + 3\[CenterDot]49\[CenterDot]75. Minimal polynomials of the witness: 2401g^3 - 4518g^2 + 2549g - 436, 343h^3 - 689h^2 + 173h + 109, and 2c^3 - 15c^2 - 14c - 1 for c = cos \[Theta]* (active frequency \[Theta]* \[TildeTilde] 0.5248591600 \[Pi]). The extensive per-block gap of the twisted family is therefore itself algebraic: \[Tau]* - 4/3 = 0.0433844126.*)
 
 (* ::Section:: *)
-(*Case D3 continued. The Optimal Gluing Word: (cct) Beats Pure Trans by 61%*)
+(*Case D3 continued. The Optimal Gluing Word: (ddt) Beats Pure Twisted by 61%*)
 
 (* ::Text:: *)
-(*The correction raises a design question: over ALL gluing words in {cis, trans} (one orientation letter per gluing; a mesh = a binary necklace), is the pure trans word gap-optimal? Answer: NO. Tooling (lovasz_theta_sparse.py, command "words"): exact \[Alpha] densities are max-plus cycle means of a 3-state interface transfer DP (exact rational arithmetic; the pure-word matrices reproduce both proven laws, and the trans staircase is the 3-cycle of its transfer matrix gaining 4 per 3 blocks); \[CurlyTheta] densities come from the chordal solver at 1200-2400 blocks, certified. Sweeping every binary bracelet of period <= 6: the word (cct)^\[Infinity] \[LongDash] two cis gluings, then one trans "reset" \[LongDash] keeps the trans staircase \[Alpha]/L = 4/3 while lifting \[CurlyTheta]/L to 1.40323087 (continuum-exact, below), so the extensive gap per block is 0.0698975 \[TildeTilde] 1.6111\[Times](\[Tau]* - 4/3). Every strict mixture ranks strictly between the pure families' gaps or above pure trans; the cis-collapse (gap 0) extends beyond pure cis to ct, ccct, ccctct, ccccct. Exhaustively over periods <= 12 (max-plus, exact): every word with \[Alpha]-density 4/3 has cis-fraction <= 2/3, and cct is the UNIQUE word attaining 2/3; the best higher-period rivals in the 4/3 class (cctcctctt, cctcctcctctt) stay below cct's gap. REFINED CONJECTURE: (cct)^\[Infinity] is the globally optimal pentagon-mesh gluing word. Design reading: trans letters protect the classical bound \[LongDash] each t breaks the cis rail before it can lift \[Alpha] \[LongDash] while cis letters buy quantum value; the optimum is the densest cis packing that \[Alpha] tolerates.*)
+(*The correction raises a design question: over ALL gluing words in {direct, twisted} (one orientation letter per gluing; a mesh = a binary necklace), is the pure twisted word gap-optimal? Answer: NO. Tooling (lovasz_theta_sparse.py, command "words"): exact \[Alpha] densities are max-plus cycle means of a 3-state interface transfer DP (exact rational arithmetic; the pure-word matrices reproduce both proven laws, and the twisted staircase is the 3-cycle of its transfer matrix gaining 4 per 3 blocks); \[CurlyTheta] densities come from the chordal solver at 1200-2400 blocks, certified. Sweeping every binary bracelet of period <= 6: the word (ddt)^\[Infinity] \[LongDash] two direct gluings, then one twisted "reset" \[LongDash] keeps the twisted staircase \[Alpha]/L = 4/3 while lifting \[CurlyTheta]/L to 1.40323087 (continuum-exact, below), so the extensive gap per block is 0.0698975 \[TildeTilde] 1.6111\[Times](\[Tau]* - 4/3). Every strict mixture ranks strictly between the pure families' gaps or above pure twisted; the direct-collapse (gap 0) extends beyond pure direct to ct, dddt, dddtdt, dddddt. Exhaustively over periods <= 12 (max-plus, exact): every word with \[Alpha]-density 4/3 has direct-fraction <= 2/3, and ddt is the UNIQUE word attaining 2/3; the best higher-period rivals in the 4/3 class (ddtddtdtt, ddtddtddtdtt) stay below ddt's gap. REFINED CONJECTURE: (ddt)^\[Infinity] is the globally optimal pentagon-mesh gluing word. Design reading: twisted letters protect the classical bound \[LongDash] each t breaks the direct rail before it can lift \[Alpha] \[LongDash] while direct letters buy quantum value; the optimum is the densest direct packing that \[Alpha] tolerates.*)
 
 (* ::CodeText:: *)
-(*The general word builder (mirrors pentagon_ring_word labels), and the dense-SDP anchor for the winner \[LongDash] \[CurlyTheta](cct\[Times]2) against the chordal value 8.347042185, plus the exact \[Alpha] staircase at L = 6, 9:*)
+(*The general word builder (mirrors pentagon_ring_word labels), and the dense-SDP anchor for the winner \[LongDash] \[CurlyTheta](ddt\[Times]2) against the chordal value 8.347042185, plus the exact \[Alpha] staircase at L = 6, 9:*)
 
 (* ::Input:: *)
 wordRing[word_String, reps_Integer] := Module[
   {w = Characters[StringRepeat[word, reps]], L, edges = {}, u, v, km},
   L = Length[w];
   Do[km = Mod[k - 1, L];
-   {u, v} = If[w[[km + 1]] === "c", {3 km + 1, 3 km + 2}, {3 km + 2, 3 km + 1}];
+   {u, v} = If[w[[km + 1]] === "d", {3 km + 1, 3 km + 2}, {3 km + 2, 3 km + 1}];
    edges = Join[edges, {{u, v}, {u, 3 k + 1}, {3 k + 1, 3 k + 2},
       {3 k + 2, 3 k + 3}, {3 k + 3, v}}], {k, 0, L - 1}];
   Graph[Range[3 L], UndirectedEdge @@@ DeleteDuplicates[Sort /@ edges]]];
-gluingWordAnchor = {LovaszTheta[wordRing["cct", 2]],
-   IndependenceNumber[wordRing["cct", 2]], IndependenceNumber[wordRing["cct", 3]]};
-cctDensity = 1.40323087; (* NUMERICALLY-determined continuum optimum of the 9x9 symbol
+gluingWordAnchor = {LovaszTheta[wordRing["ddt", 2]],
+   IndependenceNumber[wordRing["ddt", 2]], IndependenceNumber[wordRing["ddt", 3]]};
+ddtDensity = 1.40323087; (* NUMERICALLY-determined continuum optimum of the 9x9 symbol
    minimax (320-digit Newton KKT; globality argued via convexity, not machine-certified);
    the L = 2400 chordal run reads 7*10^-7 high, within its certgap *)
 gluingWordAnchor
 
 (* ::Text:: *)
-(*Does the cct density have a closed form like \[Tau]*? NO \[LongDash] and that is itself a finding. The (cct) unit cell gives a 9x9 DFT symbol with 12 edge-orbit parameters; the mesh's reflection automorphism (|Aut(cct ring of m cells)| = 2m, machine-checked below) pairs them down to 7, and the continuum minimax has the same active-set shape as the trans case (the J-block plus ONE interior frequency, \[Phi] \[TildeTilde] 0.70345\[Pi]). Solving the reduced KKT system by Newton iteration at 320-digit precision (residual 10^-319, both multipliers positive, witness feasible on a 2^20-point frequency grid to -9*10^-16) gives \[CurlyTheta]/L = 1.40323086923899745105894248. Global optimality is ARGUED, not machine-certified: the symbol program is a max-eigenvalue minimax hence convex, so a strictly-feasible KKT point with positive multipliers is global \[LongDash] but the feasibility here is NUMERICAL on a finite frequency grid (no interval/SOS bound excludes sub-grid negativity or a lower competing branch), and the automorphism-averaging only justifies the symmetric reduction, not this point's globality. The value is thus NUMERICALLY certified to ~300 digits, its globality convincing but not proven. Integer-relation search (LLL via RootApproximant on 250 matched digits) EXCLUDES any minimal polynomial of degree <= 36 with coefficient height below ~10^6 (and proportionally higher at lower degree, e.g. 10^60 at degree 3), for the density, the per-cell value, cos \[Phi], and each witness parameter. Contrast with period 1: \[Tau]* is a cubic with two-digit coefficients. The algebraic complexity of the symbol minimax explodes with the word period; the exact object standing in for a "closed form" at period 3 is the explicit polynomial KKT system itself.*)
+(*Does the ddt density have a closed form like \[Tau]*? NO \[LongDash] and that is itself a finding. The (ddt) unit cell gives a 9x9 DFT symbol with 12 edge-orbit parameters; the mesh's reflection automorphism (|Aut(ddt ring of m cells)| = 2m, machine-checked below) pairs them down to 7, and the continuum minimax has the same active-set shape as the twisted case (the J-block plus ONE interior frequency, \[Phi] \[TildeTilde] 0.70345\[Pi]). Solving the reduced KKT system by Newton iteration at 320-digit precision (residual 10^-319, both multipliers positive, witness feasible on a 2^20-point frequency grid to -9*10^-16) gives \[CurlyTheta]/L = 1.40323086923899745105894248. Global optimality is ARGUED, not machine-certified: the symbol program is a max-eigenvalue minimax hence convex, so a strictly-feasible KKT point with positive multipliers is global \[LongDash] but the feasibility here is NUMERICAL on a finite frequency grid (no interval/SOS bound excludes sub-grid negativity or a lower competing branch), and the automorphism-averaging only justifies the symmetric reduction, not this point's globality. The value is thus NUMERICALLY certified to ~300 digits, its globality convincing but not proven. Integer-relation search (LLL via RootApproximant on 250 matched digits) EXCLUDES any minimal polynomial of degree <= 36 with coefficient height below ~10^6 (and proportionally higher at lower degree, e.g. 10^60 at degree 3), for the density, the per-cell value, cos \[Phi], and each witness parameter. Contrast with period 1: \[Tau]* is a cubic with two-digit coefficients. The algebraic complexity of the symbol minimax explodes with the word period; the exact object standing in for a "closed form" at period 3 is the explicit polynomial KKT system itself.*)
 
 (* ::Text:: *)
-(*Towards GLOBAL optimality of (cct)^\[Infinity] \[LongDash] what is proven, what obstructs the rest. Two lemmas hold for EVERY gluing word, each with a finite machine-checkable certificate. LEMMA A (universal exclusivity cap): \[Alpha]* = 3L/2 exactly, hence \[CurlyTheta] <= 3L/2. Proof: the uniform packing w = 1/2 gives \[Alpha]* >= 3L/2; conversely the word-independent fractional edge cover \[LongDash] weight 1/2 on (B_k, X_k) and on the two glue-in edges of every block, weight 0 on the shared (A_k, B_k) edges \[LongDash] covers every vertex exactly once at total cost 3L/2, and \[CurlyTheta] <= fractional clique cover = \[Alpha]* by LP duality. LEMMA B (classical floor): \[Alpha]-density >= 4/3 for every word. Proof: potentials \[Phi] = (0, -1/3, -2/3) on the three interface states of the transfer DP satisfy, at every state and against EITHER letter, max over transitions of (gain + \[CapitalDelta]\[Phi]) >= 4/3 \[LongDash] six inequalities, checked below \[LongDash] so telescoping along any word yields a set gaining at least 4/3 per block; pure trans attains the floor. PINCH COROLLARY: gap(w) <= min(\[CurlyTheta]-density - 4/3, 3/2 - \[Alpha]-density) <= 1/6; any word beating (cct)^\[Infinity] must simultaneously have \[CurlyTheta]-density > 1.40323087 and \[Alpha]-density < 1.4301025. Exhaustive certified computation covers all aperiodic bracelets of period <= 9 (none comes close; runner-up gap 0.0689). THE COMPLETION: the natural finishing move is a transfer-SDP sub-action \[LongDash] windowed chordal dual templates giving a per-window density bound on \[CurlyTheta], paired with Lemma B's potential method \[LongDash] carried out in the \[Epsilon]-certificate subsection below. It yields \[Epsilon]-OPTIMALITY: the exact bracket sup gap-density \[Element] [gap(cct) = 0.069898, \[CapitalGamma](8) = 0.075309], so (cct)^\[Infinity] is optimal to within \[Epsilon] = 0.0054. Whether it is EXACTLY optimal (whether sup = gap(cct)) is OPEN \[LongDash] a genuinely open problem, not a proven obstruction. [ADVERSARIALLY CORRECTED: the earlier claim "exact global optimality is blocked by the number-field explosion" was a non-sequitur \[LongDash] a sequence of rational bounds can converge to an irrational limit; the \[Tau]cct height result excludes only a single finite exact rational certificate, not the limit nor global optimality nor its provability by other means.]*)
+(*Towards GLOBAL optimality of (ddt)^\[Infinity] \[LongDash] what is proven, what obstructs the rest. Two lemmas hold for EVERY gluing word, each with a finite machine-checkable certificate. LEMMA A (universal exclusivity cap): \[Alpha]* = 3L/2 exactly, hence \[CurlyTheta] <= 3L/2. Proof: the uniform packing w = 1/2 gives \[Alpha]* >= 3L/2; conversely the word-independent fractional edge cover \[LongDash] weight 1/2 on (B_k, X_k) and on the two glue-in edges of every block, weight 0 on the shared (A_k, B_k) edges \[LongDash] covers every vertex exactly once at total cost 3L/2, and \[CurlyTheta] <= fractional clique cover = \[Alpha]* by LP duality. LEMMA B (classical floor): \[Alpha]-density >= 4/3 for every word. Proof: potentials \[Phi] = (0, -1/3, -2/3) on the three interface states of the transfer DP satisfy, at every state and against EITHER letter, max over transitions of (gain + \[CapitalDelta]\[Phi]) >= 4/3 \[LongDash] six inequalities, checked below \[LongDash] so telescoping along any word yields a set gaining at least 4/3 per block; pure twisted attains the floor. PINCH COROLLARY: gap(w) <= min(\[CurlyTheta]-density - 4/3, 3/2 - \[Alpha]-density) <= 1/6; any word beating (ddt)^\[Infinity] must simultaneously have \[CurlyTheta]-density > 1.40323087 and \[Alpha]-density < 1.4301025. Exhaustive certified computation covers all aperiodic bracelets of period <= 9 (none comes close; runner-up gap 0.0689). THE COMPLETION: the natural finishing move is a transfer-SDP sub-action \[LongDash] windowed chordal dual templates giving a per-window density bound on \[CurlyTheta], paired with Lemma B's potential method \[LongDash] carried out in the \[Epsilon]-certificate subsection below. It yields \[Epsilon]-OPTIMALITY: the exact bracket sup gap-density \[Element] [gap(ddt) = 0.069898, \[CapitalGamma](8) = 0.075309], so (ddt)^\[Infinity] is optimal to within \[Epsilon] = 0.0054. Whether it is EXACTLY optimal (whether sup = gap(ddt)) is OPEN \[LongDash] a genuinely open problem, not a proven obstruction. [ADVERSARIALLY CORRECTED: the earlier claim "exact global optimality is blocked by the number-field explosion" was a non-sequitur \[LongDash] a sequence of rational bounds can converge to an irrational limit; the \[Tau]ddt height result excludes only a single finite exact rational certificate, not the limit nor global optimality nor its provability by other means.]*)
 
 (* ::CodeText:: *)
 (*The two certificates, machine-checked \[LongDash] Lemma B's six potential inequalities on the interface DP, and Lemma A's cover value \[Alpha]* = 3L/2 on assorted word meshes:*)
@@ -307,7 +307,7 @@ dpStates = {{0, 0}, {1, 0}, {0, 1}};
 dpTransfer[letter_] := Module[{T = ConstantArray[-Infinity, {3, 3}], out, j},
   Do[If[! (dpStates[[i, 1]] == 1 && s1 == 1) && ! (s1 == 1 && s2 == 1) &&
       ! (s2 == 1 && s3 == 1) && ! (s3 == 1 && dpStates[[i, 2]] == 1),
-     out = If[letter === "c", {s1, s2}, {s2, s1}];
+     out = If[letter === "d", {s1, s2}, {s2, s1}];
      j = Position[dpStates, out][[1, 1]];
      T[[i, j]] = Max[T[[i, j]], s1 + s2 + s3]],
     {i, 3}, {s1, 0, 1}, {s2, 0, 1}, {s3, 0, 1}];
@@ -320,39 +320,39 @@ dpTransfer[letter_] := Module[{T = ConstantArray[-Infinity, {3, 3}], out, j},
 optimalityLemmas = Module[{phi = {0, -1/3, -2/3}},
    AllTrue[Flatten[Table[
        Max[Table[dpTransfer[l][[i, j]] + phi[[j]] - phi[[i]], {j, 3}]] >= 4/3,
-       {l, {"c", "t"}}, {i, 3}]], TrueQ] &&
+       {l, {"d", "t"}}, {i, 3}]], TrueQ] &&
     AllTrue[Table[FractionalPackingNumber[wordRing[w, 2]] == 3 StringLength[w],
-      {w, {"cct", "ctt", "cctt", "ctctt"}}], TrueQ]];
+      {w, {"ddt", "dtt", "ddtt", "dtdtt"}}], TrueQ]];
 optimalityLemmas
 
 (* ::Text:: *)
-(*The \[Alpha]-side characterization is now a THEOREM. For every gluing word, \[Alpha]-density >= max(4/3, 1 + fc/2) where fc is the cis-fraction; hence \[Alpha]-density = 4/3 forces fc <= 2/3, and if moreover fc = 2/3 the word IS (cct)^k; conversely (cct)^k attains 4/3. (The naive converse fails: cctt has fc = 1/2 but density 11/8.) Proof. (1) CERTIFICATE C: potentials (0, -1/2, -1) on the interface DP give adjusted gain >= 3/2 against every cis letter and >= 1 against every trans letter at every state \[LongDash] six inequalities, checked below \[LongDash] so telescoping yields density >= fc(3/2) + (1 - fc)(1) = 1 + fc/2, tight on the pure-cis/cct family. (2) THE ccc BONUS, walk-free: with Lemma B's potentials the adjusted max-plus CUBE of the cis step satisfies min over entry states of max over exits of (A^3) = 13/3 = 3(4/3) + 1/3, and segment-guarantees chain under concatenation, so any word containing ccc has density >= 4/3 + 1/(3p) > 4/3 strictly. (3) COMBINATORICS: fc = 2/3 makes the cis-runs between trans letters average exactly 2; density 4/3 rules out ccc by (2), capping every run at 2; average 2 under cap 2 forces every run = 2, i.e. the word is (cct)^k. (4) Attainment: the cct staircase \[Alpha] = \[LeftFloor]4L/3\[RightFloor] was anchored exactly above (L = 6, 9).*)
+(*The \[Alpha]-side characterization is now a THEOREM. For every gluing word, \[Alpha]-density >= max(4/3, 1 + fc/2) where fc is the direct-fraction; hence \[Alpha]-density = 4/3 forces fc <= 2/3, and if moreover fc = 2/3 the word IS (ddt)^k; conversely (ddt)^k attains 4/3. (The naive converse fails: ddtt has fc = 1/2 but density 11/8.) Proof. (1) CERTIFICATE C: potentials (0, -1/2, -1) on the interface DP give adjusted gain >= 3/2 against every direct letter and >= 1 against every twisted letter at every state \[LongDash] six inequalities, checked below \[LongDash] so telescoping yields density >= fc(3/2) + (1 - fc)(1) = 1 + fc/2, tight on the pure-direct/ddt family. (2) THE ddd BONUS, walk-free: with Lemma B's potentials the adjusted max-plus CUBE of the direct step satisfies min over entry states of max over exits of (A^3) = 13/3 = 3(4/3) + 1/3, and segment-guarantees chain under concatenation, so any word containing ddd has density >= 4/3 + 1/(3p) > 4/3 strictly. (3) COMBINATORICS: fc = 2/3 makes the direct-runs between twisted letters average exactly 2; density 4/3 rules out ddd by (2), capping every run at 2; average 2 under cap 2 forces every run = 2, i.e. the word is (ddt)^k. (4) Attainment: the ddt staircase \[Alpha] = \[LeftFloor]4L/3\[RightFloor] was anchored exactly above (L = 6, 9).*)
 
 (* ::CodeText:: *)
 (*The three certificate computations \[LongDash] certificate C, the adjusted max-plus cube, and the run-combinatorics closure enumerated through period 12:*)
 
 (* ::Input:: *)
-alphaCisTheorem = Module[{phiC = {0, -1/2, -1}, phiB = {0, -1/3, -2/3},
+alphaDirectTheorem = Module[{phiC = {0, -1/2, -1}, phiB = {0, -1/3, -2/3},
     adjR, Acc, mpMul, A3, comb},
    adjR[T_, phi_, i_] := Max[Table[T[[i, j]] + phi[[j]] - phi[[i]], {j, 3}]];
-   Acc = Table[dpTransfer["c"][[i, j]] + phiB[[j]] - phiB[[i]], {i, 3}, {j, 3}];
+   Acc = Table[dpTransfer["d"][[i, j]] + phiB[[j]] - phiB[[i]], {i, 3}, {j, 3}];
    mpMul[X_, Y_] := Table[Max[Table[X[[i, k]] + Y[[k, j]], {k, 3}]], {i, 3}, {j, 3}];
    A3 = mpMul[mpMul[Acc, Acc], Acc];
    comb = AllTrue[Flatten[Table[If[Mod[p, 3] == 0,
-        Module[{ws = Select[Tuples[{"c", "t"}, p], Count[#, "c"] == 2 p/3 &&
-              ! StringContainsQ[StringJoin[#] <> StringJoin[#], "ccc"] &]},
-         AllTrue[ws, MemberQ[Table[RotateLeft[Characters[StringRepeat["cct", p/3]], r],
+        Module[{ws = Select[Tuples[{"d", "t"}, p], Count[#, "d"] == 2 p/3 &&
+              ! StringContainsQ[StringJoin[#] <> StringJoin[#], "ddd"] &]},
+         AllTrue[ws, MemberQ[Table[RotateLeft[Characters[StringRepeat["ddt", p/3]], r],
              {r, 0, p - 1}], #] &]], True], {p, 3, 12}]], TrueQ];
-   AllTrue[Range[3], adjR[dpTransfer["c"], phiC, #] >= 3/2 &] &&
+   AllTrue[Range[3], adjR[dpTransfer["d"], phiC, #] >= 3/2 &] &&
     AllTrue[Range[3], adjR[dpTransfer["t"], phiC, #] >= 1 &] &&
     Min[Table[Max[A3[[i]]], {i, 3}]] == 13/3 && comb];
-alphaCisTheorem
+alphaDirectTheorem
 
 (* ::Text:: *)
-(*THE EXPLICIT \[Epsilon]-OPTIMALITY CERTIFICATE. The transfer-SDP sub-action program is now constructed explicitly at window k = 7 and made exact: EpsilonCertificate.wl (in this directory) holds 128 pairs of rational PSD blocks Q (5\[Times]5, on the glue quad {u, v, A, B, apex}) and R (4\[Times]4, on {v, B, X, apex}) \[LongDash] one pair per de Bruijn-7 node \[LongDash] plus closure potentials \[Psi], DP potentials \[CapitalPhi] with a fixed strategy, and the rational bound \[CapitalGamma] = 1541247/20000000 = 0.07706235. THEOREM (a DENSITY bound, NOT per finite ring): every gluing word has extensive gap DENSITY at most \[CapitalGamma], i.e. gap-density within \[Epsilon] = 0.0071648 of the (cct) optimum. Assembly: placed along ANY length-L word ring, the blocks sum to M = [[I + B, e],[e^T, \[Sigma]]] \[LongDash] uniform unit diagonal and unit border by the edge equalities, edge-supported B, vanishing fills \[LongDash] and M is PSD as a sum of PSD liftings, so the Schur complement gives \[CurlyTheta](ring_L) <= \[Sum] d(node) EXACTLY per ring. The \[Alpha] side is only ASYMPTOTIC: \[CapitalPhi]-telescoping gives \[Alpha](ring_L) >= \[Sum] r(edge) - 2 Max[Abs[\[CapitalPhi]]] (a bounded boundary), so the exact per-ring form \[Alpha](ring) >= \[Sum] r is FALSE (adversarially found: cctt at L = 4 has \[Alpha] = 5 < \[Sum] r = 5.488, per-block gap 0.0839 > \[CapitalGamma]) \[LongDash] individual finite rings can overshoot \[CapitalGamma]. Both boundaries (\[Psi] exact on the closed walk, \[CapitalPhi] finite-valued) vanish under /L, so \[CurlyTheta]-density - \[Alpha]-density <= \[CapitalGamma] for every word. The rigorous machine-checkable CORE is the POINTWISE per-edge bound \[Sigma](e) = d(x) - r(e) + \[Psi](x) - \[Psi](w) <= \[CapitalGamma] (exact rational, all 256 edges; verified below). Convergence: \[CapitalGamma](k) = 0.1667 (k = 2; the pinch), 0.1250, 0.1020, 0.0953, 0.0824, 0.0770624 (k = 7, exact 1541247/20000000), 0.0753086 (k = 8, exact 941357/12500000) \[LongDash] decrements non-monotone; \[Epsilon] = 0.0054 at k = 8. Whether \[Epsilon] -> 0 (whether Lim \[CapitalGamma](k) = gap(cct)) is OPEN, NOT obstructed: each \[CapitalGamma](k) is rational and gap(cct) irrational, but rationals converge to irrationals \[LongDash] the \[Tau]cct height result rules out only a single finite exact rational certificate. Bonus discovery en route: the same Q/R clique family solves the PER-CYCLE transfer-SDP exactly (losses < 10^-6 against \[CurlyTheta]-density on every tested word) \[LongDash] a position-space exact word-density solver that never builds the DFT symbol.*)
+(*THE EXPLICIT \[Epsilon]-OPTIMALITY CERTIFICATE. The transfer-SDP sub-action program is now constructed explicitly at window k = 7 and made exact: EpsilonCertificate.wl (in this directory) holds 128 pairs of rational PSD blocks Q (5\[Times]5, on the glue quad {u, v, A, B, apex}) and R (4\[Times]4, on {v, B, X, apex}) \[LongDash] one pair per de Bruijn-7 node \[LongDash] plus closure potentials \[Psi], DP potentials \[CapitalPhi] with a fixed strategy, and the rational bound \[CapitalGamma] = 1541247/20000000 = 0.07706235. THEOREM (a DENSITY bound, NOT per finite ring): every gluing word has extensive gap DENSITY at most \[CapitalGamma], i.e. gap-density within \[Epsilon] = 0.0071648 of the (ddt) optimum. Assembly: placed along ANY length-L word ring, the blocks sum to M = [[I + B, e],[e^T, \[Sigma]]] \[LongDash] uniform unit diagonal and unit border by the edge equalities, edge-supported B, vanishing fills \[LongDash] and M is PSD as a sum of PSD liftings, so the Schur complement gives \[CurlyTheta](ring_L) <= \[Sum] d(node) EXACTLY per ring. The \[Alpha] side is only ASYMPTOTIC: \[CapitalPhi]-telescoping gives \[Alpha](ring_L) >= \[Sum] r(edge) - 2 Max[Abs[\[CapitalPhi]]] (a bounded boundary), so the exact per-ring form \[Alpha](ring) >= \[Sum] r is FALSE (adversarially found: ddtt at L = 4 has \[Alpha] = 5 < \[Sum] r = 5.488, per-block gap 0.0839 > \[CapitalGamma]) \[LongDash] individual finite rings can overshoot \[CapitalGamma]. Both boundaries (\[Psi] exact on the closed walk, \[CapitalPhi] finite-valued) vanish under /L, so \[CurlyTheta]-density - \[Alpha]-density <= \[CapitalGamma] for every word. The rigorous machine-checkable CORE is the POINTWISE per-edge bound \[Sigma](e) = d(x) - r(e) + \[Psi](x) - \[Psi](w) <= \[CapitalGamma] (exact rational, all 256 edges; verified below). Convergence: \[CapitalGamma](k) = 0.1667 (k = 2; the pinch), 0.1250, 0.1020, 0.0953, 0.0824, 0.0770624 (k = 7, exact 1541247/20000000), 0.0753086 (k = 8, exact 941357/12500000) \[LongDash] decrements non-monotone; \[Epsilon] = 0.0054 at k = 8. Whether \[Epsilon] -> 0 (whether Lim \[CapitalGamma](k) = gap(ddt)) is OPEN, NOT obstructed: each \[CapitalGamma](k) is rational and gap(ddt) irrational, but rationals converge to irrationals \[LongDash] the \[Tau]ddt height result rules out only a single finite exact rational certificate. Bonus discovery en route: the same Q/R clique family solves the PER-CYCLE transfer-SDP exactly (losses < 10^-6 against \[CurlyTheta]-density on every tested word) \[LongDash] a position-space exact word-density solver that never builds the DFT symbol.*)
 
 (* ::CodeText:: *)
-(*Load and exactly re-verify the certificate \[LongDash] node and edge equalities, 256 exact PSD checks, strategy-derived rates, closure \[LongDash] plus an end-to-end assembly check: the rational blocks assembled on small cct and pure-trans rings give exact PSD certificates dominating the dense-SDP \[CurlyTheta]:*)
+(*Load and exactly re-verify the certificate \[LongDash] node and edge equalities, 256 exact PSD checks, strategy-derived rates, closure \[LongDash] plus an end-to-end assembly check: the rational blocks assembled on small ddt and pure-twisted rings give exact PSD certificates dominating the dense-SDP \[CurlyTheta]:*)
 
 (* ::Input:: *)
 Get[FileNameJoin[{Quiet@Check[NotebookDirectory[], Directory[]], "..", "composition-optimality", "EpsilonCertificate.wl"}]];
@@ -369,14 +369,14 @@ epsilonCertificateCheck = Module[
      Qs[w][[iv, ib]] + Rs[w][[jv, jb]] == 0, {w, nodesE}];
   Do[Module[{w = e[[1]], x = e[[2]], b, rA, rB},
      b = StringTake[w, {-1}];
-     {rA, rB} = If[b === "c", {iu, iv}, {iv, iu}];
+     {rA, rB} = If[b === "d", {iu, iv}, {iv, iu}];
      ok = ok &&
        Qs[w][[ia, ia]] + Qs[x][[rA, rA]] + If[b === "t", Rs[x][[jv, jv]], 0] == 1 &&
        Qs[w][[ib, ib]] + Rs[w][[jb, jb]] + Qs[x][[rB, rB]] +
-         If[b === "c", Rs[x][[jv, jv]], 0] == 1 &&
+         If[b === "d", Rs[x][[jv, jv]], 0] == 1 &&
        Qs[w][[ia, ip]] + Qs[x][[rA, ip]] + If[b === "t", Rs[x][[jv, jp]], 0] == 1 &&
        Qs[w][[ib, ip]] + Rs[w][[jb, jp]] + Qs[x][[rB, ip]] +
-         If[b === "c", Rs[x][[jv, jp]], 0] == 1], {e, edgesE}];
+         If[b === "d", Rs[x][[jv, jp]], 0] == 1], {e, edgesE}];
   ok = ok && AllTrue[nodesE, PositiveSemidefiniteMatrixQ[Qs[#]] &] &&
     AllTrue[nodesE, PositiveSemidefiniteMatrixQ[Rs[#]] &];
   ratesE = Association[Table[Module[{w = e[[1]], x = e[[2]], T},
@@ -395,20 +395,20 @@ epsilonAssemblyCheck = Module[{assemble, kE = EpsilonCertificate["k"]},
     M = ConstantArray[0, {n + 1, n + 1}];
     Do[Module[{km = Mod[j - 1, L], nd, u, v, qi, ri},
       nd = StringJoin @@ Table[w[[Mod[j - (kE - 1) + i, L] + 1]], {i, 0, kE - 1}];
-      {u, v} = If[w[[Mod[j - 1, L] + 1]] === "c",
+      {u, v} = If[w[[Mod[j - 1, L] + 1]] === "d",
         {3 km + 1, 3 km + 2}, {3 km + 2, 3 km + 1}];
       qi = {u, v, 3 j + 1, 3 j + 2, n + 1}; ri = {v, 3 j + 2, 3 j + 3, n + 1};
       M[[qi, qi]] += Qs[nd]; M[[ri, ri]] += Rs[nd];
       dsum += Qs[nd][[5, 5]] + Rs[nd][[4, 4]]], {j, 0, L - 1}];
     {PositiveSemidefiniteMatrixQ[M], dsum}];
-  Module[{cct = assemble["cct", 2], tt = assemble["t", 5]},
-    cct[[1]] && tt[[1]] &&
-     cct[[2]] > LovaszTheta[wordRing["cct", 2]] &&
+  Module[{ddt = assemble["ddt", 2], tt = assemble["t", 5]},
+    ddt[[1]] && tt[[1]] &&
+     ddt[[2]] > LovaszTheta[wordRing["ddt", 2]] &&
      tt[[2]] > LovaszTheta[wordRing["t", 5]]]];
 {epsilonCertificateCheck, epsilonAssemblyCheck, N[EpsilonCertificate["Gamma"]]}
 
 (* ::Text:: *)
-(*PERIODIC-ORBIT SUFFICIENCY (for the certified functional) and the strengthened k = 8 bound. The certified gap functional GapBound_k(w) = LimSup (1/L) \[Sum] \[Sigma](e_j) is the Birkhoff average of the ADDITIVE edge cocycle \[Sigma](e) = d(x) - r(e) + \[Psi](x) - \[Psi](w), which is LOCALLY CONSTANT on the de Bruijn-k subshift (it depends only on the (k+1)-window). By Karp's max-cycle-mean theorem and mean-payoff LP duality (max cycle mean = Min over potentials of Max edge), the supremum over ALL bi-infinite words \[LongDash] periodic AND aperiodic \[LongDash] equals the maximum cycle mean = \[CapitalGamma]_k, and a maximizing invariant measure for a locally-constant potential sits on a PERIODIC ORBIT. So no aperiodic word beats the best periodic word for the certified bound: periodic-orbit sufficiency holds FOR THE CERTIFIED COCYCLE. (It does NOT transfer to the true functional \[CurlyTheta]\.bar - \[Alpha]\.bar, which is not locally constant \[LongDash] that remains open.) The bottleneck periodic word \[LongDash] where the bound is saturated \[LongDash] is (cttt)^\[Infinity] at k = 7 and (ctt)^\[Infinity] at k = 8 (Karp-exact), a LOW-cis-fraction word, NOT cct; this is expected for a loose upper bound (bound-maximizer \[NotEqual] true-gap-maximizer) and it locates the residual slack. The k = 8 certificate (EpsilonCertificate8.wl, exact rational, symbol EpsilonCertificate8) strengthens the bound to \[CapitalGamma]_8 = 941357/12500000 = 0.0753086. Net rigorous result: sup gap-density \[Element] [gap(cct) = 0.0698975, \[CapitalGamma]_8 = 0.0753086], i.e. (cct)^\[Infinity] optimal to within \[Epsilon] = 0.0054; exact global optimality is OPEN.*)
+(*PERIODIC-ORBIT SUFFICIENCY (for the certified functional) and the strengthened k = 8 bound. The certified gap functional GapBound_k(w) = LimSup (1/L) \[Sum] \[Sigma](e_j) is the Birkhoff average of the ADDITIVE edge cocycle \[Sigma](e) = d(x) - r(e) + \[Psi](x) - \[Psi](w), which is LOCALLY CONSTANT on the de Bruijn-k subshift (it depends only on the (k+1)-window). By Karp's max-cycle-mean theorem and mean-payoff LP duality (max cycle mean = Min over potentials of Max edge), the supremum over ALL bi-infinite words \[LongDash] periodic AND aperiodic \[LongDash] equals the maximum cycle mean = \[CapitalGamma]_k, and a maximizing invariant measure for a locally-constant potential sits on a PERIODIC ORBIT. So no aperiodic word beats the best periodic word for the certified bound: periodic-orbit sufficiency holds FOR THE CERTIFIED COCYCLE. (It does NOT transfer to the true functional \[CurlyTheta]\.bar - \[Alpha]\.bar, which is not locally constant \[LongDash] that remains open.) The bottleneck periodic word \[LongDash] where the bound is saturated \[LongDash] is (dttt)^\[Infinity] at k = 7 and (dtt)^\[Infinity] at k = 8 (Karp-exact), a LOW-direct-fraction word, NOT ddt; this is expected for a loose upper bound (bound-maximizer \[NotEqual] true-gap-maximizer) and it locates the residual slack. The k = 8 certificate (EpsilonCertificate8.wl, exact rational, symbol EpsilonCertificate8) strengthens the bound to \[CapitalGamma]_8 = 941357/12500000 = 0.0753086. Net rigorous result: sup gap-density \[Element] [gap(ddt) = 0.0698975, \[CapitalGamma]_8 = 0.0753086], i.e. (ddt)^\[Infinity] optimal to within \[Epsilon] = 0.0054; exact global optimality is OPEN.*)
 
 (* ::CodeText:: *)
 (*Exact re-verification (both k = 7 and k = 8): the pointwise per-edge bound \[Sigma](e) <= \[CapitalGamma] over ALL edges (the all-words density bound), the worst periodic word's de Bruijn cycle mean = \[CapitalGamma] up to the rationalization sliver (periodic attainment), and \[CapitalGamma]_8 < \[CapitalGamma]_7:*)
@@ -429,9 +429,9 @@ posCycleMean[CE_][word_String, k_] := Module[{p = StringLength[word], wl, nodes,
 posCheck[CE_, kk_, worst_String] := Module[{gam = CE["Gamma"], cm},
   cm = posCycleMean[CE][worst, kk];
   {AllTrue[posEdges[CE], posSigma[CE][#] <= gam &], gam - cm >= 0 && N[gam - cm] < 10^-7}];
-(* the "density NOT per-ring" caveat, itself certified: the finite cctt ring at
+(* the "density NOT per-ring" caveat, itself certified: the finite ddtt ring at
    L = 4 has per-block gap 0.0839 STRICTLY ABOVE Gamma_7 = 0.0771 *)
-finiteRingOvershoots = With[{g = wordRing["cctt", 1]},
+finiteRingOvershoots = With[{g = wordRing["ddtt", 1]},
    (LovaszTheta[g] - IndependenceNumber[g])/4 > EpsilonCertificate["Gamma"] &&
     IndependenceNumber[g] == 5];
 (* genuine WL re-verification of the k=8 certificate's PSD blocks (exact rational),
@@ -440,9 +440,9 @@ epsilon8BlocksPSD = AllTrue[EpsilonCertificate8["Nodes"],
    PositiveSemidefiniteMatrixQ[EpsilonCertificate8["Q"][#]] &&
     PositiveSemidefiniteMatrixQ[EpsilonCertificate8["R"][#]] &];
 periodicOrbitSufficiency = With[
-   {gapCct = cctDensity - 4/3,
+   {gapCct = ddtDensity - 4/3,
     g7 = EpsilonCertificate["Gamma"], g8 = EpsilonCertificate8["Gamma"],
-    r7 = posCheck[EpsilonCertificate, 7, "cttt"], r8 = posCheck[EpsilonCertificate8, 8, "ctt"]},
+    r7 = posCheck[EpsilonCertificate, 7, "dttt"], r8 = posCheck[EpsilonCertificate8, 8, "dtt"]},
    And @@ Join[r7, r8] && g8 < g7 && g8 == 941357/12500000 &&
     gapCct < g8 < g7 < 1/6 && N[g8 - gapCct] < 0.0055 && finiteRingOvershoots &&
     epsilon8BlocksPSD];
@@ -450,19 +450,19 @@ periodicOrbitSufficiency = With[
  N[{EpsilonCertificate["Gamma"], EpsilonCertificate8["Gamma"]}, 8]}
 
 (* ::Text:: *)
-(*WHAT GLOBAL OPTIMALITY WOULD TAKE, and the evidence for (cct)^\[Infinity]. The problem is ergodic optimization of gap-density = \[CurlyTheta]\.bar - \[Alpha]\.bar over the shift {c,t}^\[DoubleStruckCapitalZ]: \[Alpha]\.bar is a tropical (max-plus) cycle mean (periodic-optimal), \[CurlyTheta]\.bar is an SDP-limit density (a sub-additive cocycle). This is the SAME GENUS as joint-spectral-radius / Lyapunov optimization, where the "finiteness property" (an optimal PERIODIC word exists) is FALSE in general \[LongDash] Bousch-Mairesse (2002) exhibit sets whose maximizer is an aperiodic STURMIAN sequence. So exact optimality of the periodic word cct is not only unproven; a priori a nearby-slope aperiodic word could win. TWO pieces of evidence make that implausible here. (i) cct is a SHARP ISOLATED peak: among all balanced (Christoffel/mechanical) words of period <= 21 with cis-density in [0.5, 0.8] \[LongDash] the natural competitors, whose irrational-slope limits are exactly the Sturmian words \[LongDash] every one has gap-density at least 0.012 BELOW cct (nearest: cis-density 0.65 -> 0.0572, 0.68 -> 0.0455, vs cct's 0.0699 at 2/3). By continuity of gap-density in the slope, a Sturmian word of nearby irrational slope inherits a value below cct's. (ii) The MECHANISM is the \[Alpha]-cis theorem: cct is the UNIQUE word achieving the classical floor \[Alpha]\.bar = 4/3 (proven), so every neighbour pays a strict \[Alpha]-penalty \[LongDash] this is the isolated-peak's cause, and it is the exact structural fact a proof would exploit (bound \[CurlyTheta]\.bar(W) - \[CurlyTheta]\.bar(cct) <= \[Alpha]\.bar(W) - 4/3 for all W would finish it; this is open). Separately, the \[Epsilon]-certificate's own bottleneck word MIGRATES away from cct (cct at k = 2,3; low/mid-cis words at k >= 4), so the certificate route is not converging onto cct and likely cannot close \[Epsilon]. NET: (cct)^\[Infinity] is the best word known by a clear margin, its optimality strongly evidenced and mechanistically explained, but exact global optimality remains an OPEN ergodic-optimization problem.*)
+(*WHAT GLOBAL OPTIMALITY WOULD TAKE, and the evidence for (ddt)^\[Infinity]. The problem is ergodic optimization of gap-density = \[CurlyTheta]\.bar - \[Alpha]\.bar over the shift {c,t}^\[DoubleStruckCapitalZ]: \[Alpha]\.bar is a tropical (max-plus) cycle mean (periodic-optimal), \[CurlyTheta]\.bar is an SDP-limit density (a sub-additive cocycle). This is the SAME GENUS as joint-spectral-radius / Lyapunov optimization, where the "finiteness property" (an optimal PERIODIC word exists) is FALSE in general \[LongDash] Bousch-Mairesse (2002) exhibit sets whose maximizer is an aperiodic STURMIAN sequence. So exact optimality of the periodic word ddt is not only unproven; a priori a nearby-slope aperiodic word could win. TWO pieces of evidence make that implausible here. (i) ddt is a SHARP ISOLATED peak: among all balanced (Christoffel/mechanical) words of period <= 21 with direct-density in [0.5, 0.8] \[LongDash] the natural competitors, whose irrational-slope limits are exactly the Sturmian words \[LongDash] every one has gap-density at least 0.012 BELOW ddt (nearest: direct-density 0.65 -> 0.0572, 0.68 -> 0.0455, vs ddt's 0.0699 at 2/3). By continuity of gap-density in the slope, a Sturmian word of nearby irrational slope inherits a value below ddt's. (ii) The MECHANISM is the \[Alpha]-direct theorem: ddt is the UNIQUE word achieving the classical floor \[Alpha]\.bar = 4/3 (proven), so every neighbour pays a strict \[Alpha]-penalty \[LongDash] this is the isolated-peak's cause, and it is the exact structural fact a proof would exploit (bound \[CurlyTheta]\.bar(W) - \[CurlyTheta]\.bar(ddt) <= \[Alpha]\.bar(W) - 4/3 for all W would finish it; this is open). Separately, the \[Epsilon]-certificate's own bottleneck word MIGRATES away from ddt (ddt at k = 2,3; low/mid-direct words at k >= 4), so the certificate route is not converging onto ddt and likely cannot close \[Epsilon]. NET: (ddt)^\[Infinity] is the best word known by a clear margin, its optimality strongly evidenced and mechanistically explained, but exact global optimality remains an OPEN ergodic-optimization problem.*)
 
 (* ::CodeText:: *)
-(*The peak MECHANISM, keyed to the already-proven \[Alpha]-cis theorem: cct UNIQUELY attains the classical floor \[Alpha]\.bar = 4/3 (theorem, key D3_alphaCisTheorem), so every nearby word carries a strict \[Alpha]-penalty \[LongDash] that is what isolates cct's gap peak, and it is the structural fact a full proof would exploit. The gap comparison itself \[LongDash] cct beats every balanced/Christoffel word of period <= 21 near slope 2/3 by >= 0.012 (nearest 0.65 -> 0.0572, 0.68 -> 0.0455 vs cct 0.0699) \[LongDash] is the Python Sturmian probe (lovasz_theta_sparse.py; reported in the Text above), the primary evidence:*)
+(*The peak MECHANISM, keyed to the already-proven \[Alpha]-direct theorem: ddt UNIQUELY attains the classical floor \[Alpha]\.bar = 4/3 (theorem, key D3_alphaDirectTheorem), so every nearby word carries a strict \[Alpha]-penalty \[LongDash] that is what isolates ddt's gap peak, and it is the structural fact a full proof would exploit. The gap comparison itself \[LongDash] ddt beats every balanced/Christoffel word of period <= 21 near slope 2/3 by >= 0.012 (nearest 0.65 -> 0.0572, 0.68 -> 0.0455 vs ddt 0.0699) \[LongDash] is the Python Sturmian probe (lovasz_theta_sparse.py; reported in the Text above), the primary evidence:*)
 
 (* ::Input:: *)
 globalOptimalityEvidence =
-   Abs[(cctDensity - 4/3) - 0.0698975] < 10^-4 &&  (* cct gap-density sits at the alpha-floor *)
-    alphaCisTheorem;                                (* the mechanism: cct uniquely attains 4/3 *)
-{globalOptimalityEvidence, N[cctDensity - 4/3, 8]}
+   Abs[(ddtDensity - 4/3) - 0.0698975] < 10^-4 &&  (* ddt gap-density sits at the alpha-floor *)
+    alphaDirectTheorem;                                (* the mechanism: ddt uniquely attains 4/3 *)
+{globalOptimalityEvidence, N[ddtDensity - 4/3, 8]}
 
 (* ::Text:: *)
-(*THE TARGET INEQUALITY \[CurlyTheta]\.bar(W) - \[CurlyTheta]\.bar(cct) <= \[Alpha]\.bar(W) - 4/3 for all W \[LongDash] a RIGOROUS REDUCTION, NOT a proof (a full proof is an open ergodic-optimization problem, JSR genus). The inequality is equivalent to gap(W) := \[CurlyTheta]\.bar(W) - \[Alpha]\.bar(W) <= gap(cct) = \[CurlyTheta]\.bar(cct) - 4/3, i.e. global optimality of (cct)^\[Infinity]. Two ALREADY-PROVEN ingredients bracket it. (1) The \[Alpha]*-cap (Lemma A, key D3_towardsGlobalOptimality): \[CurlyTheta]\.bar(W) <= \[Alpha]*-density = 3/2 by the Lov\[AAcute]sz sandwich, so gap(W) <= 3/2 - \[Alpha]\.bar(W); hence the inequality holds EXACTLY whenever \[Alpha]\.bar(W) >= 3/2 - gap(cct) = 1.4301025. (2) The \[Epsilon]-certificate (key D3_epsilonCertificate): gap(W) <= \[CapitalGamma]_8 = 941357/12500000 = 0.0753086 for every W, so gap(W) <= gap(cct) + 0.005411 UNCONDITIONALLY. COMBINED: the target inequality is PROVEN for every word with \[Alpha]\.bar(W) >= 1.4301025, and holds within 0.005411 for all words \[LongDash] it reduces to the single narrow window \[Alpha]\.bar(W) \[Element] [4/3, 1.4301025). By the \[Alpha]-cis theorem these are the LOW-classical-density, "cct-like" words (\[Alpha]\.bar near the floor, high cis-content), with equality exactly at cct; that window is precisely where the \[CurlyTheta]\.bar-vs-\[Alpha]\.bar tradeoff is delicate and where an aperiodic (Sturmian) competitor would have to live. Closing it needs either \[CapitalGamma]_k -> gap(cct) (open; the certificate bottleneck migrates AWAY from cct, so unlikely by this route) or a genuinely new \[CurlyTheta]\.bar upper bound tighter than 3/2 in the window. NOT PROVEN; this is the honest frontier.*)
+(*THE TARGET INEQUALITY \[CurlyTheta]\.bar(W) - \[CurlyTheta]\.bar(ddt) <= \[Alpha]\.bar(W) - 4/3 for all W \[LongDash] a RIGOROUS REDUCTION, NOT a proof (a full proof is an open ergodic-optimization problem, JSR genus). The inequality is equivalent to gap(W) := \[CurlyTheta]\.bar(W) - \[Alpha]\.bar(W) <= gap(ddt) = \[CurlyTheta]\.bar(ddt) - 4/3, i.e. global optimality of (ddt)^\[Infinity]. Two ALREADY-PROVEN ingredients bracket it. (1) The \[Alpha]*-cap (Lemma A, key D3_towardsGlobalOptimality): \[CurlyTheta]\.bar(W) <= \[Alpha]*-density = 3/2 by the Lov\[AAcute]sz sandwich, so gap(W) <= 3/2 - \[Alpha]\.bar(W); hence the inequality holds EXACTLY whenever \[Alpha]\.bar(W) >= 3/2 - gap(ddt) = 1.4301025. (2) The \[Epsilon]-certificate (key D3_epsilonCertificate): gap(W) <= \[CapitalGamma]_8 = 941357/12500000 = 0.0753086 for every W, so gap(W) <= gap(ddt) + 0.005411 UNCONDITIONALLY. COMBINED: the target inequality is PROVEN for every word with \[Alpha]\.bar(W) >= 1.4301025, and holds within 0.005411 for all words \[LongDash] it reduces to the single narrow window \[Alpha]\.bar(W) \[Element] [4/3, 1.4301025). By the \[Alpha]-direct theorem these are the LOW-classical-density, "ddt-like" words (\[Alpha]\.bar near the floor, high direct-content), with equality exactly at ddt; that window is precisely where the \[CurlyTheta]\.bar-vs-\[Alpha]\.bar tradeoff is delicate and where an aperiodic (Sturmian) competitor would have to live. Closing it needs either \[CapitalGamma]_k -> gap(ddt) (open; the certificate bottleneck migrates AWAY from ddt, so unlikely by this route) or a genuinely new \[CurlyTheta]\.bar upper bound tighter than 3/2 in the window. NOT PROVEN; this is the honest frontier.*)
 
 (* ::CodeText:: *)
 (*The reduction, machine-checked: the two thresholds and that the residual window is a proper sub-interval of [4/3, 3/2). The two ingredient facts themselves are the already-verified keys D3_towardsGlobalOptimality (\[Alpha]* = 3/2) and D3_epsilonCertificate (\[CapitalGamma]_8 bound):*)
@@ -471,30 +471,30 @@ globalOptimalityEvidence =
 (* arithmetic of the reduction only; the two INGREDIENTS are the already-verified keys
    D3_towardsGlobalOptimality (alpha* = 3/2, Lemma A) and D3_epsilonCertificate (Gamma_8) *)
 inequalityReduction = With[
-   {gapCct = cctDensity - 4/3, g8 = EpsilonCertificate8["Gamma"], thr = 3/2 - (cctDensity - 4/3)},
+   {gapCct = ddtDensity - 4/3, g8 = EpsilonCertificate8["Gamma"], thr = 3/2 - (ddtDensity - 4/3)},
    Abs[thr - 1.4301025] < 10^-6 &&        (* alpha*-cap resolves alpha-bar >= this threshold *)
     4/3 < thr < 3/2 &&                     (* the open window is a proper, narrow sub-interval *)
     N[g8 - gapCct] < 0.0055];              (* eps-certificate residual in the window *)
 {inequalityReduction,
- "PROVEN for alpha-bar >=" -> N[3/2 - (cctDensity - 4/3), 8],
- "within" -> N[EpsilonCertificate8["Gamma"] - (cctDensity - 4/3), 6],
- "open window" -> {4/3, N[3/2 - (cctDensity - 4/3), 8]}}
+ "PROVEN for alpha-bar >=" -> N[3/2 - (ddtDensity - 4/3), 8],
+ "within" -> N[EpsilonCertificate8["Gamma"] - (ddtDensity - 4/3), 6],
+ "open window" -> {4/3, N[3/2 - (ddtDensity - 4/3), 8]}}
 
 (* ::Text:: *)
-(*The last thread: the TRANS-CHAIN density \[LongDash] STRONG NUMERICAL EVIDENCE, not a theorem (adversarially corrected: "resolved" was too strong). Open trans-glued chains (PentagonChain with alternating orientation; builder pentagon_chain_word, CLI "transchain") NUMERICALLY appear to settle onto the same bulk density as the trans ring: per-block increments \[CurlyTheta](chain m2) - \[CurlyTheta](chain m1) over m2 - m1 read \[TildeTilde] \[Tau]* (1.3767178 from m = 50 through m = 800, certgaps 10^-6..8\[CenterDot]10^-4), with an O(1) boundary constant \[CurlyTheta] - \[Tau]* m -> 0.995(1) \[LongDash] these are unproven prose numerics, NOT a convergence proof. The exact interface DP gives \[Alpha](trans-chain m) = \[LeftFloor]4(m+1)/3\[RightFloor] verified m = 3..12 exhaustively (spot-checked to 800), CONJECTURED for all m, so IF the density conjecture holds the gap is EXTENSIVE, \[TildeTilde] (\[Tau]* - 4/3) m. Consequence (numerical): the "rings beat chains" dichotomy of Case D was never about closure \[LongDash] open trans chains numerically carry the same bulk advantage, and the decaying-gap chains of Case D were cis chains. Small-m accident mirroring the cis parity law: \[CurlyTheta](trans-chain 5) = \[Alpha] = 8 exactly. Durable tooling in lovasz_theta_sparse.py: pentagon_chain_word, alpha_chain_word, word_density_transfer_sdp (exact position-space \[CurlyTheta]-density of any PERIODIC word; validated against \[Tau]*, 3/2, the cct density to 2\[CenterDot]10^-6).*)
+(*The last thread: the TWISTED-CHAIN density \[LongDash] STRONG NUMERICAL EVIDENCE, not a theorem (adversarially corrected: "resolved" was too strong). Open twisted-glued chains (PentagonChain with alternating orientation; builder pentagon_chain_word, CLI "twistedchain") NUMERICALLY appear to settle onto the same bulk density as the twisted ring: per-block increments \[CurlyTheta](chain m2) - \[CurlyTheta](chain m1) over m2 - m1 read \[TildeTilde] \[Tau]* (1.3767178 from m = 50 through m = 800, certgaps 10^-6..8\[CenterDot]10^-4), with an O(1) boundary constant \[CurlyTheta] - \[Tau]* m -> 0.995(1) \[LongDash] these are unproven prose numerics, NOT a convergence proof. The exact interface DP gives \[Alpha](twisted-chain m) = \[LeftFloor]4(m+1)/3\[RightFloor] verified m = 3..12 exhaustively (spot-checked to 800), CONJECTURED for all m, so IF the density conjecture holds the gap is EXTENSIVE, \[TildeTilde] (\[Tau]* - 4/3) m. Consequence (numerical): the "rings beat chains" dichotomy of Case D was never about closure \[LongDash] open twisted chains numerically carry the same bulk advantage, and the decaying-gap chains of Case D were direct chains. Small-m accident mirroring the direct parity law: \[CurlyTheta](twisted-chain 5) = \[Alpha] = 8 exactly. Durable tooling in lovasz_theta_sparse.py: pentagon_chain_word, alpha_chain_word, word_density_transfer_sdp (exact position-space \[CurlyTheta]-density of any PERIODIC word; validated against \[Tau]*, 3/2, the ddt density to 2\[CenterDot]10^-6).*)
 
 (* ::CodeText:: *)
-(*Trans-chain anchors \[LongDash] the ROBUST facts the key verifies: the m = 5 exact \[CurlyTheta] = \[Alpha] = 8 coincidence against the dense SDP, and the \[Alpha] staircase \[LeftFloor]4(m+1)/3\[RightFloor] exhaustively m = 3..12. The bulk density \[TildeTilde] \[Tau]* is NUMERICAL evidence (Python increments m = 50..800), stated in the Text, NOT verified in-key \[LongDash] a tight in-WL increment check would need large m (small-m boundary transients deviate by ~0.01):*)
+(*Twisted-chain anchors \[LongDash] the ROBUST facts the key verifies: the m = 5 exact \[CurlyTheta] = \[Alpha] = 8 coincidence against the dense SDP, and the \[Alpha] staircase \[LeftFloor]4(m+1)/3\[RightFloor] exhaustively m = 3..12. The bulk density \[TildeTilde] \[Tau]* is NUMERICAL evidence (Python increments m = 50..800), stated in the Text, NOT verified in-key \[LongDash] a tight in-WL increment check would need large m (small-m boundary transients deviate by ~0.01):*)
 
 (* ::Input:: *)
-transChainWL[m_Integer] := Module[{edges = {}, u = 1, v = 2},
+twistedChainWL[m_Integer] := Module[{edges = {}, u = 1, v = 2},
   Do[Module[{a = 3 k + 3, b = 3 k + 4, x = 3 k + 5},
     edges = Join[edges, {{u, v}, {u, a}, {a, b}, {b, x}, {x, v}}];
     {u, v} = {b, a}], {k, 0, m - 1}];
   Graph[Range[3 m + 2], UndirectedEdge @@@ DeleteDuplicates[Sort /@ edges]]];
-transChainAnchor = {LovaszTheta[transChainWL[5]], IndependenceNumber[transChainWL[5]],
-   Table[IndependenceNumber[transChainWL[m]] == Floor[4 (m + 1)/3], {m, 3, 12}]};
-transChainAnchor
+twistedChainAnchor = {LovaszTheta[twistedChainWL[5]], IndependenceNumber[twistedChainWL[5]],
+   Table[IndependenceNumber[twistedChainWL[m]] == Floor[4 (m + 1)/3], {m, 3, 12}]};
+twistedChainAnchor
 
 (* ::Section:: *)
 (*Verification*)
@@ -525,47 +525,47 @@ CaseStudiesVerification = <|
   "D3_sparseMatchesDense" -> sparseAgreement < 10^-4,
   "D3_gluingArbitration" -> gluingArbitration[[1]] < gluingArbitration[[2]] - 0.15 &&
      Abs[gluingArbitration[[1]] - 28.86756] < 10^-3 && Abs[gluingArbitration[[2]] - 29.03987] < 10^-3,
-  "D3_cisRingLaw" -> AllTrue[cisLawTable, Abs[#[[2]] - #[[3]]] < 10^-5 &] &&
-     cisLawTable[[All, 4]] == Table[Floor[3 n/2], {n, 4, 8}],
-  "D3_cisMonotone" -> chain31 <= cisRing33 + 10^-4 &&
-     Abs[cisRing33 - (33 + LovaszTheta[CycleGraph[33]])] < 10^-3 &&
+  "D3_directRingLaw" -> AllTrue[directLawTable, Abs[#[[2]] - #[[3]]] < 10^-5 &] &&
+     directLawTable[[All, 4]] == Table[Floor[3 n/2], {n, 4, 8}],
+  "D3_directMonotone" -> chain31 <= directRing33 + 10^-4 &&
+     Abs[directRing33 - (33 + LovaszTheta[CycleGraph[33]])] < 10^-3 &&
      Abs[chain31 - 47.026768] < 10^-3,
   "D3_recordedScaling" -> OrderedQ[ringScalingRecord[[All, 3]]] &&
-     ringScalingRecord[[-1, 3]] < transDensityLimit + 10^-6 &&
+     ringScalingRecord[[-1, 3]] < twistedDensityLimit + 10^-6 &&
      AllTrue[ringScalingRecord, Abs[#[[2]]/#[[1]] - #[[3]]] < 10^-6 &],
   "D3_extensiveGapCorrected" -> With[{th = ringScalingRecord[[-1, 2]]},
      Floor[4 100000/3] < th < 3 100000/2 && th < 142491 &&
        Abs[th - 137671.775] < 0.01 && th - Floor[4 100000/3] > 4000],
   "D3_densityClosedForm" -> Union[closedFormCertificate] === {0} &&
-     Abs[transDensityLimit - 1.376717745915859] < 10^-12 &&
-     AllTrue[ringScalingRecord[[All, 3]], # < transDensityLimit + 10^-6 &],
+     Abs[twistedDensityLimit - 1.376717745915859] < 10^-12 &&
+     AllTrue[ringScalingRecord[[All, 3]], # < twistedDensityLimit + 10^-6 &],
   (* the all-N THEOREM is the analytic proof above; this key SPOT-CHECKS the explicit
      rail-umbrella witness at N in {5,7,9,11} and alpha at N in {4..8} *)
-  "D3_cisLawWitnessChecked" -> cisORCheck[5] && cisORCheck[7] && cisORCheck[9] && cisORCheck[11] &&
-     cisLawTable[[All, 4]] == Table[Floor[3 n/2], {n, 4, 8}],
+  "D3_directLawWitnessChecked" -> directORCheck[5] && directORCheck[7] && directORCheck[9] && directORCheck[11] &&
+     directLawTable[[All, 4]] == Table[Floor[3 n/2], {n, 4, 8}],
   "D3_gluingWordOptimum" -> Abs[gluingWordAnchor[[1]] - 8.347042185] < 10^-4 &&
      gluingWordAnchor[[2]] == 8 && gluingWordAnchor[[3]] == 12 &&
-     cctDensity - 4/3 > transDensityLimit - 4/3 &&
-     Abs[(cctDensity - 4/3)/(transDensityLimit - 4/3) - 1.611] < 0.01,
-  "D3_cctDensityCharacterized" ->
-     Table[GroupOrder[GraphAutomorphismGroup[wordRing["cct", m]]], {m, 2, 4}] == {4, 6, 8} &&
-     Abs[cctDensity - 1.4032308692389975] < 10^-8 &&
-     cctDensity < 1.4032316 (* the finite-L 2400 reading, corrected by the continuum solve *),
+     ddtDensity - 4/3 > twistedDensityLimit - 4/3 &&
+     Abs[(ddtDensity - 4/3)/(twistedDensityLimit - 4/3) - 1.611] < 0.01,
+  "D3_ddtDensityCharacterized" ->
+     Table[GroupOrder[GraphAutomorphismGroup[wordRing["ddt", m]]], {m, 2, 4}] == {4, 6, 8} &&
+     Abs[ddtDensity - 1.4032308692389975] < 10^-8 &&
+     ddtDensity < 1.4032316 (* the finite-L 2400 reading, corrected by the continuum solve *),
   "D3_towardsGlobalOptimality" -> optimalityLemmas &&
-     Abs[(3/2 - (cctDensity - 4/3)) - 1.4301025] < 10^-6 &&
-     cctDensity - 4/3 < 1/6 (* the pinch bound is not saturated by cct *),
-  "D3_alphaCisTheorem" -> alphaCisTheorem &&
+     Abs[(3/2 - (ddtDensity - 4/3)) - 1.4301025] < 10^-6 &&
+     ddtDensity - 4/3 < 1/6 (* the pinch bound is not saturated by ddt *),
+  "D3_alphaDirectTheorem" -> alphaDirectTheorem &&
      gluingWordAnchor[[2]] == 8 && gluingWordAnchor[[3]] == 12,
   "D3_epsilonCertificate" -> epsilonCertificateCheck && epsilonAssemblyCheck &&
      EpsilonCertificate["Gamma"] == 1541247/20000000 &&
      EpsilonCertificate["Gamma"] < 1/6 &&
-     Abs[N[EpsilonCertificate["Gamma"]] - (cctDensity - 4/3) - 0.0071648] < 10^-5,
-  (* trans-chain: NUMERICAL evidence, not a theorem. The key verifies the ROBUST
+     Abs[N[EpsilonCertificate["Gamma"]] - (ddtDensity - 4/3) - 0.0071648] < 10^-5,
+  (* twisted-chain: NUMERICAL evidence, not a theorem. The key verifies the ROBUST
      facts only -- the m=5 theta=alpha=8 coincidence and the alpha-law floor(4(m+1)/3)
      m=3..12; the bulk density ~ tau* is Python numerics (prose), NOT verified in-key
      (an in-WL increment check would need large m; small-m boundary transients ~0.01) *)
-  "D3_transChainNumerical" -> Abs[transChainAnchor[[1]] - 8] < 10^-5 &&
-     transChainAnchor[[2]] == 8 && AllTrue[transChainAnchor[[3]], TrueQ],
+  "D3_twistedChainNumerical" -> Abs[twistedChainAnchor[[1]] - 8] < 10^-5 &&
+     twistedChainAnchor[[2]] == 8 && AllTrue[twistedChainAnchor[[3]], TrueQ],
   "D3_periodicOrbitSufficiency" -> periodicOrbitSufficiency,
   "D3_globalOptimalityEvidence" -> globalOptimalityEvidence,
   "D3_inequalityReduction" -> inequalityReduction

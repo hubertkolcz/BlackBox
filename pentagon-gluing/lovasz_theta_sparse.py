@@ -20,12 +20,12 @@ Two independent exact routes to theta(G) for pentagon meshes with 10^4..10^5 blo
    Solved with Clarabel (interior point, sparse KKT); SCS fallback.
 
 2. ring_theta_symmetric(N, family): pentagon rings only (Z_N-symmetric meshes).
-   TWO distinct ring families exist ("cis"/"trans" gluing orientation, see the builders);
-   CaseStudies.wl pentagonRing is the TRANS family, BlackBox`PentagonChain closed up
-   cyclically is the CIS family, and they are NOT isomorphic: theta/N -> 1.376717746
-   (trans) vs exactly theta = N + theta(C_N) (cis, so theta/N -> 3/2 and even-N cis
+   TWO distinct ring families exist ("direct"/"twisted" gluing orientation, see the builders);
+   CaseStudies.wl pentagonRing is the TWISTED family, BlackBox`PentagonChain closed up
+   cyclically is the DIRECT family, and they are NOT isomorphic: theta/N -> 1.376717746
+   (twisted) vs exactly theta = N + theta(C_N) (direct, so theta/N -> 3/2 and even-N direct
    rings sit at alpha = theta = alpha* = 3N/2). PentagonChain pieces are induced
-   subgraphs of CIS rings only -- chain-anchored bounds do not transfer to trans rings.
+   subgraphs of DIRECT rings only -- chain-anchored bounds do not transfer to twisted rings.
    The ring is block-circulant (blocks a_k, b_k, x_k), so an optimal dual witness B can be
    taken Z_N-invariant; the 3N-dimensional LMI block-diagonalises under the DFT into N
    Hermitian 3x3 symbols A(w) = J3*N*[f=0] + B0 + w*B1 + conj(w)*B1^T, w = exp(2*pi*i*f/N).
@@ -56,7 +56,7 @@ SQRT2 = math.sqrt(2.0)
 # ---------------------------------------------------------------------------
 
 def pentagon_ring(nb):
-    """CaseStudies pentagonRing (TRANS gluing): 3*nb vertices a_k=3k, b_k=3k+1,
+    """CaseStudies pentagonRing (TWISTED gluing): 3*nb vertices a_k=3k, b_k=3k+1,
     x_k=3k+2; 4*nb edges.  Pentagon k = a_{k-1}-b_{k-1}-a_k-b_k-x_k; consecutive
     pentagons share edge (a_k, b_k) and attach their short sides to ALTERNATING
     endpoints of it (b_{k-1}->a_k, then b_k->a_{k+1})."""
@@ -73,8 +73,8 @@ def pentagon_ring(nb):
     return 3 * nb, sorted(edges)
 
 
-def pentagon_ring_cis(nb):
-    """Cyclic closure of BlackBox`PentagonChain (CIS gluing): the short sides of
+def pentagon_ring_direct(nb):
+    """Cyclic closure of BlackBox`PentagonChain (DIRECT gluing): the short sides of
     consecutive pentagons attach to the SAME endpoint of each shared edge, so the
     c1 vertices form a rail c1_0-c1_1-...-c1_{nb-1}-c1_0.  Vertices c1_k=3k,
     c2_k=3k+1, c3_k=3k+2; pentagon k = c1_{k-1}-c1_k-c2_k-c3_k-c2_{k-1}; 4*nb edges.
@@ -111,8 +111,8 @@ def cycle_graph(n):
 def pentagon_ring_word(word, reps=1):
     """Necklace of edge-glued pentagons with per-gluing orientation word in {t,c}:
     letter k orients the entry of pentagon k+1 on pentagon k's exit edge (c1_k, c2_k)
-    -- 'c' keeps the short-side endpoint (u' = c1_k), 't' alternates (u' = c2_k).
-    'c'*L reproduces pentagon_ring_cis(L) and 't'*L reproduces pentagon_ring(L)
+    -- 'd' keeps the short-side endpoint (u' = c1_k), 't' alternates (u' = c2_k).
+    'd'*L reproduces pentagon_ring_direct(L) and 't'*L reproduces pentagon_ring(L)
     with identical vertex labels (c1_k = 3k, c2_k = 3k+1, c3_k = 3k+2)."""
     w = word * reps
     L = len(w)
@@ -122,7 +122,7 @@ def pentagon_ring_word(word, reps=1):
     for k in range(L):
         km = (k - 1) % L
         c1p, c2p = 3 * km, 3 * km + 1
-        u, v = (c1p, c2p) if w[km] == "c" else (c2p, c1p)
+        u, v = (c1p, c2p) if w[km] == "d" else (c2p, c1p)
         c1, c2, c3 = 3 * k, 3 * k + 1, 3 * k + 2
         for a, b in ((u, v), (u, c1), (c1, c2), (c2, c3), (c3, v)):
             edges.add((min(a, b), max(a, b)))
@@ -135,7 +135,7 @@ def alpha_ring_word(word, reps=1):
     to the entry pair (u, v) in {(0,0), (1,0), (0,1)}; each pentagon contributes
     its three new vertices c1, c2, c3 subject to the 5-cycle constraints; the
     letter decides whether the exit pair (c1, c2) enters the next block straight
-    ('c') or swapped ('t')."""
+    ('d') or swapped ('t')."""
     w = word * reps
     L = len(w)
     states = [(0, 0), (1, 0), (0, 1)]
@@ -153,18 +153,18 @@ def alpha_ring_word(word, reps=1):
                     for s3 in (0, 1):
                         if (s2 and s3) or (s3 and sv):
                             continue
-                        out = (s1, s2) if letter == "c" else (s2, s1)
+                        out = (s1, s2) if letter == "d" else (s2, s1)
                         j = states.index(out)
                         T[i][j] = max(T[i][j], s1 + s2 + s3)
         return T
 
-    Tc, Tt = transfer("c"), transfer("t")
+    Td, Tt = transfer("d"), transfer("t")
     best = NEG
     for s0 in range(3):
         vec = [NEG] * 3
         vec[s0] = 0
         for k in range(L):
-            T = Tc if w[k] == "c" else Tt
+            T = Td if w[k] == "d" else Tt
             vec = [max(vec[i] + T[i][j] for i in range(3)) for j in range(3)]
         best = max(best, vec[s0])
     return best
@@ -191,7 +191,7 @@ def alpha_density_word(word):
                     for s3 in (0, 1):
                         if (s2 and s3) or (s3 and sv):
                             continue
-                        j = states.index((s1, s2) if letter == "c" else (s2, s1))
+                        j = states.index((s1, s2) if letter == "d" else (s2, s1))
                         T[i][j] = max(T[i][j], s1 + s2 + s3)
         return T
 
@@ -199,9 +199,9 @@ def alpha_density_word(word):
         return [[max(A[i][k] + B[k][j] for k in range(3)) for j in range(3)]
                 for i in range(3)]
 
-    Tc, Tt = transfer("c"), transfer("t")
+    Td, Tt = transfer("d"), transfer("t")
     for ch in word:
-        M = Tc if ch == "c" else Tt
+        M = Td if ch == "d" else Tt
         P = M if P is None else mp_mul(P, M)
     # max cycle mean over cycles of length 1..3 in the period-product matrix
     best = Fraction(NEG)
@@ -216,8 +216,8 @@ def alpha_density_word(word):
 def pentagon_chain_word(word):
     """OPEN chain of m = len(word)+1 edge-glued pentagons with per-gluing
     orientation letters (3m+2 vertices: seed glue edge (0,1), block k adds
-    3k+2, 3k+3, 3k+4). 'c'*(m-1) reproduces BlackBox`PentagonChain[m] with
-    identical vertex labels; 't'*(m-1) is the open TRANS chain."""
+    3k+2, 3k+3, 3k+4). 'd'*(m-1) reproduces BlackBox`PentagonChain[m] with
+    identical vertex labels; 't'*(m-1) is the open TWISTED chain."""
     m = len(word) + 1
     edges = set()
     u, v = 0, 1
@@ -226,7 +226,7 @@ def pentagon_chain_word(word):
         for p, q in ((u, v), (u, a), (a, b), (b, x), (x, v)):
             edges.add((min(p, q), max(p, q)))
         if k < m - 1:
-            u, v = (a, b) if word[k] == "c" else (b, a)
+            u, v = (a, b) if word[k] == "d" else (b, a)
     return 3 * m + 2, sorted(edges)
 
 
@@ -238,7 +238,7 @@ def alpha_chain_word(word):
     NEG = -(10 ** 9)
     vec = [su + sv for (su, sv) in states]   # seed vertices contribute
     for k in range(m):
-        letter = word[k] if k < m - 1 else "c"   # last exit unused
+        letter = word[k] if k < m - 1 else "d"   # last exit unused
         new = [NEG] * 3
         for i, (su, sv) in enumerate(states):
             if vec[i] <= NEG // 2:
@@ -249,7 +249,7 @@ def alpha_chain_word(word):
                     if s1 and s2: continue
                     for s3 in (0, 1):
                         if (s2 and s3) or (s3 and sv): continue
-                        out = (s1, s2) if letter == "c" else (s2, s1)
+                        out = (s1, s2) if letter == "d" else (s2, s1)
                         j = states.index(out)
                         new[j] = max(new[j], vec[i] + s1 + s2 + s3)
         vec = new
@@ -289,19 +289,19 @@ def word_density_transfer_sdp(word, solver="clarabel"):
         add([(qv(k, IU, IB), 1.0)], 0.0)
         add([(qv(k, IV, IB), 1.0), (rv(k, JV, JB), 1.0)], 0.0)
         b = word[k]
-        rA, rB = (IU, IV) if b == "c" else (IV, IU)
+        rA, rB = (IU, IV) if b == "d" else (IV, IU)
         kp = (k + 1) % p
         t = [(qv(k, IA, IA), 1.0), (qv(kp, rA, rA), 1.0)]
         if b == "t": t.append((rv(kp, JV, JV), 1.0))
         add(t, 1.0)
         t = [(qv(k, IB, IB), 1.0), (rv(k, JB, JB), 1.0), (qv(kp, rB, rB), 1.0)]
-        if b == "c": t.append((rv(kp, JV, JV), 1.0))
+        if b == "d": t.append((rv(kp, JV, JV), 1.0))
         add(t, 1.0)
         t = [(qv(k, IA, IP), 1.0), (qv(kp, rA, IP), 1.0)]
         if b == "t": t.append((rv(kp, JV, JP), 1.0))
         add(t, 1.0)
         t = [(qv(k, IB, IP), 1.0), (rv(k, JB, JP), 1.0), (qv(kp, rB, IP), 1.0)]
-        if b == "c": t.append((rv(kp, JV, JP), 1.0))
+        if b == "d": t.append((rv(kp, JV, JP), 1.0))
         add(t, 1.0)
     neq = len(bvals)
     dims = []
@@ -554,10 +554,10 @@ def chordal_theta(n, edges, solver="clarabel", verbose=False):
 
 # edge orbits of the two Z_N-symmetric ring families, as supports of the
 # block-circulant parameter matrices B0 (offset 0) and B1 (offset +1):
-# trans (pentagon_ring):     B0 on (a,b),(b,x);  B1 on b->a, a->x
-# cis (pentagon_ring_cis):   B0 on (c1,c2),(c2,c3);  B1 on c1->c1, c2->c3
-RING_SPECS = {"trans": {"b0": [(0, 1), (1, 2)], "b1": [(1, 0), (0, 2)]},
-              "cis":   {"b0": [(0, 1), (1, 2)], "b1": [(0, 0), (1, 2)]}}
+# twisted (pentagon_ring):     B0 on (a,b),(b,x);  B1 on b->a, a->x
+# direct (pentagon_ring_direct):   B0 on (c1,c2),(c2,c3);  B1 on c1->c1, c2->c3
+RING_SPECS = {"twisted": {"b0": [(0, 1), (1, 2)], "b1": [(1, 0), (0, 2)]},
+              "direct":   {"b0": [(0, 1), (1, 2)], "b1": [(0, 0), (1, 2)]}}
 
 
 def _ring_symbols(N, freqs, params, spec, j0=None):
@@ -584,7 +584,7 @@ def _ring_lambda_max(N, params, spec, j0=None):
     return lam, freqs
 
 
-def ring_theta_symmetric(N, family="trans", tol=1e-8, verbose=False):
+def ring_theta_symmetric(N, family="twisted", tol=1e-8, verbose=False):
     """Exact theta(pentagon ring N) via the Z_N-reduced dual; cutting planes on
     frequencies. Returns dict with Theta, UpperBound (certified), Cuts, Rounds."""
     import clarabel
@@ -657,7 +657,7 @@ def ring_theta_symmetric(N, family="trans", tol=1e-8, verbose=False):
             "Time": time.perf_counter() - t0, "Status": str(res.status)}
 
 
-def ring_density_limit(family="trans", grid=8192):
+def ring_density_limit(family="twisted", grid=8192):
     """N -> infinity limit of theta(ring N)/N: continuum minimax over the circle."""
     from scipy.optimize import minimize
     # tau(params) = max( lmax(J3 + B0 + B1 + B1^T), max_w lmax(B0 + w B1 + conj(w) B1^T) )
@@ -695,7 +695,7 @@ def ring_density_limit(family="trans", grid=8192):
 
 # kernel-verified dense-SDP reference values (LovaszTheta of BlackBox, 10 July 2026;
 # ring 18/21 and chain 16/19/31 re-verified against the dense solver on the same day
-# during the cis/trans arbitration)
+# during the direct/twisted arbitration)
 DENSE_REFERENCE = {
     ("cycle", 5): 2.2360679775,
     ("cycle", 7): 3.3176672429,
@@ -723,7 +723,7 @@ DENSE_REFERENCE = {
 }
 
 BUILDERS = {"cycle": cycle_graph, "chain": pentagon_chain, "ring": pentagon_ring,
-            "cring": pentagon_ring_cis}
+            "cring": pentagon_ring_direct}
 
 
 def cmd_validate(args):
@@ -736,7 +736,7 @@ def cmd_validate(args):
         ok &= d < 1e-5 and r["CertGap"] < 1e-5
         print(f"  {kind:5s} N={N:3d} (n={n:3d})  theta={r['Theta']:.9f}  ref={ref:.9f}  "
               f"|diff|={d:.2e}  certgap={r['CertGap']:.2e}  w={r['MaxClique']}")
-    print("symmetry solver vs dense (trans rings):")
+    print("symmetry solver vs dense (twisted rings):")
     for N in list(range(3, 16)) + [18, 21]:
         r = ring_theta_symmetric(N)
         d = abs(r["Theta"] - DENSE_REFERENCE[("ring", N)])
@@ -744,7 +744,7 @@ def cmd_validate(args):
         print(f"  ring  N={N:3d}  theta={r['Theta']:.9f}  |diff|={d:.2e}  "
               f"certgap={r['CertGap']:.2e}")
     print("cross-check chordal vs symmetry at N=100 (both families):")
-    for family, builder in (("trans", pentagon_ring), ("cis", pentagon_ring_cis)):
+    for family, builder in (("twisted", pentagon_ring), ("direct", pentagon_ring_direct)):
         n, edges = builder(100)
         rc = chordal_theta(n, edges, solver=args.solver)
         rs = ring_theta_symmetric(100, family=family)
@@ -752,21 +752,21 @@ def cmd_validate(args):
         ok &= d < 5e-4
         print(f"  {family:5s} chordal={rc['Theta']:.9f}  symmetric={rs['Theta']:.9f}  "
               f"|diff|={d:.2e}")
-    print("monotonicity: theta(chain m) <= theta(cis-ring m+2) [chain is induced]:")
+    print("monotonicity: theta(chain m) <= theta(direct-ring m+2) [chain is induced]:")
     ch = chordal_theta(*pentagon_chain(31), solver=args.solver)
-    cr = ring_theta_symmetric(33, family="cis")
+    cr = ring_theta_symmetric(33, family="direct")
     ok &= ch["Theta"] <= cr["Theta"] + 1e-5
-    print(f"  chain 31 = {ch['Theta']:.6f}  <=  cis-ring 33 = {cr['Theta']:.6f}: "
+    print(f"  chain 31 = {ch['Theta']:.6f}  <=  direct-ring 33 = {cr['Theta']:.6f}: "
           f"{ch['Theta'] <= cr['Theta'] + 1e-5}")
-    print("open word-chain builder vs PentagonChain (all-cis word):")
+    print("open word-chain builder vs PentagonChain (all-direct word):")
     for m in (3, 7, 16):
-        r = chordal_theta(*pentagon_chain_word("c" * (m - 1)), solver=args.solver)
+        r = chordal_theta(*pentagon_chain_word("d" * (m - 1)), solver=args.solver)
         d = abs(r["Theta"] - DENSE_REFERENCE[("chain", m)])
         ok &= d < 1e-5
         print(f"  chain {m:2d}: theta={r['Theta']:.9f}  |diff|={d:.2e}   "
-              f"alpha={alpha_chain_word('c' * (m - 1))}")
+              f"alpha={alpha_chain_word('d' * (m - 1))}")
     print("per-cycle transfer SDP (position-space exact word densities):")
-    for wd, ref in (("t", 1.3767177459), ("c", 1.5), ("cct", 1.4032308692)):
+    for wd, ref in (("t", 1.3767177459), ("d", 1.5), ("ddt", 1.4032308692)):
         v = word_density_transfer_sdp(wd)
         ok &= abs(v - ref) < 2e-6
         print(f"  {wd:>4}: transfer-SDP = {v:.9f}  ref = {ref:.9f}  "
@@ -776,7 +776,7 @@ def cmd_validate(args):
 
 
 def cmd_ring(args):
-    builder = pentagon_ring if args.family == "trans" else pentagon_ring_cis
+    builder = pentagon_ring if args.family == "twisted" else pentagon_ring_direct
     if args.method in ("chordal", "both"):
         n, edges = builder(args.N)
         r = chordal_theta(n, edges, solver=args.solver, verbose=args.verbose)
@@ -815,7 +815,7 @@ def cmd_words(args):
         seen, out = set(), []
         for p in range(1, pmax + 1):
             for bits in range(2 ** p):
-                w = "".join("tc"[(bits >> i) & 1] for i in range(p))
+                w = "".join("td"[(bits >> i) & 1] for i in range(p))
                 reps = {w[r:] + w[:r] for r in range(p)}
                 reps |= {s[::-1] for s in reps}
                 canon = min(reps)
@@ -855,20 +855,20 @@ def cmd_words(args):
     for gap, w, L, thd, conv, ad in rows[:8]:
         print(f"  {w:>8}: gap/L = {gap:.7f}   theta/L = {thd:.7f}   alpha/L = {ad}")
     best = rows[0]
-    print(f"\npure trans optimal: {best[1] == 't'}   "
-          f"(trans gap {next(r[0] for r in rows if r[1] == 't'):.7f})")
+    print(f"\npure twisted optimal: {best[1] == 't'}   "
+          f"(twisted gap {next(r[0] for r in rows if r[1] == 't'):.7f})")
     return 0
 
 
 def cmd_scaling(args):
-    print("theta(pentagon ring N); trans ring: alpha = floor(4N/3), alpha* = 3N/2")
+    print("theta(pentagon ring N); twisted ring: alpha = floor(4N/3), alpha* = 3N/2")
     print(f"{'family':>6} {'N':>7} {'theta':>16} {'method':>9} {'density':>9} "
           f"{'alpha':>8} {'certgap':>9} {'time':>8}")
-    for family in ("trans", "cis"):
-        builder = pentagon_ring if family == "trans" else pentagon_ring_cis
+    for family in ("twisted", "direct"):
+        builder = pentagon_ring if family == "twisted" else pentagon_ring_direct
         for N in args.sizes:
             rs = ring_theta_symmetric(N, family=family)
-            alpha = f"{4*N//3:8d}" if family == "trans" else f"{'':8}"
+            alpha = f"{4*N//3:8d}" if family == "twisted" else f"{'':8}"
             print(f"{family:>6} {N:7d} {rs['Theta']:16.6f} {'symmetry':>9} "
                   f"{rs['Theta']/N:9.6f} {alpha} {rs['CertGap']:9.2e} {rs['Time']:7.1f}s")
             if N <= args.chordal_cap:
@@ -878,7 +878,7 @@ def cmd_scaling(args):
                       f"{rc['Theta']/N:9.6f} {'':8} {rc['CertGap']:9.2e} "
                       f"{rc['SetupTime']+rc['SolveTime']:7.1f}s   "
                       f"(cliques={rc['CliqueCount']}, w={rc['MaxClique']}, vars={rc['Vars']})")
-    for family in ("trans", "cis"):
+    for family in ("twisted", "direct"):
         lim, p = ring_density_limit(family)
         print(f"N->infinity {family}-ring density limit (continuum symbol minimax): "
               f"{lim:.9f}")
@@ -894,12 +894,12 @@ def main():
     p = sub.add_parser("ring")
     p.add_argument("N", type=int)
     p.add_argument("--method", choices=["chordal", "symmetry", "both"], default="both")
-    p.add_argument("--family", choices=["trans", "cis"], default="trans")
+    p.add_argument("--family", choices=["twisted", "direct"], default="twisted")
     p = sub.add_parser("chain")
     p.add_argument("N", type=int)
     p = sub.add_parser("density")
     p.add_argument("word", type=str)
-    p = sub.add_parser("transchain")
+    p = sub.add_parser("twistedchain")
     p.add_argument("M", type=int)
     p = sub.add_parser("scaling")
     p.add_argument("--sizes", type=int, nargs="*", default=[100, 1000, 10000, 100000])
@@ -911,17 +911,17 @@ def main():
     def cmd_density(a):
         print(f"theta-density({a.word}) = {word_density_transfer_sdp(a.word):.9f}")
         return 0
-    def cmd_transchain(a):
+    def cmd_twistedchain(a):
         n, e = pentagon_chain_word("t" * (a.M - 1))
         r = chordal_theta(n, e, solver=a.solver)
         al = alpha_chain_word("t" * (a.M - 1))
-        print(f"trans-chain M={a.M} (n={n}): theta={r['Theta']:.6f} "
+        print(f"twisted-chain M={a.M} (n={n}): theta={r['Theta']:.6f} "
               f"(certgap {r['CertGap']:.1e})  alpha={al}  "
               f"gap={r['Theta'] - al:.6f}  gap/M={(r['Theta'] - al)/a.M:.6f}")
         return 0
     return {"validate": cmd_validate, "ring": cmd_ring, "chain": cmd_chain,
             "scaling": cmd_scaling, "words": cmd_words,
-            "density": cmd_density, "transchain": cmd_transchain}[args.cmd](args)
+            "density": cmd_density, "twistedchain": cmd_twistedchain}[args.cmd](args)
 
 
 if __name__ == "__main__":

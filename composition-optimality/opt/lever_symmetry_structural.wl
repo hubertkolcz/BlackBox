@@ -11,7 +11,7 @@ SetDirectory[DirectoryName[$InputFileName]];
    rb[u,i,j] of R[u]) ---------- *)
 nodeConsE[u_] := {rb[u,3,3] - 1, rb[u,3,4] - 1, q[u,2,3], q[u,1,4],
    q[u,2,4] + rb[u,1,2]};
-edgeConsE[w_, x_, b_] := If[b === "c",
+edgeConsE[w_, x_, b_] := If[b === "d",
    {q[w,3,3] + q[x,1,1] - 1,
     q[w,4,4] + rb[w,2,2] + q[x,2,2] + rb[x,1,1] - 1,
     q[w,3,5] + q[x,1,5] - 1,
@@ -63,7 +63,7 @@ edgeOK[gW_, gX_, b_, bp_, dirRev_] := Module[{lhs, rhs},
      canonSet[edgeConsE[MW, MX, bp]]];
    lhs === rhs];
 
-letters = {"c", "t"};
+letters = {"d", "t"};
 Print["Part A2: building 2x2x2 edge-compatibility tables over ", nc, "^2 gauge ",
   "pairs (this is the expensive symbolic step)..."];
 tstart = AbsoluteTime[];
@@ -79,10 +79,10 @@ Do[Print["  allowed (gW,gX) pairs for (b=", b, " -> b'=", bp, ", dirRev=",
   {b, letters}, {bp, letters}, {dirRev, {True, False}}];
 
 (* ---------- Part A3: CSP over the de Bruijn graph for each node map ------ *)
-flip[c_] := If[c === "c", "t", "c"];
+flip[c_] := If[c === "d", "t", "d"];
 runCSP[K_, mapName_, dirRev_, bpFun_] := Module[
    {nodes, edges, cand, changed, empty = False, w, x, b, bp, tbl, ok},
-   nodes = StringJoin /@ Tuples[{"c", "t"}, K];
+   nodes = StringJoin /@ Tuples[{"d", "t"}, K];
    edges = Select[Tuples[nodes, 2],
      StringDrop[#[[1]], 1] === StringDrop[#[[2]], -1] &];
    cand = Association[Table[u -> Range[nc], {u, nodes}]];
@@ -127,13 +127,13 @@ dpStates = {{0, 0}, {1, 0}, {0, 1}};
 dpTransfer[letter_] := Module[{T = ConstantArray[-Infinity, {3, 3}], out, j},
    Do[If[! (dpStates[[i, 1]] == 1 && s1 == 1) && ! (s1 == 1 && s2 == 1) &&
         ! (s2 == 1 && s3 == 1) && ! (s3 == 1 && dpStates[[i, 2]] == 1),
-      out = If[letter === "c", {s1, s2}, {s2, s1}];
+      out = If[letter === "d", {s1, s2}, {s2, s1}];
       j = Position[dpStates, out][[1, 1]];
       T[[i, j]] = Max[T[[i, j]], s1 + s2 + s3]],
      {i, 3}, {s1, 0, 1}, {s2, 0, 1}, {s3, 0, 1}];
    T];
-Tc = dpTransfer["c"]; Tt = dpTransfer["t"];
-TM["c"] = Tc; TM["t"] = Tt;
+Td = dpTransfer["d"]; Tt = dpTransfer["t"];
+TM["d"] = Td; TM["t"] = Tt;
 taus = Permutations[Range[3]];
 
 (* finiteness-pattern compatibility:
@@ -157,7 +157,7 @@ Do[Print["  game-side allowed (tauW,tauX) for (b=", b, "->b'=", bp, ", dirRev=",
 
 runGameCSP[K_, mapName_, dirRev_, bpFun_] := Module[
    {nodes, edges, cand, changed, empty = False, w, x, b, bp, tbl, ok},
-   nodes = StringJoin /@ Tuples[{"c", "t"}, K];
+   nodes = StringJoin /@ Tuples[{"d", "t"}, K];
    edges = Select[Tuples[nodes, 2],
      StringDrop[#[[1]], 1] === StringDrop[#[[2]], -1] &];
    cand = Association[Table[u -> Range[6], {u, nodes}]];

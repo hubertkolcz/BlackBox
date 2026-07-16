@@ -4,7 +4,7 @@ Ledger track `MESH` — "pentagon-mesh composition": how gluing many KCBS pentag
 
 ## Contents
 
-`CaseStudies.wl` — trans/cis gluing family theorems, the `(cct)^infinity` optimal gluing word (`MESH-001` through `MESH-003`). `realizability.py`, `qutrit_realization.py` — physical realizability of the trans-chain advantage in a single qutrit (`MESH-004`). `trans_chain_proofs.py`, `trans_chain_density_check.wl` — exact independence/clique-number laws with full proof (`MESH-005`, `MESH-009`). `word_census.py` — exhaustive gluing-word census up to period 18. `lovasz_theta_sparse.py` — sparse Lovász $\theta$ at $10^4$-$10^6$ vertices. `fem_study.py`, `fem_study_results.json` — whether DLA growth under composition correlates with contextual-fraction density (`LP-002`, a headline negative result: it does not, reliably).
+`CaseStudies.wl` — twisted/direct gluing family theorems, the `(ddt)^infinity` optimal gluing word (`MESH-001` through `MESH-003`). `realizability.py`, `qutrit_realization.py` — physical realizability of the twisted-chain advantage in a single qutrit (`MESH-004`). `twisted_chain_proofs.py`, `twisted_chain_density_check.wl` — exact independence/clique-number laws with full proof (`MESH-005`, `MESH-009`). `word_census.py` — exhaustive gluing-word census up to period 18. `lovasz_theta_sparse.py` — sparse Lovász $\theta$ at $10^4$-$10^6$ vertices. `fem_study.py`, `fem_study_results.json` — whether DLA growth under composition correlates with contextual-fraction density (`LP-002`, a headline negative result: it does not, reliably).
 
 Note: `qutrit.wl` moved to `pentagon-foundations/` — it's a shared primitive `kcbs.wl` also depends on, not mesh-specific.
 

@@ -22,7 +22,7 @@ The repository is organized by **role in the research**, not by method or chrono
 | [`certification-protocol/`](certification-protocol/) | **Primary.** Pre-registered black-box certification protocol (statistics + the DLA hook); its one pre-declared blind spot is the project's central impossibility condition. | `BBT` |
 | [`pentagon-foundations/`](pentagon-foundations/) | Shared KCBS-pentagon bedrock: graph invariants, circuits, GE at 2 copies, contextual fraction ↔ signed negativity. | `D2` |
 | [`open-search-frontier/`](open-search-frontier/) | Numerics-only frontier: does GE-with-copies single out ϑ(G) for every graph? Heptagon catalysis; open nonagon cell. | `D1` |
-| [`pentagon-gluing/`](pentagon-gluing/) | Pentagon gluing: cis/trans laws, τ\* density, (cct)^∞ optimal word, realizability. | `MESH` |
+| [`pentagon-gluing/`](pentagon-gluing/) | Pentagon gluing: direct/twisted laws, τ\* density, (ddt)^∞ optimal word, realizability. | `MESH` |
 | [`cluster-state-realization/`](cluster-state-realization/) | Emerging: literal MBQC cluster-state realization of the winning gluing word at scale. | `MESH`/`LP` |
 | [`composition-optimality/`](composition-optimality/) | ε-certificates (Γ_k) for the gluing-word gap density; ergodic-optimization family. | `CERT` |
 | [`bound-derivation-question/`](bound-derivation-question/) | Abramsky–Brandenburger backbone: Laplacian rejection, Čech obstruction, torsion census; home of the priority open question (`ESSAY-005`). | `D3` |
@@ -41,7 +41,7 @@ The modules follow the arc told in [`EvaluatingBlackBoxPhysics-Illustrated.nb`](
 1. **[`pentagon-foundations/`](pentagon-foundations/)** — start here: the shared KCBS-pentagon bedrock (graph invariants, contextual fraction) every other module builds on.
 2. **[`certification-protocol/`](certification-protocol/)** — the primary module: the black-box certification protocol and its one pre-declared blind spot, the project's central impossibility result.
 3. **[`optical-synthesis/`](optical-synthesis/)** — the constructive mirror: builds the devices the protocol certifies.
-4. **[`pentagon-gluing/`](pentagon-gluing/)** — how certified pentagons compose (cis/trans laws, the winning gluing word).
+4. **[`pentagon-gluing/`](pentagon-gluing/)** — how certified pentagons compose (direct/twisted laws, the winning gluing word).
 5. **[`composition-optimality/`](composition-optimality/)** — the ergodic-optimization proof that the winning gluing word is optimal.
 6. **[`cluster-state-realization/`](cluster-state-realization/)** — the physical (MBQC cluster-state) realization of that composition at scale.
 7. **[`open-search-frontier/`](open-search-frontier/)** — the open numerical frontier the composition work still leaves (GE-with-copies, heptagon catalysis, the ω=17 clique search).

@@ -1,9 +1,9 @@
-"""Physical-realizability profile of the trans pentagon-chain contextuality advantage.
+"""Physical-realizability profile of the twisted pentagon-chain contextuality advantage.
 
 Addresses the QUANTUM_CONTEXTUALITY.md sec.9 hardware open item *for the theta-density
 thread*: "does a real device realize the pentagon-mesh extensive advantage?"  It converts
 that vague item into two quantified, hardware-deciding curves in the chain length N
-(number of edge-glued pentagons in the open TRANS chain = pentagon_chain_word('t'*(N-1))):
+(number of edge-glued pentagons in the open TWISTED chain = pentagon_chain_word('t'*(N-1))):
 
   (1) DIMENSION d(N) = rank of the optimal theta-SDP Gram matrix
       = dimension of an orthonormal representation of the exclusivity graph that SATURATES
@@ -42,17 +42,17 @@ that vague item into two quantified, hardware-deciding curves in the chain lengt
   [PRIOR-ART: the mechanism is the published Konig-Egervary-graph lemma (a graph with a
   perfect matching that is also a clique cover has alpha=theta=|V|/2; Larson et al., "A Class
   of Graphs Where alpha=theta", 2013). New here (unstated in the literature): that even-length
-  edge-glued CIS pentagon chains ARE such graphs, the PARITY LAW (even-cis collapse vs odd/
-  trans gap), and the gap direction -- none addressed by the KE lemma.]
-    * CIS chains -- a clean PARITY LAW: theta = alpha for every EVEN N, gap for odd N.
+  edge-glued DIRECT pentagon chains ARE such graphs, the PARITY LAW (even-direct collapse vs odd/
+  twisted gap), and the gap direction -- none addressed by the KE lemma.]
+    * DIRECT chains -- a clean PARITY LAW: theta = alpha for every EVEN N, gap for odd N.
       Reason: |V| = 3N+2 is even iff N even, and then alpha = |V|/2 with a perfect
-      clique cover into |V|/2 edges (alpha = chi_bar), forcing theta = alpha. So EVEN cis
-      chains carry NO contextual advantage -- an exact sharpening of "cis is classical".
-    * TRANS chains -- sporadic: theta = alpha only at N = 2 and N = 5 (verified to N=20;
+      clique cover into |V|/2 edges (alpha = chi_bar), forcing theta = alpha. So EVEN direct
+      chains carry NO contextual advantage -- an exact sharpening of "direct is classical".
+    * TWISTED chains -- sporadic: theta = alpha only at N = 2 and N = 5 (verified to N=20;
       not periodic, N=8,11 do not resonate). Both still contain induced C5's, so this is
       a sandwich coincidence (alpha = chi_bar at those two lengths), not perfection.
   Either way a resonance is a sharp instance of composition boundary B1: gluing contextual
-  pentagons can destroy the advantage entirely, the bond (cis/trans) and length deciding.
+  pentagons can destroy the advantage entirely, the bond (direct/twisted) and length deciding.
 
 Everything is triple cross-checked across three independent SDP code paths (dense CLARABEL,
 dense SCS, and the repo's chordal-decomposition solver). This is computable-bound theory:
@@ -111,17 +111,17 @@ def noise_profile(nmax=11):
 
 
 def resonance_scan(nmax=14):
-    """theta=alpha resonances: cis chains resonate iff N even; trans only at N=2,5."""
+    """theta=alpha resonances: direct chains resonate iff N even; twisted only at N=2,5."""
     from lovasz_theta_sparse import pentagon_chain_word as pcw
-    cis, trans = [], []
+    direct, twisted = [], []
     for N in range(1, nmax + 1):
-        for word, bucket in ((("c" * (N - 1)), cis), (("t" * (N - 1)), trans)):
+        for word, bucket in ((("d" * (N - 1)), direct), (("t" * (N - 1)), twisted)):
             n, e = pcw(word)
             th, _ = theta_gram(n, e)
             a = alpha_chain_word(word)
             if abs(th - a) < 1e-4:
                 bucket.append(N)
-    return {"cis_resonances": cis, "trans_resonances": trans}
+    return {"direct_resonances": direct, "twisted_resonances": twisted}
 
 
 def main():
@@ -150,8 +150,8 @@ def main():
         th = chordal_theta(n, edges)["Theta"]; a = alpha_chain_word(word)
         print(f"  N={N:>2}: theta={th:.6f}  alpha={a}  |theta-alpha|={abs(th-a):.2e}")
     rs = resonance_scan()
-    print(f"\nresonance scan (theta=alpha, N=1..14): cis={rs['cis_resonances']} (all even), "
-          f"trans={rs['trans_resonances']} (sporadic)")
+    print(f"\nresonance scan (theta=alpha, N=1..14): direct={rs['direct_resonances']} (all even), "
+          f"twisted={rs['twisted_resonances']} (sporadic)")
 
 
 if __name__ == "__main__":

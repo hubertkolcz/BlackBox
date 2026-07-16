@@ -67,7 +67,7 @@ rm -f .git/index && git reset            # rebuilds the index from HEAD
 ## 2. Outstanding work to commit
 
 `git log` confirms the earlier plan's files are **already committed** (the MBQC module, the
-n-cycle/sequential-game/trans-chain additions, the k=10 generator with the `ISSUE-020` fix, and
+n-cycle/sequential-game/twisted-chain additions, the k=10 generator with the `ISSUE-020` fix, and
 the reporting layer all landed; `ISSUE-020` is resolved). Current outstanding state:
 
 **A. One local commit already made, not yet pushed** — see §3.
@@ -81,15 +81,15 @@ the reporting layer all landed; `ISSUE-020` is resolved). Current outstanding st
 ```powershell
 # 1: regenerated optical-compiler schematics (EMU-001)
 git add optical-synthesis/schematics/
-git commit -m "Regenerate optical-synthesis schematics (KCBS/C7/cct-mesh/table demos, L1-L2)"
+git commit -m "Regenerate optical-synthesis schematics (KCBS/C7/ddt-mesh/table demos, L1-L2)"
 
 # 2: new research source — D1 frontier, MESH hull/falsification, k6 cert, D3 sheaf duals
 git add open-search-frontier/erg003_verdict.json `
-        pentagon-gluing/final_cct_falsify.py `
-        pentagon-gluing/final_cct_hull.py `
+        pentagon-gluing/final_ddt_falsify.py `
+        pentagon-gluing/final_ddt_hull.py `
         composition-optimality/GenerateEpsilonCertificate_testK6_fast.wl `
         bound-derivation-question/final_h1_structured_duals.py
-git commit -m "Add cct-mesh hull/falsification, ERG-003 verdict, k6 cert gen, H1 structured duals"
+git commit -m "Add ddt-mesh hull/falsification, ERG-003 verdict, k6 cert gen, H1 structured duals"
 
 # 3: remove the byte-identical Hawking precommit draft (hash a8cf20a0, == NOTES-hawking-2.md)
 git rm hawking-application/NOTES-hawking-2-precommit-draft.md

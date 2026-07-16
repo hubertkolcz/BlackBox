@@ -2,24 +2,24 @@
 
 gap_bar(w) = theta_density(w) - alpha_density(w)  (both exact / position-space, via
 word_density_transfer_sdp and alpha_density_word). The census is a rigorous LOWER bound
-on sup_w gap_bar(w) = max over all words tested; if (cct)^inf stays the maximum over ALL
+on sup_w gap_bar(w) = max over all words tested; if (ddt)^inf stays the maximum over ALL
 necklaces (not merely the balanced/Christoffel words checked earlier), that is strong
-evidence for global optimality of (cct)^inf.
+evidence for global optimality of (ddt)^inf.
 
-RESULT (Pmax=18): cct and its powers (cct, cctcct, ...) are the UNIQUE maximum,
+RESULT (Pmax=18): ddt and its powers (ddt, ddtddt, ...) are the UNIQUE maximum,
 gap_bar = 0.0698975, over EVERY binary necklace up to period 18 (~29000+ words); NO word
-beats cct; the runner-ups are cct-perturbations (cctcctccttct, ... ~0.0689-0.0692) about
-0.001 below. Combined with the alpha-cis theorem (cct uniquely attains alpha_bar = 4/3), this
-makes an aperiodic (Sturmian) beater implausible. The EXACT sup (= gap(cct)?) and the
+beats ddt; the runner-ups are ddt-perturbations (ddtddtddttdt, ... ~0.0689-0.0692) about
+0.001 below. Combined with the alpha-direct theorem (ddt uniquely attains alpha_bar = 4/3), this
+makes an aperiodic (Sturmian) beater implausible. The EXACT sup (= gap(ddt)?) and the
 matching upper bracket (Gamma_9, Gamma_10) remain the genuinely-hard ergodic-optimization
 open items -- a certified upper bound needs the exact-rational windowed transfer-SDP
-certificate (EpsilonCertificate*.wl); the rigorous bracket stands at [gap(cct)=0.0698975,
+certificate (EpsilonCertificate*.wl); the rigorous bracket stands at [gap(ddt)=0.0698975,
 Gamma_8=0.0753086].
 """
 import sys
 from lovasz_theta_sparse import word_density_transfer_sdp, alpha_density_word
 
-GAP_CCT = 0.0698975     # gap_bar((cct)^inf)
+GAP_DDT = 0.0698975     # gap_bar((ddt)^inf)
 
 
 def necklaces(P):
@@ -28,7 +28,7 @@ def necklaces(P):
     for x in range(2 ** P):
         w = format(x, f"0{P}b")
         if w == min(w[i:] + w[:i] for i in range(P)):
-            out.append(w.replace("0", "c").replace("1", "t"))
+            out.append(w.replace("0", "d").replace("1", "t"))
     return out
 
 
@@ -42,7 +42,7 @@ def census(pmax, topk=8):
         for w in necklaces(P):
             best.append((gap_bar(w), w))
         best = sorted(best, reverse=True)[:topk]
-    beaters = [w for g, w in best if g > GAP_CCT + 1e-7]
+    beaters = [w for g, w in best if g > GAP_DDT + 1e-7]
     return best, beaters
 
 
@@ -52,8 +52,8 @@ def main():
     print(f"Exhaustive gap-density census over ALL necklaces up to period {pmax}:")
     for g, w in best:
         print(f"  {g:.7f}  '{w}'")
-    print(f"\nsup over census = {best[0][0]:.7f} at '{best[0][1]}'   gap(cct) = {GAP_CCT}")
-    print(f"words strictly beating cct: {beaters if beaters else 'NONE'}")
+    print(f"\nsup over census = {best[0][0]:.7f} at '{best[0][1]}'   gap(ddt) = {GAP_DDT}")
+    print(f"words strictly beating ddt: {beaters if beaters else 'NONE'}")
 
 
 if __name__ == "__main__":

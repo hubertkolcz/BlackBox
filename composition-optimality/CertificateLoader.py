@@ -26,7 +26,7 @@ Usage:
     from CertificateLoader import load_certificate
     CE8 = load_certificate("EpsilonCertificate8.wl")
     CE8["Gamma"]        # -> Fraction(941357, 12500000)
-    CE8["Q"]["cccccccc"]  # -> 5x5 nested list of Fractions
+    CE8["Q"]["dddddddd"]  # -> 5x5 nested list of Fractions
 """
 import re
 from fractions import Fraction

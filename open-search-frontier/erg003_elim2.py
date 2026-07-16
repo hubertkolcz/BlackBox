@@ -435,10 +435,10 @@ class FvecView:
     def get(self, s):
         if s not in self.base:
             return None
-        return _TransRow(self, s)
+        return _TwistedRow(self, s)
 
 
-class _TransRow:
+class _TwistedRow:
     def __init__(self, view, s):
         self.view = view
         self.s = s

@@ -46,7 +46,7 @@ GivensDecompose::usage =
 StagesToUnitary::usage =
   "StagesToUnitary[stages_List, n_Integer] re-multiplies a stage list back into the n x n unitary it realizes, returning <|\"Exact\"->matrix,\"Numeric\"->matrix|>. Stages are read in APPLICATION order (first stage applied first to the state), matching kcbs_circuit.wl's circuit semantics.";
 CompileMeshRouting::usage =
-  "CompileMeshRouting[word_String, reps_Integer] gives the pentagon-mesh routing of the cct-style word: <|Word,Reps,L,ModeCount->3L, Blocks, Routing, EdgeList|>. EdgeList is exactly wordRingEdgesFast[word,reps] (O(L), no Join-in-loop). Each Blocks[[k]] is a 3-mode Lapkiewicz block stage; Routing[[k]] glues block k to block k-1 on SharedModes {3(k-1)+1,3(k-1)+2} with Orientation \"trans\" iff the FROM-block letter w[[k]] (block k-1's letter) is not \"c\" (matching wordRingEdgesFast's glue-pair swap).";
+  "CompileMeshRouting[word_String, reps_Integer] gives the pentagon-mesh routing of the ddt-style word: <|Word,Reps,L,ModeCount->3L, Blocks, Routing, EdgeList|>. EdgeList is exactly wordRingEdgesFast[word,reps] (O(L), no Join-in-loop). Each Blocks[[k]] is a 3-mode Lapkiewicz block stage; Routing[[k]] glues block k to block k-1 on SharedModes {3(k-1)+1,3(k-1)+2} with Orientation \"twisted\" iff the FROM-block letter w[[k]] (block k-1's letter) is not \"c\" (matching wordRingEdgesFast's glue-pair swap).";
 KCBSCascadeStages::usage =
   "KCBSCascadeStages[n_Integer] (n odd) gives {stages, Ts, P, geometry} of the exact Lapkiewicz n-cycle qutrit cascade, extracted (exact version) from kcbs_circuit.wl and kcbs_circuit_ncycle.wl.";
 
@@ -292,7 +292,7 @@ diagStage[diag_, n_, exQ_] := <|
 (* ------------------------------------------------------------------ *)
 (* CompileMeshRouting                                                  *)
 (* wordRingEdgesFast copied VERBATIM from                              *)
-(* cluster-state-realization/cct_mesh_sparse_construction.wl (Section 1),  *)
+(* cluster-state-realization/ddt_mesh_sparse_construction.wl (Section 1),  *)
 (* the O(L) single-Table + one-Flatten construction (no Join-in-loop). *)
 (* ------------------------------------------------------------------ *)
 
@@ -301,7 +301,7 @@ wordRingEdgesFast[word_String, reps_Integer] := Module[{w, L, edgeBlocks},
    L = Length[w];
    edgeBlocks = Table[
      Module[{km = Mod[k - 1, L], u, v},
-       {u, v} = If[w[[km + 1]] === "c", {3 km + 1, 3 km + 2}, {3 km + 2, 3 km + 1}];
+       {u, v} = If[w[[km + 1]] === "d", {3 km + 1, 3 km + 2}, {3 km + 2, 3 km + 1}];
        {{u, v}, {u, 3 k + 1}, {3 k + 1, 3 k + 2}, {3 k + 2, 3 k + 3}, {3 k + 3, v}}],
      {k, 0, L - 1}];
    DeleteDuplicates[Sort /@ Flatten[edgeBlocks, 1]]];
@@ -318,10 +318,10 @@ CompileMeshRouting[word_String, reps_Integer /; reps >= 1] := Module[
   (* routing glues block k to block k-1 on the shared pair.  The glue orientation
      INTO block k comes from the FROM-block letter w[[k]] (block k-1's letter):
      wordRingEdgesFast swaps the glue pair {u,v} on block km = k-1 iff
-     w[[km+1]] = w[[k]] is not "c", so cis iff w[[k]] === "c". *)
+     w[[km+1]] = w[[k]] is not "d", so direct iff w[[k]] === "d". *)
   routing = Table[
     <|"From" -> k - 1, "To" -> k, "SharedModes" -> {3 (k - 1) + 1, 3 (k - 1) + 2},
-      "Orientation" -> If[w[[k]] === "c", "cis", "trans"]|>, {k, 1, L - 1}];
+      "Orientation" -> If[w[[k]] === "d", "direct", "twisted"]|>, {k, 1, L - 1}];
   <|"Word" -> word, "Reps" -> reps, "L" -> L, "ModeCount" -> 3 L,
     "Blocks" -> blocks, "Routing" -> routing, "EdgeList" -> edges|>];
 

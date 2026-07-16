@@ -11,7 +11,7 @@ dpStates = {{0,0},{1,0},{0,1}};
 dpTransfer[letter_] := Module[{T = ConstantArray[-Infinity,{3,3}], out, j},
   Do[If[!(dpStates[[i,1]]==1 && s1==1) && !(s1==1 && s2==1) &&
         !(s2==1 && s3==1) && !(s3==1 && dpStates[[i,2]]==1),
-      out = If[letter==="c", {s1,s2}, {s2,s1}];
+      out = If[letter==="d", {s1,s2}, {s2,s1}];
       j = Position[dpStates, out][[1,1]];
       T[[i,j]] = Max[T[[i,j]], s1+s2+s3]], {i,3},{s1,0,1},{s2,0,1},{s3,0,1}]; T];
 

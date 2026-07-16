@@ -6,7 +6,7 @@
    on the de Bruijn-k digraph with coefficients in the (max,+) tropical semiring
    T = R_max = (R U {-Inf}, max, +), and VALIDATES the sub-action = 0-cochain claim:
 
-     X = de Bruijn-k digraph. 0-cells V = length-k words over {c,t} (|V|=2^k);
+     X = de Bruijn-k digraph. 0-cells V = length-k words over {d,t} (|V|=2^k);
      1-cells E = transitions w->x with overlap k-1 (|E|=2^(k+1)); strongly connected.
      Stalks all T. C^0(X)=T^V is the potential field Psi; C^1(X)=T^E the edge field.
      Coboundary (delta Psi)(e) = Psi(head) - Psi(tail) (tropical division = subtraction).
@@ -46,14 +46,14 @@ dpStates = {{0, 0}, {1, 0}, {0, 1}};
 dpTransfer[letter_] := Module[{T = ConstantArray[-Infinity, {3, 3}], out, j},
    Do[If[! (dpStates[[i, 1]] == 1 && s1 == 1) && ! (s1 == 1 && s2 == 1) &&
         ! (s2 == 1 && s3 == 1) && ! (s3 == 1 && dpStates[[i, 2]] == 1),
-      out = If[letter === "c", {s1, s2}, {s2, s1}];
+      out = If[letter === "d", {s1, s2}, {s2, s1}];
       j = Position[dpStates, out][[1, 1]];
       T[[i, j]] = Max[T[[i, j]], s1 + s2 + s3]],
      {i, 3}, {s1, 0, 1}, {s2, 0, 1}, {s3, 0, 1}];
    T];
 
 (* ---- de Bruijn-k graph and the certificate cochains ---- *)
-deBruijnNodes[k_] := StringJoin /@ Tuples[{"c", "t"}, k];
+deBruijnNodes[k_] := StringJoin /@ Tuples[{"d", "t"}, k];
 deBruijnEdges[nodes_] := Select[Tuples[nodes, 2],
    StringDrop[#[[1]], 1] === StringDrop[#[[2]], -1] &];
 

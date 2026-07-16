@@ -54,7 +54,7 @@ frameworkRoot = Module[
        "bound-derivation-question/final_h1_cocycle_results.json",
        "open-search-frontier/erg003_verdict.json", "docs/FRAMEWORK-2026-07-13.md",
        "optical-synthesis/schematics/demo1_kcbs_pentagon_L1.png",
-       "optical-synthesis/schematics/demo3_cct_mesh_reps2.png",
+       "optical-synthesis/schematics/demo3_ddt_mesh_reps2.png",
        "certification-protocol/certification_map.png",
        "composition-optimality/orbit_spectrum.png"};
      Do[dest = FileNameJoin[Prepend[FileNameSplit[rel], cacheRoot]];
@@ -100,8 +100,8 @@ liveNumberList = Select[Flatten[{
     oq1RankQuantum, oq1ZColumn, oq1RankBlind,
     oq2tMax, oq2Dmax, oq2Dmax/oq2tMax,
     cvPassive2["dim"], cvActive2["dim"], cvActive1["dim"],
-    (* S4 composition *) gluingArbitration, tauStar, gapCct, cctDensity,
-    gammaExact, gamma10Numeric, epsCertified, orbitSeeds, cisLawTable, chainGapParity,
+    (* S4 composition *) gluingArbitration, tauStar, gapCct, ddtDensity,
+    gammaExact, gamma10Numeric, epsCertified, orbitSeeds, directLawTable, chainGapParity,
     (* S5 sheaf *) lam1c5, lam2c5, lam2c7, lam3c7, supQuantum, supClassical,
     (* S6 Hawking *) chshLimit, rEff225, qubitCF,
     (* S7-S9 *) kcbsAngle, legendreFloor, muCost, Floor[13^(3/2)]

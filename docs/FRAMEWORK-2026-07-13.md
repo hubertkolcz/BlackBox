@@ -35,11 +35,11 @@ coherent-forgeability theorem, arXiv:2601.13869). See
 `certification-protocol/certification_map.nb`.
 
 **F4. Exact mesh-composition laws [T].** Two non-isomorphic gluing families
-(cis/trans; MESH-001); orientation, not size, controls gap survival (MESH-002);
-τ\* = Root[49x³−128x²−75x+218,2] = 1.37671774591586 exactly; cis laws
-θ = N+θ(C_N), α = ⌊3N/2⌋; the α-cis theorem ᾱ(w) ≥ max(4/3, 1+f_c/2) with
-equality at 4/3 **iff** w=(cct)^k. cct achieves gap density 0.0698975 (61%
-over trans; MESH-003) [C: 320-digit certified, no low-degree closed form].
+(direct/twisted; MESH-001); orientation, not size, controls gap survival (MESH-002);
+τ\* = Root[49x³−128x²−75x+218,2] = 1.37671774591586 exactly; direct laws
+θ = N+θ(C_N), α = ⌊3N/2⌋; the α-direct theorem ᾱ(w) ≥ max(4/3, 1+f_d/2) with
+equality at 4/3 **iff** w=(ddt)^k. ddt achieves gap density 0.0698975 (61%
+over twisted; MESH-003) [C: 320-digit certified, no low-degree closed form].
 
 **F5. The certificate hierarchy [T]/[C].** Windowed transfer-SDP certificates:
 gap(w) ≤ Γ_k for **all** gluing words; exact rational Γ₇=0.0770206,
@@ -48,8 +48,8 @@ gap(w) ≤ Γ_k for **all** gluing words; exact rational Γ₇=0.0770206,
 certified on WolframBatch Memory8x64 warm-started from k=9, all Stage-3 exact gates
 True, Γ₁₀≤Γ₉ exact). The certificate condition is a Bousch sub-action
 (tropical 0-cochain on de Bruijn-k; Γ_k = max-plus eigenvalue, Karp-verified).
-Spurious policy-iteration values are periodic-orbit densities −1 (cis 3/2,
-trans τ\*, 16/11, 19/13, 25/17): the orbit-spectrum/crowding reading
+Spurious policy-iteration values are periodic-orbit densities −1 (direct 3/2,
+twisted τ\*, 16/11, 19/13, 25/17): the orbit-spectrum/crowding reading
 (`composition-optimality/CONVERGENCE-ANALYSIS-2026-07-13.md`).
 
 **F6. Degree-0 sheaf derivation of GE [T].** The weighted GE presheaf capacity
@@ -66,16 +66,16 @@ gives ω ≥ 17. Activation (ω≥18) attacked directly 2026-07-14: **no 18-cliq
 across a WCS S=18 detection sweep + a free 7-strategy hunt, and ϑ=ϑ′=19.666 is pinned →
 **ω=17 evidenced-tight, no activation on all evidence** (closure research-scale; see H3).
 
-**F8. Constructive realizations [T].** The cct mesh realized as a cluster state
+**F8. Constructive realizations [T].** The ddt mesh realized as a cluster state
 and verified at 9M qubits; MBQC execution of Bernstein–Vazirani (10⁵ bits),
 Grover, contextuality-powered universal classical gates; Hawking information
 dynamics (Page curve, Hayden–Preskill, CHSH/CF certification) built agnostically
 and confirmed against four published papers. All Clifford; honest scope in headers.
 
 **F9. Established negatives [R] (part of the theory).** (i) The affine α-credit
-tilt is inert — no affine-in-f_c certificate family can have limit gap(cct);
+tilt is inert — no affine-in-f_c certificate family can have limit gap(ddt);
 (ii) the static↔dynamic ergodic-sheaf unification is a category error (cross-side
-T→0 limit yields packing 5/2, not Γ, and does not select cct); (iii) the
+T→0 limit yields packing 5/2, not Γ, and does not select ddt); (iii) the
 possibilistic (support) presheaf is blind to S_k; (iv) the cellular-sheaf
 Laplacian fails as a contextuality measure (SH-004); (v) Choudhary–Barbosa's
 Ramsey technique cannot certify ω≤17 for the mixed nonagon cell; (vi) the
@@ -87,26 +87,26 @@ the method space.
 
 ## Layer 1 — The named hypotheses (best possible assumptions; open problems)
 
-### H1 — cct Optimality Hypothesis
-**Statement.** sup over all infinite gluing words w of gap(w) = gap(cct)
-= 0.0698975…, attained (uniquely up to rotation) by (cct)^∞.
+### H1 — ddt Optimality Hypothesis
+**Statement.** sup over all infinite gluing words w of gap(w) = gap(ddt)
+= 0.0698975…, attained (uniquely up to rotation) by (ddt)^∞.
 **Evidence.** Exhaustive over all periods ≤18 (~29,000 necklaces, unique max);
 all balanced/Sturmian words fall ≥0.012 below; certified globally within
-ε = Γ₁₀ − gap(cct) = 0.00156; **exactly proven** on the region ᾱ ≥ 1.4301025;
-the α-penalty mechanism (F4) punishes every deviation from cct.
+ε = Γ₁₀ − gap(ddt) = 0.00156; **exactly proven** on the region ᾱ ≥ 1.4301025;
+the α-penalty mechanism (F4) punishes every deviation from ddt.
 **Confidence.** Very high. Any counterexample must be an aperiodic, unbalanced
 word with f_c ≈ 2/3 and ᾱ ∈ [4/3, 1.4301) — a thin corridor with no known
 inhabitant.
 **Proof target.** Either (a) close the corridor: a certificate family whose
-limit is gap(cct) — the Legendre/Pareto-frontier certificate (θ̄ bounded as a
-function of f_c against the *kinked* floor max(4/3,1+f_c/2); not covered by the
+limit is gap(ddt) — the Legendre/Pareto-frontier certificate (θ̄ bounded as a
+function of f_c against the *kinked* floor max(4/3,1+f_d/2); not covered by the
 affine-inertness refutation) is the live candidate; or (b) an
 ergodic-optimization selection theorem for this potential class. Known hard:
 the finiteness property fails in general (Bousch–Mairesse), so (b) cannot be
-generic — it must use the α-cis structure.
+generic — it must use the α-direct structure.
 **Related open sub-hypothesis H1′ (Γ-limit).** lim Γ_k = sup_w gap(w). The
 hierarchy is decreasing and bounded below by the sup; equality of the limit
-with the sup is itself unproven. H1 ∧ H1′ ⟺ lim Γ_k = gap(cct).
+with the sup is itself unproven. H1 ∧ H1′ ⟺ lim Γ_k = gap(ddt).
 
 ### H2 — Cohomological Detection Hypothesis (ESSAY-005 at H¹)
 **Statement.** On the weighted GE presheaf cover, the connecting class
@@ -202,11 +202,11 @@ run. A Lasserre-2 value < 40 closes H5 outright.
 
 ## Layer 2 — The conditional theory (what the framework says if H1–H5 hold)
 
-**Under H1 (+H1′):** the composition theory is *final*: cct is THE optimal
-gluing rule; the design principle "orientation over size, cct over all" is
+**Under H1 (+H1′):** the composition theory is *final*: ddt is THE optimal
+gluing rule; the design principle "orientation over size, ddt over all" is
 exact; the Γ_k hierarchy is an asymptotically tight certificate scheme; the
 θ-density theory of glued cycle families (apparently unstudied territory) has a
-complete solution over {c,t}.
+complete solution over {d,t}.
 
 **Under H2:** ESSAY-005 is answered affirmatively at H¹: quantum advantage in
 GE composition *is* the vanishing of an integral lifting obstruction — a
@@ -245,7 +245,7 @@ selection) rather than inside it.
 
 | # | Open problem | Type | Nearest known obstruction | Cheapest credible path |
 |---|---|---|---|---|
-| H1 | sup gap = gap(cct) | ergodic optimization | finiteness property fails generically (Bousch–Mairesse); affine tilts inert | Legendre-frontier certificate tight at f_c=2/3 |
+| H1 | sup gap = gap(ddt) | ergodic optimization | finiteness property fails generically (Bousch–Mairesse); affine tilts inert | Legendre-frontier certificate tight at f_c=2/3 |
 | H1′ | lim Γ_k = sup gap | hierarchy convergence | none known — likely provable | SFT window-approximation argument |
 | H2 | δ(c mod ℤ) is THE detector | sheaf cohomology | gauge invariance untested | compute class over optimal face; C₉ control |
 | H3 | ~~ω(nonagon cell)=16~~ **REFUTED: ω ≥ 17**; activation (ω≥18) **not found**, ω ∈ [17,19] **17 evidenced-tight** (3 regimes) | finite search + Lovász ϑ | ϑ=ϑ′=19.666 pinned; UB<18 needs Lasserre-2 | research-scale: symmetry-reduced Lasserre-2, or 1.7k–15k cr uncertain exhaustion |
@@ -295,7 +295,7 @@ choice is closed; a detector must be sought in finer structures.
 **H1: the Legendre-frontier route → provably dead (added as F9viii).**
 **F9viii [R, theorem].** Any certified Legendre frequency-frontier equals the
 *concave hull* of θ̄ over f_c, which is pinned flat at 3/2 on [1/2, 1] (ct and
-ccct achieve exact θ̄ = 3/2); cct sits 0.0968 strictly below the hull,
+dddt achieve exact θ̄ = 3/2); ddt sits 0.0968 strictly below the hull,
 unexposed by any supporting hyperplane — the route certifies ≥ 1/6 at f_c=2/3,
 *worse* than flat Γ₉. Enumeration-independent. Consequence: both affine (F9i)
 and Legendre families are now closed; H1 needs a **nonlinear-in-frequency**

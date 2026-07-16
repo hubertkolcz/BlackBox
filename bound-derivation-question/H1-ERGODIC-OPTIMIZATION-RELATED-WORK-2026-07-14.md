@@ -1,9 +1,9 @@
-# H1 — Related Work: Is `(cct)^∞` Precedented, and What Is the Simplest Formalization?
+# H1 — Related Work: Is `(ddt)^∞` Precedented, and What Is the Simplest Formalization?
 
 Literature pass of 2026-07-14. Companion to `docs/FRAMEWORK-2026-07-13.md` (H1's
 statement, §"Layer 1 — named hypotheses"), `ESSAY-005-BRIDGE-formalC-tropical-limit.md`
 (the Bousch–Mairesse risk, §6), and `docs/RELATED-WORK.md` (whose axis-citation style
-this file follows). Triggered by a direct question: does the cis/trans-necklace
+this file follows). Triggered by a direct question: does the direct/twisted-necklace
 *representation*, or the "which infinite word maximizes an ergodic average" *question*,
 have precedent under a different name, in a different field? **MUST-CITE** = this
 project could not honestly omit it if H1 is written up. **[new]** = not previously in
@@ -15,7 +15,7 @@ paywalled abstract, not fetched in full — check before citing in the essay.
 
 Two separate questions were asked; they have two separate answers.
 
-**(a) Does the cis/trans binary-necklace *representation* of edge-glued polygon chains
+**(a) Does the direct/twisted binary-necklace *representation* of edge-glued polygon chains
 have precedent?** Yes, extensively — chemical graph theory, §2 below. But every
 extremal result in that ~45-year literature is for a *counting* index (Merrifield–Simmons
 σ, Hosoya Z, Wiener, Schultz, Gutman, Kirchhoff), and every extremal chain ever found
@@ -31,8 +31,8 @@ optimization**, and its matrix-cocycle special case is the **joint-spectral-radi
 / spectrum-maximizing-product** literature, §1. This is not a new discovery — Bousch–Mairesse
 and Ahmadi–Jungers–Parrilo–Roozbehani are already in the project's citations — but this
 pass surfaces materially new, actionable results: a 2026 theorem set covering the *exact*
-ambient space `{c,t}^ℕ`; an explicit *period-5* mixed-word precedent in the JSR literature
-structurally analogous to `cct`; a devil's-staircase theorem explaining *why* a low-period,
+ambient space `{d,t}^ℕ`; an explicit *period-5* mixed-word precedent in the JSR literature
+structurally analogous to `ddt`; a devil's-staircase theorem explaining *why* a low-period,
 rational-slope word is the expected outcome rather than a fragile coincidence; and a
 concrete alternative numerical route (with public code) to the sub-action certificate the
 project is already building by hand.
@@ -42,7 +42,7 @@ it either. The devil's-staircase and prevalence results below give "very high co
 (`FRAMEWORK-2026-07-13.md`) firmer structural footing than the 2026-07-12/13 numerics
 alone provided — but they are structural analogies for a *different* potential family, not
 a proof for *this* potential. The proof target stated in-project (a certificate whose
-limit is `gap(cct)`, or a selection theorem using the α-cis structure specifically) stands
+limit is `gap(ddt)`, or a selection theorem using the α-direct structure specifically) stands
 unchanged.
 
 ## 1. Ergodic optimization / joint spectral radius — the "different field, same question"
@@ -59,7 +59,7 @@ unchanged.
   Math. **205**, 383–412 (2016), arXiv:1307.0559. Precise scope now confirmed: maximizing
   measures of a **Baire-generic Lipschitz** potential are supported on a single periodic
   orbit; stated directly for the symbolic full shift `{1,…,d}^ℕ` (Lopes 2026, Thm 2, §1b)
-  — i.e. it literally covers the `d=2` case `{c,t}^ℕ`, but only says this holds for
+  — i.e. it literally covers the `d=2` case `{d,t}^ℕ`, but only says this holds for
   *almost every* potential in a topological sense, silent on any specific one.
 - **[proj]** Ahmadi, A.A., Jungers, R., Parrilo, P., Roozbehani, M., *Analysis of the
   joint spectral radius via Lyapunov functions on path-complete graphs*, HSCC 2011
@@ -76,11 +76,11 @@ unchanged.
   Temperature Limits and the Max-Plus Algebra*, 29º Colóquio Brasileiro de Matemática,
   IMPA (2013).
 
-### 1b. New: theorems on the *exact* ambient space `{c,t}^ℕ`
+### 1b. New: theorems on the *exact* ambient space `{d,t}^ℕ`
 
 - **MUST-CITE [new]** Ding, J., Li, Z., Zhang, Y., *On the prevalence of the periodicity
   of maximizing measures*, Adv. Math. **438**, 109485 (2024), arXiv:2303.00536. Proves
-  that for the **one-sided full shift on two symbols** — literally `{c,t}^ℕ` — periodicity
+  that for the **one-sided full shift on two symbols** — literally `{d,t}^ℕ` — periodicity
   of the maximizing measure is **prevalent** (Hunt–Sauer–Yorke measure-theoretic
   genericity, strictly stronger than topological genericity) among Lipschitz functions
   w.r.t. metrics with mildly-fast-decaying cylinder diameters. This is the sharpest
@@ -94,7 +94,7 @@ unchanged.
   for dynamical systems: symbolic dynamics*, arXiv:2603.07224 (2026); accepted, Invent.
   Math., DOI 10.1007/s00222-026-01411-x. Extends "typical periodic optimization" (TPO)
   past subshifts of finite type to sofic, eventually-sofic, and "eventually fragile"
-  shifts. The plain full shift `{c,t}^ℕ` is the trivial SFT case (empty Markov boundary)
+  shifts. The plain full shift `{d,t}^ℕ` is the trivial SFT case (empty Markov boundary)
   and is already covered by Contreras/Bousch — this paper adds no *new* leverage there,
   but its **Completely Maximizing Criterion** (a minimax set with `sup_n sup_{x} S_nf(x) <
   ∞` is automatically completely maximizing and dynamically minimal, via a
@@ -107,7 +107,7 @@ unchanged.
   directly on `Ω = {1,…,d}^ℕ`. Contains the exact certificate machinery the project's
   windowed transfer-SDP sub-action *is* an instance of, made fully explicit — see §4.
 
-### 1c. New: explicit low-period mixed-word precedent (the closest structural analogue to `cct`)
+### 1c. New: explicit low-period mixed-word precedent (the closest structural analogue to `ddt`)
 
 - **MUST-CITE [new]** Morris, I.D., Sidorov, N., *On a devil's staircase associated to the
   joint spectral radii of a family of pairs of matrices*, J. Eur. Math. Soc. **15**(5),
@@ -117,7 +117,7 @@ unchanged.
   whole interval** (a mode-locked plateau — the sequence is then genuinely periodic) and
   attains irrational values only on a parameter set of **Hausdorff dimension zero**. This
   is the single most useful structural fact found in this pass: it is the textbook
-  explanation for why a low-period, rational-"slope" word (`cct` has letter-frequency
+  explanation for why a low-period, rational-"slope" word (`ddt` has letter-frequency
   `f_c = 2/3`, exactly a rational slope) being the true, isolated, robust maximizer is the
   *expected*, typical behaviour of this genus of problem — not a coincidence requiring
   special pleading — even though it is a different potential family and proves nothing
@@ -128,7 +128,7 @@ unchanged.
   length-5 mixed products `A²BAB²` and `B²ABA²` are *both* spectrum-maximizing
   simultaneously (a "Horowitz pair"). This is the most concrete available precedent for "a
   short, specific, non-monotone periodic word is the robust maximizer over an open
-  parameter regime" — structurally the closest thing to `cct` that this pass turned up
+  parameter regime" — structurally the closest thing to `ddt` that this pass turned up
   outside the project's own computation.
 - **[unverified, worth Hubert's own follow-up]** *Partial classification of spectrum
   maximizing products for pairs of 2×2 matrices*, ScienceDirect (2025) — a recent
@@ -155,12 +155,12 @@ unchanged.
   (`u∘σ ≥ u + A − α(A)`), then the defect `R(x) = u(σx) − u(x) − A(x) + α(A) ≥ 0`
   vanishes exactly on `supp(μ)`; conversely, if `R = 0` on the support of some invariant
   `μ`, then `μ` is maximizing. This is a two-sided necessity-and-sufficiency test —
-  exhibit one subaction with `R = 0` on `orbit((cct)^∞)` and `R > 0` strictly everywhere
+  exhibit one subaction with `R = 0` on `orbit((ddt)^∞)` and `R > 0` strictly everywhere
   else, and H1 is proved. It is the same Mañé–Conze–Guivarc'h/Bousch machinery the
   project's windowed transfer-SDP `ψ` already instantiates (`σ(e) ≤ Γ_k` *is* a sub-action
   inequality), now with the exact textbook necessity+sufficiency statement and its
   "contact locus" (`𝕄_A(u) = {R=0}`) vocabulary attached — worth adopting so the
-  project's own certificate can be stated as "does `𝕄` equal `orbit(cct)` exactly," a
+  project's own certificate can be stated as "does `𝕄` equal `orbit(ddt)` exactly," a
   sharper target than the current ε-bracket framing.
 - **[new, actionable]** Ferreira, H.H., Lopes, A.O., Oliveira, E.R., *An iterative
   process for approximating subactions* (2021) and *Explicit examples in Ergodic
@@ -190,7 +190,7 @@ unchanged.
   paper introducing the binary orientation-word encoding: at each internal vertex a
   hexagonal chain is either "linear" (L) or "angular/kink" (A), and consecutive kinks are
   same-direction (helicene-forming) or alternating (zigzag-forming) — the direct ancestor
-  of this project's cis/trans letter). Gutman & Zhang subsequently determined: **the
+  of this project's direct/twisted letter). Gutman & Zhang subsequently determined: **the
   linear chain (pure "L" word) uniquely maximizes the Hosoya index and minimizes the
   Merrifield–Simmons index** among all hexagonal chains of given length; in restricted
   "fully-angular" subclasses the **zig-zag chain** (alternating, period 2) and **helicene**
@@ -214,7 +214,7 @@ unchanged.
   doi:10.1371/journal.pone.0304695 — read in full this pass. **Important negative
   finding:** this paper, specifically about *pentagonal* chains and the Schultz index
   (the closest-sounding title match to the project's own object), does **not** use a
-  cis/trans word-family formalism at all — it fixes a single canonical chain shape `P_n`
+  direct/twisted word-family formalism at all — it fixes a single canonical chain shape `P_n`
   (attributed to He et al.) and computes closed-form Wiener/Gutman/Schultz/modified-Schultz
   values for that one shape. The pentagon-specific sub-literature is *narrower* than the
   hexagonal one: it has not yet even posed the "which gluing word" question that Gutman
@@ -224,7 +224,7 @@ unchanged.
   found here.
 - **[proj]** Sedlar, J., *Independent sets in chain cacti*, arXiv:1105.1940 (2011) —
   vertex-glued (cactus/spiro), not edge-glued; gives the *uniform* answer `α = 2m`,
-  independent of gluing word, because vertex-glued pentagon chains have no cis/trans
+  independent of gluing word, because vertex-glued pentagon chains have no direct/twisted
   choice to make in the first place. Confirms edge-gluing is what creates the
   combinatorial word space this project (and the hexagonal-chain literature) works in.
 
@@ -257,7 +257,7 @@ Stripped of the pentagon/SDP specifics, H1 is an instance of the following compl
 standard object, called **ergodic optimization**:
 
 > Let `(Σ, σ)` be a one- or two-sided shift space over a finite alphabet `A` (here
-> `A = {c,t}`, `Σ = A^ℕ` or `A^ℤ`, the *full* shift — every gluing sequence is
+> `A = {d,t}`, `Σ = A^ℕ` or `A^ℤ`, the *full* shift — every gluing sequence is
 > realizable, no forbidden words). Let `M_σ(Σ)` be the set of `σ`-invariant Borel
 > probability measures on `Σ` — nonempty, convex, and weak-\* compact. Let `φ : Σ → ℝ` be
 > a continuous potential. For `μ ∈ M_σ(Σ)`, Birkhoff's ergodic theorem gives, for
@@ -286,14 +286,14 @@ cleanest special cases:
   parameter set, mode-locked out almost everywhere by rational-slope periodic plateaus
   (§1c).
 
-**H1's specialization.** `Σ = {c,t}^ℤ` (or `ℕ`), and the potential is not a simple
+**H1's specialization.** `Σ = {d,t}^ℤ` (or `ℕ`), and the potential is not a simple
 cylinder function but is built two levels deep: `φ(w) "=" θ̄(w) − ᾱ(w)`, where
 `ᾱ(w) = lim_n (1/n) · [max-plus/tropical growth rate of the length-n transfer-matrix
 product selected by `w`]` — literally a **joint-spectral-radius-type quantity in the
 `(max,+)` semiring**, i.e. `ᾱ` genuinely *is* a matrix cocycle (§1's JSR literature
 applies to it directly) — while `θ̄(w) = lim_n (1/n) · [value of a growing, `w`-indexed
 semidefinite program]` is a Fekete limit of a subadditive sequence (proven to exist in
-`trans_chain_proofs.py`), a strictly more exotic "SDP-density" cocycle without a known
+`twisted_chain_proofs.py`), a strictly more exotic "SDP-density" cocycle without a known
 finite-dimensional linear representation. `gap(w) = θ̄(w) − ᾱ(w)` is therefore a
 *difference of two already-optimized growth rates*, each of which is itself an instance of
 the abstract problem above, composed once more. This double-optimization structure is the
@@ -305,7 +305,7 @@ already give.
 ## 5. What this pass adds that the project did not already have
 
 1. A prevalence-class (not merely topological-genericity) theorem, Ding–Li–Zhang, stated
-   on the *exact* ambient space `{c,t}^ℕ` — an unchecked but plausibly-satisfiable
+   on the *exact* ambient space `{d,t}^ℕ` — an unchecked but plausibly-satisfiable
    hypothesis test against the certificate's own known Lipschitz estimates (§1b).
 2. A textbook two-sided necessity+sufficiency certificate (Lopes 2026, Theorem 4) with a
    named target object (`𝕄_A(u)`, the contact locus) sharper than the current ε-bracket

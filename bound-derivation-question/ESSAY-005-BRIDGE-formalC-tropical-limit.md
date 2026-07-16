@@ -4,7 +4,7 @@
 > numerically (`F_K(β) → Γ_K`, K=3,4,5). The STRONG cross-side bridge (dynamic
 > `Γ_K` = T→0 limit of the static GE LP `S_k`) is REFUTED as an identity — a
 > category error: the static T→0 falsifier returns the packing number `S(C5)→5/2`,
-> not any `Γ_K`, and does not select `cct`. Recorded as an OBSTRUCTION, not an
+> not any `Γ_K`, and does not select `ddt`. Recorded as an OBSTRUCTION, not an
 > achievement. Do NOT cite "connect the two cohomologies via one dequantization"
 > as done. Master synthesis: `ESSAY-005-ERGODIC-BRIDGE-2026-07-13.md`.
 
@@ -15,7 +15,7 @@ and the static side `bound-derivation-question/essay005_p3_gluing_lp.wl`.
 This note defines a temperature-`T` (inverse temperature `β = 1/T`) free-energy softening of the
 windowed transfer certificate as a **Ruelle transfer operator**, states the **exact numerically
 testable** zero-temperature-limit claim with its anchors, identifies the visibility family `V` as a
-function of temperature, and settles honestly whether the maximizing word `cct` is the `T→0`
+function of temperature, and settles honestly whether the maximizing word `ddt` is the `T→0`
 equilibrium state and where **Bousch–Mairesse** finiteness-property failure could break the bridge.
 
 ## 0. Verdict up front (read this before the math)
@@ -29,13 +29,13 @@ equilibrium state and where **Bousch–Mairesse** finiteness-property failure co
   anchors and needs no new mathematics to test.
 - **CONJECTURE with a probable OBSTRUCTION (leg C proper).** The stronger claim that the *dynamic*
   `Γ_K` is the zero-temperature limit of the *static* GE weighted-sheaf LP (value `S_k`) is most
-  likely a **category error**: the two LPs live on different graphs (de Bruijn `{c,t}` words vs
+  likely a **category error**: the two LPs live on different graphs (de Bruijn `{d,t}` words vs
   conormal powers of `C₅`), and the static side has no shift/ergodic average (finite `k` copies, not
   an orbit length `→∞`). Each side dequantizes *its own* operator; there is no evident operator
   homomorphism carrying one to the other. §7 states this obstruction precisely and gives a numerical
   falsifier. Per project ethos, a clean obstruction is a result.
-- **Selection is fragile even where the value is robust.** The *value* leg (`Γ_K → gap(cct)`)
-  converges regardless. Whether the `T→0` equilibrium *measure* selects `δ_cct` is **open** and is
+- **Selection is fragile even where the value is robust.** The *value* leg (`Γ_K → gap(ddt)`)
+  converges regardless. Whether the `T→0` equilibrium *measure* selects `δ_ddt` is **open** and is
   exactly where the observed **orbit-crowding** (a dense family of near-optimal periodic words) can
   trigger Bousch–Mairesse non-selection / non-convergence (§6).
 
@@ -52,7 +52,7 @@ an LP value over the `[0,1]`-semimodule `(ℝ₊,+,×)`; its dual is a fractiona
 (a Čech 0-cochain).
 
 **Dynamic side (tropical, `(max,+)`), the windowed certificate.** Maximize the per-block gap density
-`gap(w) = θ̄(w) − ᾱ(w)` over the shift `{c,t}^ℤ`. On the de Bruijn-`K` graph (nodes = length-`K`
+`gap(w) = θ̄(w) − ᾱ(w)` over the shift `{d,t}^ℤ`. On the de Bruijn-`K` graph (nodes = length-`K`
 words, edges = length-`K+1` overlaps) the certificate returns
 `Γ_K = ` (max cycle mean) `= ` tropical `(max,+)` eigenvalue of a weighted adjacency, with the
 per-edge inequality
@@ -73,9 +73,9 @@ a **Bousch sub-action** inequality: `ψ` is the sub-action (bias / `(max,+)` eig
 | 9 | `0.0720260` |
 | 10 | `0.0714575` |
 
-`Γ_K ↓ gap(cct) = 0.0698975` monotonically (achieved lower bound `= cctDensity − 4/3`,
-`cctDensity ≈ 1.40323087`). Extremal orbits: pure-**cis** density `3/2` (exact),
-pure-**trans** density `τ* = Root[49x³−128x²−75x+218, 2] = 1.37671774591586`.
+`Γ_K ↓ gap(ddt) = 0.0698975` monotonically (achieved lower bound `= ddtDensity − 4/3`,
+`ddtDensity ≈ 1.40323087`). Extremal orbits: pure-**direct** density `3/2` (exact),
+pure-**twisted** density `τ* = Root[49x³−128x²−75x+218, 2] = 1.37671774591586`.
 
 > **Indexing caution (risk, must resolve before validation).** The task-memory anchor list
 > `Γ₃=0.1020, Γ₄=0.0953, Γ₅=0.0824` is shifted by one relative to the code/convergence-doc
@@ -189,33 +189,33 @@ thermodynamic reading of the project's observed **orbit-crowding**. The `−1` "
 values in the convergence doc are the `β`-finite Gibbs contributions of individual periodic orbits
 before the entropy term is annealed away.
 
-## 6. Is `cct` the `T→0` equilibrium state? Selection and the Bousch–Mairesse caveat
+## 6. Is `ddt` the `T→0` equilibrium state? Selection and the Bousch–Mairesse caveat
 
-**Value convergence: robust [proj/lit].** `F_K(∞) = Γ_K` and `Γ_K ↓ gap(cct)`; the *value* leg of
+**Value convergence: robust [proj/lit].** `F_K(∞) = Γ_K` and `Γ_K ↓ gap(ddt)`; the *value* leg of
 the bridge holds independently of any selection subtlety.
 
 **Measure selection: open, and fragile [conj].** The zero-temperature question is whether the Gibbs
-measures `μ_β` converge, and if so to `δ_cct` (the period-3 `cct` orbit measure). Theory **[lit]**:
+measures `μ_β` converge, and if so to `δ_ddt` (the period-3 `ddt` orbit measure). Theory **[lit]**:
 - For a *generic* (open-dense in Lipschitz) potential the maximizing measure is a single periodic
   orbit with the **finiteness property** (Yuan–Hunt; Bousch; Contreras), and then `μ_β → ` the
   maximizing orbit measure — selection holds.
 - But the gluing-density potential is **not generic**: `CONVERGENCE-ANALYSIS-2026-07-13.md`
   documents a dense family of near-optimal periodic orbits (`16/11, 19/13, 25/17, …`) whose gaps
-  crowd toward the *irrational* `gap(cct)` from a set of *rationals*. This is exactly the regime
+  crowd toward the *irrational* `gap(ddt)` from a set of *rationals*. This is exactly the regime
   where **Bousch–Mairesse** / **Chazottes–Hochman** show the `T→0` limit of `μ_β` **need not
   converge** (it can oscillate among competing near-maximizers) and the finiteness property **fails**.
 
 **Consequence for the bridge.** Conditional statement, honestly bracketed:
 ```
-  IF  gap(cct) is attained by cct as the UNIQUE maximizing measure with the finiteness property,
-  THEN  μ_β → δ_cct  and  T=0 selects cct.
+  IF  gap(ddt) is attained by ddt as the UNIQUE maximizing measure with the finiteness property,
+  THEN  μ_β → δ_ddt  and  T=0 selects ddt.
   ELSE (finiteness fails — orbit-crowding is direct evidence it may) selection can fail:
-       μ_β may not converge, or may select a competitor, even though F_K(∞)=Γ_K → gap(cct) still holds.
+       μ_β may not converge, or may select a competitor, even though F_K(∞)=Γ_K → gap(ddt) still holds.
 ```
-The global optimality of `cct` is itself **open in-project** ("near-optimal, long-period competitors",
+The global optimality of `ddt` is itself **open in-project** ("near-optimal, long-period competitors",
 convergence doc §4). So: the **selection leg is the fragile one**; the seed oscillation observed in
 the certificate runs is a *direct visualization* of the Bousch–Mairesse competitor set. The bridge C
-value statement survives this; the "T=0 equilibrium = cct" statement is **conjectural and at risk**
+value statement survives this; the "T=0 equilibrium = ddt" statement is **conjectural and at risk**
 precisely here.
 
 ## 7. The static side, and the honest cross-side obstruction  [obstruction, likely-true]
@@ -230,7 +230,7 @@ requires `S_k` and `Γ_K` to be two temperatures of **one** parametrized operato
 and the obstruction is structural, not numerical:
 
 1. **Different base spaces.** Static index set = vertices of `C₅^{∨k}` (conormal power); dynamic
-   index set = de Bruijn-`K` words over `{c,t}`. No natural map identifies them.
+   index set = de Bruijn-`K` words over `{d,t}`. No natural map identifies them.
 2. **No shift on the static side.** `S_k` is a *finite-`k`* optimization; the dynamic `Γ_K` is an
    *ergodic average over an infinite orbit* (`k`-copies is not an orbit length under a shift). The
    dynamic side's `β` softens a *transfer operator of a dynamical system*; the static side's `T`
@@ -240,7 +240,7 @@ and the obstruction is structural, not numerical:
    *multiplicative-in-`k`* limit: `Θ(C₅) = lim_k α(C₅^{⊠k})^{1/k} = √5`, and
    `(1/k) log S_k → log Θ` is itself a pressure-like growth rate in the copy-number axis `k`.
    So the static side *does* have a hidden "dynamical" axis (`k`), but it is a **different** shift
-   (Cabello product of copies of `C₅`) from the gluing shift `{c,t}^ℤ`. Unifying them would need a
+   (Cabello product of copies of `C₅`) from the gluing shift `{d,t}^ℤ`. Unifying them would need a
    common base system, which does not evidently exist — **[conj]**, offered as a research direction,
    not a construction.
 
@@ -261,7 +261,7 @@ the main risk" discipline.
 | `F_K(β) = (1/β) log ρ(exp(β A^{(K)})) ↓ Γ_K` as `β→∞` (Claim C-lim) | **[new]**, directly testable |
 | `Γ_K` = topological-pressure zero-temperature limit of a `(+,×)` Ruelle operator | **[new packaging of lit]** |
 | `V=1 ⟷ T=0`, noise `(1−V)` = temperature (dynamic side) | **[conj]**, calibratable §4 |
-| `μ_β → δ_cct` (cct is the `T=0` equilibrium) | **[conj], fragile** — Bousch–Mairesse, §6 |
+| `μ_β → δ_ddt` (ddt is the `T=0` equilibrium) | **[conj], fragile** — Bousch–Mairesse, §6 |
 | Dynamic `Γ_K` = `T→0` limit of the *static* GE LP `S_k` | **OBSTRUCTION [conj, likely-false]** — category error, §7 |
 
 ## 9. Validation checklist for the implementer
@@ -272,7 +272,7 @@ the main risk" discipline.
 3. Use log-sum-exp / `exp(β(A−maxA))` stabilization; no cloud, no SDP; `numpy`/WL local only.
 4. Run the §7 static falsifier: `S_2(C₅;T→0) = √5`, exhibiting the category error.
 5. Report the selection question (§6) as **open**, with orbit-crowding as the honest risk to `T=0`
-   selection of `cct`. Do **not** claim `μ_β → δ_cct` without a finiteness-property proof.
+   selection of `ddt`. Do **not** claim `μ_β → δ_ddt` without a finiteness-property proof.
 
 ## References (Phase-1 leads used)
 

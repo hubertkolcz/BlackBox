@@ -74,29 +74,29 @@ resolving the issue's "unclear whether" in favor of the partial-flag alternative
 `python fem_study.py` end to end (exit 0, ~2.5 min); `fem_study_results.json` now
 contains all of h1–h5 alongside sanity/quad_edges. Refreshed values re-confirm the
 related claims verbatim: **LP-002** (Pearson r(sat_frac, CF) = -0.4294 vs
-r(AUC, CF) = +0.2662, 9 points, sign flip reproduced) and **MESH-002** (cis pinch at
+r(AUC, CF) = +0.2662, 9 points, sign flip reproduced) and **MESH-002** (direct pinch at
 N=3 and even N ≥ 4; odd-N residual gaps 0.2361 / 0.3177 / 0.3601 at N = 5/7/9).
 No source change was needed; `fem_study.py` is unmodified.
 
 **Evidence.** Before/after top-level keys: `[quad_edges, sanity]` (1917 bytes) →
 `[h1, h2, h3, h4, h5, quad_edges, sanity]` (20011 bytes); sanity/quad_edges unchanged.
-Spot checks against the ledger: h1 trans theta/N limit 1.376717745915859 vs
-tau* = 1.3767177459 (dev 5.4e-9); cct per-block gap 1.4032309 - 4/3 = 0.0698975;
-h4 V_crit = (5+3*sqrt(5))/20 = 0.5854101966 for all chain/trans-ring rows, cis-ring
+Spot checks against the ledger: h1 twisted theta/N limit 1.376717745915859 vs
+tau* = 1.3767177459 (dev 5.4e-9); ddt per-block gap 1.4032309 - 4/3 = 0.0698975;
+h4 V_crit = (5+3*sqrt(5))/20 = 0.5854101966 for all chain/twisted-ring rows, direct-ring
 N=3 pinched to ~0; h3 empirical exponent 1.242, h3_rejected = False; all `all_ok`
 gates True. Full run log: session scratchpad `fem_study_full_run.log`.
 
 **Reviewer re-verification (2026-07-13).** Reviewer independently parsed the
 regenerated JSON: top-level keys exactly `{h1,h2,h3,h4,h5,quad_edges,sanity}`;
 h5.correlation `pearson_satfrac = -0.4294334`, `pearson_auc = +0.2662100`,
-`n_points = 9`; h2.cis_pinch gaps at N=5/7/9 = 0.23606799 / 0.31766721 / 0.36009
-with pinches at N=3,4,6,8 (|gap| < 2e-8); h1.limits trans = 1.376717745915859,
-cct = 1.4032308692; h4 anchor 0.5854101966249685; h3 exponent 1.2416, not rejected.
+`n_points = 9`; h2.direct_pinch gaps at N=5/7/9 = 0.23606799 / 0.31766721 / 0.36009
+with pinches at N=3,4,6,8 (|gap| < 2e-8); h1.limits twisted = 1.376717745915859,
+ddt = 1.4032308692; h4 anchor 0.5854101966249685; h3 exponent 1.2416, not rejected.
 All match the LP-002 / MESH-002 ledger values.
 
 **Known residuals (flagged, not fixed).** `fem_study.py`'s docstring advertises a
 `gates` stage that `main()` silently ignores; results are still written only once at
-end of `main()` (a mid-study crash persists nothing); h4 cis-ring N=3 serializes as a
+end of `main()` (a mid-study crash persists nothing); h4 direct-ring N=3 serializes as a
 tiny negative LP epsilon (prints -0.000000) rather than exact 0.
 
 **Files.**

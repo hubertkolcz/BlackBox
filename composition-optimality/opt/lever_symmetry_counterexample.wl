@@ -1,6 +1,6 @@
 (* minimal concrete counterexample record for the reject verdict *)
 Do[Module[{nodes, edges, cross},
-   nodes = StringJoin /@ Tuples[{"c", "t"}, K];
+   nodes = StringJoin /@ Tuples[{"d", "t"}, K];
    edges = Select[Tuples[nodes, 2],
      StringDrop[#[[1]], 1] === StringDrop[#[[2]], -1] &];
    cross = Select[edges, StringTake[#[[1]], -1] =!= StringTake[#[[1]], {2}] &];

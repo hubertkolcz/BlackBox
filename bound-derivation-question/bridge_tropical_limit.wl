@@ -25,7 +25,7 @@ dpStates = {{0, 0}, {1, 0}, {0, 1}};
 dpTransfer[letter_] := Module[{T = ConstantArray[-Infinity, {3, 3}], out, j},
    Do[If[! (dpStates[[i, 1]] == 1 && s1 == 1) && ! (s1 == 1 && s2 == 1) &&
         ! (s2 == 1 && s3 == 1) && ! (s3 == 1 && dpStates[[i, 2]] == 1),
-      out = If[letter === "c", {s1, s2}, {s2, s1}];
+      out = If[letter === "d", {s1, s2}, {s2, s1}];
       j = Position[dpStates, out][[1, 1]];
       T[[i, j]] = Max[T[[i, j]], s1 + s2 + s3]],
      {i, 3}, {s1, 0, 1}, {s2, 0, 1}, {s3, 0, 1}];
@@ -72,8 +72,8 @@ gibbsMass[A_, beta_] := Module[{n = Length[A], maxA, Texp, vr, vl},
    vl = Abs@First[Eigenvectors[Transpose[Texp]][[Ordering[-Re[Eigenvalues[Transpose[Texp]]], 1]]]];
    Normalize[vr*vl, Total]];
 
-runK[Kval_, certFile_, docGamma_, cctNodesFn_] := Module[
-  {CE, nodes, n, idx, edges, A, mcm, betas, tab, bc, best, mass, top, cctNodes},
+runK[Kval_, certFile_, docGamma_, ddtNodesFn_] := Module[
+  {CE, nodes, n, idx, edges, A, mcm, betas, tab, bc, best, mass, top, ddtNodes},
   Clear[EpsilonCertificate9];
   Get[FileNameJoin[{$certDir, certFile}]];
   CE = EpsilonCertificate9;
@@ -93,31 +93,31 @@ runK[Kval_, certFile_, docGamma_, cctNodesFn_] := Module[
   Do[Print["  ", PaddedForm[row[[1]], 5], "   ", NumberForm[N[row[[2]], 12], {14, 12}],
       "   ", ScientificForm[N[row[[3]], 4]]], {row, tab}];
   Print["  monotone decreasing in beta: ", OrderedQ[Reverse[tab[[All, 2]]]]];
-  (* selection: which cycle does T->0 pick, is it cct? *)
+  (* selection: which cycle does T->0 pick, is it ddt? *)
   bc = bestCycleNode[A, nodes];
-  cctNodes = cctNodesFn[];
+  ddtNodes = ddtNodesFn[];
   mass = gibbsMass[A, 640];
   top = Take[SortBy[Table[nodes[[i]] -> mass[[i]], {i, n}], -Last[#] &], Min[4, n]];
   Print["  argmax-cycle-mean bottleneck node (period start): ", nodes[[bc[[3]]]],
      "  (cycle length ", bc[[1]], ")"];
-  Print["  cct-orbit de Bruijn-", Kval, " nodes: ", cctNodes];
+  Print["  ddt-orbit de Bruijn-", Kval, " nodes: ", ddtNodes];
   Print["  Gibbs mass (beta=640) top nodes: ", top];
-  Print["  T->0 mass concentrated on cct-orbit? ",
-     Total[mass[[idx /@ cctNodes]]] > 0.9,
-     "   (cct-orbit mass = ", N[Total[mass[[idx /@ cctNodes]]], 4], ")"];
-  {Kval, N[CE["Gamma"], 16], N[mcm, 16], tab, nodes[[bc[[3]]]], cctNodes,
-   N[Total[mass[[idx /@ cctNodes]]], 4]}
+  Print["  T->0 mass concentrated on ddt-orbit? ",
+     Total[mass[[idx /@ ddtNodes]]] > 0.9,
+     "   (ddt-orbit mass = ", N[Total[mass[[idx /@ ddtNodes]]], 4], ")"];
+  {Kval, N[CE["Gamma"], 16], N[mcm, 16], tab, nodes[[bc[[3]]]], ddtNodes,
+   N[Total[mass[[idx /@ ddtNodes]]], 4]}
 ];
 
-(* cct = (cct)^inf ; its length-K de Bruijn windows are the K cyclic rotations *)
-cctWindows[Kval_] := Module[{s = StringRepeat["cct", Ceiling[(Kval + 3)/3] + 1]},
+(* ddt = (ddt)^inf ; its length-K de Bruijn windows are the K cyclic rotations *)
+ddtWindows[Kval_] := Module[{s = StringRepeat["ddt", Ceiling[(Kval + 3)/3] + 1]},
    DeleteDuplicates[Table[StringTake[s, {j, j + Kval - 1}], {j, 1, 3}]]];
 
-res3 = runK[3, "EpsilonCertificate_testK3_output.wl", 0.125, cctWindows[3] &];
-res4 = runK[4, "EpsilonCertificate_testK4_output.wl", 0.10196412702492699, cctWindows[4] &];
-res5 = runK[5, "EpsilonCertificate_testK5_output.wl", 0.0952971530959493, cctWindows[5] &];
+res3 = runK[3, "EpsilonCertificate_testK3_output.wl", 0.125, ddtWindows[3] &];
+res4 = runK[4, "EpsilonCertificate_testK4_output.wl", 0.10196412702492699, ddtWindows[4] &];
+res5 = runK[5, "EpsilonCertificate_testK5_output.wl", 0.0952971530959493, ddtWindows[5] &];
 
 Print["\n==================== SUMMARY ===================="];
-Print["K | Gamma_K(cert) | maxCycleMean(A) | F_K(640) | bottleneck word | cct-orbit T->0 mass"];
+Print["K | Gamma_K(cert) | maxCycleMean(A) | F_K(640) | bottleneck word | ddt-orbit T->0 mass"];
 Do[Print[r[[1]], " | ", r[[2]], " | ", r[[3]], " | ", N[Last[r[[4]]][[2]], 12],
      " | ", r[[5]], " | ", r[[7]]], {r, {res3, res4, res5}}];

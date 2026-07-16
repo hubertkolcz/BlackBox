@@ -2,29 +2,29 @@
 (* orbit_spectrum_figure.wl -- essay figure for CONVERGENCE-ANALYSIS-2026-07-13.md.
    Visualizes the finding that the "spurious" strategy-iteration seed values are
    periodic-orbit densities: observed value + 1 = theta-density of a gluing orbit.
-   Panel A: the density spectrum from trans tau-star to cis 3/2, orbits marked.
+   Panel A: the density spectrum from twisted tau-star to direct 3/2, orbits marked.
    Panel B: seed value vs orbit density -- spurious orbits lie on value=density-1
-   (alpha-correction OFF); the true optimum cct drops to value=density-4/3 (real gap).
+   (alpha-correction OFF); the true optimum ddt drops to value=density-4/3 (real gap).
    Run: wolframscript -file orbit_spectrum_figure.wl  ->  orbit_spectrum.png / .pdf *)
 
-tau   = N[Root[49 #^3 - 128 #^2 - 75 # + 218 &, 2], 30];   (* trans density *)
-cct   = 1.4032308692389975;                                 (* cct density *)
-aBar  = 4/3;                                                (* cct alpha-density *)
-gapCct = cct - aBar;                                        (* 0.0698975 *)
+tau   = N[Root[49 #^3 - 128 #^2 - 75 # + 218 &, 2], 30];   (* twisted density *)
+ddt   = 1.4032308692389975;                                 (* ddt density *)
+aBar  = 4/3;                                                (* ddt alpha-density *)
+gapCct = ddt - aBar;                                        (* 0.0698975 *)
 
 (* {density, label, observedSeedValue} for the orbits the random seeds revealed *)
 orbits = {
-  {tau,  "trans  \[Tau]*", 0.376723},
+  {tau,  "twisted  \[Tau]*", 0.376723},
   {16/11, "16/11", 0.4545496},
   {19/13, "19/13", 0.4615426},
   {25/17, "25/17", 0.470592},
-  {3/2,  "cis  3/2", 0.500004}
+  {3/2,  "direct  3/2", 0.500004}
 };
 
 (* --- palette (2026-07-14 visual pass: softer tones, round line caps/joins) --- *)
-cExtreme = RGBColor[0.20, 0.34, 0.64];   (* trans / cis: structural extremes *)
+cExtreme = RGBColor[0.20, 0.34, 0.64];   (* twisted / direct: structural extremes *)
 cMixed   = RGBColor[0.46, 0.49, 0.56];   (* mixed orbits *)
-cOpt     = RGBColor[0.87, 0.58, 0.11];   (* cct: the true optimum *)
+cOpt     = RGBColor[0.87, 0.58, 0.11];   (* ddt: the true optimum *)
 cLine    = RGBColor[0.68, 0.70, 0.75];
 ink      = GrayLevel[0.14];
 
@@ -55,11 +55,11 @@ panelA = Graphics[{
       {col, CapForm["Round"], Thickness[0.002], Line[{{d, axisY + 0.03}, {d, sl - 0.03}}]},
       Text[Style[lab, 10, col, Bold], {d, sl}]}],
      {i, Length[orbits]}],
-   (* cct : the true optimum, highlighted *)
-   {cOpt, PointSize[0.022], Point[{cct, axisY}]},
-   {cOpt, CapForm["Round"], Thickness[0.0026], Line[{{cct, axisY - 0.03}, {cct, -0.14}}]},
-   Text[Style["cct  \[LongDash] true optimum", 10, cOpt, Bold], {cct, -0.20}],
-   Text[Style["(found by the deterministic seeds)", 8, cOpt], {cct, -0.26}]
+   (* ddt : the true optimum, highlighted *)
+   {cOpt, PointSize[0.022], Point[{ddt, axisY}]},
+   {cOpt, CapForm["Round"], Thickness[0.0026], Line[{{ddt, axisY - 0.03}, {ddt, -0.14}}]},
+   Text[Style["ddt  \[LongDash] true optimum", 10, cOpt, Bold], {ddt, -0.20}],
+   Text[Style["(found by the deterministic seeds)", 8, cOpt], {ddt, -0.26}]
    },
   PlotRange -> {{lo, hi}, {-0.30, 0.72}}, AspectRatio -> 0.32, ImageSize -> 760,
   PlotLabel -> Style["A.  Orbit-density spectrum explored by strategy iteration", 12, ink, Bold],
@@ -83,20 +83,20 @@ panelB = Graphics[{
      {{col, PointSize[0.014], Point[{d, v}]},
       Text[Style[orbits[[i, 2]], 8, col], {d, v + 0.028}]}],
      {i, Length[orbits]}],
-   (* cct on the real-gap line + the drop arrow *)
-   {cOpt, PointSize[0.022], Point[{cct, gapCct}]},
-   Text[Style["cct", 9, cOpt, Bold], {cct + 0.006, gapCct + 0.028}],
+   (* ddt on the real-gap line + the drop arrow *)
+   {cOpt, PointSize[0.022], Point[{ddt, gapCct}]},
+   Text[Style["ddt", 9, cOpt, Bold], {ddt + 0.006, gapCct + 0.028}],
    {GrayLevel[0.6], CapForm["Round"], Dashing[{0.006, 0.006}], Arrowheads[0.02],
-     Arrow[{{cct, cct - 1}, {cct, gapCct + 0.01}}]},
+     Arrow[{{ddt, ddt - 1}, {ddt, gapCct + 0.01}}]},
    Text[Style["\[Alpha]-cocycle\ndevelops", 8, GrayLevel[0.45], Italic],
-     {cct - 0.028, (cct - 1 + gapCct)/2}]
+     {ddt - 0.028, (ddt - 1 + gapCct)/2}]
    },
   PlotRange -> {dRange, {-0.02, 0.56}}, AspectRatio -> 0.5, ImageSize -> 760,
   Frame -> {{True, False}, {True, False}}, FrameStyle -> GrayLevel[0.55],
   FrameLabel -> {Style["orbit \[Theta]-density", 10, ink],
      Style["reported seed value", 10, ink]},
   FrameTicks -> {{Automatic, None}, {Automatic, None}},
-  PlotLabel -> Style["B.  Why the optimum is special: the \[Alpha]-correction drops cct off the density\[Minus]1 line", 12, ink, Bold],
+  PlotLabel -> Style["B.  Why the optimum is special: the \[Alpha]-correction drops ddt off the density\[Minus]1 line", 12, ink, Bold],
   ImagePadding -> {{55, 12}, {40, 24}}, Background -> White];
 
 fig = Column[{panelA, panelB}, Spacings -> 1.2, Alignment -> Center];
@@ -104,5 +104,5 @@ fig = Column[{panelA, panelB}, Spacings -> 1.2, Alignment -> Center];
 Export["orbit_spectrum.png", fig, ImageResolution -> 200];
 Export["orbit_spectrum.pdf", fig];
 Print["WROTE orbit_spectrum.png (", FileByteCount["orbit_spectrum.png"], " bytes) and .pdf"];
-Print["tau* = ", tau, "  |  cct = ", cct, "  |  gap(cct) = ", gapCct];
+Print["tau* = ", tau, "  |  ddt = ", ddt, "  |  gap(ddt) = ", gapCct];
 Print["check: 16/11-1=", N[16/11 - 1], " vs obs 0.4545496 ; 25/17-1=", N[25/17 - 1], " vs obs 0.470592"];

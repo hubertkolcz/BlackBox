@@ -46,22 +46,22 @@ pentagon this is exact, has exactly one structural blind spot, and is closed
 **Question.** How does contextuality compose when you edge-glue pentagons, and is
 there a *best* way to glue them?
 
-**Thesis.** A pentagon mesh is a binary (cis/trans) necklace with exact composition
-laws; a believed-optimal word **cct** carries an irrational gap density 0.0698975…;
+**Thesis.** A pentagon mesh is a binary (direct/twisted) necklace with exact composition
+laws; a believed-optimal word **ddt** carries an irrational gap density 0.0698975…;
 and a windowed transfer-SDP ladder Γ_k brackets it from above — an ergodic-
 optimization problem whose optimizer is a sharp, isolated peak.
 
 **Outline.**
-1. Meshes as necklaces — cis vs trans are non-isomorphic; orientation, not size, controls the gap `[gluingArbitration]`
-2. Exact laws — cis θ = N+θ(C_N), α = ⌊3N/2⌋; τ\* = Root[49x³−128x²−75x+218,2] = 1.37671775 `[tauStar]`
-3. The α-cis theorem — ᾱ(w) ≥ max(4/3, 1+f_c/2), equality **iff** (cct)^k `[cisLawTable]`
-4. The certificate ladder — exact Γ₇, Γ₈, Γ₉ (and Γ₁₀) descending toward gap(cct) `[gammaExact]`
+1. Meshes as necklaces — direct vs twisted are non-isomorphic; orientation, not size, controls the gap `[gluingArbitration]`
+2. Exact laws — direct θ = N+θ(C_N), α = ⌊3N/2⌋; τ\* = Root[49x³−128x²−75x+218,2] = 1.37671775 `[tauStar]`
+3. The α-direct theorem — ᾱ(w) ≥ max(4/3, 1+f_d/2), equality **iff** (ddt)^k `[directLawTable]`
+4. The certificate ladder — exact Γ₇, Γ₈, Γ₉ (and Γ₁₀) descending toward gap(ddt) `[gammaExact]`
 5. The orbit-spectrum reading — spurious policy values are periodic-orbit densities − 1 `[orbitSeeds]`
-6. H1 — the cct-optimality hypothesis and why it's hard (finiteness fails; Bousch–Mairesse)
+6. H1 — the ddt-optimality hypothesis and why it's hard (finiteness fails; Bousch–Mairesse)
 7. *(optional)* the degree-0 sheaf derivation (F6) — an integer-vs-fractional partition of unity `[lam*]`
 
 **Draws on:** `essay_sections_4_6.wl` (S4, S5) + `EpsilonCertificate{7,8,9}*.wl` + `orbit_spectrum.png` + H1.
-**Novelty anchor:** the exact Lovász-θ density theory of edge-glued C₅ meshes + τ\* + the α-cis equality-iff-cct theorem.
+**Novelty anchor:** the exact Lovász-θ density theory of edge-glued C₅ meshes + τ\* + the α-direct equality-iff-ddt theorem.
 **Audience:** combinatorial / ergodic optimization, SDP. **Size:** ~50–60 cells, ~40 live numbers. **The deepest mathematics.**
 
 ---

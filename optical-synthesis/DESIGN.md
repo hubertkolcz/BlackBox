@@ -36,7 +36,7 @@ leaf-confined by its own audit (`DLADimension < 3`), and the blueprint says so.
 | **L1 Interferometer** | `pentagon-foundations/kcbs_circuit.wl` (Sec. 3–4, cascade `[P,T1..T4]`), `kcbs_circuit_ncycle.wl` (`buildNCycleCircuit`), `pentagon-foundations/BiphotonSimulator.wl` (u⊗u lift) | synthesize the Givens/beamsplitter mesh of a target unitary |
 | **L2 Intensity** | `certification-protocol/mbqc_blackbox_test.py` (`table_intensity`, `sample_table`, construction iii-d) | synthesize per-context intensity fractions + source/splitter/detector schedule |
 | **L3 Dispatcher** | `BlackBox` paclet (`CascadeGenerators`, `So3Axis`, `DLADimension`); `certification-protocol/final_o3_cv_dla.py` (Sp(2n,R) CV closure) | decide, per component, L1 vs L2, and stamp the verdict |
-| **Mesh routing** | `cluster-state-realization/cct_mesh_sparse_construction.wl` (`wordRingEdgesFast`) | translate a `(word, reps)` mesh into a stage/routing list |
+| **Mesh routing** | `cluster-state-realization/ddt_mesh_sparse_construction.wl` (`wordRingEdgesFast`) | translate a `(word, reps)` mesh into a stage/routing list |
 
 **Two-lens dispatch rule (from L3):** a component whose claimed dynamics is
 leaf-confined / poly-DLA / table-only ⇒ **Layer 2 suffices** (emulable, cheap); a
@@ -96,8 +96,8 @@ Uses a **verbatim copy** of `wordRingEdgesFast` (Section 5, no Join-in-loop). Re
 where `L = StringLength[StringRepeat[word,reps]]`, one 3-mode Lapkiewicz block-stage
 per pentagon; `EdgeList` is exactly `wordRingEdgesFast[word,reps]` (the A4 anchor).
 `Routing[[k]] = <|"From"->k-1,"To"->k, "SharedModes"->{3(k-1)+1,3(k-1)+2},
-"Orientation"->"cis"|"trans"|>`, orientation `= "trans"` iff the k-th letter is `t`
-(the wordRing swap), `"cis"` for letter `c`.
+"Orientation"->"direct"|"twisted"|>`, orientation `= "twisted"` iff the k-th letter is `t`
+(the wordRing swap), `"direct"` for letter `c`.
 
 ### 2.3 Layer 2 — intensity emulator synthesis (Builder B)
 
@@ -334,11 +334,11 @@ Expected (cross-checked against the Python original's numbers):
   yet its Layer-3 verdict is `"emulable"` / leaf-confined (that is the point).
 
 **A4 — mesh routing matches `wordRingEdgesFast` exactly.**
-For `word="cct"`, `reps∈{1,2,3}`: `CompileMeshRouting["cct",reps]["EdgeList"]` equals
-`wordRingEdgesFast["cct",reps]` as sorted sets (and equals `wordRingOriginal`'s edge
-set — the regression already proven in `cct_mesh_sparse_construction.wl`).
+For `word="ddt"`, `reps∈{1,2,3}`: `CompileMeshRouting["ddt",reps]["EdgeList"]` equals
+`wordRingEdgesFast["ddt",reps]` as sorted sets (and equals `wordRingOriginal`'s edge
+set — the regression already proven in `ddt_mesh_sparse_construction.wl`).
 `ModeCount = 3L`: reps 1→9, 2→18, 3→27 modes. Routing shared-mode map
-`{3(k-1)+1,3(k-1)+2}`; orientation `"trans"` exactly at `t` letters (word `cct` ⇒
+`{3(k-1)+1,3(k-1)+2}`; orientation `"twisted"` exactly at `t` letters (word `ddt` ⇒
 per period letters `c,c,t` ⇒ swap on every third block). Expected: `EXACT MATCH -> True`
 for all three reps.
 

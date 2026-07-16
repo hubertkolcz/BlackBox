@@ -31,7 +31,7 @@
          solve per round to get BOTH the achieved Gamma AND the Phi values fed
          into policy improvement. This converged to Gamma ~ 0.5 regardless of
          two already-applied fixes (guarding against the -Infinity dpTransfer
-         entries Tc[[2,2]]/Tt[[2,3]], and avoiding a degenerate constant seed).
+         entries Td[[2,2]]/Tt[[2,3]], and avoiding a degenerate constant seed).
          Diagnosis, confirmed empirically (not guessed): running the SAME
          algorithm from 9 different seed strategies at k=3 produced THREE
          DISTINCT fixed points (0.5, 0.377, 0.293) -- impossible under correct
@@ -109,7 +109,7 @@ RATIONALTOL = 10^-9;       (* Rationalize tolerance for the numeric -> exact pas
    posEdges[CE_], just not yet keyed to a loaded certificate association) *)
 (* ------------------------------------------------------------------------- *)
 
-nodes = StringJoin /@ Tuples[{"c", "t"}, K];
+nodes = StringJoin /@ Tuples[{"d", "t"}, K];
 edges = Select[Tuples[nodes, 2], StringDrop[#[[1]], 1] === StringDrop[#[[2]], -1] &];
 Print["de Bruijn-", K, ": ", Length[nodes], " nodes, ", Length[edges], " edges"];
 
@@ -123,12 +123,12 @@ dpStates = {{0, 0}, {1, 0}, {0, 1}};
 dpTransfer[letter_] := Module[{T = ConstantArray[-Infinity, {3, 3}], out, j},
    Do[If[! (dpStates[[i, 1]] == 1 && s1 == 1) && ! (s1 == 1 && s2 == 1) &&
         ! (s2 == 1 && s3 == 1) && ! (s3 == 1 && dpStates[[i, 2]] == 1),
-      out = If[letter === "c", {s1, s2}, {s2, s1}];
+      out = If[letter === "d", {s1, s2}, {s2, s1}];
       j = Position[dpStates, out][[1, 1]];
       T[[i, j]] = Max[T[[i, j]], s1 + s2 + s3]],
      {i, 3}, {s1, 0, 1}, {s2, 0, 1}, {s3, 0, 1}];
    T];
-Tc = dpTransfer["c"]; Tt = dpTransfer["t"];
+Td = dpTransfer["d"]; Tt = dpTransfer["t"];
 
 (* ------------------------------------------------------------------------- *)
 (* STAGE 1: joint numeric SDP+LP solve with strategy iteration.
@@ -161,12 +161,12 @@ nodeCons = Flatten[Table[
 edgeCons = Flatten[Table[
     Module[{w = e[[1]], x = e[[2]], b, rA, rB},
       b = StringTake[w, -1];
-      {rA, rB} = If[b === "c", {iu, iv}, {iv, iu}];
+      {rA, rB} = If[b === "d", {iu, iv}, {iv, iu}];
       {
        Qs[w][[ia, ia]] + Qs[x][[rA, rA]] + If[b === "t", Rs[x][[jv, jv]], 0] == 1,
-       Qs[w][[ib, ib]] + Rs[w][[jb, jb]] + Qs[x][[rB, rB]] + If[b === "c", Rs[x][[jv, jv]], 0] == 1,
+       Qs[w][[ib, ib]] + Rs[w][[jb, jb]] + Qs[x][[rB, rB]] + If[b === "d", Rs[x][[jv, jv]], 0] == 1,
        Qs[w][[ia, ip]] + Qs[x][[rA, ip]] + If[b === "t", Rs[x][[jv, jp]], 0] == 1,
-       Qs[w][[ib, ip]] + Rs[w][[jb, jp]] + Qs[x][[rB, ip]] + If[b === "c", Rs[x][[jv, jp]], 0] == 1
+       Qs[w][[ib, ip]] + Rs[w][[jb, jp]] + Qs[x][[rB, ip]] + If[b === "d", Rs[x][[jv, jp]], 0] == 1
       }],
     {e, edges}]];
 
@@ -188,7 +188,7 @@ psdCons = Join[
    Table[VectorGreaterEqual[{Qs[w] - PSDMARGIN*IdentityMatrix[5], 0}, {"SemidefiniteCone", 5}], {w, nodes}],
    Table[VectorGreaterEqual[{Rs[w] - PSDMARGIN*IdentityMatrix[4], 0}, {"SemidefiniteCone", 4}], {w, nodes}]];
 
-(* dpTransfer has genuine -Infinity (invalid-transition) entries -- Tc[[2,2]] and
+(* dpTransfer has genuine -Infinity (invalid-transition) entries -- Td[[2,2]] and
    Tt[[2,3]] specifically. Any strategy, seed or improved, MUST avoid ever
    selecting a sig with T[[s,sig]] == -Infinity, or SemidefiniteOptimization will
    fail outright on the resulting poisoned constraint. *)
@@ -206,7 +206,7 @@ refNode = First[nodes];
 CanonicalPhi[strategy_] := Module[{potCons, tVar},
    potCons = Flatten[Table[
       Module[{w = e[[1]], x = e[[2]], sig, T},
-        T = If[edgeLetter[e] === "c", Tc, Tt];
+        T = If[edgeLetter[e] === "d", Td, Tt];
         sig = strategy[{s, e}];
         tVar <= T[[s, sig]] + phiVar[sig - 1, x] - phiVar[s - 1, w]],
       {e, edges}, {s, 1, 3}]];
@@ -219,7 +219,7 @@ SolveJoint[strategy_] := Module[{potCons},
    potCons = Join[
      Flatten[Table[
        Module[{w = e[[1]], x = e[[2]], sig, T},
-         T = If[edgeLetter[e] === "c", Tc, Tt];
+         T = If[edgeLetter[e] === "d", Td, Tt];
          sig = strategy[{s, e}];
          rVar[e] <= T[[s, sig]] + phiVar[sig - 1, x] - phiVar[s - 1, w]],
        {e, edges}, {s, 1, 3}]],
@@ -256,7 +256,7 @@ SolveJoint[strategy_] := Module[{potCons},
    certificate. *)
 Improve[strategy_, canonSol_] := Association[Flatten[Table[
     Module[{w = e[[1]], x = e[[2]], T, valid, vals},
-      T = If[edgeLetter[e] === "c", Tc, Tt];
+      T = If[edgeLetter[e] === "d", Td, Tt];
       valid = validSigs[T, s];
       vals = (T[[s, #]] + (phiVar[# - 1, x] /. canonSol)) & /@ valid;
       {s, e} -> valid[[First@Ordering[-vals, 1]]]],
@@ -266,17 +266,17 @@ Improve[strategy_, canonSol_] := Association[Flatten[Table[
    sequence, both converging identically) plus a couple of random restarts as
    an extra safety net -- keep whichever converges to the smallest Gamma. *)
 seedA = Association[Table[
-   Module[{T = If[edgeLetter[e] === "c", Tc, Tt], valid},
+   Module[{T = If[edgeLetter[e] === "d", Td, Tt], valid},
      valid = validSigs[T, s];
      {s, e} -> If[MemberQ[valid, s], s, First[valid]]],
    {e, edges}, {s, 1, 3}]];
 seedB = Association[Table[
-   Module[{T = If[edgeLetter[e] === "c", Tc, Tt], valid}, valid = validSigs[T, s];
+   Module[{T = If[edgeLetter[e] === "d", Td, Tt], valid}, valid = validSigs[T, s];
      {s, e} -> First[valid]],
    {e, edges}, {s, 1, 3}]];
 randomSeed[seedNum_] := (SeedRandom[seedNum];
    Association[Table[
-     Module[{T = If[edgeLetter[e] === "c", Tc, Tt], valid}, valid = validSigs[T, s];
+     Module[{T = If[edgeLetter[e] === "d", Td, Tt], valid}, valid = validSigs[T, s];
        {s, e} -> RandomChoice[valid]],
      {e, edges}, {s, 1, 3}]]);
 
@@ -449,13 +449,13 @@ nodeEqOK = AllTrue[nodes, RsExact[#][[jx, jx]] == 1 && RsExact[#][[jx, jp]] == 1
      QsExact[#][[iv, ib]] + RsExact[#][[jv, jb]] == 0 &];
 
 edgeEqOK = AllTrue[edges, Module[{w = #[[1]], x = #[[2]], b, rA, rB},
-      b = StringTake[w, -1]; {rA, rB} = If[b === "c", {iu, iv}, {iv, iu}];
+      b = StringTake[w, -1]; {rA, rB} = If[b === "d", {iu, iv}, {iv, iu}];
       QsExact[w][[ia, ia]] + QsExact[x][[rA, rA]] + If[b === "t", RsExact[x][[jv, jv]], 0] == 1 &&
        QsExact[w][[ib, ib]] + RsExact[w][[jb, jb]] + QsExact[x][[rB, rB]] +
-         If[b === "c", RsExact[x][[jv, jv]], 0] == 1 &&
+         If[b === "d", RsExact[x][[jv, jv]], 0] == 1 &&
        QsExact[w][[ia, ip]] + QsExact[x][[rA, ip]] + If[b === "t", RsExact[x][[jv, jp]], 0] == 1 &&
        QsExact[w][[ib, ip]] + RsExact[w][[jb, jp]] + QsExact[x][[rB, ip]] +
-         If[b === "c", RsExact[x][[jv, jp]], 0] == 1] &];
+         If[b === "d", RsExact[x][[jv, jp]], 0] == 1] &];
 
 psdOK = AllTrue[nodes, PositiveSemidefiniteMatrixQ[QsExact[#]] && PositiveSemidefiniteMatrixQ[RsExact[#]] &];
 
@@ -479,7 +479,7 @@ StrategyExact = Association[Table[
     {e, edges}, {s, 1, 3}]];
 
 posSigma9[e_] := Module[{w = e[[1]], x = e[[2]], T, r},
-   T = If[edgeLetter[e] === "c", Tc, Tt];
+   T = If[edgeLetter[e] === "d", Td, Tt];
    r = Min[Table[Module[{sig = StrategyExact[ToString[s - 1] <> "|" <> w <> ">" <> x]},
        T[[s, sig]] + PhiExact[ToString[sig - 1] <> "|" <> x] - PhiExact[ToString[s - 1] <> "|" <> w]],
       {s, 3}]];

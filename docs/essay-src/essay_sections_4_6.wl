@@ -48,7 +48,7 @@ repoRoot = Module[
        "bound-derivation-question/final_h1_cocycle_results.json",
        "open-search-frontier/erg003_verdict.json", "docs/FRAMEWORK-2026-07-13.md",
        "optical-synthesis/schematics/demo1_kcbs_pentagon_L1.png",
-       "optical-synthesis/schematics/demo3_cct_mesh_reps2.png",
+       "optical-synthesis/schematics/demo3_ddt_mesh_reps2.png",
        "certification-protocol/certification_map.png",
        "composition-optimality/orbit_spectrum.png"};
      Do[dest = FileNameJoin[Prepend[FileNameSplit[rel], cacheRoot]];
@@ -75,7 +75,7 @@ sfx6 = <||>;   (* verification accumulator, filled section by section *)
 (*S4. Composition: Mesh Laws and the Optimal Word*)
 
 (* ::Text:: *)
-(*A mesh of edge-glued pentagons is a binary necklace: one orientation letter per gluing, c (cis) or t (trans). Cis rails the short sides onto one endpoint of the running glue edge; trans alternates them. The two closures are not isomorphic (MESH-001), and orientation \[LongDash] not size \[LongDash] controls whether the quantum gap \[CapitalTheta] - \[Alpha] survives (MESH-002). This section reproduces the exact composition laws live, reads the tightened certificate ladder \[CapitalGamma]_7, \[CapitalGamma]_8, \[CapitalGamma]_9 from committed exact-arithmetic certificates, and authors the bracket figure from those live values.*)
+(*A mesh of edge-glued pentagons is a binary necklace: one orientation letter per gluing, c (direct) or t (twisted). Direct rails the short sides onto one endpoint of the running glue edge; twisted alternates them. The two closures are not isomorphic (MESH-001), and orientation \[LongDash] not size \[LongDash] controls whether the quantum gap \[CapitalTheta] - \[Alpha] survives (MESH-002). This section reproduces the exact composition laws live, reads the tightened certificate ladder \[CapitalGamma]_7, \[CapitalGamma]_8, \[CapitalGamma]_9 from committed exact-arithmetic certificates, and authors the bracket figure from those live values.*)
 
 (* ::CodeText:: *)
 (*The general word-ring builder (mirrors pentagon-gluing/CaseStudies.wl) and the 3-state interface transfer DP whose max-plus cycle means give exact \[Alpha]-densities:*)
@@ -85,7 +85,7 @@ wordRing[word_String, reps_Integer] := Module[
   {w = Characters[StringRepeat[word, reps]], L, edges = {}, u, v, km},
   L = Length[w];
   Do[km = Mod[k - 1, L];
-   {u, v} = If[w[[km + 1]] === "c", {3 km + 1, 3 km + 2}, {3 km + 2, 3 km + 1}];
+   {u, v} = If[w[[km + 1]] === "d", {3 km + 1, 3 km + 2}, {3 km + 2, 3 km + 1}];
    edges = Join[edges, {{u, v}, {u, 3 k + 1}, {3 k + 1, 3 k + 2},
       {3 k + 2, 3 k + 3}, {3 k + 3, v}}], {k, 0, L - 1}];
   Graph[Range[3 L], UndirectedEdge @@@ DeleteDuplicates[Sort /@ edges]]];
@@ -93,78 +93,78 @@ dpStates = {{0, 0}, {1, 0}, {0, 1}};
 dpTransfer[letter_] := Module[{T = ConstantArray[-Infinity, {3, 3}], out, j},
   Do[If[! (dpStates[[i, 1]] == 1 && s1 == 1) && ! (s1 == 1 && s2 == 1) &&
       ! (s2 == 1 && s3 == 1) && ! (s3 == 1 && dpStates[[i, 2]] == 1),
-     out = If[letter === "c", {s1, s2}, {s2, s1}];
+     out = If[letter === "d", {s1, s2}, {s2, s1}];
      j = Position[dpStates, out][[1, 1]];
      T[[i, j]] = Max[T[[i, j]], s1 + s2 + s3]],
     {i, 3}, {s1, 0, 1}, {s2, 0, 1}, {s3, 0, 1}];
   T];
 
 (* ::CodeText:: *)
-(*Cis/trans dichotomy, live [T]: the dense SDP arbitrates at a size it still reaches \[LongDash] \[CurlyTheta](trans-ring 21) < \[CurlyTheta](cis-chain 19), and \[CurlyTheta] is monotone under induced subgraphs, so no 19-block cis chain embeds in the 21-block trans ring. The two families are genuinely distinct:*)
+(*Direct/twisted dichotomy, live [T]: the dense SDP arbitrates at a size it still reaches \[LongDash] \[CurlyTheta](twisted-ring 21) < \[CurlyTheta](direct-chain 19), and \[CurlyTheta] is monotone under induced subgraphs, so no 19-block direct chain embeds in the 21-block twisted ring. The two families are genuinely distinct:*)
 
 (* ::Input:: *)
-cisRing[nb_ /; nb >= 3] := Module[{c1, c2, c3, edges},
+directRing[nb_ /; nb >= 3] := Module[{c1, c2, c3, edges},
   edges = Flatten[Table[{{c1[Mod[k - 1, nb]], c1[k]}, {c1[k], c2[k]}, {c2[k], c3[k]},
       {c3[k], c2[Mod[k - 1, nb]]}, {c2[Mod[k - 1, nb]], c1[Mod[k - 1, nb]]}}, {k, 0, nb - 1}], 1];
   Graph[DeleteDuplicates[Flatten[edges]], UndirectedEdge @@@ DeleteDuplicates[Sort /@ edges]]];
 gluingArbitration = {LovaszTheta[PentagonRing[21]], LovaszTheta[PentagonChain[19]]};
-sfx6["S4_cisTransDistinct"] = gluingArbitration[[1]] < gluingArbitration[[2]] - 0.15;
+sfx6["S4_directTwistedDistinct"] = gluingArbitration[[1]] < gluingArbitration[[2]] - 0.15;
 gluingArbitration
 
 (* ::CodeText:: *)
-(*Cis law [T]: \[CurlyTheta](cis-ring N) = N + \[CurlyTheta](C_N) and \[Alpha] = \[LeftFloor]3N/2\[RightFloor] (edge-deletion upper bound + one-extra-dimension representation; proof in CaseStudies.wl). Live on N = 4..8:*)
+(*Direct law [T]: \[CurlyTheta](direct-ring N) = N + \[CurlyTheta](C_N) and \[Alpha] = \[LeftFloor]3N/2\[RightFloor] (edge-deletion upper bound + one-extra-dimension representation; proof in CaseStudies.wl). Live on N = 4..8:*)
 
 (* ::Input:: *)
-cisLawTable = Table[{n, LovaszTheta[cisRing[n]], n + LovaszTheta[CycleGraph[n]],
-    IndependenceNumber[cisRing[n]], Floor[3 n/2]}, {n, 4, 8}];
-sfx6["S4_cisLaw"] = AllTrue[cisLawTable, Abs[#[[2]] - #[[3]]] < 10^-5 &] &&
-   cisLawTable[[All, 4]] == cisLawTable[[All, 5]];
-TableForm[cisLawTable, TableHeadings -> {None, {"N", "\[CurlyTheta](cis ring)", "N+\[CurlyTheta](C_N)", "\[Alpha]", "\[LeftFloor]3N/2\[RightFloor]"}}]
+directLawTable = Table[{n, LovaszTheta[directRing[n]], n + LovaszTheta[CycleGraph[n]],
+    IndependenceNumber[directRing[n]], Floor[3 n/2]}, {n, 4, 8}];
+sfx6["S4_directLaw"] = AllTrue[directLawTable, Abs[#[[2]] - #[[3]]] < 10^-5 &] &&
+   directLawTable[[All, 4]] == directLawTable[[All, 5]];
+TableForm[directLawTable, TableHeadings -> {None, {"N", "\[CurlyTheta](direct ring)", "N+\[CurlyTheta](C_N)", "\[Alpha]", "\[LeftFloor]3N/2\[RightFloor]"}}]
 
 (* ::CodeText:: *)
-(*The trans density limit \[Tau]* [C], the EXACT middle root of a cubic with two-digit coefficients (Groebner elimination of the continuum symbol minimax), recomputed live to 20 digits:*)
+(*The twisted density limit \[Tau]* [C], the EXACT middle root of a cubic with two-digit coefficients (Groebner elimination of the continuum symbol minimax), recomputed live to 20 digits:*)
 
 (* ::Input:: *)
 tauStar = Root[49 #^3 - 128 #^2 - 75 #^1 + 218 &, 2];
 sfx6["S4_tauStarCubic"] = (MinimalPolynomial[tauStar, x] === 49 x^3 - 128 x^2 - 75 x + 218) &&
    Abs[N[tauStar, 20] - 1.37671774591585905328] < 10^-15;
-{N[tauStar, 20], "per-block trans gap \[Tau]*-4/3" -> N[tauStar - 4/3, 12]}
+{N[tauStar, 20], "per-block twisted gap \[Tau]*-4/3" -> N[tauStar - 4/3, 12]}
 
 (* ::CodeText:: *)
-(*The \[Alpha]-cis theorem [T] (key mechanism): for every gluing word \[Alpha]-density >= max(4/3, 1 + f_c/2); equality at 4/3 iff the word is (cct)^k. Certificate C (potentials (0,-1/2,-1)), the walk-free ccc bonus (adjusted max-plus cube = 13/3), and the run-combinatorics closure through period 12 \[LongDash] all machine-checked live:*)
+(*The \[Alpha]-direct theorem [T] (key mechanism): for every gluing word \[Alpha]-density >= max(4/3, 1 + f_d/2); equality at 4/3 iff the word is (ddt)^k. Certificate C (potentials (0,-1/2,-1)), the walk-free ddd bonus (adjusted max-plus cube = 13/3), and the run-combinatorics closure through period 12 \[LongDash] all machine-checked live:*)
 
 (* ::Input:: *)
-alphaCisTheorem = Module[{phiC = {0, -1/2, -1}, phiB = {0, -1/3, -2/3},
+alphaDirectTheorem = Module[{phiC = {0, -1/2, -1}, phiB = {0, -1/3, -2/3},
     adjR, Acc, mpMul, A3, comb},
    adjR[T_, phi_, i_] := Max[Table[T[[i, j]] + phi[[j]] - phi[[i]], {j, 3}]];
-   Acc = Table[dpTransfer["c"][[i, j]] + phiB[[j]] - phiB[[i]], {i, 3}, {j, 3}];
+   Acc = Table[dpTransfer["d"][[i, j]] + phiB[[j]] - phiB[[i]], {i, 3}, {j, 3}];
    mpMul[X_, Y_] := Table[Max[Table[X[[i, k]] + Y[[k, j]], {k, 3}]], {i, 3}, {j, 3}];
    A3 = mpMul[mpMul[Acc, Acc], Acc];
    comb = AllTrue[Flatten[Table[If[Mod[p, 3] == 0,
-        Module[{ws = Select[Tuples[{"c", "t"}, p], Count[#, "c"] == 2 p/3 &&
-              ! StringContainsQ[StringJoin[#] <> StringJoin[#], "ccc"] &]},
-         AllTrue[ws, MemberQ[Table[RotateLeft[Characters[StringRepeat["cct", p/3]], r],
+        Module[{ws = Select[Tuples[{"d", "t"}, p], Count[#, "d"] == 2 p/3 &&
+              ! StringContainsQ[StringJoin[#] <> StringJoin[#], "ddd"] &]},
+         AllTrue[ws, MemberQ[Table[RotateLeft[Characters[StringRepeat["ddt", p/3]], r],
              {r, 0, p - 1}], #] &]], True], {p, 3, 12}]], TrueQ];
-   AllTrue[Range[3], adjR[dpTransfer["c"], phiC, #] >= 3/2 &] &&
+   AllTrue[Range[3], adjR[dpTransfer["d"], phiC, #] >= 3/2 &] &&
     AllTrue[Range[3], adjR[dpTransfer["t"], phiC, #] >= 1 &] &&
     Min[Table[Max[A3[[i]]], {i, 3}]] == 13/3 && comb];
-sfx6["S4_alphaCisTheorem"] = alphaCisTheorem;
-alphaCisTheorem
+sfx6["S4_alphaDirectTheorem"] = alphaDirectTheorem;
+alphaDirectTheorem
 
 (* ::CodeText:: *)
-(*The optimal word (cct)^\[Infinity] and its gap density gap(cct) [C]. The dense-SDP anchor \[CurlyTheta](cct\[Times]2) matches the chordal continuum value; the \[Alpha] staircase gives \[LeftFloor]4L/3\[RightFloor]; the per-block gap is cctDensity - 4/3 \[TildeTilde] 0.0698975, which is 1.611\[Times] the pure-trans gap (\[Tau]* - 4/3). cctDensity is the numerically-certified (~300-digit KKT) continuum optimum \[LongDash] no low-degree closed form exists (LLL excludes minimal polynomials of degree <= 36):*)
+(*The optimal word (ddt)^\[Infinity] and its gap density gap(ddt) [C]. The dense-SDP anchor \[CurlyTheta](ddt\[Times]2) matches the chordal continuum value; the \[Alpha] staircase gives \[LeftFloor]4L/3\[RightFloor]; the per-block gap is ddtDensity - 4/3 \[TildeTilde] 0.0698975, which is 1.611\[Times] the pure-twisted gap (\[Tau]* - 4/3). ddtDensity is the numerically-certified (~300-digit KKT) continuum optimum \[LongDash] no low-degree closed form exists (LLL excludes minimal polynomials of degree <= 36):*)
 
 (* ::Input:: *)
-gluingWordAnchor = {LovaszTheta[wordRing["cct", 2]],
-   IndependenceNumber[wordRing["cct", 2]], IndependenceNumber[wordRing["cct", 3]]};
-cctDensity = 1.4032308692389975;   (* continuum optimum of the 9x9 symbol minimax; numeric-certified, no closed form *)
-gapCct = cctDensity - 4/3;
+gluingWordAnchor = {LovaszTheta[wordRing["ddt", 2]],
+   IndependenceNumber[wordRing["ddt", 2]], IndependenceNumber[wordRing["ddt", 3]]};
+ddtDensity = 1.4032308692389975;   (* continuum optimum of the 9x9 symbol minimax; numeric-certified, no closed form *)
+gapCct = ddtDensity - 4/3;
 sfx6["S4_optimalWord"] = Abs[gluingWordAnchor[[1]] - 8.347042185] < 10^-4 &&
    gluingWordAnchor[[2]] == 8 && gluingWordAnchor[[3]] == 12 &&
    Abs[gapCct - 0.0698975] < 10^-4 && gapCct > (tauStar - 4/3) &&
    Abs[gapCct/(tauStar - 4/3) - 1.611] < 0.01;
-{"\[CurlyTheta](cct\[Times]2)" -> gluingWordAnchor[[1]], "\[Alpha](cct\[Times]2,\[Times]3)" -> gluingWordAnchor[[2 ;; 3]],
- "gap(cct)" -> N[gapCct, 8], "gap(cct)/(\[Tau]*-4/3)" -> N[gapCct/(tauStar - 4/3), 6]}
+{"\[CurlyTheta](ddt\[Times]2)" -> gluingWordAnchor[[1]], "\[Alpha](ddt\[Times]2,\[Times]3)" -> gluingWordAnchor[[2 ;; 3]],
+ "gap(ddt)" -> N[gapCct, 8], "gap(ddt)/(\[Tau]*-4/3)" -> N[gapCct/(tauStar - 4/3), 6]}
 
 (* ::CodeText:: *)
 (*The certificate ladder \[CapitalGamma]_k [T]/[C]. Each \[CapitalGamma]_k is an all-words upper bound on gap-density (a Bousch sub-action / max-plus eigenvalue on the de Bruijn-k subshift). The tightened exact rationals \[CapitalGamma]_7, \[CapitalGamma]_8, \[CapitalGamma]_9, \[CapitalGamma]_10 are READ from the committed certificates (regenerated on Wolfram Compute Services \[LongDash] \[CapitalGamma]_10 on a Memory8x64 kernel warm-started from k=9, all PSD/pointwise/convergence gates True) and reduced to numbers in-essay \[LongDash] never re-typed:*)
@@ -185,7 +185,7 @@ sfx6["S4_gammaLadderExact"] = AllTrue[gammaExact, Head[#] === Rational &] &&
  "\[CapitalGamma]_10" -> N[gamma10, 10], "exact \[CapitalGamma]_10" -> gamma10}
 
 (* ::CodeText:: *)
-(*\[CapitalGamma]_10 is now EXACT: the k=10 windowed certificate was produced on a WolframBatch Memory8x64 kernel (warm-started from the k=9 certificate; peak ~21 GB, which is why the earlier 16 GB attempts ran out of memory), with every nodeCons/edgeCons equality exact, both Q(5x5) and R(4x4) blocks PSD, and pointwise \[Sigma](e) <= \[CapitalGamma]_10 over all 2048 edges. The certified \[Epsilon] = \[CapitalGamma]_10 - gap(cct) is therefore an exact-rational-backed bracket half-width (see CONVERGENCE-ANALYSIS-2026-07-13.md):*)
+(*\[CapitalGamma]_10 is now EXACT: the k=10 windowed certificate was produced on a WolframBatch Memory8x64 kernel (warm-started from the k=9 certificate; peak ~21 GB, which is why the earlier 16 GB attempts ran out of memory), with every nodeCons/edgeCons equality exact, both Q(5x5) and R(4x4) blocks PSD, and pointwise \[Sigma](e) <= \[CapitalGamma]_10 over all 2048 edges. The certified \[Epsilon] = \[CapitalGamma]_10 - gap(ddt) is therefore an exact-rational-backed bracket half-width (see CONVERGENCE-ANALYSIS-2026-07-13.md):*)
 
 (* ::Input:: *)
 gamma10Numeric = N[gamma10, 10];   (* now backed by the exact rational certificate loaded above *)
@@ -193,11 +193,11 @@ epsCertified = gamma10 - gapCct;
 sfx6["S4_gamma10Exact"] = Head[gamma10] === Rational && TrueQ[gamma10 <= gamma9] &&
    gamma10 > gapCct && Abs[N[epsCertified] - 0.00156] < 10^-4;
 {"\[CapitalGamma]_10 (exact)" -> gamma10, "\[CapitalGamma]_10 (numeric)" -> gamma10Numeric,
- "\[Epsilon] = \[CapitalGamma]_10 - gap(cct)" -> N[epsCertified, 6],
+ "\[Epsilon] = \[CapitalGamma]_10 - gap(ddt)" -> N[epsCertified, 6],
  "status" -> "exact rational certificate (WolframBatch Memory8x64, warm from k=9; all exact gates True)"}
 
 (* ::CodeText:: *)
-(*The orbit-spectrum reading (CERT-003). Spurious policy-iteration values are periodic-orbit densities minus 1 \[LongDash] cis 3/2, trans \[Tau]*, then 16/11, 19/13, 25/17. \[Tau]* is recomputed live (above); the rationals are the finite-orbit readings. The figure orbit_spectrum.png is regenerated by composition-optimality/orbit_spectrum_figure.wl (embedded by the master essay); here we verify the seed values are ordered and \[Tau]* sits among them:*)
+(*The orbit-spectrum reading (CERT-003). Spurious policy-iteration values are periodic-orbit densities minus 1 \[LongDash] direct 3/2, twisted \[Tau]*, then 16/11, 19/13, 25/17. \[Tau]* is recomputed live (above); the rationals are the finite-orbit readings. The figure orbit_spectrum.png is regenerated by composition-optimality/orbit_spectrum_figure.wl (embedded by the master essay); here we verify the seed values are ordered and \[Tau]* sits among them:*)
 
 (* ::Input:: *)
 orbitSeeds = {3/2, tauStar, 16/11, 19/13, 25/17};
@@ -209,27 +209,27 @@ orbitSpectrumFigure = If[FileExistsQ[orbitSpectrumFigureRef], Import[orbitSpectr
 Column[{N[orbitSeeds, 6], orbitSpectrumFigure}]
 
 (* ::CodeText:: *)
-(*FIGURE (authored live). The certificate bracket: \[CapitalGamma]_7 > \[CapitalGamma]_8 > \[CapitalGamma]_9 (exact) and \[CapitalGamma]_10 (numeric) descending toward gap(cct), the conjectured supremum. Every plotted ordinate is a live value computed above:*)
+(*FIGURE (authored live). The certificate bracket: \[CapitalGamma]_7 > \[CapitalGamma]_8 > \[CapitalGamma]_9 (exact) and \[CapitalGamma]_10 (numeric) descending toward gap(ddt), the conjectured supremum. Every plotted ordinate is a live value computed above:*)
 
 (* ::Input:: *)
 gammaBracketFigure = ListLinePlot[
    {Table[{k, N[gammaExact[[k - 6]]]}, {k, 7, 9}]~Join~{{10, gamma10Numeric}}},
    PlotMarkers -> Automatic, Joined -> True,
    Epilog -> {Directive[Red, Dashed], Line[{{6.5, gapCct}, {10.5, gapCct}}],
-     Text[Style["gap(cct) \[TildeTilde] 0.06990", 9], {9, gapCct}, {0, -1.4}]},
+     Text[Style["gap(ddt) \[TildeTilde] 0.06990", 9], {9, gapCct}, {0, -1.4}]},
    AxesLabel -> {"k", "\[CapitalGamma]_k"}, PlotRange -> {{6.5, 10.5}, {0.069, 0.078}},
-   PlotLabel -> "Certificate ladder \[RightArrow] gap(cct)", ImageSize -> 360];
+   PlotLabel -> "Certificate ladder \[RightArrow] gap(ddt)", ImageSize -> 360];
 gammaBracketFigure
 
 (* ::CodeText:: *)
-(*FIGURE (authored live). Pentagon-chain gap parity: cis chains obey the parity law \[LongDash] even N pinches the gap \[CapitalTheta] - \[Alpha] to zero, odd N reopens it \[LongDash] computed live via PentagonChain + LovaszTheta:*)
+(*FIGURE (authored live). Pentagon-chain gap parity: direct chains obey the parity law \[LongDash] even N pinches the gap \[CapitalTheta] - \[Alpha] to zero, odd N reopens it \[LongDash] computed live via PentagonChain + LovaszTheta:*)
 
 (* ::Input:: *)
 chainGapParity = Table[{n, Chop[LovaszTheta[PentagonChain[n]] - IndependenceNumber[PentagonChain[n]], 10^-6]}, {n, 3, 9}];
 sfx6["S4_chainParity"] = (chainGapParity[[2, 2]] < 10^-5) && (chainGapParity[[4, 2]] < 10^-5) &&
    (chainGapParity[[1, 2]] > 0.1) && (chainGapParity[[3, 2]] > 10^-8);
 chainParityFigure = ListLinePlot[chainGapParity, PlotMarkers -> Automatic,
-   AxesLabel -> {"N", "\[CapitalTheta]-\[Alpha] (cis chain)"}, PlotLabel -> "Chain gap parity (even N pinches)", ImageSize -> 360];
+   AxesLabel -> {"N", "\[CapitalTheta]-\[Alpha] (direct chain)"}, PlotLabel -> "Chain gap parity (even N pinches)", ImageSize -> 360];
 chainParityFigure
 
 (* ::Section:: *)
@@ -402,7 +402,7 @@ sfx6["S6_A7ii_CFzero"] = AllTrue[cfSingleContext, #[[2]] == 0 &];
 TableForm[cfSingleContext, TableHeadings -> {None, {"witness size K", "CF (single context)"}}]
 
 (* ::CodeText:: *)
-(*The qubit information sector [T]. On the isotropic CHSH family CF(S) = (S-2)/2, giving the pinned anchors CF(2)=0, CF(2 Sqrt[2]) = Sqrt[2]-1, CF(2.25)=1/8 \[LongDash] the same numbers the qubit Page/Hayden-Preskill suite (cluster-state-realization/cct_mbqc_hawking.wl) certifies. Recomputed live:*)
+(*The qubit information sector [T]. On the isotropic CHSH family CF(S) = (S-2)/2, giving the pinned anchors CF(2)=0, CF(2 Sqrt[2]) = Sqrt[2]-1, CF(2.25)=1/8 \[LongDash] the same numbers the qubit Page/Hayden-Preskill suite (cluster-state-realization/ddt_mbqc_hawking.wl) certifies. Recomputed live:*)
 
 (* ::Input:: *)
 cfOfS[s_] := Max[0, (s - 2)/2];

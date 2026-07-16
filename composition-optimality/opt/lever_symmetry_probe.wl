@@ -10,19 +10,19 @@ dpStates = {{0, 0}, {1, 0}, {0, 1}};
 dpTransfer[letter_] := Module[{T = ConstantArray[-Infinity, {3, 3}], out, j},
    Do[If[! (dpStates[[i, 1]] == 1 && s1 == 1) && ! (s1 == 1 && s2 == 1) &&
         ! (s2 == 1 && s3 == 1) && ! (s3 == 1 && dpStates[[i, 2]] == 1),
-      out = If[letter === "c", {s1, s2}, {s2, s1}];
+      out = If[letter === "d", {s1, s2}, {s2, s1}];
       j = Position[dpStates, out][[1, 1]];
       T[[i, j]] = Max[T[[i, j]], s1 + s2 + s3]],
      {i, 3}, {s1, 0, 1}, {s2, 0, 1}, {s3, 0, 1}];
    T];
-Tc = dpTransfer["c"]; Tt = dpTransfer["t"];
-Print["Tc = ", Tc];
+Td = dpTransfer["d"]; Tt = dpTransfer["t"];
+Print["Td = ", Td];
 Print["Tt = ", Tt];
-Print["Tc -Inf cells: ", Position[Tc, -Infinity]];
+Print["Td -Inf cells: ", Position[Td, -Infinity]];
 Print["Tt -Inf cells: ", Position[Tt, -Infinity]];
 
 rev[w_String] := StringReverse[w];
-sw[w_String]  := StringReplace[w, {"c" -> "t", "t" -> "c"}];
+sw[w_String]  := StringReplace[w, {"d" -> "t", "t" -> "d"}];
 rs[w_String]  := sw[rev[w]];
 
 edgeLetter[e_] := StringTake[e[[1]], -1];
@@ -43,7 +43,7 @@ probeOne[file_, kExpected_] := Module[
   d = Association[Table[w -> Q[w][[5, 5]] + R[w][[4, 4]], {w, nodes}]];
 
   sigma[e_] := Module[{w = e[[1]], x = e[[2]], T, r},
-    T = If[edgeLetter[e] === "c", Tc, Tt];
+    T = If[edgeLetter[e] === "d", Td, Tt];
     r = Min[Table[
        Module[{sig = Strat[ToString[s - 1] <> "|" <> w <> ">" <> x]},
         T[[s, sig]] + Phi[ToString[sig - 1] <> "|" <> x] -

@@ -45,7 +45,7 @@ $BlackBoxRepoRoot = Module[
        "bound-derivation-question/final_h1_cocycle_results.json",
        "open-search-frontier/erg003_verdict.json", "docs/FRAMEWORK-2026-07-13.md",
        "optical-synthesis/schematics/demo1_kcbs_pentagon_L1.png",
-       "optical-synthesis/schematics/demo3_cct_mesh_reps2.png",
+       "optical-synthesis/schematics/demo3_ddt_mesh_reps2.png",
        "certification-protocol/certification_map.png",
        "composition-optimality/orbit_spectrum.png"};
      Do[dest = FileNameJoin[Prepend[FileNameSplit[rel], cacheRoot]];
@@ -120,22 +120,22 @@ bpC7 = EmitBlueprint[<|"Scenario" -> "Cn", "n" -> 7|>];
 {bpC7["Layer"], VerifyBlueprint[bpC7]["OK"], 7 - 4 LovaszTheta[CycleGraph[7]]}
 
 (* ::CodeText:: *)
-(*Demo 3 \[LongDash] the cct pentagon-mesh chain (reps = 2). This is a block-local emulator: single-photon linear optics reproduces each block's table but constructs no globally-entangled cluster (the KLM caveat, honest in every header). Its geometric lens does NOT yet have a computable per-block DLA test for mesh compositions \[LongDash] flagged as an open item during a 2026-07-14 repo audit (the su(2^n) cluster-state route is representationally infeasible at this size, and reusing the KCBS cascade generators for an arbitrary word could not be substantiated). The mesh's TOPOLOGY is independently self-certified below (gate A5 reconstructs and matches the routing exactly); the leaf-confinement claim itself is honestly recorded as not-yet-computed, not asserted either way:*)
+(*Demo 3 \[LongDash] the ddt pentagon-mesh chain (reps = 2). This is a block-local emulator: single-photon linear optics reproduces each block's table but constructs no globally-entangled cluster (the KLM caveat, honest in every header). Its geometric lens does NOT yet have a computable per-block DLA test for mesh compositions \[LongDash] flagged as an open item during a 2026-07-14 repo audit (the su(2^n) cluster-state route is representationally infeasible at this size, and reusing the KCBS cascade generators for an arbitrary word could not be substantiated). The mesh's TOPOLOGY is independently self-certified below (gate A5 reconstructs and matches the routing exactly); the leaf-confinement claim itself is honestly recorded as not-yet-computed, not asserted either way:*)
 
 (* ::Input:: *)
-bpMesh = EmitBlueprint[<|"Word" -> "cct", "Reps" -> 2|>];
+bpMesh = EmitBlueprint[<|"Word" -> "ddt", "Reps" -> 2|>];
 {bpMesh["Layer"], VerifyBlueprint[bpMesh]["OK"],
  Union[#["LeafConfined"] & /@ Values[bpMesh["CertificationVerdict"]]]}
 
 (* ::CodeText:: *)
-(*The committed schematics (re-emitted by runners/RunOpticalCompiler.wl so they never drift from the numbers above): the KCBS Layer-1 cascade and the cct mesh. Displayed from the compiler's own committed output.*)
+(*The committed schematics (re-emitted by runners/RunOpticalCompiler.wl so they never drift from the numbers above): the KCBS Layer-1 cascade and the ddt mesh. Displayed from the compiler's own committed output.*)
 
 (* ::Input:: *)
 With[{f = FileNameJoin[{$BlackBoxRepoRoot, "optical-synthesis", "schematics", "demo1_kcbs_pentagon_L1.png"}]},
   If[FileExistsQ[f], Import[f], Missing["figure unavailable"]]]
 
 (* ::Input:: *)
-With[{f = FileNameJoin[{$BlackBoxRepoRoot, "optical-synthesis", "schematics", "demo3_cct_mesh_reps2.png"}]},
+With[{f = FileNameJoin[{$BlackBoxRepoRoot, "optical-synthesis", "schematics", "demo3_ddt_mesh_reps2.png"}]},
   If[FileExistsQ[f], Import[f], Missing["figure unavailable"]]]
 
 (* ::Text:: *)
@@ -155,10 +155,10 @@ deltaC5 = CycleCoboundary[5];
 Chop[HarmonicResidual[deltaC5, N@CycleModel[5, #]] & /@ {"Classical", "Quantum", "Wright"}]
 
 (* ::CodeText:: *)
-(*(ii) The affine \[Alpha]-credit tilt [R] (F9i). No affine-in-f_c certificate family can have limiting gap equal to gap(cct): the linear correction is inert against the kinked \[Alpha]-floor. Proof: composition-optimality (CONVERGENCE-ANALYSIS-2026-07-13.md) / FRAMEWORK F9i. [R, theorem]*)
+(*(ii) The affine \[Alpha]-credit tilt [R] (F9i). No affine-in-f_c certificate family can have limiting gap equal to gap(ddt): the linear correction is inert against the kinked \[Alpha]-floor. Proof: composition-optimality (CONVERGENCE-ANALYSIS-2026-07-13.md) / FRAMEWORK F9i. [R, theorem]*)
 
 (* ::CodeText:: *)
-(*(iii) The Legendre \[Theta]-frontier [R, theorem] (F9viii / CERT-004). A certified Legendre frequency-frontier equals the upper CONCAVE HULL of \[Theta]-bar over cis-frequency f_c \[LongDash] and that hull is pinned flat at 3/2 on f_c in [1/2,1] (the words ct and ccct attain \[Theta]-bar = 3/2 exactly), while cct sits strictly below it, unexposed by any supporting hyperplane. So the route certifies a gap floor of at least 3/2 - 4/3, recomputed live below \[LongDash] worse than the flat certificate \[CapitalGamma]\:2089. File-sourced: hull(2/3) = 3/2, cct \[Theta]-bar = 1.4032309 (0.0967691 below the hull), from pentagon-gluing/final_cct_hull.py.*)
+(*(iii) The Legendre \[Theta]-frontier [R, theorem] (F9viii / CERT-004). A certified Legendre frequency-frontier equals the upper CONCAVE HULL of \[Theta]-bar over direct-frequency f_c \[LongDash] and that hull is pinned flat at 3/2 on f_c in [1/2,1] (the words ct and dddt attain \[Theta]-bar = 3/2 exactly), while ddt sits strictly below it, unexposed by any supporting hyperplane. So the route certifies a gap floor of at least 3/2 - 4/3, recomputed live below \[LongDash] worse than the flat certificate \[CapitalGamma]\:2089. File-sourced: hull(2/3) = 3/2, ddt \[Theta]-bar = 1.4032309 (0.0967691 below the hull), from pentagon-gluing/final_ddt_hull.py.*)
 
 (* ::Input:: *)
 legendreFloor = 3/2 - 4/3;
@@ -181,7 +181,7 @@ legendreFloor = 3/2 - 4/3;
 (*(vi) The Ramsey obstruction [R] (F9v). The Choudhary-Barbosa Ramsey technique provably cannot certify \[Omega] <= 17 for the mixed nonagon cell (its bound is too weak for this graph). Proof: FRAMEWORK F9v / ERG-003 analysis. [R, theorem]*)
 
 (* ::CodeText:: *)
-(*(vii) The ergodic-sheaf category error [R] (F9ii). The proposed static<->dynamic unification is a category error: the cross-side T->0 limit yields packing 5/2, not a certificate value \[CapitalGamma], and does not select cct. Proof: bound-derivation-question / FRAMEWORK F9ii. [R]*)
+(*(vii) The ergodic-sheaf category error [R] (F9ii). The proposed static<->dynamic unification is a category error: the cross-side T->0 limit yields packing 5/2, not a certificate value \[CapitalGamma], and does not select ddt. Proof: bound-derivation-question / FRAMEWORK F9ii. [R]*)
 
 (* ::CodeText:: *)
 (*(viii) Bound-inertness [R] (F9x / ERG-004b). Zero of the 26 pentagram families are bound-eliminable (the inertness lemma: \[Omega](cn(Q_m)) >= 8 - s_m meets the generator constraint), so S = 17 is search-bound, not bound-decidable. The family count is read live from the committed ERG-003 verdict:*)
@@ -217,7 +217,7 @@ Grid[Prepend[hRows, hHeader], Frame -> All, Alignment -> Left,
 (*The five (plus H1') live hypotheses, each a sharply-posed problem with a stated proof target:*)
 
 (* ::Item:: *)
-(*H1 (cct optimality) [H]: sup over all gluing words of gap(w) equals gap(cct) = 0.0698975, certified within \[Epsilon] = \[CapitalGamma]\:2081\:2080 - gap(cct) = 0.00156 (\[CapitalGamma]\:2081\:2080 numeric-only, per S4; the exact k=10 certificate is pending). Counterexamples confined to a thin corridor f_c ~ 2/3, \[Alpha]-bar in [4/3, 1.4301). Target: a NONLINEAR-in-frequency certificate (the affine and Legendre routes are dead, S8-ii/iii) or an ergodic-optimization selection theorem. Plus H1' (\[CapitalGamma]-limit): lim \[CapitalGamma]_k = sup gap.*)
+(*H1 (ddt optimality) [H]: sup over all gluing words of gap(w) equals gap(ddt) = 0.0698975, certified within \[Epsilon] = \[CapitalGamma]\:2081\:2080 - gap(ddt) = 0.00156 (\[CapitalGamma]\:2081\:2080 numeric-only, per S4; the exact k=10 certificate is pending). Counterexamples confined to a thin corridor f_c ~ 2/3, \[Alpha]-bar in [4/3, 1.4301). Target: a NONLINEAR-in-frequency certificate (the affine and Legendre routes are dead, S8-ii/iii) or an ergodic-optimization selection theorem. Plus H1' (\[CapitalGamma]-limit): lim \[CapitalGamma]_k = sup gap.*)
 
 (* ::Item:: *)
 (*H2' (cohomological detection, reopened) [H]: a genuine quantitative-cohomology detector on a cover OTHER than the maximal-clique cover \[LongDash] the \[Delta](y* mod \[DoubleStruckCapitalZ]) route is closed (F9vii, S8-iv). The degree-0 derivation S_k = \[CapitalLambda]_k^(1/k) (S5) stands untouched.*)

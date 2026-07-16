@@ -8,7 +8,7 @@
    in this repo), and re-derives -- in native Wolfram exact rational
    arithmetic, independently of the Python implementation in
    CertificateLoader.py / ZeroSlackDiagnostic.py -- whether a Psi-only
-   recalibration can force zero-slack on the cct cycle. Mirrors
+   recalibration can force zero-slack on the ddt cycle. Mirrors
    CaseStudies.wl's own posSigma/posCycleMean cell (lines ~358-451)
    verbatim in construction. *)
 
@@ -20,14 +20,14 @@ dpStates = {{0, 0}, {1, 0}, {0, 1}};
 dpTransfer[letter_] := Module[{T = ConstantArray[-Infinity, {3, 3}], out, j},
    Do[If[!(dpStates[[i, 1]] == 1 && s1 == 1) && !(s1 == 1 && s2 == 1) &&
        !(s2 == 1 && s3 == 1) && !(s3 == 1 && dpStates[[i, 2]] == 1),
-      out = If[letter === "c", {s1, s2}, {s2, s1}];
+      out = If[letter === "d", {s1, s2}, {s2, s1}];
       j = Position[dpStates, out][[1, 1]];
       T[[i, j]] = Max[T[[i, j]], s1 + s2 + s3]],
      {i, 3}, {s1, 0, 1}, {s2, 0, 1}, {s3, 0, 1}];
    T];
-Tc = dpTransfer["c"]; Tt = dpTransfer["t"];
-Print["Tc = ", Tc]; Print["Tt = ", Tt];
-Print["-Infinity entries confirmed: Tc[[2,2]]=", Tc[[2, 2]], "  Tt[[2,3]]=", Tt[[2, 3]]];
+Td = dpTransfer["d"]; Tt = dpTransfer["t"];
+Print["Td = ", Td]; Print["Tt = ", Tt];
+Print["-Infinity entries confirmed: Td[[2,2]]=", Td[[2, 2]], "  Tt[[2,3]]=", Tt[[2, 3]]];
 
 posEdges[CE_] := Select[Tuples[CE["Nodes"], 2], StringDrop[#[[1]], 1] === StringDrop[#[[2]], -1] &];
 
@@ -48,7 +48,7 @@ cycleMean[CE_, word_String] := Module[{k = CE["k"], edges},
    {Mean[posSigma[CE] /@ edges], posSigma[CE] /@ edges, edges}];
 
 fullReport[CE_, name_, bottleneckWord_String] := Module[
-   {gamma = CE["Gamma"], edges, sigmas, worst, allOK, muCct, cctSig, cctE,
+   {gamma = CE["Gamma"], edges, sigmas, worst, allOK, muCct, ddtSig, ddtE,
     muBot, botSig, botE, forcedViolation},
    Print["======================================================================"];
    Print[name, "  k=", CE["k"], "  nodes=", Length[CE["Nodes"]]];
@@ -60,11 +60,11 @@ fullReport[CE_, name_, bottleneckWord_String] := Module[
    Print["  max sigma(e)=", worst[[2]], "=", N[worst[[2]], 10], " at ", worst[[1]],
      "  (==Gamma exactly: ", worst[[2]] == gamma, ", <=Gamma everywhere: ", allOK, ")"];
 
-   {muCct, cctSig, cctE} = cycleMean[CE, "cct"];
-   Print["  cct cycle: ", cctE];
-   Print["  sigma values on cct: ", N[cctSig, 8]];
-   Print["  mu_cct = ", muCct, " = ", N[muCct, 12]];
-   Print["  Gamma - mu_cct (slack at cct) = ", gamma - muCct, " = ", N[gamma - muCct, 10]];
+   {muCct, ddtSig, ddtE} = cycleMean[CE, "ddt"];
+   Print["  ddt cycle: ", ddtE];
+   Print["  sigma values on ddt: ", N[ddtSig, 8]];
+   Print["  mu_ddt = ", muCct, " = ", N[muCct, 12]];
+   Print["  Gamma - mu_ddt (slack at ddt) = ", gamma - muCct, " = ", N[gamma - muCct, 10]];
 
    {muBot, botSig, botE} = cycleMean[CE, bottleneckWord];
    Print["  bottleneck word ", bottleneckWord, ": sigma values ", N[botSig, 8]];
@@ -73,13 +73,13 @@ fullReport[CE_, name_, bottleneckWord_String] := Module[
      "  (rationalization sliver)"];
 
    forcedViolation = muBot - muCct;
-   Print["  ==> forcing sigma=mu_cct on cct via Psi alone forces >= ", forcedViolation,
+   Print["  ==> forcing sigma=mu_ddt on ddt via Psi alone forces >= ", forcedViolation,
      " = ", N[forcedViolation, 10], " NEGATIVE SLACK on ", bottleneckWord];
    <|"gamma" -> gamma, "muCct" -> muCct, "muBot" -> muBot, "allOK" -> allOK,
      "forcedViolation" -> forcedViolation|>];
 
-r7 = fullReport[EpsilonCertificate, "EpsilonCertificate (k=7)", "cttt"];
-r8 = fullReport[EpsilonCertificate8, "EpsilonCertificate8 (k=8)", "ctt"];
+r7 = fullReport[EpsilonCertificate, "EpsilonCertificate (k=7)", "dttt"];
+r8 = fullReport[EpsilonCertificate8, "EpsilonCertificate8 (k=8)", "dtt"];
 
 (* Psi-independence sanity check: perturb Psi at random exact rationals and
    confirm the cycle mean is unchanged (telescoping argument, verified). *)
@@ -97,8 +97,8 @@ Do[
     mu1 = cycleMean[CE2, word][[1]];
     Print["  ", label, " ", word, ": mu=", N[mu0, 10], " vs perturbed-Psi mu=", N[mu1, 10],
       "  identical=", mu0 == mu1]],
-  {item, {{EpsilonCertificate, "cct", "k=7"}, {EpsilonCertificate, "cttt", "k=7"},
-    {EpsilonCertificate8, "cct", "k=8"}, {EpsilonCertificate8, "ctt", "k=8"}}}];
+  {item, {{EpsilonCertificate, "ddt", "k=7"}, {EpsilonCertificate, "dttt", "k=7"},
+    {EpsilonCertificate8, "ddt", "k=8"}, {EpsilonCertificate8, "dtt", "k=8"}}}];
 
 Print["======================================================================"];
 Print["FINAL EXACT RESULT (native Wolfram, independent of the Python implementation):"];

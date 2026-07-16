@@ -1,6 +1,6 @@
 """Item #3: EXPLICIT qutrit (d=3) realization of the pentagon-mesh contextuality advantage.
 
-realizability.py proved d(N)=3 (a single qutrit saturates theta for any trans-chain length).
+realizability.py proved d(N)=3 (a single qutrit saturates theta for any twisted-chain length).
 This module makes that constructive: it extracts, from the rank-3 theta-SDP Gram matrix, the
 actual CSW measurement directions and state that achieve the CSW bound theta on one qutrit.
 
@@ -17,7 +17,7 @@ Dictionary (verified below; reproduces sqrt5 for the single pentagon):
     of sum_i |v_i><v_i|, i.e. the optimal state).
   * Then the CSW functional  S = sum_i <psi|P_i|psi> = sum_i <psi|v_i>^2 = theta.
 
-So an arbitrarily long trans pentagon chain is realized on the SAME 3-level system that
+So an arbitrarily long twisted pentagon chain is realized on the SAME 3-level system that
 Lapkiewicz et al. (2011) already used for one pentagon -- only the number of measurement
 settings (3N+2 directions, in edge-contexts) grows, not the Hilbert-space dimension.
 This is computable-bound theory: it hands over an explicit projective-measurement protocol
@@ -36,7 +36,7 @@ def theta_gram(n, edges):
 
 
 def realization(N):
-    """Return (theta, V, psi, edges) for the open trans chain of N pentagons:
+    """Return (theta, V, psi, edges) for the open twisted chain of N pentagons:
     V is (3N+2) x 3 with unit rows |v_i>; psi is the 3-vector state."""
     n, edges = pentagon_chain_word("t" * (N - 1))
     th, X = theta_gram(n, edges)

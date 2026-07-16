@@ -33,7 +33,7 @@ Einstein equations. Specifically, state up front, in the file header:
   Sanders, PRA 65, 042304 (2002)). Therefore **this entire Hawking sector sits on
   the EMULABLE side of the framework's two-lens boundary**, exactly mirroring the
   Clifford status of the qubit Hawking module
-  (`cluster-state-realization/cct_mbqc_hawking_certification.wl`). The interesting
+  (`cluster-state-realization/ddt_mbqc_hawking_certification.wl`). The interesting
   content (A8) is that the *generator set* is still non-passive: genuine squeezing
   is present (active `sp(4,R)`, not passive `u(2)`), so it is **not** emulable by
   *linear/passive* optics even though it *is* Gaussian-classically simulable — the
@@ -203,9 +203,9 @@ Here `{|t_i|} = {1, Tanh[2r], Tanh[2r]}`, two largest `{1, Tanh[2r]}`:
 CHSH(r) = 2 Sqrt[ 1 + Tanh[2 r]^2 ]
 ```
 - `r -> Infinity`: `Tanh[2r] -> 1`, `CHSH -> 2 Sqrt[2]` — **the A6 bridge to the
-  qubit anchor** (`cct_mbqc_hawking_certification.wl`: CHSH `2 Sqrt[2]`,
+  qubit anchor** (`ddt_mbqc_hawking_certification.wl`: CHSH `2 Sqrt[2]`,
   CF `Sqrt[2]-1`). At the ceiling the TMSV literally realizes a qubit EPR pair.
-- Place on the CF scale via `CCTCFofS[s] = Max[0,(s-2)/2]` (the qubit module's
+- Place on the CF scale via `DDTCFofS[s] = Max[0,(s-2)/2]` (the qubit module's
   own function, or `hawking_cf_bridge.py`): `CF(r) = Max[0, Sqrt[1+Tanh[2r]^2]-1]`.
 - **Literature `B = 2.25` ⇒ effective squeezing (A6, numeric).** Solve
   `2 Sqrt[1+Tanh[2r]^2] == 2.25` ⇒ `Tanh[2 r_eff] = 0.515388...`,
@@ -283,7 +283,7 @@ Prove `PseudospinCorrMatrix[r] == DiagonalMatrix[{Tanh[2r],-Tanh[2r],1}]` and
 `CHSHofR[r] == 2 Sqrt[1+Tanh[2r]^2]`, `Limit[CHSHofR[r], r->Infinity] == 2 Sqrt[2]`.
 Tabulate `CHSH(r)`, `CF(r)=Max[0,(CHSH-2)/2]` on a grid. Numeric: `r_eff` for
 `B=2.25` ⇒ `0.285020` (gate `< 10^-5`). Cross-check `CHSHofR` and CF against
-`cct_mbqc_hawking_certification.wl` anchors (`2 Sqrt[2]`, `Sqrt[2]-1`).
+`ddt_mbqc_hawking_certification.wl` anchors (`2 Sqrt[2]`, `Sqrt[2]-1`).
 
 ### A7 — Scope confirmations (constructive)
 - **(i) Hudson / Wigner positivity:** for every state the engine produces
